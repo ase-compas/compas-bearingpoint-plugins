@@ -14,9 +14,10 @@
 
   interface Props {
     coreVersion?: string;
+    onClose?: () => void;
   }
 
-  let { coreVersion = '1.0.0' }: Props = $props();
+  let { coreVersion = '1.0.0', onClose }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let loading = $state(true);
@@ -51,6 +52,8 @@
   }
 
   $effect(() => {
+    // Re-initialise when the host core version changes
+    const _version = coreVersion;
     initHub();
   });
 
@@ -87,7 +90,7 @@
     }
     const plugin = plugins.find((p) => p.id === pluginId);
     if (plugin) {
-      loadPlugin(plugin).catch((err) =>
+      loadPlugin(plugin, providers).catch((err) =>
         console.error(`[Plugins-Hub] Failed to load plugin "${plugin.name}":`, err)
       );
     }
@@ -129,7 +132,7 @@
 <div class="plugins-hub">
   <div class="hub-header">
     <h2 class="hub-title">Plugin Store</h2>
-    <button class="close-btn" onclick={() => {}} aria-label="Close plugin store">✕</button>
+    <button class="close-btn" onclick={() => onClose?.()} aria-label="Close plugin store">✕</button>
   </div>
 
   <div class="hub-toolbar">

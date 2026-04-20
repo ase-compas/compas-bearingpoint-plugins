@@ -1,4 +1,38 @@
 import type { Plugin } from '../types/plugin.ts';
+import type { Provider } from '../types/provider.ts';
+
+/**
+ * Returns the set of allowed origins derived from the provider registry.
+ * Only plugin URLs whose origin matches a provider's pluginsUrl origin are permitted.
+ */
+function buildTrustedOrigins(providers: Provider[]): Set<string> {
+  const origins = new Set<string>();
+  for (const p of providers) {
+    try {
+      origins.add(new URL(p.pluginsUrl).origin);
+    } catch {
+      // skip invalid URLs
+    }
+  }
+  return origins;
+}
+
+/**
+ * Validates that a plugin URL belongs to a trusted origin.
+ * Trusted origins are derived from the registered providers' pluginsUrl hosts.
+ *
+ * @param url - The URL to validate.
+ * @param trustedOrigins - Set of allowed origins.
+ * @returns true if the URL's origin is trusted.
+ */
+export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' && trustedOrigins.has(parsed.origin);
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Dynamically loads a plugin's ESM bundle and registers it as a custom element
@@ -8,14 +42,22 @@ import type { Plugin } from '../types/plugin.ts';
  * will be registered under the custom-element tag derived from the plugin id.
  *
  * @param plugin - The plugin to load.
+ * @param providers - The registered providers used to determine trusted origins.
  * @returns Promise that resolves when the plugin is loaded (or rejects on error).
  */
-export async function loadPlugin(plugin: Plugin): Promise<void> {
+export async function loadPlugin(plugin: Plugin, providers: Provider[] = []): Promise<void> {
   const tag = pluginIdToTag(plugin.id);
 
   // Skip if already registered
   if (customElements.get(tag)) {
     return;
+  }
+
+  const trustedOrigins = buildTrustedOrigins(providers);
+  if (providers.length > 0 && !isUrlTrusted(plugin.url, trustedOrigins)) {
+    throw new Error(
+      `[PluginLoader] Plugin "${plugin.name}" URL "${plugin.url}" is not from a trusted origin.`
+    );
   }
 
   const module = await import(/* @vite-ignore */ plugin.url);

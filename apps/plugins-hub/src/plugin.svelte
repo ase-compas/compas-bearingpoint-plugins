@@ -9,6 +9,4 @@
   let { doc, editCount }: Props = $props();
 </script>
 
-{#if doc !== undefined || editCount !== undefined}
-  <PluginsHub />
-{/if}
+<PluginsHub />

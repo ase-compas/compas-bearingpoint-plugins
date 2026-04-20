@@ -11,7 +11,7 @@ export type {
 export { loadProvider, loadAllProviders } from './lib/services/provider-loader.ts';
 export type { ProviderLoadResult } from './lib/services/provider-loader.ts';
 
-export { loadPlugin, pluginIdToTag, slugify, buildPluginId } from './lib/services/plugin-loader.ts';
+export { loadPlugin, pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader.ts';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver.ts';
 
