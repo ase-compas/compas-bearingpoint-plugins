@@ -1,0 +1,26 @@
+{
+  "name": "plugins-hub-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/plugins-hub/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "command": "eslint libs/plugins-hub/**/*.{ts,svelte,spec.ts}"
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "svelte-check",
+        "cwd": "libs/plugins-hub"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/libs/plugins-hub"
+      }
+    }
+  }
+}

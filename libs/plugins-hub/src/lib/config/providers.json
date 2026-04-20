@@ -1,0 +1,9 @@
+[
+  {
+    "prefix": "bp",
+    "name": "BearingPoint Plugins",
+    "icon": "https://cdn.bearingpoint.com/icons/bp.svg",
+    "description": "Official BearingPoint plugin provider for OpenSCD.",
+    "pluginsUrl": "https://plugins.bearingpoint.eu/plugins.json"
+  }
+]
