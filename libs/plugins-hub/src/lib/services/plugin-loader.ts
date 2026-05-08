@@ -1,5 +1,5 @@
-import type { Plugin } from '../types/plugin.ts';
-import type { Provider } from '../types/provider.ts';
+import type { Plugin } from '../types/plugin';
+import type { Provider } from '../types/provider';
 
 /**
  * Returns the set of allowed origins derived from the provider registry.

@@ -8,11 +8,14 @@ export type {
   ActivationState,
 } from './lib/types/plugin.ts';
 
-export { loadProvider, loadAllProviders } from './lib/services/provider-loader.ts';
-export type { ProviderLoadResult } from './lib/services/provider-loader.ts';
+export { loadProvider, loadAllProviders } from './lib/services/provider-loader';
+export type { ProviderLoadResult } from './lib/services/provider-loader';
 
-export { loadPlugin, pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader.ts';
+export { loadPlugin, pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
-export { isVersionCompatible, compareSemver } from './lib/services/version-resolver.ts';
+export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
-export { buildPlugin, updatePluginState, loadPersistedState } from './lib/store/plugin-store.ts';
+export { buildPlugin, updatePluginState, loadPersistedState } from './lib/store/plugin-store';
+
+export { default as providersConfig } from './lib/config/providers.json';
+

@@ -1,0 +1,78 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run:plugins-hub",
+      "type": "npm",
+      "script": "run:plugins-hub",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
+      "label": "preview:plugins-hub",
+      "type": "npm",
+      "script": "preview:plugins-hub",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
+      "label": "test:all watch",
+      "type": "npm",
+      "script": "test:all",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
+      "label": "build all",
+      "type": "npm",
+      "script": "build",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
+      "label": "build:plugins-hub",
+      "type": "npm",
+      "script": "build:plugins-hub",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "lint",
+        "--",
+        "--max-warnings=0"
+      ],
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      },
+      "problemMatcher": ["$eslint-stylish"],
+      "runOptions": {
+        "reevaluateOnRerun": true
+      }
+    }
+  ]
+}

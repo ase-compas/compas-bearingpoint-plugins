@@ -1,16 +1,26 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "moduleResolution": "node",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
     "types": ["vitest/globals", "node", "vite/client"],
     "strict": false,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "../../dist/out-tsc"
   },
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.svelte",
     "src/**/*.test.svelte"
-  ]
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ],
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Provider } from '../types/provider.ts';
-import { loadProvider } from './provider-loader.ts';
+import type { Provider } from '../types/provider';
+import { loadProvider } from './provider-loader';
 
 const mockProvider: Provider = {
   prefix: 'bp',

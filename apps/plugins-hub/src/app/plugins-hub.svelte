@@ -7,8 +7,8 @@
     updatePluginState,
     loadPersistedState,
     loadPlugin,
+    providersConfig,
   } from '@compas-bearingpoint/plugins-hub';
-  import providersConfig from '../../../../libs/plugins-hub/src/lib/config/providers.json';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
 

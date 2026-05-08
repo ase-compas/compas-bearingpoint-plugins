@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { slugify, buildPluginId, pluginIdToTag, isUrlTrusted } from './plugin-loader.ts';
+import { slugify, buildPluginId, pluginIdToTag, isUrlTrusted } from './plugin-loader';
 
 describe('slugify', () => {
   it('converts name to lowercase slug', () => {

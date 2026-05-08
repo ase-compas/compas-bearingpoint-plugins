@@ -1,5 +1,5 @@
-import type { Provider } from '../types/provider.ts';
-import type { PluginManifestEntry } from '../types/plugin.ts';
+import type { Provider } from '../types/provider';
+import type { PluginManifestEntry } from '../types/plugin';
 
 /** Result of loading a provider's plugin manifest. */
 export interface ProviderLoadResult {

@@ -22,11 +22,14 @@ export default class PluginsHubElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.props.doc = this._doc;
     this.props.editCount = this._editCount;
+    if(!this.shadowRoot) {
+      throw new Error('ShadowRoot not found');
+    }
 
     const linkElement = createStyleLinkElement();
-    this.shadowRoot!.appendChild(linkElement);
+    this.shadowRoot.appendChild(linkElement);
 
-    const mountPlugin = () => mount(Plugin, { target: this.shadowRoot!, props: this.props });
+    const mountPlugin = () => mount(Plugin, { target: this.shadowRoot, props: this.props });
     linkElement.addEventListener('load', mountPlugin, { once: true });
     linkElement.addEventListener('error', mountPlugin, { once: true });
   }

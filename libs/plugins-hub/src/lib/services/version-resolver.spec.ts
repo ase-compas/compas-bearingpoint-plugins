@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { compareSemver, isVersionCompatible } from './version-resolver.ts';
+import { compareSemver, isVersionCompatible } from './version-resolver';
 
 describe('compareSemver', () => {
   it('returns 0 for equal versions', () => {

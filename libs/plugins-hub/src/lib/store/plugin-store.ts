@@ -1,8 +1,8 @@
 import type { Plugin, InstallationState, ActivationState } from '../types/plugin.ts';
 import type { Provider } from '../types/provider.ts';
 import type { PluginManifestEntry } from '../types/plugin.ts';
-import { buildPluginId } from '../services/plugin-loader.ts';
-import { isVersionCompatible } from '../services/version-resolver.ts';
+import { buildPluginId } from '../services/plugin-loader';
+import { isVersionCompatible } from '../services/version-resolver';
 
 /**
  * In-memory store for all aggregated plugins across all providers.
