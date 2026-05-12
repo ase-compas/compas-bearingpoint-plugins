@@ -1,10 +1,18 @@
 /// <reference types='vitest' />
-import { defineConfig } from 'vite';
+import { defineConfig, UserConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-export default defineConfig(async () => {
+export default defineConfig(async (): Promise<UserConfig> => {
   const { svelte } = await import('@sveltejs/vite-plugin-svelte');
 
+  const proxy = {
+    '/external-api': {
+      target: 'http://localhost:8181',
+      secure: false,
+      changeOrigin: true,
+      // rewrite: (path) => path.replace(/^\/api/, ''), // falls der path-prefix '/api' stört
+    },
+  };
   return {
     root: __dirname,
     cacheDir: '../../node_modules/.vite/apps/plugins-hub',
@@ -15,11 +23,13 @@ export default defineConfig(async () => {
       fs: {
         allow: ['..'],
       },
+      proxy,
     },
 
     preview: {
       port: 4301,
       host: 'localhost',
+      proxy,
     },
 
     plugins: [svelte(), nxViteTsPaths()],

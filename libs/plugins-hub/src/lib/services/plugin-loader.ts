@@ -10,8 +10,9 @@ function buildTrustedOrigins(providers: Provider[]): Set<string> {
   for (const p of providers) {
     try {
       origins.add(new URL(p.pluginsUrl).origin);
-    } catch {
+    } catch (e) {
       // skip invalid URLs
+      console.debug('invalid URL:', p.pluginsUrl, e);
     }
   }
   return origins;
@@ -26,6 +27,10 @@ function buildTrustedOrigins(providers: Provider[]): Set<string> {
  * @returns true if the URL's origin is trusted.
  */
 export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean {
+  if (url.startsWith('/')) {
+    // same server path is always valid (mostly used for local dev, but must be configured via server proxies)
+    return true;
+  }
   try {
     const parsed = new URL(url);
     return parsed.protocol === 'https:' && trustedOrigins.has(parsed.origin);

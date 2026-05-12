@@ -1,0 +1,16 @@
+[
+  {
+    "name": "bearingpoint-plugin-1",
+    "description": "Bearingpoint Plugin Test 1",
+    "url": "/external-api/provider/bearingpoint-plugin-01.js",
+    "icon": "/external-api/provider/bearingpoint.svg",
+    "supportedCoreVersion": { "from": "1.0.0", "to": "2.0.0" }
+  },
+  {
+    "name": "bearingpoint-plugin-2",
+    "description": "Bearingpoint Plugin Test 2",
+    "url": "/external-api/provider/bearingpoint-plugin-02.js",
+    "icon": "/external-api/provider/bearingpoint.svg",
+    "supportedCoreVersion": { "from": "1.0.0", "to": "2.0.0" }
+  }
+]

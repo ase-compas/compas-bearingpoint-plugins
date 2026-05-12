@@ -17,6 +17,6 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "../../dist/out-tsc"
   },
-  "include": ["src/**/*.ts", "src/**/*.svelte", "src/lib/config/**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.svelte", "src/lib/config/*.json"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.svelte", "**/*.test.svelte"]
 }

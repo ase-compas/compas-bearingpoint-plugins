@@ -1,0 +1,16 @@
+[
+  {
+    "name": "dummy-plugin-1",
+    "description": "Dummy Plugin Test 1",
+    "url": "/external-api/provider/dummy-plugin-1.js",
+    "icon": "/external-api/provider/dummy.svg",
+    "supportedCoreVersion": { "from": "1.0.0", "to": "2.0.0" }
+  },
+  {
+    "name": "dummy-plugin-2",
+    "description": "Dummy Plugin Test 2",
+    "url": "/external-api/provider/dummy-plugin-2.js",
+    "icon": "/external-api/provider/dummy.svg",
+    "supportedCoreVersion": { "from": "1.0.0", "to": "2.0.0" }
+  }
+]

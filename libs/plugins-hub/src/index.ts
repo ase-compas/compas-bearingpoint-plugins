@@ -17,5 +17,11 @@ export { isVersionCompatible, compareSemver } from './lib/services/version-resol
 
 export { buildPlugin, updatePluginState, loadPersistedState } from './lib/store/plugin-store';
 
-export { default as providersConfig } from './lib/config/providers.json';
+import { default as providersConfigProd } from './lib/config/providers.json';
+import { default as providersConfigDev } from './lib/config/providers.dev.json';
+
+
+const isDev = (import.meta.env.MODE === 'development');
+const providersConfig = isDev ? providersConfigDev : providersConfigProd;
+export { providersConfig };
 

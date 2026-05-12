@@ -69,6 +69,7 @@ function isValidPluginManifestEntry(value: unknown): value is PluginManifestEntr
   if (!value || typeof value !== 'object') return false;
   const p = value as Record<string, unknown>;
 
+  const isDev = (import.meta.env.MODE === 'development');
   return (
     typeof p['name'] === 'string' &&
     p['name'].length >= 1 &&
@@ -76,7 +77,7 @@ function isValidPluginManifestEntry(value: unknown): value is PluginManifestEntr
     typeof p['description'] === 'string' &&
     p['description'].length <= 280 &&
     typeof p['url'] === 'string' &&
-    p['url'].startsWith('https://') &&
+    ( isDev || !isDev && p['url'].startsWith('https://')) &&
     typeof p['icon'] === 'string' &&
     typeof p['supportedCoreVersion'] === 'object' &&
     p['supportedCoreVersion'] !== null &&
