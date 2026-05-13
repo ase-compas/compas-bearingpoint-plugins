@@ -35,6 +35,17 @@
       }
     },
     {
+      "label": "wiremock",
+      "type": "npm",
+      "script": "wiremock",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
       "label": "build all",
       "type": "npm",
       "script": "build",

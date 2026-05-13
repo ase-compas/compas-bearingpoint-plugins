@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
+import { defineConfig, UserConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-export default defineConfig(async () => {
+export default defineConfig(async (): Promise<UserConfig> => {
   const { svelte } = await import('@sveltejs/vite-plugin-svelte');
 
   return {
