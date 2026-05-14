@@ -1,3 +1,5 @@
+import type { Provider } from './provider';
+
 /**
  * Installation state of a plugin.
  * - INSTALLED: the plugin has been installed/registered in OpenSCD.
@@ -11,6 +13,10 @@ export type InstallationState = 'INSTALLED' | 'AVAILABLE';
  * - INACTIVE: the plugin is installed but currently disabled.
  */
 export type ActivationState = 'ACTIVE' | 'INACTIVE';
+
+export type PluginKind = 'editor' | 'menu' | 'validator';
+const menuPositions = ['top', 'middle', 'bottom'] as const;
+export type MenuPosition = (typeof menuPositions)[number];
 
 /**
  * Semver version range specifying which OpenSCD core versions the plugin supports.
@@ -26,16 +32,22 @@ export interface SupportedCoreVersion {
  * Raw plugin entry as served from a provider's plugins.json.
  */
 export interface PluginManifestEntry {
-  /** Plugin name (1–64 chars). */
+  /** Plugin name. */
   name: string;
-  /** Short description (≤ 280 chars). */
-  description: string;
-  /** HTTPS URL to the ESM bundle. */
-  url: string;
-  /** Icon URL (.svg preferred). */
+  /** Author of the plugin. */
+  author?: string;
+  /** Source URL to the plugin script. */
+  src: string;
+  /** Kind of plugin (e.g., "editor"). */
+  kind: PluginKind;
+  /** Material Design Icon name. */
   icon: string;
-  /** Supported OpenSCD core version range. */
-  supportedCoreVersion: SupportedCoreVersion;
+  /** Short description. */
+  description: string;
+  /** postion if kind === 'menu'. */
+  position?: MenuPosition;
+  /** Supported OpenSCD core version range (optional). */
+  supportedCoreVersion?: SupportedCoreVersion;
 }
 
 /**
@@ -49,8 +61,8 @@ export interface Plugin extends PluginManifestEntry {
    * Example: "bp:transformer-importer"
    */
   id: string;
-  /** The prefix of the provider that supplies this plugin. */
-  providerPrefix: string;
+  /** The provider that supplies this plugin. */
+  provider: Provider;
   /** Whether the plugin is compatible with the running core version. */
   compatible: boolean;
   /** Installation state. */

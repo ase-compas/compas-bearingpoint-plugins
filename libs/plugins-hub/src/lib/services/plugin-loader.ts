@@ -40,44 +40,6 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
 }
 
 /**
- * Dynamically loads a plugin's ESM bundle and registers it as a custom element
- * in the OpenSCD host page.
- *
- * The plugin bundle is expected to export a default `HTMLElement` class that
- * will be registered under the custom-element tag derived from the plugin id.
- *
- * @param plugin - The plugin to load.
- * @param providers - The registered providers used to determine trusted origins.
- * @returns Promise that resolves when the plugin is loaded (or rejects on error).
- */
-export async function loadPlugin(plugin: Plugin, providers: Provider[] = []): Promise<void> {
-  const tag = pluginIdToTag(plugin.id);
-
-  // Skip if already registered
-  if (customElements.get(tag)) {
-    return;
-  }
-
-  const trustedOrigins = buildTrustedOrigins(providers);
-  if (providers.length > 0 && !isUrlTrusted(plugin.url, trustedOrigins)) {
-    throw new Error(
-      `[PluginLoader] Plugin "${plugin.name}" URL "${plugin.url}" is not from a trusted origin.`
-    );
-  }
-
-  const module = await import(/* @vite-ignore */ plugin.url);
-  const PluginClass = module.default;
-
-  if (typeof PluginClass !== 'function') {
-    throw new Error(
-      `[PluginLoader] Plugin "${plugin.name}" (${plugin.url}) did not export a default class.`
-    );
-  }
-
-  customElements.define(tag, PluginClass);
-}
-
-/**
  * Converts a plugin ID (e.g. "bp:transformer-importer") to a valid HTML custom-element tag
  * (e.g. "plugin-bp-transformer-importer").
  *

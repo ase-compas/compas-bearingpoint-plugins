@@ -1,7 +1,13 @@
-import type { Plugin, InstallationState, ActivationState } from '../types/plugin.ts';
-import type { Provider } from '../types/provider.ts';
-import type { PluginManifestEntry } from '../types/plugin.ts';
-import { buildPluginId } from '../services/plugin-loader';
+import type {
+  Plugin,
+  InstallationState,
+  ActivationState,
+  PluginKind,
+  MenuPosition,
+} from '../types/plugin';
+import type { Provider } from '../types/provider';
+import type { PluginManifestEntry } from '../types/plugin';
+import { buildPluginId, pluginIdToTag } from '../services/plugin-loader';
 import { isVersionCompatible } from '../services/version-resolver';
 
 /**
@@ -9,23 +15,36 @@ import { isVersionCompatible } from '../services/version-resolver';
  * Uses Svelte 5 runes ($state) for reactivity when used inside Svelte components.
  */
 
-/** Persistent store key for installed/activation states */
-const STORAGE_KEY = 'plugins-hub:state';
+/** Persistent store key for installed plugins */
+const STORAGE_KEY = 'plugins';
 
-type PersistedPluginState = Record<string, { installationState: InstallationState; activationState: ActivationState }>;
+type StoredPlugin = {
+  name: string;
+  author?: string;
+  src: string;
+  kind: PluginKind;
+  icon: string;
+  description?: string;
+  active: boolean;
+  requireDoc?: boolean;
+  position?: MenuPosition;
+  activeByDefault?: boolean;
+  installed?: boolean;
+  [key: string]: any;
+};
 
-function loadPersistedState(): PersistedPluginState {
+export function loadStoredPlugins(): StoredPlugin[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as PersistedPluginState) : {};
+    return raw ? (JSON.parse(raw) as StoredPlugin[]) : [];
   } catch {
-    return {};
+    return [];
   }
 }
 
-function savePersistedState(state: PersistedPluginState): void {
+export function saveStoredPlugins(stored: StoredPlugin[]): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
   } catch {
     // storage unavailable — ignore
   }
@@ -38,51 +57,102 @@ export function buildPlugin(
   entry: PluginManifestEntry,
   provider: Provider,
   coreVersion: string,
-  persisted: PersistedPluginState
+  stored: StoredPlugin[],
 ): Plugin {
   const id = buildPluginId(provider.prefix, entry.name);
+  const matching = stored.find((p) => p.src === entry.src);
+  const installationState: InstallationState = matching
+    ? 'INSTALLED'
+    : 'AVAILABLE';
+  const activationState: ActivationState =
+    matching && matching.active ? 'ACTIVE' : 'INACTIVE';
   const compatible = isVersionCompatible(
     coreVersion,
-    entry.supportedCoreVersion.from,
-    entry.supportedCoreVersion.to
+    entry.supportedCoreVersion?.from,
+    entry.supportedCoreVersion?.to,
   );
-
-  const savedState = persisted[id];
 
   return {
     ...entry,
     id,
-    providerPrefix: provider.prefix,
+    provider: provider,
     compatible,
-    installationState: savedState?.installationState ?? 'AVAILABLE',
-    activationState: savedState?.activationState ?? 'INACTIVE',
+    installationState,
+    activationState,
   };
 }
 
 /**
- * Updates the installation/activation state of a plugin and persists it.
+ * Installs a plugin by adding it to stored plugins with active: false.
  */
-export function updatePluginState(
-  plugins: Plugin[],
-  pluginId: string,
-  update: Partial<Pick<Plugin, 'installationState' | 'activationState'>>
-): Plugin[] {
-  const updated = plugins.map((p) =>
-    p.id === pluginId ? { ...p, ...update } : p
-  );
+export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+  const plugin = plugins.find((p) => p.id === pluginId);
+  if (!plugin) return plugins;
 
-  const persisted: PersistedPluginState = {};
-  for (const p of updated) {
-    if (p.installationState === 'INSTALLED') {
-      persisted[p.id] = {
-        installationState: p.installationState,
-        activationState: p.activationState,
-      };
-    }
+  const stored = loadStoredPlugins();
+  if (stored.find((p) => p.src === plugin.src)) return plugins;
+
+  const newStoredPlugin: StoredPlugin = {
+    name: plugin.name,
+    author: plugin.author || plugin.provider.name,
+    src: plugin.src,
+    kind: plugin.kind,
+    icon: plugin.icon,
+    description: plugin.description,
+    position: plugin.position,
+    active: false,
+    requireDoc: true,
+    activeByDefault: false,
+    installed: true,
+  };
+
+  if (plugin.kind === 'menu' && !newStoredPlugin.position) {
+    newStoredPlugin.position = 'middle';
   }
-  savePersistedState(persisted);
 
-  return updated;
+  stored.push(newStoredPlugin);
+  saveStoredPlugins(stored);
+
+  return plugins.map((p) =>
+    p.id === pluginId
+      ? {
+          ...p,
+          installationState: 'INSTALLED' as InstallationState,
+          activationState: 'INACTIVE' as ActivationState,
+        }
+      : p,
+  );
 }
 
-export { loadPersistedState };
+/**
+ * Uninstalls a plugin if not active.
+ */
+export function uninstallPlugin(
+  plugins: Plugin[],
+  pluginId: string,
+): { updated: Plugin[]; success: boolean } {
+  const plugin = plugins.find((p) => p.id === pluginId);
+  if (!plugin) return { updated: plugins, success: false };
+
+  const stored = loadStoredPlugins();
+  const index = stored.findIndex((p) => p.src === plugin.src);
+  if (index === -1) return { updated: plugins, success: false };
+
+  if (stored[index].active) {
+    return { updated: plugins, success: false };
+  }
+
+  stored.splice(index, 1);
+  saveStoredPlugins(stored);
+
+  const updated = plugins.map((p) =>
+    p.id === pluginId
+      ? {
+          ...p,
+          installationState: 'AVAILABLE' as InstallationState,
+          activationState: 'INACTIVE' as ActivationState,
+        }
+      : p,
+  );
+  return { updated, success: true };
+}

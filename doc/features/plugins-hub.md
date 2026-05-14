@@ -67,17 +67,23 @@ interface Provider {
 
 ### `plugins.json` (hosted per provider)
 
-Array of `PluginManifestEntry`:
-
-```ts
-interface PluginManifestEntry {
-  name: string;
-  description: string;
-  url: string;           // HTTPS ESM bundle URL
-  icon: string;          // URL
-  supportedCoreVersion: { from: string; to: string }; // semver range [from, to)
+```json
+{
+  "plugins": [
+    {
+      "name": "Transformer Importer",
+      "author": "BearingPoint",
+      "src": "https://plugins.bearingpoint.eu/transformer-importer.js",
+      "kind": "editor",
+      "icon": "account_tree",
+      "description": "Imports transformer models into SCL."
+    }
+  ]
 }
 ```
+
+- `supportedCoreVersion` is optional. If not present, no constraint.
+- `icon` is a Material Design Icon name (string).
 
 ### Plugin (runtime, with state)
 
@@ -122,10 +128,14 @@ openscd:history-viewer
 | Search / filter                     | ❌            | ✅          |
 | Plugin detail view                  | ❌            | ✅          |
 | Lazy ESM loading                    | ✅            | ✅          |
-| Install / uninstall state           | ❌            | ✅          |
-| Enable / disable state              | ❌            | ✅          |
+| Install / uninstall                 | ✅            | ✅          |
+| Activate / deactivate               | ❌ (manual via OpenSCD menu)  | ✅ |
+| Uninstall only if inactive          | ❌            | ✅          |
+| Status display (Available/Installed/Active/Inactive) | ❌ | ✅ |
+| Material icons for plugins          | ✅            | ✅          |
+| Icons for providers (string/URL)    | ❌            | ✅          |
 | PR-based onboarding                 | ❌            | ✅          |
-| Persistent state (localStorage)     | ❌            | ✅          |
+| Persistent state (localStorage)     | ✅            | ✅          |
 
 ## Adding a New Provider
 
@@ -157,12 +167,14 @@ openscd:history-viewer
 ### Plugin manifest
 | Field | Type | Constraint |
 |---|---|---|
-| `name` | string | 1–64 chars |
-| `description` | string | ≤ 280 chars |
-| `url` | string (URL) | HTTPS, ESM bundle |
-| `icon` | string (URL) | `.svg` / `.png` |
-| `supportedCoreVersion.from` | string | semver |
-| `supportedCoreVersion.to` | string | semver (exclusive upper bound) |
+| `name` | string | Required |
+| `author` | string | Required |
+| `src` | string (URL) | HTTPS, ESM bundle |
+| `kind` | string | e.g. "editor" |
+| `icon` | string | Material Design Icon name |
+| `description` | string | Required |
+| `supportedCoreVersion.from` | string | semver (optional) |
+| `supportedCoreVersion.to` | string | semver (exclusive upper bound, optional) |
 
 ## Developer References
 

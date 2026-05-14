@@ -14,7 +14,9 @@ export interface ProviderLoadResult {
  * @param provider - The provider configuration to load plugins from.
  * @returns A result object containing the provider, its plugins, and any error.
  */
-export async function loadProvider(provider: Provider): Promise<ProviderLoadResult> {
+export async function loadProvider(
+  provider: Provider,
+): Promise<ProviderLoadResult> {
   try {
     const response = await fetch(provider.pluginsUrl);
 
@@ -28,20 +30,26 @@ export async function loadProvider(provider: Provider): Promise<ProviderLoadResu
 
     const data: unknown = await response.json();
 
-    if (!Array.isArray(data)) {
+    if (
+      !data ||
+      typeof data !== 'object' ||
+      !Array.isArray((data as any).plugins)
+    ) {
       return {
         provider,
         plugins: [],
-        error: 'Provider plugins.json must be a JSON array.',
+        error:
+          'Provider plugins.json must be an object with a "plugins" array.',
       };
     }
 
-    const plugins = data.filter(isValidPluginManifestEntry);
-    const skipped = data.length - plugins.length;
+    const rawPlugins = (data as any).plugins;
+    const plugins = rawPlugins.filter(isValidPluginManifestEntry);
+    const skipped = rawPlugins.length - plugins.length;
 
     if (skipped > 0) {
       console.warn(
-        `[ProviderLoader] Provider "${provider.name}": skipped ${skipped} invalid plugin entries.`
+        `[ProviderLoader] Provider "${provider.name}": skipped ${skipped} invalid plugin entries.`,
       );
     }
 
@@ -58,30 +66,34 @@ export async function loadProvider(provider: Provider): Promise<ProviderLoadResu
  * @param providers - Array of provider configurations.
  * @returns Array of load results, one per provider.
  */
-export async function loadAllProviders(providers: Provider[]): Promise<ProviderLoadResult[]> {
+export async function loadAllProviders(
+  providers: Provider[],
+): Promise<ProviderLoadResult[]> {
   return Promise.all(providers.map(loadProvider));
 }
 
 /**
  * Type-guard that validates a raw JSON value is a PluginManifestEntry.
  */
-function isValidPluginManifestEntry(value: unknown): value is PluginManifestEntry {
+function isValidPluginManifestEntry(
+  value: unknown,
+): value is PluginManifestEntry {
   if (!value || typeof value !== 'object') return false;
   const p = value as Record<string, unknown>;
 
-  const isDev = (import.meta.env.MODE === 'development');
+  const isDev = import.meta.env.MODE === 'development';
   return (
-    typeof p['name'] === 'string' &&
-    p['name'].length >= 1 &&
-    p['name'].length <= 64 &&
-    typeof p['description'] === 'string' &&
-    p['description'].length <= 280 &&
-    typeof p['url'] === 'string' &&
-    ( isDev || !isDev && p['url'].startsWith('https://')) &&
-    typeof p['icon'] === 'string' &&
-    typeof p['supportedCoreVersion'] === 'object' &&
-    p['supportedCoreVersion'] !== null &&
-    typeof (p['supportedCoreVersion'] as Record<string, unknown>)['from'] === 'string' &&
-    typeof (p['supportedCoreVersion'] as Record<string, unknown>)['to'] === 'string'
+    typeof p.name === 'string' &&
+    (!p.author || typeof p.author === 'string') &&
+    typeof p.src === 'string' &&
+    (isDev || p.src.startsWith('https://')) &&
+    typeof p.kind === 'string' &&
+    typeof p.icon === 'string' &&
+    typeof p.description === 'string' &&
+    (p.supportedCoreVersion === undefined ||
+      (typeof p.supportedCoreVersion === 'object' &&
+        p.supportedCoreVersion !== null &&
+        typeof (p.supportedCoreVersion as any).from === 'string' &&
+        typeof (p.supportedCoreVersion as any).to === 'string'))
   );
 }

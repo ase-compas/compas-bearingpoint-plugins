@@ -19,18 +19,11 @@
 <aside class="plugin-details">
   <div class="details-header">
     <div class="details-title-row">
-      {#if plugin.icon}
-        <img
-          class="details-icon"
-          src={plugin.icon}
-          alt="{plugin.name} icon"
-          onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
-        />
-      {:else}
-        <span class="details-icon-fallback">🔌</span>
-      {/if}
+      <span class="material-icons details-icon">{plugin.icon}</span>
       <h3 class="details-name">{plugin.name}</h3>
-      <button class="close-btn" onclick={onClose} aria-label="Close details">✕</button>
+      <button class="close-btn" onclick={onClose} aria-label="Close details"
+        >✕</button
+      >
     </div>
     <p class="details-short-desc">{plugin.description}</p>
 
@@ -52,14 +45,25 @@
   <div class="details-meta">
     <div class="meta-item">
       <span class="meta-label">PROVIDER</span>
-      <span class="meta-value">{plugin.providerPrefix.toUpperCase()}</span>
+      <span class="meta-value">{plugin.provider.prefix.toUpperCase()}</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">CORE VERSION</span>
-      <span class="meta-value"
-        >{plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}</span
-      >
+      <span class="meta-label">AUTHOR</span>
+      <span class="meta-value">{plugin.author}</span>
     </div>
+    <div class="meta-item">
+      <span class="meta-label">KIND</span>
+      <span class="meta-value">{plugin.kind}</span>
+    </div>
+    {#if plugin.supportedCoreVersion}
+      <div class="meta-item">
+        <span class="meta-label">CORE VERSION</span>
+        <span class="meta-value"
+          >{plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion
+            .to}</span
+        >
+      </div>
+    {/if}
     <div class="meta-item">
       <span class="meta-label">PLUGIN ID</span>
       <span class="meta-value plugin-id">{plugin.id}</span>
@@ -68,8 +72,11 @@
 
   <div class="details-url">
     <span class="meta-label">URL</span>
-    <a href={plugin.url} target="_blank" rel="noopener noreferrer" class="url-link"
-      >{plugin.url}</a
+    <a
+      href={plugin.src}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="url-link">{plugin.src}</a
     >
   </div>
 
@@ -310,4 +317,5 @@
   .action-btn.remove:hover {
     background: #b91c1c;
   }
+
 </style>

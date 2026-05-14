@@ -11,8 +11,7 @@
     onDisable: () => void;
   }
 
-  let { plugin, selected, onSelect, onInstall, onUninstall, onEnable, onDisable }: Props =
-    $props();
+  let { plugin, selected, onSelect, onInstall, onUninstall, onEnable, onDisable }: Props = $props();
 
   const isInstalled = $derived(plugin.installationState === 'INSTALLED');
   const isActive = $derived(plugin.activationState === 'ACTIVE');
@@ -41,16 +40,7 @@
 >
   <div class="card-top">
     <div class="plugin-icon-wrapper">
-      {#if plugin.icon}
-        <img
-          class="plugin-icon"
-          src={plugin.icon}
-          alt="{plugin.name} icon"
-          onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
-        />
-      {:else}
-        <span class="plugin-icon-fallback">🔌</span>
-      {/if}
+      <span class="material-icons plugin-icon">{plugin.icon}</span>
     </div>
 
     <button
@@ -96,7 +86,9 @@
     border-radius: 6px;
     padding: 12px;
     cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -159,6 +151,15 @@
 
   .action-btn.install:hover {
     background: #0a2f3a;
+  }
+
+  .action-btn.uninstall {
+    background: #dc2626;
+    color: #fff;
+  }
+
+  .action-btn.uninstall:hover {
+    background: #b91c1c;
   }
 
   .action-btn.enable {

@@ -11,11 +11,11 @@ export type {
 export { loadProvider, loadAllProviders } from './lib/services/provider-loader';
 export type { ProviderLoadResult } from './lib/services/provider-loader';
 
-export { loadPlugin, pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
+export { pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
-export { buildPlugin, updatePluginState, loadPersistedState } from './lib/store/plugin-store';
+export { buildPlugin, installPlugin, uninstallPlugin, loadStoredPlugins } from './lib/store/plugin-store';
 
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';

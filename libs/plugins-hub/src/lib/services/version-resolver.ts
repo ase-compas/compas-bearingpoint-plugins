@@ -30,12 +30,20 @@ function parseSemver(version: string): [number, number, number] {
  * Checks whether a given core version is within the plugin's supported range.
  *
  * The range is [from, to) — inclusive on `from`, exclusive on `to`.
+ * If from and to are undefined, assumes compatible.
  *
  * @param coreVersion - The current host core version.
- * @param from - Minimum supported version (inclusive).
- * @param to - Maximum supported version (exclusive).
- * @returns `true` if coreVersion ∈ [from, to).
+ * @param from - Minimum supported version (inclusive) or undefined.
+ * @param to - Maximum supported version (exclusive) or undefined.
+ * @returns `true` if compatible.
  */
-export function isVersionCompatible(coreVersion: string, from: string, to: string): boolean {
-  return compareSemver(coreVersion, from) >= 0 && compareSemver(coreVersion, to) < 0;
+export function isVersionCompatible(
+  coreVersion: string,
+  from?: string,
+  to?: string,
+): boolean {
+  if (from === undefined || to === undefined) return true;
+  return (
+    compareSemver(coreVersion, from) >= 0 && compareSemver(coreVersion, to) < 0
+  );
 }

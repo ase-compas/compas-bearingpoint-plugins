@@ -4,13 +4,18 @@
   import {
     loadAllProviders,
     buildPlugin,
-    updatePluginState,
-    loadPersistedState,
-    loadPlugin,
+    loadStoredPlugins,
     providersConfig,
+    installPlugin,
+    uninstallPlugin,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
+
+  // general stylings from open-scd
+  import 'svelte-material-ui/bare.css';
+  import '../../public/material-icon.css';
+  import '../../public/global.css';
 
   interface Props {
     coreVersion?: string;
@@ -33,17 +38,20 @@
   async function initHub() {
     loading = true;
     loadErrors = [];
-    const persisted = loadPersistedState();
+    const stored = loadStoredPlugins();
     const results = await loadAllProviders(providers);
     const allPlugins: Plugin[] = [];
 
     for (const result of results) {
       if (result.error) {
-        loadErrors = [...loadErrors, `${result.provider.name}: ${result.error}`];
+        loadErrors = [
+          ...loadErrors,
+          `${result.provider.name}: ${result.error}`,
+        ];
       }
       const provider = result.provider;
       for (const entry of result.plugins) {
-        allPlugins.push(buildPlugin(entry, provider, coreVersion, persisted));
+        allPlugins.push(buildPlugin(entry, provider, coreVersion, stored));
       }
     }
 
@@ -58,7 +66,7 @@
   });
 
   function getPluginsForProvider(prefix: string): Plugin[] {
-    return filteredPlugins.filter((p) => p.providerPrefix === prefix);
+    return filteredPlugins.filter((p) => p.provider.prefix === prefix);
   }
 
   const filteredPlugins = $derived(
@@ -77,47 +85,35 @@
         providerFilter === 'all' || p.providerPrefix === providerFilter;
 
       return matchesSearch && matchesStatus && matchesProvider;
-    })
+    }),
   );
 
   function handleInstall(pluginId: string) {
-    plugins = updatePluginState(plugins, pluginId, {
-      installationState: 'INSTALLED',
-      activationState: 'ACTIVE',
-    });
+    plugins = installPlugin(plugins, pluginId);
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
-    }
-    const plugin = plugins.find((p) => p.id === pluginId);
-    if (plugin) {
-      loadPlugin(plugin, providers).catch((err) =>
-        console.error(`[Plugins-Hub] Failed to load plugin "${plugin.name}":`, err)
-      );
     }
   }
 
   function handleUninstall(pluginId: string) {
-    plugins = updatePluginState(plugins, pluginId, {
-      installationState: 'AVAILABLE',
-      activationState: 'INACTIVE',
-    });
+    const { updated, success } = uninstallPlugin(plugins, pluginId);
+    plugins = updated;
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
+    }
+    if (!success) {
+      alert(
+        'Cannot uninstall active plugin. Deactivate it first in OpenSCD menu.',
+      );
     }
   }
 
   function handleEnable(pluginId: string) {
-    plugins = updatePluginState(plugins, pluginId, { activationState: 'ACTIVE' });
-    if (selectedPlugin?.id === pluginId) {
-      selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
-    }
+    console.log('TODO: handle Enable');
   }
 
   function handleDisable(pluginId: string) {
-    plugins = updatePluginState(plugins, pluginId, { activationState: 'INACTIVE' });
-    if (selectedPlugin?.id === pluginId) {
-      selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
-    }
+    console.log('TODO: handle Enable');
   }
 
   function handleSelectPlugin(plugin: Plugin) {
@@ -132,7 +128,6 @@
 <div class="plugins-hub">
   <div class="hub-header">
     <h2 class="hub-title">Plugin Store</h2>
-    <button class="close-btn" onclick={() => onClose?.()} aria-label="Close plugin store">✕</button>
   </div>
 
   <div class="hub-toolbar">
@@ -147,13 +142,21 @@
       />
     </div>
 
-    <select class="filter-select" bind:value={statusFilter} aria-label="Filter by status">
+    <select
+      class="filter-select"
+      bind:value={statusFilter}
+      aria-label="Filter by status"
+    >
       <option value="all">All status</option>
       <option value="installed">Installed</option>
       <option value="available">Available</option>
     </select>
 
-    <select class="filter-select" bind:value={providerFilter} aria-label="Filter by contributor">
+    <select
+      class="filter-select"
+      bind:value={providerFilter}
+      aria-label="Filter by contributor"
+    >
       <option value="all">All contributors</option>
       {#each providers as provider}
         <option value={provider.prefix}>{provider.name}</option>
@@ -260,8 +263,14 @@
     min-width: 180px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 12px;
+    padding: 5px 6px;
     background: #fff;
+    margin: 0 0 0.5em 0;
+  }
+  
+  .search-wrapper .search-input {
+    margin: 0;
+    padding: 0;
   }
 
   .search-icon {

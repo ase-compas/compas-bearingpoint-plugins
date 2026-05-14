@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "svelte-material-ui": "^8.0.3",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

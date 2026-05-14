@@ -12,9 +12,10 @@ const mockProvider: Provider = {
 
 const validPlugin = {
   name: 'Transformer Importer',
+  kind: "editor",
   description: 'Imports transformer models.',
-  url: 'https://example.com/transformer-importer.js',
-  icon: 'https://example.com/icon.svg',
+  src: 'https://example.com/transformer-importer.js',
+  icon: 'document',
   supportedCoreVersion: { from: '1.0.0', to: '2.0.0' },
 };
 
@@ -26,7 +27,7 @@ describe('loadProvider', () => {
   it('returns plugins on successful fetch', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => [validPlugin],
+      json: async () => ({ plugins: [validPlugin]}),
     } as Response);
 
     const result = await loadProvider(mockProvider);
@@ -52,7 +53,7 @@ describe('loadProvider', () => {
   it('returns error when response is not an array', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({ notAnArray: true }),
+      json: async () => ({ plugins: { notAnArray: true }}),
     } as Response);
 
     const result = await loadProvider(mockProvider);
@@ -65,7 +66,7 @@ describe('loadProvider', () => {
     const invalidPlugin = { name: 'Invalid' }; // missing required fields
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => [validPlugin, invalidPlugin],
+      json: async () => ({ plugins: [validPlugin, invalidPlugin] }),
     } as Response);
 
     const result = await loadProvider(mockProvider);

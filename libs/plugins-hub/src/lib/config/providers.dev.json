@@ -19,5 +19,12 @@
     "icon": "/external-api/provider/dummy.svg",
     "description": "Dummy plugin provider for OpenSCD.",
     "pluginsUrl": "/external-api/provider/dummy-not-exist-plugins.json"
+  },
+  {
+    "prefix": "se",
+    "name": "SprintEins",
+    "icon": "/external-api/provider/dummy.svg",
+    "description": "SprintEins plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/sprinteins-plugins.json"
   }
 ]

@@ -32,13 +32,16 @@
       <h3 class="provider-name">{provider.name}</h3>
       <span class="provider-description">{provider.description}</span>
     </div>
-    {#if provider.icon}
+    {#if provider.icon.startsWith('http') || provider.icon.startsWith('/')}
       <img
         class="provider-icon"
         src={provider.icon}
         alt="{provider.name} logo"
-        onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+        onerror={(e) =>
+          ((e.currentTarget as HTMLImageElement).style.display = 'none')}
       />
+    {:else}
+      <span class="material-icons provider-icon">{provider.icon}</span>
     {/if}
   </div>
 
