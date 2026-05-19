@@ -19,10 +19,9 @@
 
   interface Props {
     coreVersion?: string;
-    onClose?: () => void;
   }
 
-  let { coreVersion = '1.0.0', onClose }: Props = $props();
+  let { coreVersion = '1.0.0' }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let loading = $state(true);
@@ -236,15 +235,6 @@
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 4px;
   }
 
   .hub-toolbar {
