@@ -43,6 +43,14 @@ export default defineConfig(async (): Promise<UserConfig> => {
       rollupOptions: {
         output: {
           entryFileNames: 'index.js',
+          assetFileNames: (assetInfo) => {
+            // Ensure the emitted CSS (from Svelte components) is always named style.css
+            // as expected by the plugin-wrapper's generateStylePath()
+            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+              return 'style.css';
+            }
+            return assetInfo.name || '[name]-[hash][extname]';
+          },
         },
       },
       lib: {

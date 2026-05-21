@@ -4,9 +4,10 @@
   interface Props {
     doc?: XMLDocument;
     editCount?: number;
+    coreVersion?: string;
   }
 
-  let { doc, editCount }: Props = $props();
+  let { doc, editCount, coreVersion }: Props = $props();
 </script>
 
-<PluginsHub />
+<PluginsHub {coreVersion} />

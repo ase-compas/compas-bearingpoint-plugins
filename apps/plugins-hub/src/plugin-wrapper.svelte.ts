@@ -5,6 +5,7 @@ import { mount } from 'svelte';
 type Props = {
   doc?: XMLDocument;
   editCount?: number;
+  coreVersion?: string;
 };
 
 export default class PluginsHubElement extends HTMLElement {
@@ -15,6 +16,7 @@ export default class PluginsHubElement extends HTMLElement {
     this.props = $state({
       doc: undefined,
       editCount: undefined,
+      coreVersion: undefined,
     });
   }
 
@@ -22,6 +24,7 @@ export default class PluginsHubElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.props.doc = this._doc;
     this.props.editCount = this._editCount;
+    this.props.coreVersion = this._coreVersion;
     if(!this.shadowRoot) {
       throw new Error('ShadowRoot not found');
     }
@@ -44,6 +47,12 @@ export default class PluginsHubElement extends HTMLElement {
   public set editCount(newCount: number) {
     this._editCount = newCount;
     this.props.editCount = newCount;
+  }
+
+  private _coreVersion?: string;
+  public set coreVersion(newVersion: string) {
+    this._coreVersion = newVersion;
+    this.props.coreVersion = newVersion;
   }
 }
 

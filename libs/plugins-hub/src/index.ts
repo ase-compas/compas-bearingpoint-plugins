@@ -15,7 +15,7 @@ export { pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/servi
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
-export { buildPlugin, installPlugin, uninstallPlugin, loadStoredPlugins } from './lib/store/plugin-store';
+export { buildPlugin, installPlugin, uninstallPlugin, activatePlugin, deactivatePlugin, loadStoredPlugins } from './lib/store/plugin-store';
 
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';

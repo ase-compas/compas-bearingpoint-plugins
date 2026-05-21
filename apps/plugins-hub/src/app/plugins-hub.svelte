@@ -8,6 +8,8 @@
     providersConfig,
     installPlugin,
     uninstallPlugin,
+    activatePlugin,
+    deactivatePlugin,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -21,7 +23,7 @@
     coreVersion?: string;
   }
 
-  let { coreVersion = '1.0.0' }: Props = $props();
+  let { coreVersion = '1.4.0' }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let loading = $state(true);
@@ -89,30 +91,53 @@
 
   function handleInstall(pluginId: string) {
     plugins = installPlugin(plugins, pluginId);
+    const updatedPlugin = plugins.find((p) => p.id === pluginId);
     if (selectedPlugin?.id === pluginId) {
-      selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
+      selectedPlugin = updatedPlugin ?? null;
+    }
+    if (updatedPlugin) {
+
+      dispatchConfigurePlugin(updatedPlugin);
     }
   }
 
   function handleUninstall(pluginId: string) {
+    const pluginBefore = plugins.find((p) => p.id === pluginId);
     const { updated, success } = uninstallPlugin(plugins, pluginId);
     plugins = updated;
+    const updatedPlugin = plugins.find((p) => p.id === pluginId);
     if (selectedPlugin?.id === pluginId) {
-      selectedPlugin = plugins.find((p) => p.id === pluginId) ?? null;
+      selectedPlugin = updatedPlugin ?? null;
     }
-    if (!success) {
+    if (success && pluginBefore) {
+      dispatchConfigurePlugin({ id: pluginBefore.id, kind: pluginBefore.kind }, true);
+    } else if (!success) {
       alert(
-        'Cannot uninstall active plugin. Deactivate it first in OpenSCD menu.',
+        'Cannot uninstall active plugin. Deactivate it first.',
       );
     }
   }
 
   function handleEnable(pluginId: string) {
-    console.log('TODO: handle Enable');
+    plugins = activatePlugin(plugins, pluginId);
+    const updatedPlugin = plugins.find((p) => p.id === pluginId);
+    if (selectedPlugin?.id === pluginId) {
+      selectedPlugin = updatedPlugin ?? null;
+    }
+    if (updatedPlugin) {
+      dispatchConfigurePlugin(updatedPlugin);
+    }
   }
 
   function handleDisable(pluginId: string) {
-    console.log('TODO: handle Enable');
+    plugins = deactivatePlugin(plugins, pluginId);
+    const updatedPlugin = plugins.find((p) => p.id === pluginId);
+    if (selectedPlugin?.id === pluginId) {
+      selectedPlugin = updatedPlugin ?? null;
+    }
+    if (updatedPlugin) {
+      dispatchConfigurePlugin(updatedPlugin);
+    }
   }
 
   function handleSelectPlugin(plugin: Plugin) {
@@ -122,6 +147,67 @@
   function handleCloseDetails() {
     selectedPlugin = null;
   }
+
+  interface ConfigureTarget {
+    id: string;
+    kind: 'editor' | 'menu' | 'validator';
+    name?: string;
+    author?: string;
+    src?: string;
+    icon?: string;
+    description?: string;
+    position?: 'top' | 'middle' | 'bottom';
+    activationState?: 'ACTIVE' | 'INACTIVE';
+    installationState?: 'INSTALLED' | 'AVAILABLE';
+    provider?: Provider;
+  }
+
+  /**
+   * Dispatches the oscd-configure-plugin event to integrate with the OpenSCD host.
+   * Uses the namespaced plugin.id as the unique registration key (detail.name) to
+   * prevent collisions across providers. The config payload includes display metadata.
+   */
+  function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
+    const detail = remove
+      ? {
+          name: target.id,
+          kind: target.kind,
+          config: null,
+        }
+      : {
+          name: target.id,
+          kind: target.kind,
+          config: {
+            // TODO: target.id must not be a slug id it should be provider-prefix + ' - ' + provider-plugin+name
+            name: target.id, // use identifier which is provider-prefix plus provider-plugin.name
+            author: target.author || target.provider?.name,
+            src: target.src,
+            icon: target.icon,
+            kind: target.kind,
+            description: target.description,
+            requireDoc: true,
+            position: target.position || (target.kind === 'menu' ? 'middle' : undefined),
+            active: target.activationState === 'ACTIVE',
+            installed: target.installationState === 'INSTALLED',
+          },
+        };
+
+    const event = new CustomEvent('oscd-configure-plugin', {
+      bubbles: true,
+      composed: true,
+      detail,
+    });
+
+    getLayoutContainer()?.dispatchEvent(event);
+  }
+
+  function getLayoutContainer(): HTMLElement | null {
+    const openScd = document.querySelector('open-scd');
+    const compasLayout = (openScd as any)?.shadowRoot?.querySelector('compas-layout') ?? null;
+    // console.log('Compas-Layout:', compasLayout);
+    return compasLayout;
+  }
+
 </script>
 
 <div class="plugins-hub">

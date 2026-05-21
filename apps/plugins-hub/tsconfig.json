@@ -1,6 +1,6 @@
 {
   "files": [],
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.svelte", "./package.json"],
   "references": [
     {
       "path": "./tsconfig.app.json"

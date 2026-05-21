@@ -44,7 +44,9 @@ export function loadStoredPlugins(): StoredPlugin[] {
 
 export function saveStoredPlugins(stored: StoredPlugin[]): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    // TODO: refactoring: remove saveStoredPlugin: Updates are made with the 'oscd-configure-plugin' event.
+    console.log('save localStorage deactivated');
+    //localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
   } catch {
     // storage unavailable — ignore
   }
@@ -107,7 +109,7 @@ export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
   };
 
   if (plugin.kind === 'menu' && !newStoredPlugin.position) {
-    newStoredPlugin.position = 'middle';
+    newStoredPlugin.position = 'middle'; // set default for menu-plugins
   }
 
   stored.push(newStoredPlugin);
@@ -155,4 +157,56 @@ export function uninstallPlugin(
       : p,
   );
   return { updated, success: true };
+}
+
+/**
+ * Activates an installed plugin (sets active: true in storage).
+ */
+export function activatePlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+  const plugin = plugins.find((p) => p.id === pluginId);
+  if (!plugin) return plugins;
+
+  const stored = loadStoredPlugins();
+  const storedPlugin = stored.find((p) => p.src === plugin.src);
+  if (!storedPlugin) return plugins;
+
+  if (storedPlugin.active) return plugins;
+
+  storedPlugin.active = true;
+  saveStoredPlugins(stored);
+
+  return plugins.map((p) =>
+    p.id === pluginId
+      ? {
+          ...p,
+          activationState: 'ACTIVE' as ActivationState,
+        }
+      : p,
+  );
+}
+
+/**
+ * Deactivates an installed plugin (sets active: false in storage).
+ */
+export function deactivatePlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+  const plugin = plugins.find((p) => p.id === pluginId);
+  if (!plugin) return plugins;
+
+  const stored = loadStoredPlugins();
+  const storedPlugin = stored.find((p) => p.src === plugin.src);
+  if (!storedPlugin) return plugins;
+
+  if (!storedPlugin.active) return plugins;
+
+  storedPlugin.active = false;
+  saveStoredPlugins(stored);
+
+  return plugins.map((p) =>
+    p.id === pluginId
+      ? {
+          ...p,
+          activationState: 'INACTIVE' as ActivationState,
+        }
+      : p,
+  );
 }

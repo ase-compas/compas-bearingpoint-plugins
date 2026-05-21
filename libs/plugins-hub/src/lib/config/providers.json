@@ -5,5 +5,12 @@
     "icon": "https://cdn.bearingpoint.com/icons/bp.svg",
     "description": "Official BearingPoint plugin provider for OpenSCD.",
     "pluginsUrl": "https://plugins.bearingpoint.eu/plugins.json"
+  },
+  {
+    "prefix": "SprintEins",
+    "name": "SprintEins Plugins",
+    "icon": "https://avatars.githubusercontent.com/u/44259540?s=200&v=4",
+    "description": "SprintEins plugin provider for OpenSCD.",
+    "pluginsUrl": "https://sprinteins.github.io/oscd-plugin-store/plugins.json"
   }
 ]
