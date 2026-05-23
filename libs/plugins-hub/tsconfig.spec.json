@@ -19,8 +19,5 @@
     "src/**/*.test.svelte"
   ],
   "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    }
   ],
 }

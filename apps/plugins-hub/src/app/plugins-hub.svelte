@@ -18,6 +18,8 @@
   import 'svelte-material-ui/bare.css';
   import '../../public/material-icon.css';
   import '../../public/global.css';
+  
+  import type { PluginKind } from '../../../../libs/plugins-hub/src/lib/types/plugin';
 
   interface Props {
     coreVersion?: string;
@@ -164,7 +166,7 @@
    * prevent collisions across providers. The config payload includes display metadata.
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
-    const detail: StoredPlugin = remove
+    const detail: {name: string, kind: PluginKind, config: StoredPlugin | null } = remove
       ? {
           name: target.id,
           kind: target.kind,
@@ -174,11 +176,10 @@
           name: target.id,
           kind: target.kind,
           config: {
-            // TODO: target.id must not be a slug id it should be provider-prefix + ' - ' + provider-plugin+name
             name: target.id, // use identifier which is provider-prefix plus provider-plugin.name
             author: target.author || target.provider?.name,
-            src: target.src,
-            icon: target.icon,
+            src: target.src!,
+            icon: target.icon!,
             kind: target.kind,
             description: target.description,
             requireDoc: true,
