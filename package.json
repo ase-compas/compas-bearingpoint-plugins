@@ -9,8 +9,10 @@
     "run:plugins-hub": "nx run plugins-hub:serve",
     "preview:plugins-hub": "nx run plugins-hub:preview --configuration=development",
     "preview:plugins-hub-prod": "nx run --prod plugins-hub:preview",
-    "test:all": "nx run-many --target=test --projects='plugins-hub-lib'",
+    "test:all": "nx run-many --target=test",
     "lint": "nx run-many --target=lint",
+    "check": "nx run-many --target=check",
+    "verify": "nx run-many --target=lint,check,test",
     "wiremock": "wiremock --root-dir=./wiremock --port=8181 --local-response-templating"
   },
   "private": true,

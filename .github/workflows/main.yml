@@ -26,11 +26,8 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Run Linting
-        run: npm run lint
-
-      - name: Run Tests
-        run: npm run test:all
+      - name: Run verify (lint, check, test)
+        run: npm run verify
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4

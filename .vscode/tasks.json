@@ -66,6 +66,16 @@
       }
     },
     {
+      "label": "verify",
+      "type": "npm",
+      "script": "verify",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
       "label": "lint",
       "type": "shell",
       "command": "npm",
