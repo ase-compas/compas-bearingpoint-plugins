@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Provider } from '@compas-bearingpoint/plugins-hub';
+  import type { Provider, StoredPlugin } from '@compas-bearingpoint/plugins-hub';
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
   import {
     loadAllProviders,
@@ -47,7 +47,7 @@
       if (result.error) {
         loadErrors = [
           ...loadErrors,
-          `${result.provider.name}: ${result.error}`,
+          `Error loading Provider '${result.provider.name}'': ${result.error}`,
         ];
       }
       const provider = result.provider;
@@ -83,7 +83,7 @@
         (statusFilter === 'available' && p.installationState === 'AVAILABLE');
 
       const matchesProvider =
-        providerFilter === 'all' || p.providerPrefix === providerFilter;
+        providerFilter === 'all' || p.provider?.prefix === providerFilter;
 
       return matchesSearch && matchesStatus && matchesProvider;
     }),
@@ -109,12 +109,8 @@
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = updatedPlugin ?? null;
     }
-    if (success && pluginBefore) {
+    if (pluginBefore) {
       dispatchConfigurePlugin({ id: pluginBefore.id, kind: pluginBefore.kind }, true);
-    } else if (!success) {
-      alert(
-        'Cannot uninstall active plugin. Deactivate it first.',
-      );
     }
   }
 
@@ -168,7 +164,7 @@
    * prevent collisions across providers. The config payload includes display metadata.
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
-    const detail = remove
+    const detail: StoredPlugin = remove
       ? {
           name: target.id,
           kind: target.kind,

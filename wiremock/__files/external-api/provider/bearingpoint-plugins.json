@@ -1,7 +1,7 @@
 {
   "plugins": [
     {
-      "name": "bearingpoint-plugin-1",
+      "name": "Plugin 1",
       "author": "Bearingpoint",
       "kind": "editor",
       "description": "Bearingpoint Plugin Test 1",
@@ -13,7 +13,7 @@
       }
     },
     {
-      "name": "bearingpoint-plugin-2",
+      "name": "Plugin 2",
       "kind": "editor",
       "description": "Bearingpoint Plugin Test 2",
       "src": "/external-api/provider/bearingpoint-plugin-02.js",

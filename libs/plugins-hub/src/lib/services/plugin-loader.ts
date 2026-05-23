@@ -1,4 +1,3 @@
-import type { Plugin } from '../types/plugin';
 import type { Provider } from '../types/provider';
 
 /**
@@ -40,31 +39,10 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
 }
 
 /**
- * Converts a plugin ID (e.g. "bp:transformer-importer") to a valid HTML custom-element tag
- * (e.g. "plugin-bp-transformer-importer").
- *
- * Custom element tags must contain a hyphen, so we use the "plugin-" prefix.
- */
-export function pluginIdToTag(pluginId: string): string {
-  return `plugin-${pluginId.replace(':', '-')}`;
-}
-
-/**
- * Slugifies a plugin name for use in a plugin ID.
- * e.g. "Transformer Importer" → "transformer-importer"
- */
-export function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-/**
  * Builds the unique plugin ID from provider prefix and plugin name.
- * Format: "<providerPrefix>:<slug>"
- * e.g. "bp:transformer-importer"
+ * Format: "<providerPrefix>:<pluginName>"
+ * e.g. "BP - Transformermporter"
  */
 export function buildPluginId(providerPrefix: string, pluginName: string): string {
-  return `${providerPrefix}:${slugify(pluginName)}`;
+  return `${providerPrefix} - ${pluginName}`;
 }

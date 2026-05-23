@@ -1,17 +1,18 @@
 // Public API for libs/plugins-hub
-export type { Provider } from './lib/types/provider.ts';
+export type { Provider } from './lib/types/provider';
 export type {
   Plugin,
   PluginManifestEntry,
   SupportedCoreVersion,
   InstallationState,
   ActivationState,
-} from './lib/types/plugin.ts';
+} from './lib/types/plugin';
+export type { StoredPlugin } from './lib/types/stored-plugin';
 
 export { loadProvider, loadAllProviders } from './lib/services/provider-loader';
 export type { ProviderLoadResult } from './lib/services/provider-loader';
 
-export { pluginIdToTag, slugify, buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
+export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 

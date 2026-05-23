@@ -86,7 +86,7 @@ function isValidPluginManifestEntry(
     typeof p.name === 'string' &&
     (!p.author || typeof p.author === 'string') &&
     typeof p.src === 'string' &&
-    (isDev || p.src.startsWith('https://')) &&
+    (isDev || p.src.startsWith('https://') || p.src.startsWith('/')) &&
     typeof p.kind === 'string' &&
     typeof p.icon === 'string' &&
     typeof p.description === 'string' &&

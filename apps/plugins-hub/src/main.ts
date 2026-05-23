@@ -1,24 +1,22 @@
 import PluginsHub from './app/plugins-hub.svelte';
 import { mount } from 'svelte';
+import { createFakeCompasLayout, listenOscdConfigurePlugin } from './dev/fake-open-scd';
 
-// ─────────────────────────────────────────────────────────────
-// Nur im Dev-Modus: Event abfangen und auf die Console loggen
-// ─────────────────────────────────────────────────────────────
+// =============================================
+// Dev-Only: Fake erstellen + Event abhören
+// =============================================
+let fakeCompasLayout: HTMLElement | null = null;
 if (import.meta.env?.DEV) {
-  document.addEventListener('oscd-configure-plugin', (e: Event) => {
-    const event = e as CustomEvent;           // TypeScript-Sicherheit
+  fakeCompasLayout = createFakeCompasLayout();
 
+  if (fakeCompasLayout) {
+    fakeCompasLayout.addEventListener('oscd-configure-plugin', (e: Event) => listenOscdConfigurePlugin(e));
+    
     console.log(
-      '%c📡 oscd-configure-plugin empfangen (main.ts)',
-      'background:#0ea5e9; color:white; padding:2px 6px; border-radius:3px; font-weight:bold',
-      event.detail
+      '%c✅ [Dev] Fake open-scd + compas-layout created und oscd-configure-plugin listener registered',
+      'color:#0ea5e9; font-weight:bold',
     );
-
-    // Optional: noch detailliertere Ausgabe
-    // console.dir(event.detail);
-  });
-
-  console.log('%c✅ [Dev] Listener für "oscd-configure-plugin" aktiv', 'color:#0ea5e9; font-weight:bold');
+  }
 }
 
 

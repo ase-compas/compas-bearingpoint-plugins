@@ -23,7 +23,7 @@
   {
     "prefix": "SprintEins",
     "name": "SprintEins Plugins",
-    "icon": "/external-api/provider/dummy.svg",
+    "icon": "/external-api/provider/sprinteins.jpg",
     "description": "SprintEins plugin provider for OpenSCD.",
     "pluginsUrl": "/external-api/provider/sprinteins-plugins.json"
   }
