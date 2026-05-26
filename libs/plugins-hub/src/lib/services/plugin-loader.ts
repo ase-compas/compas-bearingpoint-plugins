@@ -1,8 +1,12 @@
 import type { Provider } from '../types/provider';
 
 /**
- * Returns the set of allowed origins derived from the provider registry.
- * Only plugin URLs whose origin matches a provider's pluginsUrl origin are permitted.
+ * Extracts unique trusted origins from the given providers.
+ * Each provider's pluginsUrl is parsed and its origin (protocol + host) is collected.
+ * Invalid URLs are skipped.
+ *
+ * @param providers - Array of providers to extract origins from.
+ * @returns Set of trusted origins (e.g. "https://example.com").
  */
 function buildTrustedOrigins(providers: Provider[]): Set<string> {
   const origins = new Set<string>();
