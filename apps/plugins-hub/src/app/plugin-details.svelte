@@ -56,13 +56,18 @@
       <span class="meta-label">KIND</span>
       <span class="meta-value">{plugin.kind}</span>
     </div>
-    {#if plugin.supportedCoreVersion}
+    {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
         <span class="meta-label">CORE VERSION</span>
-        <span class="meta-value"
-          >{plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion
-            .to}</span
-        >
+        <span class="meta-value">
+          {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
+            {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
+          {:else if plugin.supportedCoreVersion.from}
+            ≥ {plugin.supportedCoreVersion.from}
+          {:else if plugin.supportedCoreVersion.to}
+            {'< ' + plugin.supportedCoreVersion.to}
+          {/if}
+        </span>
       </div>
     {/if}
     <div class="meta-item">
