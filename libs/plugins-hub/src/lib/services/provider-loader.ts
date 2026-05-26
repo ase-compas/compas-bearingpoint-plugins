@@ -93,7 +93,7 @@ function isValidPluginManifestEntry(
     (p.supportedCoreVersion === undefined ||
       (typeof p.supportedCoreVersion === 'object' &&
         p.supportedCoreVersion !== null &&
-        typeof (p.supportedCoreVersion as any).from === 'string' &&
-        typeof (p.supportedCoreVersion as any).to === 'string'))
+        (typeof (p.supportedCoreVersion as any).from === 'string' ||
+        typeof (p.supportedCoreVersion as any).to === 'string')))
   );
 }

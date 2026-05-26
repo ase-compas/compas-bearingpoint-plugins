@@ -10,6 +10,7 @@
     uninstallPlugin,
     activatePlugin,
     deactivatePlugin,
+    getAppVersion,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -25,7 +26,7 @@
     coreVersion?: string;
   }
 
-  let { coreVersion = '1.4.0' }: Props = $props();
+  let { coreVersion = getAppVersion() }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let loading = $state(true);
@@ -287,6 +288,7 @@
         onUninstall={handleUninstall}
         onEnable={handleEnable}
         onDisable={handleDisable}
+        {coreVersion}
       />
     {/if}
   </div>

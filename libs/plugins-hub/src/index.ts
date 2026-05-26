@@ -17,6 +17,7 @@ export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
 export { buildPlugin, installPlugin, uninstallPlugin, activatePlugin, deactivatePlugin, loadStoredPlugins } from './lib/store/plugin-store';
+export { getAppVersion } from './lib/store/app-version-store';
 
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';

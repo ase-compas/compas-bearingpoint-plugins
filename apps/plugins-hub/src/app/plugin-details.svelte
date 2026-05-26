@@ -8,9 +8,10 @@
     onUninstall: (pluginId: string) => void;
     onEnable: (pluginId: string) => void;
     onDisable: (pluginId: string) => void;
+    coreVersion?: string;
   }
 
-  let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable }: Props = $props();
+  let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable, coreVersion }: Props = $props();
 
   const isInstalled = $derived(plugin.installationState === 'INSTALLED');
   const isActive = $derived(plugin.activationState === 'ACTIVE');
@@ -68,6 +69,12 @@
       <span class="meta-label">PLUGIN ID</span>
       <span class="meta-value plugin-id">{plugin.id}</span>
     </div>
+    {#if coreVersion}
+      <div class="meta-item">
+        <span class="meta-label">CURRENT CORE</span>
+        <span class="meta-value">{coreVersion}</span>
+      </div>
+    {/if}
   </div>
 
   <div class="details-url">
