@@ -7,6 +7,13 @@
     "pluginsUrl": "/external-api/provider/bearingpoint-plugins.json"
   },
   {
+    "prefix": "TransnetBW",
+    "name": "TransnetBW Plugins",
+    "icon": "/external-api/provider/transnetbw.ico",
+    "description": "Official TransnetBW plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/transnetbw-plugins.json"
+  },
+  {
     "prefix": "Dummy",
     "name": "Dummy Plugins",
     "icon": "/external-api/provider/dummy.svg",
