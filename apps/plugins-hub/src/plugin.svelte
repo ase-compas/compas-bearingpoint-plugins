@@ -11,3 +11,9 @@
 </script>
 
 <PluginsHub {coreVersion} />
+
+<style>
+  :host {
+    min-height: 0; /* needed for flex-heigth! */
+  }
+</style>
