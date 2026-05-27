@@ -1,6 +1,16 @@
 {
   "plugins": [
     {
+      "name": "PluginHub",
+      "kind": "editor",
+      "description": "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
+      "src": "http://localhost:4301/index.js",
+      "icon": "hub",
+      "supportedCoreVersion": {
+        "from": "0.44.0"
+      }
+    },
+    {
       "name": "Plugin 1",
       "author": "Bearingpoint",
       "kind": "editor",
