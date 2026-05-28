@@ -77,6 +77,10 @@ export default class PluginsHubElement extends HTMLElement {
     this.props.coreVersion = newVersion;
   }
 
+  /**
+   * Apply a layout hack to fix the height of the plugin-container div.
+   * This is necessary because compas core doesn't limit the plugin-container height to the current window-height.
+   */
   private applyLayoutHack() {
     const openScd = document.querySelector(
       'body > open-scd',
@@ -91,14 +95,14 @@ export default class PluginsHubElement extends HTMLElement {
     this.targetDiv = compasLayout.shadowRoot.querySelector('div') as HTMLDivElement;
     if (!this.targetDiv) return;
 
-    // Originalzustand sichern
+    // Save original styles before applying hack.
     this.originalStyles = {
       height: this.targetDiv.style.height,
       display: this.targetDiv.style.display,
       flexDirection: this.targetDiv.style.flexDirection,
     };
 
-    // Dein gewünschter Hack
+    // Apply layout hack.
     this.targetDiv.style.height = 'calc(100vh - 4px)'; // 4px is the bottom progressbar from the oscd-waiter wrapper
     this.targetDiv.style.display = 'flex';
     this.targetDiv.style.flexDirection = 'column';
@@ -107,7 +111,7 @@ export default class PluginsHubElement extends HTMLElement {
   private restoreLayoutHack() {
     if (!this.targetDiv) return;
 
-    // Originale Inline-Styles wiederherstellen
+    // Restore original styles.
     this.targetDiv.style.height = this.originalStyles.height ?? '';
     this.targetDiv.style.display = this.originalStyles.display ?? '';
     this.targetDiv.style.flexDirection = this.originalStyles.flexDirection ?? '';
