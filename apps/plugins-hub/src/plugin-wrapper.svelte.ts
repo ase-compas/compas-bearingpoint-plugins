@@ -1,6 +1,7 @@
 import Plugin from './plugin.svelte';
 import * as pkg from '../package.json';
 import { mount } from 'svelte';
+import { getLayout } from '@compas-bearingpoint/plugins-hub';
 
 type Props = {
   doc?: XMLDocument;
@@ -79,17 +80,11 @@ export default class PluginsHubElement extends HTMLElement {
 
   /**
    * Apply a layout hack to fix the height of the plugin-container div.
-   * This is necessary because compas core doesn't limit the plugin-container height to the current window-height.
+   * This is necessary because compas-oscd core doesn't limit the plugin-container height to the current window-height.
    */
   private applyLayoutHack() {
-    const openScd = document.querySelector(
-      'body > open-scd',
-    ) as HTMLElement | null;
-    if (!openScd?.shadowRoot) return;
 
-    const compasLayout = openScd.shadowRoot.querySelector(
-      'compas-layout',
-    ) as HTMLElement | null;
+    const compasLayout = getLayout();
     if (!compasLayout?.shadowRoot) return;
 
     this.targetDiv = compasLayout.shadowRoot.querySelector('div') as HTMLDivElement;

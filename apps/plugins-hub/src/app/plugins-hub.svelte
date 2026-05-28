@@ -11,6 +11,7 @@
     activatePlugin,
     deactivatePlugin,
     getAppVersion,
+    getLayout,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -196,14 +197,7 @@
       detail,
     });
 
-    getLayoutContainer()?.dispatchEvent(event);
-  }
-
-  function getLayoutContainer(): HTMLElement | null {
-    const openScd = document.querySelector('open-scd');
-    const compasLayout = (openScd as any)?.shadowRoot?.querySelector('compas-layout') ?? null;
-    // console.log('Compas-Layout:', compasLayout);
-    return compasLayout;
+    getLayout()?.dispatchEvent(event);
   }
 
 </script>

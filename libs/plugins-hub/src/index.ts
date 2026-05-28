@@ -19,6 +19,8 @@ export { isVersionCompatible, compareSemver } from './lib/services/version-resol
 export { buildPlugin, installPlugin, uninstallPlugin, activatePlugin, deactivatePlugin, loadStoredPlugins } from './lib/store/plugin-store';
 export { getAppVersion } from './lib/store/app-version-store';
 
+export { getLayout } from './lib/dom/open-scd-helpers';
+
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';
 
