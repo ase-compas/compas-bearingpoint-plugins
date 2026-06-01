@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "ANY",
+    "urlPathPattern": "/proxy/avatars\\.githubusercontent\\.com(/.*)?"
+  },
+  "response": {
+    "proxyBaseUrl": "https://avatars.githubusercontent.com",
+    "proxyUrlPrefixToRemove": "/proxy/avatars.githubusercontent.com"
+  }
+}

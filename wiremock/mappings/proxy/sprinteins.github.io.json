@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "ANY",
+    "urlPathPattern": "/proxy/sprinteins\\.github\\.io(/.*)?"
+  },
+  "response": {
+    "proxyBaseUrl": "https://sprinteins.github.io",
+    "proxyUrlPrefixToRemove": "/proxy/sprinteins.github.io"
+  }
+}

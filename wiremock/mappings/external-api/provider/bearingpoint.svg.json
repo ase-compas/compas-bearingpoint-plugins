@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/external-api/provider/bearingpoint.svg.*"
+    },
+    "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 0,
+        "headers": {
+            "Content-Type": "image/svg+xml"
+        },
+        "bodyFileName": "external-api/provider/bearingpoint.svg"
+    },
+    "priority": 10
+}

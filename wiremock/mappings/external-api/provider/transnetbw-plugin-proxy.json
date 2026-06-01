@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/external-api/compas-transnetbw-plugins/.*"
+  },
+  "response": {
+    "proxyBaseUrl": "https://ase-compas.github.io/compas-transnetbw-plugins",
+    "proxyUrlPrefixToRemove": "/external-api/compas-transnetbw-plugins"
+  },
+  "priority": 10
+}

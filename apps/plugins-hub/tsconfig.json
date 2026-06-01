@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "include": ["src/**/*.ts", "src/**/*.svelte", "./package.json"],
+  "references": [
+  ],
+  "extends": "../../tsconfig.base.json"
+}

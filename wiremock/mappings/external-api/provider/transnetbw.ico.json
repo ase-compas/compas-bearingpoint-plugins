@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/external-api/provider/transnetbw.ico.*"
+    },
+    "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 0,
+        "headers": {
+            "Content-Type": "image/jpeg"
+        },
+        "bodyFileName": "external-api/provider/transnetbw.ico"
+    },
+    "priority": 10
+}

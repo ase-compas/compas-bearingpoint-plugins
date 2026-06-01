@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "@compas-bearingpoint/plugins-hub": [
+        "./libs/plugins-hub/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

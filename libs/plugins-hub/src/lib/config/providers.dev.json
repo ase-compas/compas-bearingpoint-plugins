@@ -1,0 +1,37 @@
+[
+  {
+    "prefix": "BP",
+    "name": "BearingPoint Plugins",
+    "icon": "/external-api/provider/bearingpoint.svg",
+    "description": "Official BearingPoint plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/bearingpoint-plugins.json"
+  },
+  {
+    "prefix": "TransnetBW",
+    "name": "TransnetBW Plugins",
+    "icon": "/external-api/provider/transnetbw.ico",
+    "description": "Official TransnetBW plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/transnetbw-plugins.json"
+  },
+  {
+    "prefix": "Dummy",
+    "name": "Dummy Plugins",
+    "icon": "/external-api/provider/dummy.svg",
+    "description": "Dummy plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/dummy-plugins.json"
+  },
+  {
+    "prefix": "dummy-not-exist",
+    "name": "Not Existing Dummy Plugins Provider Test",
+    "icon": "/external-api/provider/dummy.svg",
+    "description": "Dummy plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/dummy-not-exist-plugins.json"
+  },
+  {
+    "prefix": "SprintEins",
+    "name": "SprintEins Plugins",
+    "icon": "/external-api/provider/sprinteins.jpg",
+    "description": "SprintEins plugin provider for OpenSCD.",
+    "pluginsUrl": "/external-api/provider/sprinteins-plugins.json"
+  }
+]

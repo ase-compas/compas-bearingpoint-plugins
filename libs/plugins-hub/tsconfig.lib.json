@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "bundler",
+    "target": "es2017",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "types": ["svelte", "node", "vite/client"],
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "../../dist/out-tsc"
+  },
+  "include": ["src/**/*.ts", "src/**/*.svelte", "src/lib/config/*.json"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.svelte", "**/*.test.svelte"]
+}

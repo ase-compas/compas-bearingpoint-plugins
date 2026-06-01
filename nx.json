@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/cypress/**/*",
+      "!{projectRoot}/**/*.cy.[jt]s?(x)",
+      "!{projectRoot}/cypress.config.[jt]s",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.js"
+    ],
+    "sharedGlobals": []
+  },
+  "targetDefaults": {
+    "@nx/vite:test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "@nx/vite:build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/eslint:lint": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js"
+      ]
+    }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint",
+        "extensions": ["ts", "tsx", "js", "jsx", "svelte"]
+      }
+    }
+  ]
+}
