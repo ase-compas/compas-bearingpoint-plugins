@@ -24,6 +24,17 @@
       }
     },
     {
+      "label": "preview:plugins-hub-prod",
+      "type": "npm",
+      "script": "preview:plugins-hub-prod",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "clear": true
+      }
+    },
+    {
       "label": "test:all watch",
       "type": "npm",
       "script": "test:all",

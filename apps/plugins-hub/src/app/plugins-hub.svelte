@@ -12,6 +12,7 @@
     deactivatePlugin,
     getAppVersion,
     getLayout,
+    proxyUrl,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -38,7 +39,7 @@
   let statusFilter = $state<'all' | 'installed' | 'available'>('all');
   let providerFilter = $state<string>('all');
 
-  const providers: Provider[] = providersConfig as Provider[];
+  const providers: Provider[] = (providersConfig as Provider[]).map(p => ({...p, icon: proxyUrl(p.icon)}));
 
   async function initHub() {
     loading = true;
@@ -180,7 +181,7 @@
           config: {
             name: target.id, // use identifier which is provider-prefix plus provider-plugin.name
             author: target.author || target.provider?.name,
-            src: target.src!,
+            src: proxyUrl(target.src!),
             icon: target.icon!,
             kind: target.kind,
             description: target.description,

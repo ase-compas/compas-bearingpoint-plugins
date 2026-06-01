@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "ANY",
+    "urlPathPattern": "/proxy/ase-compas\\.github\\.io(/.*)?"
+  },
+  "response": {
+    "proxyBaseUrl": "https://ase-compas.github.io",
+    "proxyUrlPrefixToRemove": "/proxy/ase-compas.github.io"
+  }
+}

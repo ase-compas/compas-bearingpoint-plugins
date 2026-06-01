@@ -8,11 +8,7 @@ import type { PluginManifestEntry } from '../types/plugin';
 import { buildPluginId } from '../services/plugin-loader';
 import { isVersionCompatible } from '../services/version-resolver';
 import type { StoredPlugin } from '../types/stored-plugin';
-
-/**
- * In-memory store for all aggregated plugins across all providers.
- * Uses Svelte 5 runes ($state) for reactivity when used inside Svelte components.
- */
+import { proxyUrl } from '../utils/proxy-url';
 
 /** Persistent store key for installed plugins */
 const STORAGE_KEY = 'plugins';
@@ -36,7 +32,7 @@ export function buildPlugin(
   stored: StoredPlugin[],
 ): Plugin {
   let id = buildPluginId(provider.prefix, entry.name);
-  const matching = stored.find((p) => p.src === entry.src);
+  const matching = stored.find((p) => p.src === proxyUrl(entry.src));
   if (matching) {
     id = matching.name;
   }

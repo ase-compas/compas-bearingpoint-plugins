@@ -1,5 +1,6 @@
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
+import { proxyUrl } from '../utils/proxy-url';
 
 /** Result of loading a provider's plugin manifest. */
 export interface ProviderLoadResult {
@@ -18,7 +19,8 @@ export async function loadProvider(
   provider: Provider,
 ): Promise<ProviderLoadResult> {
   try {
-    const response = await fetch(provider.pluginsUrl);
+    // Use proxy URL for external URLs when running on localhost
+    const response = await fetch(proxyUrl(provider.pluginsUrl));
 
     if (!response.ok) {
       return {

@@ -21,6 +21,8 @@ export { getAppVersion } from './lib/store/app-version-store';
 
 export { getLayout } from './lib/dom/open-scd-helpers';
 
+export { proxyUrl } from './lib/utils/proxy-url';
+
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';
 
@@ -28,4 +30,3 @@ import { default as providersConfigDev } from './lib/config/providers.dev.json';
 const isDev = (import.meta.env.MODE === 'development');
 const providersConfig = isDev ? providersConfigDev : providersConfigProd;
 export { providersConfig };
-
