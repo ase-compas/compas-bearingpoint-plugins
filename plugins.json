@@ -4,7 +4,7 @@
       "name": "PluginHub",
       "kind": "editor",
       "description": "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
-      "src": "https://ase-compas.github.io/compas-bearingpoint-plugins/plugins/plugins-hub/index.js",
+      "src": "https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/index.js",
       "icon": "hub",
       "supportedCoreVersion": {
         "from": "0.44.0"
