@@ -12,8 +12,8 @@ BearingPoint Plugin Hub – Central plugin for integrating and managing plugins 
 
 GOTO: [https://openscd.github.io/](https://openscd.github.io/) or any other OpenSCD or Compas Instance and add the Plugin:
 
-* Name: BP-PluginHub
-* URL: https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/index.js
+* **Name:** BP-PluginHub
+* **URL:** https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/index.js
 
 ![Install PluginHub](img/install-pluginhub.png)
 
