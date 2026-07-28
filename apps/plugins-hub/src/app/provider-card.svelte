@@ -86,12 +86,12 @@
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    color: #004552;
   }
 
   .provider-description {
     font-size: 12px;
-    color: #6b7280;
+    color: #004552;
   }
 
   .provider-icon {

@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Textfield from '@smui/textfield';
+  import Select, { Option } from '@smui/select';
+  import Icon from '@smui/textfield/icon';
   import type { Provider, StoredPlugin } from '@compas-bearingpoint/plugins-hub';
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
   import {
@@ -209,37 +212,33 @@
   </div>
 
   <div class="hub-toolbar">
-    <div class="search-wrapper">
-      <span class="search-icon">🔍</span>
-      <input
-        class="search-input"
-        type="text"
-        placeholder="Search..."
-        bind:value={searchTerm}
-        aria-label="Search plugins"
-      />
-    </div>
 
-    <select
-      class="filter-select"
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--oscd-base2,#fff)`} >
+      {#snippet leadingIcon()}
+          <Icon class="material-icons" >search</Icon>
+        {/snippet}
+    </Textfield>
+
+    <Select
       bind:value={statusFilter}
-      aria-label="Filter by status"
-    >
-      <option value="all">All status</option>
-      <option value="installed">Installed</option>
-      <option value="available">Available</option>
-    </select>
+      style={`background: var(--oscd-base2,#fff)`}
+      variant="outlined">
+        <Option value="all">All status</Option>
+        <Option value="installed">Installed</Option>
+        <Option value="available">Available</Option>
+    </Select>
 
-    <select
+    <Select
       class="filter-select"
       bind:value={providerFilter}
-      aria-label="Filter by contributor"
-    >
-      <option value="all">All contributors</option>
-      {#each providers as provider}
-        <option value={provider.prefix}>{provider.name}</option>
-      {/each}
-    </select>
+      style={`width:300px; background: var(--oscd-base2,#fff)` }
+      variant="outlined">
+        <Option value="all">All contributors</Option>
+        {#each providers as provider}
+          <Option value={provider.prefix}>{provider.name}</Option>
+        {/each}
+    </Select>
+
   </div>
 
   {#if loadErrors.length > 0}
@@ -296,7 +295,7 @@
     width: 100%;
     height: 100%;
     min-height: 400px;
-    background: #fff;
+    background: #EDF1F2;
     font-family: sans-serif;
     color: #222;
     overflow: hidden;
@@ -322,55 +321,19 @@
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    background: #EDF1F2;
+    border-bottom: 1px solid #DAE3E6;
     flex-wrap: wrap;
   }
-
-  .search-wrapper {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    min-width: 180px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 5px 6px;
-    background: #fff;
-    margin: 0 0 0.5em 0;
-  }
-  
-  .search-wrapper .search-input {
-    margin: 0;
-    padding: 0;
-  }
-
-  .search-icon {
-    margin-right: 8px;
-    font-size: 14px;
-    color: #9ca3af;
-  }
-
-  .search-input {
-    border: none;
-    outline: none;
-    flex: 1;
-    font-size: 14px;
-    background: transparent;
-  }
-
-  .filter-select {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 28px 6px 12px;
-    font-size: 14px;
-    color: #374151;
-    background: #fff;
-    cursor: pointer;
-    appearance: auto;
+  .hub-toolbar :global(.mdc-select__anchor),
+  .hub-toolbar :global(.mdc-text-field) {
+    height: 42px !important;
   }
 
   .load-errors {
     padding: 8px 24px;
     background: #fef9c3;
+    border-bottom: 1px solid #DAE3E6;
   }
 
   .error-message {
@@ -383,6 +346,8 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    background: #EDF1F2;
+    border-bottom: 1px solid #DAE3E6;
   }
 
   .hub-body.with-details .providers-list {

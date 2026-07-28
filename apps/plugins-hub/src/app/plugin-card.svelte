@@ -65,9 +65,11 @@
   <div class="plugin-description">{plugin.description}</div>
 
   <div class="plugin-badges">
-    <span class="badge badge-{plugin.installationState.toLowerCase()}">
-      {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
-    </span>
+    {#if plugin.compatible}
+      <span class="badge badge-{plugin.installationState.toLowerCase()}">
+        {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
+      </span>
+    {/if}
     {#if plugin.installationState === 'INSTALLED'}
       <span class="badge badge-{plugin.activationState.toLowerCase()}">
         {plugin.activationState === 'ACTIVE' ? 'Active' : 'Inactive'}
@@ -145,7 +147,7 @@
   }
 
   .action-btn.install {
-    background: #0d3d4a;
+    background: #004552;
     color: #fff;
   }
 
@@ -163,33 +165,34 @@
   }
 
   .action-btn.enable {
-    background: #0d3d4a;
+    background: #0CA6C4;
     color: #fff;
   }
 
   .action-btn.enable:hover {
-    background: #0a2f3a;
+    background: #09829A;
   }
 
   .action-btn.disable {
-    background: #e5e7eb;
-    color: #374151;
+    background: #fff;
+    color: #0CA6C4;
   }
 
   .action-btn.disable:hover {
-    background: #d1d5db;
+    background: #eee;
+    color: #0CA6C4;
   }
 
   .plugin-name {
     font-size: 13px;
     font-weight: 600;
-    color: #111827;
+    color: #002B37;
     line-height: 1.3;
   }
 
   .plugin-description {
     font-size: 12px;
-    color: #6b7280;
+    color: #004552;
     line-height: 1.4;
     display: -webkit-box;
     line-clamp: 3;
@@ -210,36 +213,35 @@
     font-weight: 500;
     padding: 2px 8px;
     border-radius: 12px;
-    border: 1px solid currentColor;
   }
 
   .badge-installed {
-    color: #15803d;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
+    color: #02A75D;
+    border-color: #02A75D;
+    background: #E4FBEF;
   }
 
   .badge-available {
     color: #1d4ed8;
-    border-color: #bfdbfe;
+    border-color: #1d4ed8;
     background: #eff6ff;
   }
 
   .badge-active {
     color: #0d3d4a;
-    border-color: #a5f3fc;
+    border-color: #0d3d4a;
     background: #ecfeff;
   }
 
   .badge-inactive {
-    color: #6b7280;
-    border-color: #e5e7eb;
-    background: #f9fafb;
+    color: #004552;
+    border-color: #004552;
+    background: #EDF1F2;
   }
 
   .badge-incompatible {
     color: #b45309;
-    border-color: #fde68a;
+    border-color: #b45309;
     background: #fffbeb;
   }
 </style>

@@ -72,7 +72,7 @@
     {/if}
     <div class="meta-item">
       <span class="meta-label">PLUGIN ID</span>
-      <span class="meta-value plugin-id">{plugin.id}</span>
+      <span class="meta-value">{plugin.id}</span>
     </div>
     {#if coreVersion}
       <div class="meta-item">
@@ -187,36 +187,30 @@
     font-weight: 500;
     padding: 2px 8px;
     border-radius: 12px;
-    border: 1px solid currentColor;
   }
 
   .badge-installed {
-    color: #15803d;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
+    color: #02A75D;
+    background: #E4FBEF;
   }
 
   .badge-available {
     color: #1d4ed8;
-    border-color: #bfdbfe;
     background: #eff6ff;
   }
 
   .badge-active {
     color: #0d3d4a;
-    border-color: #a5f3fc;
     background: #ecfeff;
   }
 
   .badge-inactive {
-    color: #6b7280;
-    border-color: #e5e7eb;
-    background: #f9fafb;
+    color: #004552;
+    background: #EDF1F2;
   }
 
   .badge-incompatible {
     color: #b45309;
-    border-color: #fde68a;
     background: #fffbeb;
   }
 
@@ -224,9 +218,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    padding: 12px;
-    background: #f9fafb;
-    border-radius: 6px;
+    padding: 0px;
   }
 
   .meta-item {
@@ -251,12 +243,6 @@
     font-size: 12px;
     color: #111827;
     font-weight: 500;
-  }
-
-  .plugin-id {
-    font-family: monospace;
-    font-size: 11px;
-    word-break: break-all;
   }
 
   .details-url {
@@ -301,9 +287,8 @@
     cursor: not-allowed;
   }
 
-  .action-btn.install,
-  .action-btn.enable {
-    background: #0d3d4a;
+  .action-btn.install {
+    background: #004552;
     color: #fff;
   }
 
@@ -312,13 +297,23 @@
     background: #0a2f3a;
   }
 
+  .action-btn.enable {
+    background: #0CA6C4;
+    color: #fff;
+  }
+
+  .action-btn.enable:hover {
+    background: #09829A;
+  }
+
   .action-btn.disable {
-    background: #e5e7eb;
-    color: #374151;
+    background: #fff;
+    color: #0CA6C4;
   }
 
   .action-btn.disable:hover {
-    background: #d1d5db;
+    background: #eee;
+    color: #0CA6C4;
   }
 
   .action-btn.remove {
