@@ -172,9 +172,11 @@ openscd:history-viewer
 | `src` | string (URL) | HTTPS, ESM bundle |
 | `kind` | string | e.g. "editor" |
 | `icon` | string | Material Design Icon name |
-| `description` | string | Required |
+| `description` | string | Required (short description shown on cards) |
+| `longDescription` | string | Optional. When present, rendered in the detail panel directly after the URL. |
 | `supportedCoreVersion.from` | string | semver (optional) |
 | `supportedCoreVersion.to` | string | semver (exclusive upper bound, optional) |
+| `kind` | string | One of `editor` \| `menu` \| `validator`. Used for filtering and displayed as a badge. |
 
 ## Developer References
 
