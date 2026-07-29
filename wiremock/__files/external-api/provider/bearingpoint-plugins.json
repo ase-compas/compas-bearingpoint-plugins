@@ -25,10 +25,10 @@
     },
     {
       "name": "Plugin 2",
-      "kind": "editor",
+      "kind": "menu",
       "description": "Bearingpoint Plugin Test 2",
       "src": "/external-api/provider/bearingpoint-plugin-02.js",
-      "icon": "editing",
+      "icon": "edit",
       "supportedCoreVersion": {
         "from": "0.45.0",
         "to": "2.0.0"
@@ -36,10 +36,10 @@
     },
     {
       "name": "Plugin 3",
-      "kind": "editor",
+      "kind": "validator",
       "description": "Bearingpoint Plugin Test 3",
       "src": "/external-api/provider/bearingpoint-plugin-03.js",
-      "icon": "editing",
+      "icon": "edit",
       "supportedCoreVersion": {
         "to": "2.0.0"
       }

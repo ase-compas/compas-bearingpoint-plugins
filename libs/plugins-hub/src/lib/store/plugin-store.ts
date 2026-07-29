@@ -1,7 +1,9 @@
-import type {
-  Plugin,
-  InstallationState,
-  ActivationState,
+import {
+  type Plugin,
+  type InstallationState,
+  type ActivationState,
+  PluginKindIconMapping,
+  PluginKindTextMapping,
 } from '../types/plugin';
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
@@ -52,6 +54,8 @@ export function buildPlugin(
     id,
     provider: provider,
     compatible,
+    kindText: PluginKindTextMapping[entry.kind],
+    kindIcon: PluginKindIconMapping[entry.kind],
     installationState,
     activationState,
   };

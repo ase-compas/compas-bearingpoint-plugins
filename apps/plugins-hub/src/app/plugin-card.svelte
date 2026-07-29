@@ -62,10 +62,15 @@
   </div>
 
   <div class="plugin-name">{plugin.name}</div>
+  <div class="plugin-badges">
+    <div class="badge badge-kind">
+      <span class="material-icons badge-kind-icon">{plugin.kindIcon}</span>
+      {plugin.kindText}
+    </div>
+  </div>
   <div class="plugin-description">{plugin.description}</div>
 
   <div class="plugin-badges">
-    <span class="badge badge-kind">{plugin.kind}</span>
     {#if plugin.compatible}
       <span class="badge badge-{plugin.installationState.toLowerCase()}">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
@@ -100,12 +105,10 @@
 
   .plugin-card:hover {
     border-color: #9ca3af;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 
   .plugin-card.selected {
     border-color: #0d3d4a;
-    box-shadow: 0 0 0 2px rgba(13, 61, 74, 0.2);
   }
 
   .plugin-card.incompatible {
@@ -194,7 +197,6 @@
 
   .plugin-description {
     font-size: 12px;
-    color: #6b7280; /* lighter secondary text per mockup (consistent with provider descriptions) */
     line-height: 1.4;
     display: -webkit-box;
     line-clamp: 3;
@@ -219,38 +221,40 @@
 
   .badge-installed {
     color: #02A75D;
-    border-color: #02A75D;
     background: #E4FBEF;
   }
 
   .badge-available {
     color: #1d4ed8;
-    border-color: #1d4ed8;
     background: #eff6ff;
   }
 
   .badge-active {
     color: #0d3d4a;
-    border-color: #0d3d4a;
     background: #ecfeff;
   }
 
   .badge-inactive {
     color: #004552;
-    border-color: #004552;
     background: #EDF1F2;
   }
 
   .badge-incompatible {
     color: #b45309;
-    border-color: #b45309;
     background: #fffbeb;
   }
 
   .badge-kind {
-    color: #374151;
-    border-color: #9ca3af;
+    color: #6B9197;
     background: #f3f4f6;
     text-transform: capitalize;
+    padding: 0px 8px 4px 4px;
+    border-radius: 0;
+  }
+
+  .badge-kind-icon {
+    font-size: 16px;
+    padding: 0px 2px 0px 0px;
+    transform: translateY(4px);
   }
 </style>

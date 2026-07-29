@@ -14,7 +14,21 @@ export type InstallationState = 'INSTALLED' | 'AVAILABLE';
  */
 export type ActivationState = 'ACTIVE' | 'INACTIVE';
 
-export type PluginKind = 'editor' | 'menu' | 'validator';
+export const PLUGIN_KINDS = ['editor', 'menu', 'validator'] as const;
+export type PluginKind = typeof PLUGIN_KINDS[number];
+export const PluginKindTextMapping = {
+  editor: 'Editor plugin',
+  menu: 'Navigation plugin',
+  validator: 'Validation plugin',
+} as const satisfies Record<PluginKind, string>;
+export const PluginKindIconMapping = {
+  editor: 'tab',
+  menu: 'play_circle',
+  validator: 'rule_folder',
+} as const satisfies Record<PluginKind, string>;
+export type PluginKindText = typeof PluginKindTextMapping[PluginKind];
+export type PluginKindIcon = typeof PluginKindIconMapping[PluginKind];
+
 const menuPositions = ['top', 'middle', 'bottom'] as const;
 export type MenuPosition = (typeof menuPositions)[number];
 
@@ -67,6 +81,10 @@ export interface Plugin extends PluginManifestEntry {
   provider: Provider;
   /** Whether the plugin is compatible with the running core version. */
   compatible: boolean;
+  /** Kind Text for the given kind. */
+  kindText: PluginKindText;
+  /** Kind Icon for the given kind. */
+  kindIcon: PluginKindIcon;
   /** Installation state. */
   installationState: InstallationState;
   /** Activation state (only meaningful when installationState === 'INSTALLED'). */

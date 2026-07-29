@@ -28,6 +28,11 @@
     </div>
     <p class="details-short-desc">{plugin.description}</p>
 
+    <div class="badge badge-kind">
+      <span class="material-icons badge-kind-icon">{plugin.kindIcon}</span>
+      {plugin.kindText}
+    </div>
+
     <div class="details-badges">
       <span class="badge badge-{plugin.installationState.toLowerCase()}">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
@@ -45,20 +50,16 @@
 
   <div class="details-meta">
     <div class="meta-item">
-      <span class="meta-label">PROVIDER</span>
+      <span class="meta-label">Provider</span>
       <span class="meta-value">{plugin.provider.prefix.toUpperCase()}</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">AUTHOR</span>
+      <span class="meta-label">Author</span>
       <span class="meta-value">{plugin.author}</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">KIND</span>
-      <span class="meta-value">{plugin.kind}</span>
     </div>
     {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
-        <span class="meta-label">CORE VERSION</span>
+        <span class="meta-label">Supported Version</span>
         <span class="meta-value">
           {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
             {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
@@ -71,12 +72,12 @@
       </div>
     {/if}
     <div class="meta-item">
-      <span class="meta-label">PLUGIN ID</span>
+      <span class="meta-label">Plugin ID</span>
       <span class="meta-value">{plugin.id}</span>
     </div>
     {#if coreVersion}
       <div class="meta-item">
-        <span class="meta-label">CURRENT CORE</span>
+        <span class="meta-label">Current Core</span>
         <span class="meta-value">{coreVersion}</span>
       </div>
     {/if}
@@ -218,6 +219,20 @@
     background: #fffbeb;
   }
 
+  .badge-kind {
+    color: #6B9197;
+    background: #f3f4f6;
+    text-transform: capitalize;
+    padding: 0px 8px 4px 4px;
+    border-radius: 0;
+  }
+
+  .badge-kind-icon {
+    font-size: 16px;
+    padding: 0px 2px 0px 0px;
+    transform: translateY(4px);
+  }
+
   .details-meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -231,16 +246,11 @@
     gap: 2px;
   }
 
-  .meta-item:last-child {
-    grid-column: span 2;
-  }
-
   .meta-label {
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.08em;
     color: #9ca3af;
-    text-transform: uppercase;
   }
 
   .meta-value {

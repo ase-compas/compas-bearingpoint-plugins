@@ -311,7 +311,7 @@
     min-height: 400px;
     background: #EDF1F2;
     font-family: sans-serif;
-    color: #222;
+    color: #004552;
     overflow: hidden;
   }
 

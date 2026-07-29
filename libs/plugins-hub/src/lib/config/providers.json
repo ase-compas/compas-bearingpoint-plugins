@@ -9,7 +9,7 @@
   {
     "prefix": "TransnetBW",
     "name": "TransnetBW Plugins",
-    "icon": "https://ase-compas.github.io/compas-transnetbw-plugins/favicon.ico",
+    "icon": "https://ase-compas.github.io/compas-transnetbw-plugins/transnetbw.svg",
     "description": "Official TransnetBW plugin provider for OpenSCD.",
     "pluginsUrl": "https://ase-compas.github.io/compas-transnetbw-plugins/plugins.json"
   },
