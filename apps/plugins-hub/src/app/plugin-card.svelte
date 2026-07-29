@@ -52,11 +52,11 @@
       aria-label={!isInstalled ? 'Install' : isActive ? 'Disable' : 'Enable'}
     >
       {#if !isInstalled}
-        INSTALL
+        Install
       {:else if isActive}
-        DISABLE
+        Disable
       {:else}
-        ENABLE
+        Enable
       {/if}
     </button>
   </div>
@@ -143,7 +143,8 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    letter-spacing: 0.05em;
+    text-transform: none;
+    letter-spacing: normal;
     transition: background 0.15s;
   }
 

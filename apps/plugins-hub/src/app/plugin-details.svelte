@@ -103,14 +103,14 @@
         onclick={() => onInstall(plugin.id)}
         disabled={!plugin.compatible}
       >
-        INSTALL
+        Install
       </button>
     {:else}
-      <button class="action-btn remove" onclick={() => onUninstall(plugin.id)}>REMOVE</button>
+      <button class="action-btn remove" onclick={() => onUninstall(plugin.id)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable" onclick={() => onDisable(plugin.id)}>DISABLE</button>
+        <button class="action-btn disable" onclick={() => onDisable(plugin.id)}>Disable</button>
       {:else}
-        <button class="action-btn enable" onclick={() => onEnable(plugin.id)}>ENABLE</button>
+        <button class="action-btn enable" onclick={() => onEnable(plugin.id)}>Enable</button>
       {/if}
     {/if}
   </div>
@@ -290,7 +290,8 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    letter-spacing: 0.05em;
+    text-transform: none;
+    letter-spacing: normal;
     transition: background 0.15s;
   }
 
