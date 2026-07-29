@@ -44,6 +44,8 @@ export interface PluginManifestEntry {
   icon: string;
   /** Short description. */
   description: string;
+  /** Optional longer description shown in the detail view (after URL). */
+  longDescription?: string;
   /** postion if kind === 'menu'. */
   position?: MenuPosition;
   /** Supported OpenSCD core version range (optional). */

@@ -15,6 +15,7 @@
       "author": "Bearingpoint",
       "kind": "editor",
       "description": "Bearingpoint Plugin Test 1",
+      "longDescription": "This is a longer description for Plugin 1. It provides additional context that appears after the URL in the detail view, as defined in the mockup for Issue #5.",
       "src": "/external-api/provider/bearingpoint-plugin-01.js",
       "icon": "edit",
       "supportedCoreVersion": {
