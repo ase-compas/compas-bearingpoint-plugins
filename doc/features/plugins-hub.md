@@ -76,25 +76,30 @@ interface Provider {
       "src": "https://plugins.bearingpoint.eu/transformer-importer.js",
       "kind": "editor",
       "icon": "account_tree",
-      "description": "Imports transformer models into SCL."
+      "description": "Imports transformer models into SCL.",
+      "longDescription": "A detailed description for end users that explains what the plugin does and when to use it."
     }
   ]
 }
 ```
 
+- `kind` is required (`editor`, `menu` or `validator`).
 - `supportedCoreVersion` is optional. If not present, no constraint.
 - `icon` is a Material Design Icon name (string).
+- `longDescription` is optional. For example, when you want to provide a detailed user description of the plugin.
 
 ### Plugin (runtime, with state)
 
-Each plugin in the hub store has a unique **ID** and two state fields:
+Each plugin in the hub store has a unique **ID** and two state fields. Most manifest fields (including the new `longDescription`) are inherited.
 
 ```ts
 interface Plugin extends PluginManifestEntry {
   /** Unique ID. Format: "<providerPrefix>:<slug>", e.g. "bp:transformer-importer" */
   id: string;
-  providerPrefix: string;
+  provider: Provider;                // full provider object
   compatible: boolean;               // true if coreVersion ∈ [from, to)
+  kindText: string;                  // e.g. "Editor plugin", "Navigation plugin", "Validation plugin"
+  kindIcon: string;                  // Material icon for the kind badge
   installationState: 'INSTALLED' | 'AVAILABLE';
   activationState:   'ACTIVE'    | 'INACTIVE';
 }
@@ -126,6 +131,7 @@ openscd:history-viewer
 | Multiple federated providers        | ❌            | ✅          |
 | Core-version compatibility filter   | ❌            | ✅          |
 | Search / filter                     | ❌            | ✅          |
+| Kind filter + kind badges (editor / menu / validator) | ❌ | ✅ |
 | Plugin detail view                  | ❌            | ✅          |
 | Lazy ESM loading                    | ✅            | ✅          |
 | Install / uninstall                 | ✅            | ✅          |
@@ -168,15 +174,15 @@ openscd:history-viewer
 | Field | Type | Constraint |
 |---|---|---|
 | `name` | string | Required |
-| `author` | string | Required |
+| `author` | string | Optional |
 | `src` | string (URL) | HTTPS, ESM bundle |
-| `kind` | string | e.g. "editor" |
+| `kind` | string | One of `editor` \| `menu` \| `validator`. Used for filtering and displayed as a badge (with friendly label + icon). |
 | `icon` | string | Material Design Icon name |
 | `description` | string | Required (short description shown on cards) |
-| `longDescription` | string | Optional. When present, rendered in the detail panel directly after the URL. |
+| `longDescription` | string | Optional. When present, rendered in the detail panel directly after the URL. For example, when you want to provide a detailed user description of the plugin. |
+| `position` | string | Optional. One of `top` \| `middle` \| `bottom`. Only relevant for `kind === 'menu'`. |
 | `supportedCoreVersion.from` | string | semver (optional) |
 | `supportedCoreVersion.to` | string | semver (exclusive upper bound, optional) |
-| `kind` | string | One of `editor` \| `menu` \| `validator`. Used for filtering and displayed as a badge. |
 
 ## Developer References
 
