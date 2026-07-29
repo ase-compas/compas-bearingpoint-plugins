@@ -194,7 +194,7 @@
 
   .plugin-description {
     font-size: 12px;
-    color: #004552;
+    color: #6b7280; /* lighter secondary text per mockup (consistent with provider descriptions) */
     line-height: 1.4;
     display: -webkit-box;
     line-clamp: 3;
