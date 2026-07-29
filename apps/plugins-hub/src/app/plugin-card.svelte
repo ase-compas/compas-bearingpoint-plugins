@@ -211,7 +211,7 @@
 
   .badge {
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600; /* SemiBold per mockup AC */
     padding: 2px 8px;
     border-radius: 12px;
   }
