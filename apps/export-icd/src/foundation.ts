@@ -81,8 +81,54 @@ export function buildIcdFilename(docName: string, iedName: string): string {
 }
 
 /**
+ * Removes existing whitespace-only text nodes from an element's children.
+ * This avoids compounding indentation when re-formatting a node whose
+ * subtree is already (partially) indented, e.g. because it was cloned from
+ * a document containing some formatting whitespace.
+ */
+function stripWhitespaceOnlyTextNodes(element: Element): void {
+  Array.from(element.childNodes).forEach(child => {
+    if (child.nodeType === Node.TEXT_NODE && !child.textContent?.trim()) {
+      element.removeChild(child);
+    } else if (child.nodeType === Node.ELEMENT_NODE) {
+      stripWhitespaceOnlyTextNodes(child as Element);
+    }
+  });
+}
+
+/**
+ * Recursively indents an element's subtree in place by inserting newline
+ * and indentation text nodes between element children. Elements that only
+ * contain text (e.g. `<P>value</P>`) are left untouched so their content
+ * isn't altered.
+ */
+function indentElement(element: Element, doc: Document, depth: number): void {
+  const hasElementChildren = Array.from(element.childNodes).some(
+    child => child.nodeType === Node.ELEMENT_NODE
+  );
+  if (!hasElementChildren) return;
+
+  const childIndent = '\n' + '  '.repeat(depth + 1);
+  Array.from(element.childNodes).forEach(child => {
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      element.insertBefore(doc.createTextNode(childIndent), child);
+      indentElement(child as Element, doc, depth + 1);
+    }
+  });
+  element.appendChild(doc.createTextNode('\n' + '  '.repeat(depth)));
+}
+
+/**
  * Serialize an XMLDocument to a formatted (pretty printed) XML string.
+ *
+ * Elements cloned from the source document may carry no (or inconsistent)
+ * formatting whitespace, which would otherwise cause elements to be printed
+ * all on a single line (e.g. `</Header><IED ...>` or
+ * `<DataTypeTemplates><LNodeType ...>`). This re-indents the whole subtree
+ * before serializing.
  */
 export function serializeXmlDocument(doc: XMLDocument): string {
+  stripWhitespaceOnlyTextNodes(doc.documentElement);
+  indentElement(doc.documentElement, doc, 0);
   return new XMLSerializer().serializeToString(doc);
 }
