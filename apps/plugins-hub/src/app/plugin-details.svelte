@@ -92,6 +92,10 @@
     >
   </div>
 
+  {#if plugin.longDescription}
+    <p class="details-long-desc">{plugin.longDescription}</p>
+  {/if}
+
   <div class="details-actions">
     {#if !isInstalled}
       <button
@@ -260,6 +264,14 @@
 
   .url-link:hover {
     text-decoration: underline;
+  }
+
+  .details-long-desc {
+    margin: 0;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+    white-space: pre-wrap;
   }
 
   .details-actions {
