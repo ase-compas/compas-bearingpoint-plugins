@@ -65,6 +65,7 @@
   <div class="plugin-description">{plugin.description}</div>
 
   <div class="plugin-badges">
+    <span class="badge badge-kind">{plugin.kind}</span>
     {#if plugin.compatible}
       <span class="badge badge-{plugin.installationState.toLowerCase()}">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
@@ -243,5 +244,12 @@
     color: #b45309;
     border-color: #b45309;
     background: #fffbeb;
+  }
+
+  .badge-kind {
+    color: #374151;
+    border-color: #9ca3af;
+    background: #f3f4f6;
+    text-transform: capitalize;
   }
 </style>

@@ -41,6 +41,7 @@
   let searchTerm = $state('');
   let statusFilter = $state<'all' | 'installed' | 'available'>('all');
   let providerFilter = $state<string>('all');
+  let kindFilter = $state<'all' | PluginKind>('all');
 
   const providers: Provider[] = (providersConfig as Provider[]).map(p => ({...p, icon: proxyUrl(p.icon)}));
 
@@ -93,7 +94,10 @@
       const matchesProvider =
         providerFilter === 'all' || p.provider?.prefix === providerFilter;
 
-      return matchesSearch && matchesStatus && matchesProvider;
+      const matchesKind =
+        kindFilter === 'all' || p.kind === kindFilter;
+
+      return matchesSearch && matchesStatus && matchesProvider && matchesKind;
     }),
   );
 
@@ -237,6 +241,16 @@
         {#each providers as provider}
           <Option value={provider.prefix}>{provider.name}</Option>
         {/each}
+    </Select>
+
+    <Select
+      bind:value={kindFilter}
+      style={`background: var(--oscd-base2,#fff)`}
+      variant="outlined">
+        <Option value="all">All kinds</Option>
+        <Option value="editor">Editor</Option>
+        <Option value="menu">Menu</Option>
+        <Option value="validator">Validator</Option>
     </Select>
 
   </div>
