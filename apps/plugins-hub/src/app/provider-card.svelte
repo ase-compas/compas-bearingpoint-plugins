@@ -63,10 +63,10 @@
 <style>
   .provider-card {
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: none;
     border-radius: 8px;
     padding: 20px 20px 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    box-shadow: none;
   }
 
   .provider-header {
@@ -91,7 +91,7 @@
 
   .provider-description {
     font-size: 12px;
-    color: #004552;
+    color: #6b7280; /* lighter secondary / Gray Dark per mockup */
   }
 
   .provider-icon {
