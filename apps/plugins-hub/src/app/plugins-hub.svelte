@@ -218,7 +218,7 @@
   <div class="hub-toolbar">
 
     <!-- Keep legacy --oscd-base2 for SMUI/MDC compatibility; fallback now uses our token -->
-    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`} >
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface, #fff)`} >
       {#snippet leadingIcon()}
           <Icon class="material-icons" >search</Icon>
         {/snippet}
@@ -226,7 +226,7 @@
 
     <Select
       bind:value={statusFilter}
-      style={`background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`}
+      style={`background: var(--bearingpoint-color-surface, #fff)`}
       variant="outlined">
         <Option value="all">All status</Option>
         <Option value="installed">Installed</Option>
@@ -236,7 +236,7 @@
     <Select
       class="filter-select"
       bind:value={providerFilter}
-      style={`width:300px; background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))` }
+      style={`width:300px; background: var(--bearingpoint-color-surface, #fff)` }
       variant="outlined">
         <Option value="all">All contributors</Option>
         {#each providers as provider}
@@ -246,7 +246,7 @@
 
     <Select
       bind:value={kindFilter}
-      style={`background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`}
+      style={`background: var(--bearingpoint-color-surface, #fff)`}
       variant="outlined">
         <Option value="all">All kinds</Option>
         <Option value="editor">Editor</Option>

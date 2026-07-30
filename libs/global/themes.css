@@ -7,7 +7,8 @@
  * from the V4b Figma mockup. Use these instead of hardcoded hex values
  * in Plugins-Hub components.
  */
-:root {
+:root,
+:host {
 
 
   /* Brand / Primary */
