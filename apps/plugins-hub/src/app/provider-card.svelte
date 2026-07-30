@@ -90,6 +90,7 @@
 
   .provider-description {
     font-size: 12px;
+    color: #6B9197; /* lighter secondary / Gray Dark per mockup */
   }
 
   .provider-icon {
