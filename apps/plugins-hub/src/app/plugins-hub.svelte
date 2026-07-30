@@ -217,7 +217,8 @@
 
   <div class="hub-toolbar">
 
-    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--oscd-base2,#fff)`} >
+    <!-- Keep legacy --oscd-base2 for SMUI/MDC compatibility; fallback now uses our token -->
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`} >
       {#snippet leadingIcon()}
           <Icon class="material-icons" >search</Icon>
         {/snippet}
@@ -225,7 +226,7 @@
 
     <Select
       bind:value={statusFilter}
-      style={`background: var(--oscd-base2,#fff)`}
+      style={`background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`}
       variant="outlined">
         <Option value="all">All status</Option>
         <Option value="installed">Installed</Option>
@@ -235,7 +236,7 @@
     <Select
       class="filter-select"
       bind:value={providerFilter}
-      style={`width:300px; background: var(--oscd-base2,#fff)` }
+      style={`width:300px; background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))` }
       variant="outlined">
         <Option value="all">All contributors</Option>
         {#each providers as provider}
@@ -245,7 +246,7 @@
 
     <Select
       bind:value={kindFilter}
-      style={`background: var(--oscd-base2,#fff)`}
+      style={`background: var(--oscd-base2, var(--bearingpoint-color-surface, #fff))`}
       variant="outlined">
         <Option value="all">All kinds</Option>
         <Option value="editor">Editor</Option>
@@ -309,9 +310,9 @@
     width: 100%;
     height: 100%;
     min-height: 400px;
-    background: #EDF1F2;
+    background: var(--bearingpoint-color-bg-page);
     font-family: sans-serif;
-    color: #004552;
+    color: var(--bearingpoint-color-text-primary);
     overflow: hidden;
   }
 
@@ -319,8 +320,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #0d3d4a;
-    color: #fff;
+    background: var(--bearingpoint-color-primary-dark);
+    color: var(--bearingpoint-color-surface);
     padding: 16px 24px;
   }
 
@@ -335,8 +336,8 @@
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    background: #EDF1F2;
-    border-bottom: 1px solid #DAE3E6;
+    background: var(--bearingpoint-color-bg-page);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
     flex-wrap: wrap;
   }
   .hub-toolbar :global(.mdc-select__anchor),
@@ -346,22 +347,22 @@
 
   .load-errors {
     padding: 8px 24px;
-    background: #fef9c3;
-    border-bottom: 1px solid #DAE3E6;
+    background: var(--bearingpoint-color-warning-bg);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
   }
 
   .error-message {
     margin: 4px 0;
     font-size: 13px;
-    color: #92400e;
+    color: var(--bearingpoint-color-warning-text);
   }
 
   .hub-body {
     display: flex;
     flex: 1;
     overflow: hidden;
-    background: #EDF1F2;
-    border-bottom: 1px solid #DAE3E6;
+    background: var(--bearingpoint-color-bg-page);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
   }
 
   .hub-body.with-details .providers-list {
@@ -380,7 +381,7 @@
   .loading,
   .empty-state {
     text-align: center;
-    color: #6b7280;
+    color: var(--bearingpoint-color-text-secondary);
     padding: 40px;
     font-size: 15px;
   }

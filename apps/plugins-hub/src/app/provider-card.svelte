@@ -62,7 +62,7 @@
 
 <style>
   .provider-card {
-    background: #fff;
+    background: var(--bearingpoint-color-surface);
     border: none;
     border-radius: 8px;
     padding: 20px 20px 16px;
@@ -90,7 +90,7 @@
 
   .provider-description {
     font-size: 12px;
-    color: #6B9197; /* lighter secondary / Gray Dark per mockup */
+    color: var(--bearingpoint-color-text-secondary);
   }
 
   .provider-icon {

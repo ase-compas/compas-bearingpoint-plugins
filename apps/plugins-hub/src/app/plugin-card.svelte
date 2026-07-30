@@ -89,8 +89,8 @@
 
 <style>
   .plugin-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    background: var(--bearingpoint-color-surface);
+    border: 1px solid var(--bearingpoint-color-border);
     border-radius: 6px;
     padding: 12px;
     cursor: pointer;
@@ -104,11 +104,11 @@
   }
 
   .plugin-card:hover {
-    border-color: #9ca3af;
+    border-color: #9ca3af; /* keep slightly darker neutral hover for now */
   }
 
   .plugin-card.selected {
-    border-color: #0d3d4a;
+    border-color: var(--bearingpoint-color-primary-dark);
   }
 
   .plugin-card.incompatible {
@@ -152,46 +152,46 @@
   }
 
   .action-btn.install {
-    background: #004552;
-    color: #fff;
+    background: var(--bearingpoint-color-action-primary-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.install:hover {
-    background: #0a2f3a;
+    background: var(--bearingpoint-color-action-primary-bg-hover);
   }
 
   .action-btn.uninstall {
-    background: #dc2626;
-    color: #fff;
+    background: var(--bearingpoint-color-action-danger-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.uninstall:hover {
-    background: #b91c1c;
+    background: var(--bearingpoint-color-action-danger-bg-hover);
   }
 
   .action-btn.enable {
-    background: #0CA6C4;
-    color: #fff;
+    background: var(--bearingpoint-color-action-secondary-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.enable:hover {
-    background: #09829A;
+    background: var(--bearingpoint-color-action-secondary-bg-hover);
   }
 
   .action-btn.disable {
-    background: #fff;
-    color: #0CA6C4;
+    background: var(--bearingpoint-color-surface);
+    color: var(--bearingpoint-color-action-secondary-bg);
   }
 
   .action-btn.disable:hover {
-    background: #eee;
-    color: #0CA6C4;
+    background: #eee; /* subtle neutral hover, keep for now */
+    color: var(--bearingpoint-color-action-secondary-bg);
   }
 
   .plugin-name {
     font-size: 13px;
     font-weight: 600;
-    color: #002B37;
+    color: var(--bearingpoint-color-text-primary);
     line-height: 1.3;
   }
 
@@ -220,36 +220,36 @@
   }
 
   .badge-installed {
-    color: #02A75D;
-    background: #E4FBEF;
+    color: var(--bearingpoint-color-badge-installed-text);
+    background: var(--bearingpoint-color-badge-installed-bg);
   }
 
   .badge-available {
-    color: #1d4ed8;
-    background: #eff6ff;
+    color: var(--bearingpoint-color-badge-available-text);
+    background: var(--bearingpoint-color-badge-available-bg);
   }
 
   .badge-active {
-    color: #0d3d4a;
-    background: #ecfeff;
+    color: var(--bearingpoint-color-badge-active-text);
+    background: var(--bearingpoint-color-badge-active-bg);
   }
 
   .badge-inactive {
-    color: #004552;
-    background: #EDF1F2;
+    color: var(--bearingpoint-color-badge-inactive-text);
+    background: var(--bearingpoint-color-badge-inactive-bg);
   }
 
   .badge-incompatible {
-    color: #b45309;
-    background: #fffbeb;
+    color: var(--bearingpoint-color-badge-incompatible-text);
+    background: var(--bearingpoint-color-badge-incompatible-bg);
   }
 
   .badge-kind {
-    color: #6B9197;
-    background: #f3f4f6;
+    color: var(--bearingpoint-color-badge-kind-text);
+    background: var(--bearingpoint-color-badge-kind-bg);
     text-transform: capitalize;
     padding: 0px 8px 4px 4px;
-    border-radius: 0;
+    border-radius: 2px;
   }
 
   .badge-kind-icon {

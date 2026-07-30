@@ -121,8 +121,8 @@
   .plugin-details {
     width: 320px;
     min-width: 280px;
-    border-left: 1px solid #e5e7eb;
-    background: #fff;
+    border-left: 1px solid var(--bearingpoint-color-border);
+    background: var(--bearingpoint-color-surface);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -157,7 +157,7 @@
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    color: var(--bearingpoint-color-text-primary);
   }
 
   .close-btn {
@@ -165,19 +165,18 @@
     border: none;
     font-size: 18px;
     cursor: pointer;
-    color: #6b7280;
+    color: var(--bearingpoint-color-text-secondary);
     padding: 0 2px;
     line-height: 1;
   }
 
   .close-btn:hover {
-    color: #111827;
+    color: var(--bearingpoint-color-text-primary);
   }
 
   .details-short-desc {
     margin: 0;
     font-size: 13px;
-    color: #374151;
     line-height: 1.5;
   }
 
@@ -195,36 +194,36 @@
   }
 
   .badge-installed {
-    color: #02A75D;
-    background: #E4FBEF;
+    color: var(--bearingpoint-color-badge-installed-text);
+    background: var(--bearingpoint-color-badge-installed-bg);
   }
 
   .badge-available {
-    color: #1d4ed8;
-    background: #eff6ff;
+    color: var(--bearingpoint-color-badge-available-text);
+    background: var(--bearingpoint-color-badge-available-bg);
   }
 
   .badge-active {
-    color: #0d3d4a;
-    background: #ecfeff;
+    color: var(--bearingpoint-color-badge-active-text);
+    background: var(--bearingpoint-color-badge-active-bg);
   }
 
   .badge-inactive {
-    color: #004552;
-    background: #EDF1F2;
+    color: var(--bearingpoint-color-badge-inactive-text);
+    background: var(--bearingpoint-color-badge-inactive-bg);
   }
 
   .badge-incompatible {
-    color: #b45309;
-    background: #fffbeb;
+    color: var(--bearingpoint-color-badge-incompatible-text);
+    background: var(--bearingpoint-color-badge-incompatible-bg);
   }
 
   .badge-kind {
-    color: #6B9197;
-    background: #f3f4f6;
+    color: var(--bearingpoint-color-badge-kind-text);
+    background: var(--bearingpoint-color-badge-kind-bg);
     text-transform: capitalize;
     padding: 0px 8px 4px 4px;
-    border-radius: 0;
+    border-radius: 2px;
   }
 
   .badge-kind-icon {
@@ -250,12 +249,11 @@
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.08em;
-    color: #9ca3af;
+    color: var(--bearingpoint-color-text-secondary);
   }
 
   .meta-value {
     font-size: 12px;
-    color: #111827;
     font-weight: 500;
   }
 
@@ -279,7 +277,6 @@
   .details-long-desc {
     margin: 0;
     font-size: 13px;
-    color: #374151;
     line-height: 1.5;
     white-space: pre-wrap;
   }
@@ -289,7 +286,7 @@
     gap: 8px;
     margin-top: auto;
     padding-top: 16px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--bearingpoint-color-border);
   }
 
   .action-btn {
@@ -311,41 +308,41 @@
   }
 
   .action-btn.install {
-    background: #004552;
-    color: #fff;
+    background: var(--bearingpoint-color-action-primary-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.install:hover:not(:disabled),
   .action-btn.enable:hover {
-    background: #0a2f3a;
+    background: var(--bearingpoint-color-action-primary-bg-hover);
   }
 
   .action-btn.enable {
-    background: #0CA6C4;
-    color: #fff;
+    background: var(--bearingpoint-color-action-secondary-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.enable:hover {
-    background: #09829A;
+    background: var(--bearingpoint-color-action-secondary-bg-hover);
   }
 
   .action-btn.disable {
-    background: #fff;
-    color: #0CA6C4;
+    background: var(--bearingpoint-color-surface);
+    color: var(--bearingpoint-color-action-secondary-bg);
   }
 
   .action-btn.disable:hover {
-    background: #eee;
-    color: #0CA6C4;
+    background: #eee; /* subtle neutral hover */
+    color: var(--bearingpoint-color-action-secondary-bg);
   }
 
   .action-btn.remove {
-    background: #dc2626;
-    color: #fff;
+    background: var(--bearingpoint-color-action-danger-bg);
+    color: var(--bearingpoint-color-surface);
   }
 
   .action-btn.remove:hover {
-    background: #b91c1c;
+    background: var(--bearingpoint-color-action-danger-bg-hover);
   }
 
 </style>
