@@ -191,35 +191,42 @@
     font-weight: 600; /* SemiBold per mockup AC */
     padding: 2px 8px;
     border-radius: 12px;
+    border: 1px solid currentColor;
   }
 
   .badge-installed {
     color: var(--bearingpoint-color-badge-installed-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-installed-text), var(--bearingpoint-color-badge-installed-bg) 90%);
     background: var(--bearingpoint-color-badge-installed-bg);
   }
 
   .badge-available {
     color: var(--bearingpoint-color-badge-available-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-available-text), var(--bearingpoint-color-badge-available-bg) 90%);
     background: var(--bearingpoint-color-badge-available-bg);
   }
 
   .badge-active {
     color: var(--bearingpoint-color-badge-active-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-active-text), var(--bearingpoint-color-badge-active-bg) 90%);
     background: var(--bearingpoint-color-badge-active-bg);
   }
 
   .badge-inactive {
     color: var(--bearingpoint-color-badge-inactive-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-inactive-text), var(--bearingpoint-color-badge-inactive-bg) 90%);
     background: var(--bearingpoint-color-badge-inactive-bg);
   }
 
   .badge-incompatible {
     color: var(--bearingpoint-color-badge-incompatible-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-incompatible-text), var(--bearingpoint-color-badge-incompatible-bg) 90%);
     background: var(--bearingpoint-color-badge-incompatible-bg);
   }
 
   .badge-kind {
     color: var(--bearingpoint-color-badge-kind-text);
+    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-kind-text), var(--bearingpoint-color-badge-kind-bg) 90%);
     background: var(--bearingpoint-color-badge-kind-bg);
     text-transform: capitalize;
     padding: 0px 8px 4px 4px;
