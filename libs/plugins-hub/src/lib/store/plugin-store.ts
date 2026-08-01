@@ -63,18 +63,19 @@ export function buildPlugin(
 
 /**
  * Installs a plugin by adding it to stored plugins with active: false.
+ * Incompatible plugins are left unchanged.
  */
 export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
-
-  return plugins.map((p) =>
-    p.id === pluginId
-      ? {
-          ...p,
-          installationState: 'INSTALLED' as InstallationState,
-          activationState: 'INACTIVE' as ActivationState,
-        }
-      : p,
-  );
+  return plugins.map((p) => {
+    if (p.id !== pluginId || !p.compatible) {
+      return p;
+    }
+    return {
+      ...p,
+      installationState: 'INSTALLED' as InstallationState,
+      activationState: 'INACTIVE' as ActivationState,
+    };
+  });
 }
 
 /**

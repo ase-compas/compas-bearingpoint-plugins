@@ -98,13 +98,17 @@
   );
 
   function handleInstall(pluginId: string) {
+    const target = plugins.find((p) => p.id === pluginId);
+    if (!target?.compatible) {
+      return;
+    }
+
     plugins = installPlugin(plugins, pluginId);
     const updatedPlugin = plugins.find((p) => p.id === pluginId);
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
-
       dispatchConfigurePlugin(updatedPlugin);
     }
   }
