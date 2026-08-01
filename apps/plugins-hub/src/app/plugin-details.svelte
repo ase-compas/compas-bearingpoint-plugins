@@ -19,47 +19,51 @@
 
 <aside class="plugin-details">
   <div class="details-header">
-    <div class="details-title-row">
+    <div class="details-title-row bp-typo-h1">
       <span class="material-icons details-icon">{plugin.icon}</span>
       <h3 class="details-name">{plugin.name}</h3>
       <button class="close-btn" onclick={onClose} aria-label="Close details"
         >✕</button
       >
     </div>
-    <p class="details-short-desc">{plugin.description}</p>
+
+    <div class="details-kind-wrapper">
+      <div class="badge badge-kind bp-typo-label">
+        <span class="material-icons badge-icon">{plugin.kindIcon}</span>
+        {plugin.kindText}
+      </div>
+    </div>
+
+    <p class="details-short-desc bp-typo-body">{plugin.description}</p>
 
     <div class="details-badges">
-      <span class="badge badge-{plugin.installationState.toLowerCase()}">
+      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
       </span>
       {#if isInstalled}
-        <span class="badge badge-{plugin.activationState.toLowerCase()}">
+        <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
           {isActive ? 'Active' : 'Inactive'}
         </span>
       {/if}
       {#if !plugin.compatible}
-        <span class="badge badge-incompatible">Incompatible</span>
+        <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
       {/if}
     </div>
   </div>
 
   <div class="details-meta">
     <div class="meta-item">
-      <span class="meta-label">PROVIDER</span>
-      <span class="meta-value">{plugin.provider.prefix.toUpperCase()}</span>
+      <span class="meta-label bp-typo-label">Provider</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.provider.prefix.toUpperCase()}</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">AUTHOR</span>
-      <span class="meta-value">{plugin.author}</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">KIND</span>
-      <span class="meta-value">{plugin.kind}</span>
+      <span class="meta-label bp-typo-label">Author</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.author}</span>
     </div>
     {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
-        <span class="meta-label">CORE VERSION</span>
-        <span class="meta-value">
+        <span class="meta-label bp-typo-label">Supported Version</span>
+        <span class="meta-value bp-typo-16-regular">
           {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
             {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
           {:else if plugin.supportedCoreVersion.from}
@@ -71,42 +75,46 @@
       </div>
     {/if}
     <div class="meta-item">
-      <span class="meta-label">PLUGIN ID</span>
-      <span class="meta-value plugin-id">{plugin.id}</span>
+      <span class="meta-label bp-typo-label">Plugin ID</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.id}</span>
     </div>
     {#if coreVersion}
       <div class="meta-item">
-        <span class="meta-label">CURRENT CORE</span>
-        <span class="meta-value">{coreVersion}</span>
+        <span class="meta-label bp-typo-label">Current Core</span>
+        <span class="meta-value bp-typo-16-regular">{coreVersion}</span>
       </div>
     {/if}
   </div>
 
   <div class="details-url">
-    <span class="meta-label">URL</span>
+    <span class="meta-label bp-typo-label">URL</span>
     <a
       href={plugin.src}
       target="_blank"
-      rel="noopener noreferrer"
-      class="url-link">{plugin.src}</a
+      rel="noopener noreferrer">{plugin.src}</a
     >
   </div>
 
+  {#if plugin.longDescription}
+    <p class="details-long-desc bp-typo-body">{plugin.longDescription}</p>
+  {/if}
+
   <div class="details-actions">
+    <div style="flex: 1"></div>
     {#if !isInstalled}
       <button
-        class="action-btn install"
+        class="action-btn install bp-typo-button"
         onclick={() => onInstall(plugin.id)}
         disabled={!plugin.compatible}
       >
-        INSTALL
+        Install
       </button>
     {:else}
-      <button class="action-btn remove" onclick={() => onUninstall(plugin.id)}>REMOVE</button>
+      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.id)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable" onclick={() => onDisable(plugin.id)}>DISABLE</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.id)}>Disable</button>
       {:else}
-        <button class="action-btn enable" onclick={() => onEnable(plugin.id)}>ENABLE</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.id)}>Enable</button>
       {/if}
     {/if}
   </div>
@@ -114,21 +122,21 @@
 
 <style>
   .plugin-details {
-    width: 320px;
+    width: 440px;
     min-width: 280px;
-    border-left: 1px solid #e5e7eb;
-    background: #fff;
+    border-left: 1px solid var(--bearingpoint-color-border);
+    background: var(--bearingpoint-color-surface);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     padding: 20px;
-    gap: 16px;
+    gap: 24px;
   }
 
   .details-header {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
   }
 
   .details-title-row {
@@ -143,90 +151,48 @@
     object-fit: contain;
   }
 
-  .details-icon-fallback {
-    font-size: 18px;
-  }
-
   .details-name {
     flex: 1;
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
+    color: var(--bearingpoint-color-text-primary);
   }
 
   .close-btn {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: var(--bearingpoint-text-h1-size);
     cursor: pointer;
-    color: #6b7280;
+    color: var(--bearingpoint-color-text-secondary);
     padding: 0 2px;
     line-height: 1;
   }
 
   .close-btn:hover {
-    color: #111827;
+    color: var(--bearingpoint-color-text-primary);
   }
 
   .details-short-desc {
     margin: 0;
-    font-size: 13px;
-    color: #374151;
-    line-height: 1.5;
+  }
+
+  .details-kind-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   .details-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-  }
-
-  .badge {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid currentColor;
-  }
-
-  .badge-installed {
-    color: #15803d;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
-  }
-
-  .badge-available {
-    color: #1d4ed8;
-    border-color: #bfdbfe;
-    background: #eff6ff;
-  }
-
-  .badge-active {
-    color: #0d3d4a;
-    border-color: #a5f3fc;
-    background: #ecfeff;
-  }
-
-  .badge-inactive {
-    color: #6b7280;
-    border-color: #e5e7eb;
-    background: #f9fafb;
-  }
-
-  .badge-incompatible {
-    color: #b45309;
-    border-color: #fde68a;
-    background: #fffbeb;
+    margin-top: 6px;
   }
 
   .details-meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    padding: 12px;
-    background: #f9fafb;
-    border-radius: 6px;
+    padding: 0px;
   }
 
   .meta-item {
@@ -235,28 +201,12 @@
     gap: 2px;
   }
 
-  .meta-item:last-child {
-    grid-column: span 2;
-  }
-
   .meta-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #9ca3af;
-    text-transform: uppercase;
+    color: var(--bearingpoint-color-text-secondary);
   }
 
   .meta-value {
-    font-size: 12px;
-    color: #111827;
     font-weight: 500;
-  }
-
-  .plugin-id {
-    font-family: monospace;
-    font-size: 11px;
-    word-break: break-all;
   }
 
   .details-url {
@@ -265,15 +215,8 @@
     gap: 4px;
   }
 
-  .url-link {
-    font-size: 12px;
-    color: #1d4ed8;
-    word-break: break-all;
-    text-decoration: none;
-  }
-
-  .url-link:hover {
-    text-decoration: underline;
+  .details-long-desc {
+    margin: 0;
   }
 
   .details-actions {
@@ -281,53 +224,13 @@
     gap: 8px;
     margin-top: auto;
     padding-top: 16px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--bearingpoint-color-border);
   }
 
   .action-btn {
-    flex: 1;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: background 0.15s;
-  }
-
-  .action-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .action-btn.install,
-  .action-btn.enable {
-    background: #0d3d4a;
-    color: #fff;
-  }
-
-  .action-btn.install:hover:not(:disabled),
-  .action-btn.enable:hover {
-    background: #0a2f3a;
-  }
-
-  .action-btn.disable {
-    background: #e5e7eb;
-    color: #374151;
-  }
-
-  .action-btn.disable:hover {
-    background: #d1d5db;
-  }
-
-  .action-btn.remove {
-    background: #dc2626;
-    color: #fff;
-  }
-
-  .action-btn.remove:hover {
-    background: #b91c1c;
+    flex: 0;
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
 </style>

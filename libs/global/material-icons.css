@@ -3,7 +3,8 @@
   font-family: 'Material Icons Outlined';
   font-style: normal;
   font-weight: 400;
-  src: url('icons/material-icons-v142-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  /** Font Family 'Material Icons Outlined' should be 'material-icons-outlined' - The Plugin-Kind Icon for 'editor', 'menu', 'validator' depends on it. */
+  src: url('icons/material-icons-outlined-v109-latin-regular.woff2') format('woff2');
 }
 
 .material-icons {
@@ -20,4 +21,5 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga";
 }

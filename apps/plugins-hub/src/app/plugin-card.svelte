@@ -19,6 +19,7 @@
   function handleActionClick(e: MouseEvent) {
     e.stopPropagation();
     if (!isInstalled) {
+      if (!plugin.compatible) return;
       onInstall();
     } else if (isActive) {
       onDisable();
@@ -44,45 +45,52 @@
     </div>
 
     <button
-      class="action-btn"
+      class="action-btn bp-typo-button"
       class:disable={isInstalled && isActive}
       class:enable={isInstalled && !isActive}
       class:install={!isInstalled}
       onclick={handleActionClick}
+      disabled={!isInstalled && !plugin.compatible}
       aria-label={!isInstalled ? 'Install' : isActive ? 'Disable' : 'Enable'}
     >
       {#if !isInstalled}
-        INSTALL
+        Install
       {:else if isActive}
-        DISABLE
+        Disable
       {:else}
-        ENABLE
+        Enable
       {/if}
     </button>
   </div>
 
-  <div class="plugin-name">{plugin.name}</div>
-  <div class="plugin-description">{plugin.description}</div>
+  <div class="plugin-name bp-typo-16-bold">{plugin.name}</div>
+  <div class="plugin-kind-wrapper">
+    <div class="badge badge-kind bp-typo-label">
+      <span class="material-icons badge-icon">{plugin.kindIcon}</span>
+      {plugin.kindText}
+    </div>
+  </div>
+  <div class="plugin-description bp-typo-body">{plugin.description}</div>
 
   <div class="plugin-badges">
-    <span class="badge badge-{plugin.installationState.toLowerCase()}">
+    <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
       {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
     </span>
-    {#if plugin.installationState === 'INSTALLED'}
-      <span class="badge badge-{plugin.activationState.toLowerCase()}">
-        {plugin.activationState === 'ACTIVE' ? 'Active' : 'Inactive'}
+    {#if isInstalled}
+      <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
+        {isActive ? 'Active' : 'Inactive'}
       </span>
     {/if}
     {#if !plugin.compatible}
-      <span class="badge badge-incompatible">Incompatible</span>
+      <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
     {/if}
   </div>
 </div>
 
 <style>
   .plugin-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    background: var(--bearingpoint-color-surface);
+    border: 1px solid var(--bearingpoint-color-border);
     border-radius: 6px;
     padding: 12px;
     cursor: pointer;
@@ -96,13 +104,11 @@
   }
 
   .plugin-card:hover {
-    border-color: #9ca3af;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: var(--bearingpoint-color-border-hover);
   }
 
   .plugin-card.selected {
-    border-color: #0d3d4a;
-    box-shadow: 0 0 0 2px rgba(13, 61, 74, 0.2);
+    border-color: var(--bearingpoint-color-primary-dark);
   }
 
   .plugin-card.incompatible {
@@ -116,6 +122,7 @@
   }
 
   .plugin-icon-wrapper {
+    margin: auto 0;
     width: 28px;
     height: 28px;
     display: flex;
@@ -129,68 +136,7 @@
     object-fit: contain;
   }
 
-  .plugin-icon-fallback {
-    font-size: 20px;
-  }
-
-  .action-btn {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: background 0.15s;
-  }
-
-  .action-btn.install {
-    background: #0d3d4a;
-    color: #fff;
-  }
-
-  .action-btn.install:hover {
-    background: #0a2f3a;
-  }
-
-  .action-btn.uninstall {
-    background: #dc2626;
-    color: #fff;
-  }
-
-  .action-btn.uninstall:hover {
-    background: #b91c1c;
-  }
-
-  .action-btn.enable {
-    background: #0d3d4a;
-    color: #fff;
-  }
-
-  .action-btn.enable:hover {
-    background: #0a2f3a;
-  }
-
-  .action-btn.disable {
-    background: #e5e7eb;
-    color: #374151;
-  }
-
-  .action-btn.disable:hover {
-    background: #d1d5db;
-  }
-
-  .plugin-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: #111827;
-    line-height: 1.3;
-  }
-
   .plugin-description {
-    font-size: 12px;
-    color: #6b7280;
-    line-height: 1.4;
     display: -webkit-box;
     line-clamp: 3;
     -webkit-line-clamp: 3;
@@ -198,48 +144,16 @@
     overflow: hidden;
   }
 
+  .plugin-kind-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
   .plugin-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 4px;
-  }
-
-  .badge {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid currentColor;
-  }
-
-  .badge-installed {
-    color: #15803d;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
-  }
-
-  .badge-available {
-    color: #1d4ed8;
-    border-color: #bfdbfe;
-    background: #eff6ff;
-  }
-
-  .badge-active {
-    color: #0d3d4a;
-    border-color: #a5f3fc;
-    background: #ecfeff;
-  }
-
-  .badge-inactive {
-    color: #6b7280;
-    border-color: #e5e7eb;
-    background: #f9fafb;
-  }
-
-  .badge-incompatible {
-    color: #b45309;
-    border-color: #fde68a;
-    background: #fffbeb;
+    margin-top: 6px;
   }
 </style>

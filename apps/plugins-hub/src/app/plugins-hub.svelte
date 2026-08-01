@@ -1,6 +1,8 @@
 <script lang="ts">
-  import type { Provider, StoredPlugin } from '@compas-bearingpoint/plugins-hub';
-  import type { Plugin } from '@compas-bearingpoint/plugins-hub';
+  import Textfield from '@smui/textfield';
+  import Select, { Option } from '@smui/select';
+  import Icon from '@smui/textfield/icon';
+  import type { Provider, StoredPlugin, Plugin, PluginKind } from '@compas-bearingpoint/plugins-hub';
   import {
     loadAllProviders,
     buildPlugin,
@@ -13,16 +15,13 @@
     getAppVersion,
     getLayout,
     proxyUrl,
+    PLUGIN_KINDS,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
 
-  // general stylings from open-scd
-  import 'svelte-material-ui/bare.css';
-  import '../../public/material-icon.css';
-  import '../../public/global.css';
-  
-  import type { PluginKind } from '../../../../libs/plugins-hub/src/lib/types/plugin';
+  // general stylings
+  import '../styles/global.css';
 
   interface Props {
     coreVersion?: string;
@@ -38,6 +37,7 @@
   let searchTerm = $state('');
   let statusFilter = $state<'all' | 'installed' | 'available'>('all');
   let providerFilter = $state<string>('all');
+  let kindFilter = $state<'all' | PluginKind>('all');
 
   const providers: Provider[] = (providersConfig as Provider[]).map(p => ({...p, icon: proxyUrl(p.icon)}));
 
@@ -90,18 +90,25 @@
       const matchesProvider =
         providerFilter === 'all' || p.provider?.prefix === providerFilter;
 
-      return matchesSearch && matchesStatus && matchesProvider;
+      const matchesKind =
+        kindFilter === 'all' || p.kind === kindFilter;
+
+      return matchesSearch && matchesStatus && matchesProvider && matchesKind;
     }),
   );
 
   function handleInstall(pluginId: string) {
+    const target = plugins.find((p) => p.id === pluginId);
+    if (!target?.compatible) {
+      return;
+    }
+
     plugins = installPlugin(plugins, pluginId);
     const updatedPlugin = plugins.find((p) => p.id === pluginId);
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
-
       dispatchConfigurePlugin(updatedPlugin);
     }
   }
@@ -203,49 +210,60 @@
 
 </script>
 
-<div class="plugins-hub">
+<div class="plugins-hub bp-typo-body">
   <div class="hub-header">
     <h2 class="hub-title">Plugin Store</h2>
   </div>
 
   <div class="hub-toolbar">
-    <div class="search-wrapper">
-      <span class="search-icon">🔍</span>
-      <input
-        class="search-input"
-        type="text"
-        placeholder="Search..."
-        bind:value={searchTerm}
-        aria-label="Search plugins"
-      />
-    </div>
+    <!--
+      TODO(min-task): verify whether SMUI Textfield/Select surface background
+      can be set via CSS (.hub-toolbar :global(.mdc-text-field / .mdc-select__anchor))
+      instead of inline style={...}. Must be tested separately against MDC DOM
+      before removing the inline styles.
+    -->
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface, #fff)`} >
+      {#snippet leadingIcon()}
+          <Icon class="material-icons" >search</Icon>
+        {/snippet}
+    </Textfield>
 
-    <select
-      class="filter-select"
+    <Select
       bind:value={statusFilter}
-      aria-label="Filter by status"
-    >
-      <option value="all">All status</option>
-      <option value="installed">Installed</option>
-      <option value="available">Available</option>
-    </select>
+      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      variant="outlined">
+        <Option value="all">All status</Option>
+        <Option value="installed">Installed</Option>
+        <Option value="available">Available</Option>
+    </Select>
 
-    <select
+    <Select
       class="filter-select"
       bind:value={providerFilter}
-      aria-label="Filter by contributor"
-    >
-      <option value="all">All contributors</option>
-      {#each providers as provider}
-        <option value={provider.prefix}>{provider.name}</option>
-      {/each}
-    </select>
+      style={`width:300px; background: var(--bearingpoint-color-surface, #fff)` }
+      variant="outlined">
+        <Option value="all">All contributors</Option>
+        {#each providers as provider}
+          <Option value={provider.prefix}>{provider.name}</Option>
+        {/each}
+    </Select>
+
+    <Select
+      bind:value={kindFilter}
+      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      variant="outlined">
+        <Option value="all">All kinds</Option>
+        {#each PLUGIN_KINDS as kind}
+          <Option value={kind}>{kind.charAt(0).toUpperCase() + kind.slice(1)}</Option>
+        {/each}
+    </Select>
+
   </div>
 
   {#if loadErrors.length > 0}
     <div class="load-errors">
       {#each loadErrors as error}
-        <p class="error-message">⚠️ {error}</p>
+        <p class="error-message bp-typo-body">⚠️ {error}</p>
       {/each}
     </div>
   {/if}
@@ -253,9 +271,9 @@
   <div class="hub-body" class:with-details={selectedPlugin !== null}>
     <div class="providers-list">
       {#if loading}
-        <div class="loading">Loading plugins…</div>
+        <div class="loading bp-typo-16-regular">Loading plugins…</div>
       {:else if filteredPlugins.length === 0}
-        <div class="empty-state">No plugins match your search.</div>
+        <div class="empty-state bp-typo-body">No plugins match your search.</div>
       {:else}
         {#each providers as provider}
           {@const providerPlugins = getPluginsForProvider(provider.prefix)}
@@ -296,9 +314,8 @@
     width: 100%;
     height: 100%;
     min-height: 400px;
-    background: #fff;
-    font-family: sans-serif;
-    color: #222;
+    background: var(--bearingpoint-color-bg-page);
+    color: var(--bearingpoint-color-text-primary);
     overflow: hidden;
   }
 
@@ -306,15 +323,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #0d3d4a;
-    color: #fff;
+    background: var(--bearingpoint-color-primary-dark);
+    color: var(--bearingpoint-color-surface);
     padding: 16px 24px;
   }
 
   .hub-title {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: var(--bearingpoint-font-roboto);
+    font-weight: 500;
+    font-size: var(--bearingpoint-text-h1-size);
+    line-height: 32px;
+    letter-spacing: 0.25px;
   }
 
   .hub-toolbar {
@@ -322,67 +342,32 @@
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    background: var(--bearingpoint-color-bg-page);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
     flex-wrap: wrap;
   }
-
-  .search-wrapper {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    min-width: 180px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 5px 6px;
-    background: #fff;
-    margin: 0 0 0.5em 0;
-  }
-  
-  .search-wrapper .search-input {
-    margin: 0;
-    padding: 0;
-  }
-
-  .search-icon {
-    margin-right: 8px;
-    font-size: 14px;
-    color: #9ca3af;
-  }
-
-  .search-input {
-    border: none;
-    outline: none;
-    flex: 1;
-    font-size: 14px;
-    background: transparent;
-  }
-
-  .filter-select {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 28px 6px 12px;
-    font-size: 14px;
-    color: #374151;
-    background: #fff;
-    cursor: pointer;
-    appearance: auto;
+  .hub-toolbar :global(.mdc-select__anchor),
+  .hub-toolbar :global(.mdc-text-field) {
+    height: 42px !important;
   }
 
   .load-errors {
     padding: 8px 24px;
-    background: #fef9c3;
+    background: var(--bearingpoint-color-warning-bg);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
   }
 
   .error-message {
     margin: 4px 0;
-    font-size: 13px;
-    color: #92400e;
+    color: var(--bearingpoint-color-warning-text);
   }
 
   .hub-body {
     display: flex;
     flex: 1;
     overflow: hidden;
+    background: var(--bearingpoint-color-bg-page);
+    border-bottom: 1px solid var(--bearingpoint-color-border);
   }
 
   .hub-body.with-details .providers-list {
@@ -401,8 +386,7 @@
   .loading,
   .empty-state {
     text-align: center;
-    color: #6b7280;
+    color: var(--bearingpoint-color-text-secondary);
     padding: 40px;
-    font-size: 15px;
   }
 </style>

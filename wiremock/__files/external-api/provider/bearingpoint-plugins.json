@@ -15,6 +15,7 @@
       "author": "Bearingpoint",
       "kind": "editor",
       "description": "Bearingpoint Plugin Test 1",
+      "longDescription": "This is a longer description for Plugin 1. It provides additional context that appears after the URL in the detail view, as defined in the mockup for Issue #5.",
       "src": "/external-api/provider/bearingpoint-plugin-01.js",
       "icon": "edit",
       "supportedCoreVersion": {
@@ -24,10 +25,10 @@
     },
     {
       "name": "Plugin 2",
-      "kind": "editor",
+      "kind": "menu",
       "description": "Bearingpoint Plugin Test 2",
       "src": "/external-api/provider/bearingpoint-plugin-02.js",
-      "icon": "editing",
+      "icon": "edit",
       "supportedCoreVersion": {
         "from": "0.45.0",
         "to": "2.0.0"
@@ -35,10 +36,10 @@
     },
     {
       "name": "Plugin 3",
-      "kind": "editor",
+      "kind": "validator",
       "description": "Bearingpoint Plugin Test 3",
       "src": "/external-api/provider/bearingpoint-plugin-03.js",
-      "icon": "editing",
+      "icon": "edit",
       "supportedCoreVersion": {
         "to": "2.0.0"
       }

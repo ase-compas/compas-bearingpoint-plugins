@@ -1,7 +1,9 @@
-import type {
-  Plugin,
-  InstallationState,
-  ActivationState,
+import {
+  type Plugin,
+  type InstallationState,
+  type ActivationState,
+  PluginKindIconMapping,
+  PluginKindTextMapping,
 } from '../types/plugin';
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
@@ -52,6 +54,8 @@ export function buildPlugin(
     id,
     provider: provider,
     compatible,
+    kindText: PluginKindTextMapping[entry.kind],
+    kindIcon: PluginKindIconMapping[entry.kind],
     installationState,
     activationState,
   };
@@ -59,18 +63,19 @@ export function buildPlugin(
 
 /**
  * Installs a plugin by adding it to stored plugins with active: false.
+ * Incompatible plugins are left unchanged.
  */
 export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
-
-  return plugins.map((p) =>
-    p.id === pluginId
-      ? {
-          ...p,
-          installationState: 'INSTALLED' as InstallationState,
-          activationState: 'INACTIVE' as ActivationState,
-        }
-      : p,
-  );
+  return plugins.map((p) => {
+    if (p.id !== pluginId || !p.compatible) {
+      return p;
+    }
+    return {
+      ...p,
+      installationState: 'INSTALLED' as InstallationState,
+      activationState: 'INACTIVE' as ActivationState,
+    };
+  });
 }
 
 /**

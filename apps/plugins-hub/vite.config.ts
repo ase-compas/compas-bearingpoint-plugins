@@ -1,4 +1,5 @@
 /// <reference types='vitest' />
+import path from 'node:path';
 import { defineConfig, UserConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
@@ -21,7 +22,9 @@ export default defineConfig(async (): Promise<UserConfig> => {
       port: 4201,
       host: 'localhost',
       fs: {
-        allow: ['..'],
+        // App root is apps/plugins-hub; shared fonts/CSS live in libs/global.
+        // Previous allow:['..'] only covered apps/ → @fs/.../libs/global/icons/*.woff2 = 403.
+        allow: [path.resolve(__dirname, '../..')],
       },
       proxy,
     },

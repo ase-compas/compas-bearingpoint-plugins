@@ -29,8 +29,8 @@
 <section class="provider-card">
   <div class="provider-header">
     <div class="provider-info">
-      <h3 class="provider-name">{provider.name}</h3>
-      <span class="provider-description">{provider.description}</span>
+      <h3 class="provider-name bp-typo-h3">{provider.name}</h3>
+      <span class="provider-description bp-typo-body">{provider.description}</span>
     </div>
     {#if provider.icon.startsWith('http') || provider.icon.startsWith('/')}
       <img
@@ -62,11 +62,11 @@
 
 <style>
   .provider-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    background: var(--bearingpoint-color-surface);
+    border: none;
     border-radius: 8px;
     padding: 20px 20px 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    box-shadow: none;
   }
 
   .provider-header {
@@ -84,14 +84,10 @@
 
   .provider-name {
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
   }
 
   .provider-description {
-    font-size: 12px;
-    color: #6b7280;
+    color: var(--bearingpoint-color-text-secondary);
   }
 
   .provider-icon {

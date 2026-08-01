@@ -9,7 +9,7 @@
   {
     "prefix": "TransnetBW",
     "name": "TransnetBW Plugins",
-    "icon": "/external-api/provider/transnetbw.ico",
+    "icon": "/external-api/provider/transnetbw.svg",
     "description": "Official TransnetBW plugin provider for OpenSCD.",
     "pluginsUrl": "/external-api/provider/transnetbw-plugins.json"
   },
