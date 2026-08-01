@@ -1,0 +1,49 @@
+/**
+ * Shared BearingPoint element defaults (links, form controls, buttons).
+ * e.g. Loaded via apps/plugins-hub/public/global.css.
+ */
+a {
+  color: rgb(0, 100, 200);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: rgb(0, 80, 160);
+}
+
+label {
+  display: block;
+}
+
+input,
+button,
+select,
+textarea {
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+input:disabled {
+  color: #ccc;
+}
+
+button {
+  height: 32px;
+  opacity: 1;
+  border: none;
+  border-radius: 4px;
+  gap: 6px;
+  padding: 0 8px 0 8px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
