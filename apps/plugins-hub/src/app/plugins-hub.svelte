@@ -216,8 +216,12 @@
   </div>
 
   <div class="hub-toolbar">
-
-    <!-- Keep legacy --oscd-base2 for SMUI/MDC compatibility; fallback now uses our token -->
+    <!--
+      TODO(min-task): verify whether SMUI Textfield/Select surface background
+      can be set via CSS (.hub-toolbar :global(.mdc-text-field / .mdc-select__anchor))
+      instead of inline style={...}. Must be tested separately against MDC DOM
+      before removing the inline styles.
+    -->
     <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface, #fff)`} >
       {#snippet leadingIcon()}
           <Icon class="material-icons" >search</Icon>
