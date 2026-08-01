@@ -1,27 +1,11 @@
 @import '../../../libs/global/themes.css';
 
-/* TODO: explaind what bare.css is for: */
+/* SMUI (svelte-material-ui) default theme styles (MDC baseline).
+   Required by @smui/* components used in the hub toolbar (Textfield, Select, Icon).
+   See: https://sveltematerialui.com/INSTALL.md — "The Default Theme" / bare.css */
 @import 'svelte-material-ui/bare.css';
-/* TODO: move material-icon (with the folder icons) into /lib/global/... and rename it: */
-@import './material-icon.css';
 
-/* TODO: html & body works only in local dev-modus:
-it simulate the container where the Plugin is later placed
-Move it into /lib/global/dev-container.css
-And it should not be part of this globales.css (include it via src/main.ts or src/index.html?)
-*/
-html,
-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  box-sizing: border-box;
-}
-/* end html & body */
+@import '../../../libs/global/material-icons.css';
 
 /* start general bearingpoint styles. */
 a {

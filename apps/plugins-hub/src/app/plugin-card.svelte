@@ -19,6 +19,7 @@
   function handleActionClick(e: MouseEvent) {
     e.stopPropagation();
     if (!isInstalled) {
+      if (!plugin.compatible) return;
       onInstall();
     } else if (isActive) {
       onDisable();
@@ -49,6 +50,7 @@
       class:enable={isInstalled && !isActive}
       class:install={!isInstalled}
       onclick={handleActionClick}
+      disabled={!isInstalled && !plugin.compatible}
       aria-label={!isInstalled ? 'Install' : isActive ? 'Disable' : 'Enable'}
     >
       {#if !isInstalled}
@@ -141,7 +143,7 @@
     color: var(--bearingpoint-color-surface);
   }
 
-  .action-btn.install:hover {
+  .action-btn.install:hover:not(:disabled) {
     background: var(--bearingpoint-color-action-primary-bg-hover);
   }
 

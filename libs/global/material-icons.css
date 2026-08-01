@@ -3,7 +3,7 @@
   font-family: 'Material Icons Outlined';
   font-style: normal;
   font-weight: 400;
-  /** Font Family 'Material Icons Outlined' should be 'material-icons-outlined' - The Plugin-Kind Icon for 'editor', 'menu', 'validator' depends on it. */ 
+  /** Font Family 'Material Icons Outlined' should be 'material-icons-outlined' - The Plugin-Kind Icon for 'editor', 'menu', 'validator' depends on it. */
   src: url('icons/material-icons-outlined-v109-latin-regular.woff2') format('woff2');
 }
 
