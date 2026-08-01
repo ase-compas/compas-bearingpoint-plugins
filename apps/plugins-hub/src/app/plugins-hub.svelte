@@ -329,10 +329,8 @@
     font-family: var(--bearingpoint-font-roboto);
     font-weight: 500;
     font-size: var(--bearingpoint-text-h1-size);
-    leading-trim: NONE;
     line-height: 32px;
     letter-spacing: 0.25px;
-        
   }
 
   .hub-toolbar {
