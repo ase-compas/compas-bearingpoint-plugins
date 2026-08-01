@@ -44,7 +44,7 @@
     </div>
 
     <button
-      class="action-btn"
+      class="action-btn bp-typo-button"
       class:disable={isInstalled && isActive}
       class:enable={isInstalled && !isActive}
       class:install={!isInstalled}
@@ -61,28 +61,28 @@
     </button>
   </div>
 
-  <div class="plugin-name">{plugin.name}</div>
-  <div class="plugin-badges">
-    <div class="badge badge-kind">
-      <span class="material-icons badge-kind-icon">{plugin.kindIcon}</span>
+  <div class="plugin-name bp-typo-16-bold">{plugin.name}</div>
+  <div class="plugin-kind-wrapper">
+    <div class="badge badge-kind bp-typo-label">
+      <span class="material-icons badge-icon">{plugin.kindIcon}</span>
       {plugin.kindText}
     </div>
   </div>
-  <div class="plugin-description">{plugin.description}</div>
+  <div class="plugin-description bp-typo-body">{plugin.description}</div>
 
   <div class="plugin-badges">
     {#if plugin.compatible}
-      <span class="badge badge-{plugin.installationState.toLowerCase()}">
+      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
       </span>
     {/if}
     {#if plugin.installationState === 'INSTALLED'}
-      <span class="badge badge-{plugin.activationState.toLowerCase()}">
+      <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
         {plugin.activationState === 'ACTIVE' ? 'Active' : 'Inactive'}
       </span>
     {/if}
     {#if !plugin.compatible}
-      <span class="badge badge-incompatible">Incompatible</span>
+      <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
     {/if}
   </div>
 </div>
@@ -122,6 +122,7 @@
   }
 
   .plugin-icon-wrapper {
+    margin: auto 0;
     width: 28px;
     height: 28px;
     display: flex;
@@ -133,22 +134,6 @@
     width: 28px;
     height: 28px;
     object-fit: contain;
-  }
-
-  .plugin-icon-fallback {
-    font-size: 20px;
-  }
-
-  .action-btn {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    text-transform: none;
-    letter-spacing: normal;
-    transition: background 0.15s;
   }
 
   .action-btn.install {
@@ -188,16 +173,7 @@
     color: var(--bearingpoint-color-action-secondary-bg);
   }
 
-  .plugin-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--bearingpoint-color-text-primary);
-    line-height: 1.3;
-  }
-
   .plugin-description {
-    font-size: 12px;
-    line-height: 1.4;
     display: -webkit-box;
     line-clamp: 3;
     -webkit-line-clamp: 3;
@@ -205,63 +181,16 @@
     overflow: hidden;
   }
 
+  .plugin-kind-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
   .plugin-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 4px;
-  }
-
-  .badge {
-    font-size: 11px;
-    font-weight: 600; /* SemiBold per mockup AC */
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid currentColor;
-  }
-
-  .badge-installed {
-    color: var(--bearingpoint-color-badge-installed-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-installed-text), var(--bearingpoint-color-badge-installed-bg) 90%);
-    background: var(--bearingpoint-color-badge-installed-bg);
-  }
-
-  .badge-available {
-    color: var(--bearingpoint-color-badge-available-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-available-text), var(--bearingpoint-color-badge-available-bg) 90%);
-    background: var(--bearingpoint-color-badge-available-bg);
-  }
-
-  .badge-active {
-    color: var(--bearingpoint-color-badge-active-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-active-text), var(--bearingpoint-color-badge-active-bg) 90%);
-    background: var(--bearingpoint-color-badge-active-bg);
-  }
-
-  .badge-inactive {
-    color: var(--bearingpoint-color-badge-inactive-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-inactive-text), var(--bearingpoint-color-badge-inactive-bg) 90%);
-    background: var(--bearingpoint-color-badge-inactive-bg);
-  }
-
-  .badge-incompatible {
-    color: var(--bearingpoint-color-badge-incompatible-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-incompatible-text), var(--bearingpoint-color-badge-incompatible-bg) 90%);
-    background: var(--bearingpoint-color-badge-incompatible-bg);
-  }
-
-  .badge-kind {
-    color: var(--bearingpoint-color-badge-kind-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-kind-text), var(--bearingpoint-color-badge-kind-bg) 90%);
-    background: var(--bearingpoint-color-badge-kind-bg);
-    text-transform: capitalize;
-    padding: 0px 8px 4px 4px;
-    border-radius: 2px;
-  }
-
-  .badge-kind-icon {
-    font-size: 16px;
-    padding: 0px 2px 0px 0px;
-    transform: translateY(4px);
+    margin-top: 6px;
   }
 </style>

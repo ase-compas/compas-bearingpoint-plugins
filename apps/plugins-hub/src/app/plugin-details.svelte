@@ -19,48 +19,51 @@
 
 <aside class="plugin-details">
   <div class="details-header">
-    <div class="details-title-row">
+    <div class="details-title-row bp-typo-h1">
       <span class="material-icons details-icon">{plugin.icon}</span>
       <h3 class="details-name">{plugin.name}</h3>
       <button class="close-btn" onclick={onClose} aria-label="Close details"
         >✕</button
       >
     </div>
-    <p class="details-short-desc">{plugin.description}</p>
 
-    <div class="badge badge-kind">
-      <span class="material-icons badge-kind-icon">{plugin.kindIcon}</span>
-      {plugin.kindText}
+    <div class="details-kind-wrapper">
+      <div class="badge badge-kind bp-typo-label">
+        <span class="material-icons badge-icon">{plugin.kindIcon}</span>
+        {plugin.kindText}
+      </div>
     </div>
 
+    <p class="details-short-desc bp-typo-body">{plugin.description}</p>
+
     <div class="details-badges">
-      <span class="badge badge-{plugin.installationState.toLowerCase()}">
+      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
         {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
       </span>
       {#if isInstalled}
-        <span class="badge badge-{plugin.activationState.toLowerCase()}">
+        <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
           {isActive ? 'Active' : 'Inactive'}
         </span>
       {/if}
       {#if !plugin.compatible}
-        <span class="badge badge-incompatible">Incompatible</span>
+        <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
       {/if}
     </div>
   </div>
 
   <div class="details-meta">
     <div class="meta-item">
-      <span class="meta-label">Provider</span>
-      <span class="meta-value">{plugin.provider.prefix.toUpperCase()}</span>
+      <span class="meta-label bp-typo-label">Provider</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.provider.prefix.toUpperCase()}</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">Author</span>
-      <span class="meta-value">{plugin.author}</span>
+      <span class="meta-label bp-typo-label">Author</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.author}</span>
     </div>
     {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
-        <span class="meta-label">Supported Version</span>
-        <span class="meta-value">
+        <span class="meta-label bp-typo-label">Supported Version</span>
+        <span class="meta-value bp-typo-16-regular">
           {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
             {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
           {:else if plugin.supportedCoreVersion.from}
@@ -72,46 +75,46 @@
       </div>
     {/if}
     <div class="meta-item">
-      <span class="meta-label">Plugin ID</span>
-      <span class="meta-value">{plugin.id}</span>
+      <span class="meta-label bp-typo-label">Plugin ID</span>
+      <span class="meta-value bp-typo-16-regular">{plugin.id}</span>
     </div>
     {#if coreVersion}
       <div class="meta-item">
-        <span class="meta-label">Current Core</span>
-        <span class="meta-value">{coreVersion}</span>
+        <span class="meta-label bp-typo-label">Current Core</span>
+        <span class="meta-value bp-typo-16-regular">{coreVersion}</span>
       </div>
     {/if}
   </div>
 
   <div class="details-url">
-    <span class="meta-label">URL</span>
+    <span class="meta-label bp-typo-label">URL</span>
     <a
       href={plugin.src}
       target="_blank"
-      rel="noopener noreferrer"
-      class="url-link">{plugin.src}</a
+      rel="noopener noreferrer">{plugin.src}</a
     >
   </div>
 
   {#if plugin.longDescription}
-    <p class="details-long-desc">{plugin.longDescription}</p>
+    <p class="details-long-desc bp-typo-body">{plugin.longDescription}</p>
   {/if}
 
   <div class="details-actions">
+    <div style="flex: 1"></div>
     {#if !isInstalled}
       <button
-        class="action-btn install"
+        class="action-btn install bp-typo-button"
         onclick={() => onInstall(plugin.id)}
         disabled={!plugin.compatible}
       >
         Install
       </button>
     {:else}
-      <button class="action-btn remove" onclick={() => onUninstall(plugin.id)}>Remove</button>
+      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.id)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable" onclick={() => onDisable(plugin.id)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.id)}>Disable</button>
       {:else}
-        <button class="action-btn enable" onclick={() => onEnable(plugin.id)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.id)}>Enable</button>
       {/if}
     {/if}
   </div>
@@ -119,7 +122,7 @@
 
 <style>
   .plugin-details {
-    width: 320px;
+    width: 440px;
     min-width: 280px;
     border-left: 1px solid var(--bearingpoint-color-border);
     background: var(--bearingpoint-color-surface);
@@ -127,13 +130,13 @@
     flex-direction: column;
     overflow-y: auto;
     padding: 20px;
-    gap: 16px;
+    gap: 24px;
   }
 
   .details-header {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
   }
 
   .details-title-row {
@@ -148,22 +151,16 @@
     object-fit: contain;
   }
 
-  .details-icon-fallback {
-    font-size: 18px;
-  }
-
   .details-name {
     flex: 1;
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
     color: var(--bearingpoint-color-text-primary);
   }
 
   .close-btn {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: var(--bearingpoint-text-h1-size);
     cursor: pointer;
     color: var(--bearingpoint-color-text-secondary);
     padding: 0 2px;
@@ -176,67 +173,19 @@
 
   .details-short-desc {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
+  }
+
+  .details-kind-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   .details-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-  }
-
-  .badge {
-    font-size: 11px;
-    font-weight: 600; /* SemiBold per mockup AC */
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid currentColor;
-  }
-
-  .badge-installed {
-    color: var(--bearingpoint-color-badge-installed-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-installed-text), var(--bearingpoint-color-badge-installed-bg) 90%);
-    background: var(--bearingpoint-color-badge-installed-bg);
-  }
-
-  .badge-available {
-    color: var(--bearingpoint-color-badge-available-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-available-text), var(--bearingpoint-color-badge-available-bg) 90%);
-    background: var(--bearingpoint-color-badge-available-bg);
-  }
-
-  .badge-active {
-    color: var(--bearingpoint-color-badge-active-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-active-text), var(--bearingpoint-color-badge-active-bg) 90%);
-    background: var(--bearingpoint-color-badge-active-bg);
-  }
-
-  .badge-inactive {
-    color: var(--bearingpoint-color-badge-inactive-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-inactive-text), var(--bearingpoint-color-badge-inactive-bg) 90%);
-    background: var(--bearingpoint-color-badge-inactive-bg);
-  }
-
-  .badge-incompatible {
-    color: var(--bearingpoint-color-badge-incompatible-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-incompatible-text), var(--bearingpoint-color-badge-incompatible-bg) 90%);
-    background: var(--bearingpoint-color-badge-incompatible-bg);
-  }
-
-  .badge-kind {
-    color: var(--bearingpoint-color-badge-kind-text);
-    border-color: color-mix(in oklab, var(--bearingpoint-color-badge-kind-text), var(--bearingpoint-color-badge-kind-bg) 90%);
-    background: var(--bearingpoint-color-badge-kind-bg);
-    text-transform: capitalize;
-    padding: 0px 8px 4px 4px;
-    border-radius: 2px;
-  }
-
-  .badge-kind-icon {
-    font-size: 16px;
-    padding: 0px 2px 0px 0px;
-    transform: translateY(4px);
+    margin-top: 6px;
   }
 
   .details-meta {
@@ -253,14 +202,10 @@
   }
 
   .meta-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
     color: var(--bearingpoint-color-text-secondary);
   }
 
   .meta-value {
-    font-size: 12px;
     font-weight: 500;
   }
 
@@ -270,22 +215,8 @@
     gap: 4px;
   }
 
-  .url-link {
-    font-size: 12px;
-    color: #1d4ed8;
-    word-break: break-all;
-    text-decoration: none;
-  }
-
-  .url-link:hover {
-    text-decoration: underline;
-  }
-
   .details-long-desc {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    white-space: pre-wrap;
   }
 
   .details-actions {
@@ -297,21 +228,10 @@
   }
 
   .action-btn {
-    flex: 1;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: none;
-    letter-spacing: normal;
-    transition: background 0.15s;
-  }
-
-  .action-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    flex: 0;
+    padding-right: 12px;
+    padding-left: 12px;
+    
   }
 
   .action-btn.install {

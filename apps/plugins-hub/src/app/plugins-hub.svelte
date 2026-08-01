@@ -20,9 +20,7 @@
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
 
-  // general stylings from open-scd
-  import 'svelte-material-ui/bare.css';
-  import '../../public/material-icon.css';
+  // general stylings
   import '../../public/global.css';
   
   import type { PluginKind } from '../../../../libs/plugins-hub/src/lib/types/plugin';
@@ -210,7 +208,7 @@
 
 </script>
 
-<div class="plugins-hub">
+<div class="plugins-hub bp-typo-body">
   <div class="hub-header">
     <h2 class="hub-title">Plugin Store</h2>
   </div>
@@ -259,7 +257,7 @@
   {#if loadErrors.length > 0}
     <div class="load-errors">
       {#each loadErrors as error}
-        <p class="error-message">⚠️ {error}</p>
+        <p class="error-message bp-typo-body">⚠️ {error}</p>
       {/each}
     </div>
   {/if}
@@ -267,9 +265,9 @@
   <div class="hub-body" class:with-details={selectedPlugin !== null}>
     <div class="providers-list">
       {#if loading}
-        <div class="loading">Loading plugins…</div>
+        <div class="loading bp-typo-16-regular">Loading plugins…</div>
       {:else if filteredPlugins.length === 0}
-        <div class="empty-state">No plugins match your search.</div>
+        <div class="empty-state bp-typo-body">No plugins match your search.</div>
       {:else}
         {#each providers as provider}
           {@const providerPlugins = getPluginsForProvider(provider.prefix)}
@@ -311,7 +309,6 @@
     height: 100%;
     min-height: 400px;
     background: var(--bearingpoint-color-bg-page);
-    font-family: sans-serif;
     color: var(--bearingpoint-color-text-primary);
     overflow: hidden;
   }
@@ -327,8 +324,13 @@
 
   .hub-title {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: var(--bearingpoint-font-roboto);
+    font-weight: 500;
+    font-size: var(--bearingpoint-text-h1-size);
+    leading-trim: NONE;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+        
   }
 
   .hub-toolbar {
@@ -353,7 +355,6 @@
 
   .error-message {
     margin: 4px 0;
-    font-size: 13px;
     color: var(--bearingpoint-color-warning-text);
   }
 
@@ -383,6 +384,5 @@
     text-align: center;
     color: var(--bearingpoint-color-text-secondary);
     padding: 40px;
-    font-size: 15px;
   }
 </style>

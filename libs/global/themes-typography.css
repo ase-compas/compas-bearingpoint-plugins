@@ -1,0 +1,185 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&family=Source+Sans+3:wght@400;600&family=Rubik:wght@400;500&display=swap");
+
+:root,
+:host {
+  /* Font stacks */
+  --bearingpoint-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bearingpoint-font-inter: "Inter", system-ui, sans-serif;
+  --bearingpoint-font-roboto: "Roboto", system-ui, sans-serif;
+  --bearingpoint-font-source-sans: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  --bearingpoint-font-rubik: "Rubik", system-ui, sans-serif;
+
+  /* Type scale tokens (px) */
+  --bearingpoint-text-h1-size: 20px;
+  --bearingpoint-text-h1-line: 24px;
+  --bearingpoint-text-h1-weight: 600;
+
+  --bearingpoint-text-h2-size: 16px;
+  --bearingpoint-text-h2-line: 22px;
+  --bearingpoint-text-h2-weight: 600;
+
+  --bearingpoint-text-h3-size: 18px;
+  --bearingpoint-text-h3-line: 24px;
+  --bearingpoint-text-h3-weight: 600;
+
+  --bearingpoint-text-16-size: 16px;
+  --bearingpoint-text-16-line: 22px;
+  --bearingpoint-text-16-bold-weight: 600;
+
+  --bearingpoint-text-body-size: 14px;
+  --bearingpoint-text-body-line: 22px;
+  --bearingpoint-text-body-weight: 400;
+
+  --bearingpoint-text-14-bold-size: 14px;
+  --bearingpoint-text-14-bold-line: 20px;
+  --bearingpoint-text-14-bold-weight: 600;
+
+  --bearingpoint-text-caption-size: 12px;
+  --bearingpoint-text-caption-line: 16px;
+  --bearingpoint-text-caption-weight: 400;
+
+  --bearingpoint-text-label-size: 12px;
+  --bearingpoint-text-label-line: 16px;
+  --bearingpoint-text-label-weight: 600;
+
+  --bearingpoint-text-tag-size: 12px;
+  --bearingpoint-text-tag-line: 16px;
+  --bearingpoint-text-tag-weight: 600;
+
+  --bearingpoint-text-button-size: 14px;
+  --bearingpoint-text-button-line: 20px;
+  --bearingpoint-text-button-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   BearingPoint shared text styles → CSS classes
+   --------------------------------------------------------------------------- */
+
+/** BearingPoint/h1 — Inter Semi Bold 20 / 24 */
+h1,
+.bp-typo-h1 {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-h1-size);
+  font-weight: var(--bearingpoint-text-h1-weight);
+  line-height: var(--bearingpoint-text-h1-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/h2 — Inter Semi Bold 16 / 22 */
+h2,
+.bp-typo-h2 {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-h2-size);
+  font-weight: var(--bearingpoint-text-h2-weight);
+  line-height: var(--bearingpoint-text-h2-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/DELETE - H3 — Inter Semi Bold 18 / 24 */
+h3,
+.bp-typo-h3 {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-h3-size);
+  font-weight: var(--bearingpoint-text-h3-weight);
+  line-height: var(--bearingpoint-text-h3-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/body - 14 Regular — Inter Regular 14 / 22 */
+.bp-typo-body {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-body-size);
+  font-weight: var(--bearingpoint-text-body-weight);
+  line-height: var(--bearingpoint-text-body-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/DELETE - 16 Regular — Inter Regular 16 / 22 */
+.bp-typo-16-regular {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-16-size);
+  font-weight: var(--bearingpoint-text-body-weight);
+  line-height: var(--bearingpoint-text-16-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/DELETE - 16 Bold — Inter Semi Bold 16 / 22 */
+.bp-typo-16-bold {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-16-size);
+  font-weight: var(--bearingpoint-text-16-bold-weight);
+  line-height: var(--bearingpoint-text-16-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/DELETE - 14 Bold — Inter Semi Bold 14 / 20 */
+.bp-typo-14-bold {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-14-bold-size);
+  font-weight: var(--bearingpoint-text-14-bold-weight);
+  line-height: var(--bearingpoint-text-14-bold-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/caption - 12 Regular — Inter Regular 12 / 16 */
+.bp-typo-caption {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-caption-size);
+  font-weight: var(--bearingpoint-text-caption-weight);
+  line-height: var(--bearingpoint-text-caption-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/label - 12 Semi — Inter Semi Bold 12 / 16 */
+.bp-typo-label {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-label-size);
+  font-weight: var(--bearingpoint-text-label-weight);
+  line-height: var(--bearingpoint-text-label-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/tag - 12 Semi — Inter Semi Bold 12 / 16 */
+.bp-typo-tag {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-tag-size);
+  font-weight: var(--bearingpoint-text-tag-weight);
+  line-height: var(--bearingpoint-text-tag-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/** BearingPoint/button — Inter Semi Bold 14 / 20 */
+button,
+.bp-typo-button {
+  font-family: var(--bearingpoint-font-inter);
+  font-size: var(--bearingpoint-text-button-size);
+  font-weight: var(--bearingpoint-text-button-weight);
+  line-height: var(--bearingpoint-text-button-line);
+  letter-spacing: normal;
+  font-style: normal;
+}
+
+/* ---------------------------------------------------------------------------
+   Font-family utility classes (families observed in the file)
+   --------------------------------------------------------------------------- */
+
+.bp-font-inter { font-family: var(--bearingpoint-font-inter); }
+.bp-font-roboto { font-family: var(--bearingpoint-font-roboto); }
+.bp-font-source-sans { font-family: var(--bearingpoint-font-source-sans); }
+.bp-font-rubik { font-family: var(--bearingpoint-font-rubik); }
+
+.bp-font-weight-regular { font-weight: 400; }
+.bp-font-weight-medium { font-weight: 500; }
+.bp-font-weight-semibold { font-weight: 600; }
+.bp-font-weight-bold { font-weight: 700; }
