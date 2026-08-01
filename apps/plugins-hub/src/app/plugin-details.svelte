@@ -231,45 +231,6 @@
     flex: 0;
     padding-right: 12px;
     padding-left: 12px;
-    
-  }
-
-  .action-btn.install {
-    background: var(--bearingpoint-color-action-primary-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.install:hover:not(:disabled),
-  .action-btn.enable:hover {
-    background: var(--bearingpoint-color-action-primary-bg-hover);
-  }
-
-  .action-btn.enable {
-    background: var(--bearingpoint-color-action-secondary-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.enable:hover {
-    background: var(--bearingpoint-color-action-secondary-bg-hover);
-  }
-
-  .action-btn.disable {
-    background: var(--bearingpoint-color-surface);
-    color: var(--bearingpoint-color-action-secondary-bg);
-  }
-
-  .action-btn.disable:hover {
-    background: #eee; /* subtle neutral hover */
-    color: var(--bearingpoint-color-action-secondary-bg);
-  }
-
-  .action-btn.remove {
-    background: var(--bearingpoint-color-action-danger-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.remove:hover {
-    background: var(--bearingpoint-color-action-danger-bg-hover);
   }
 
 </style>

@@ -138,43 +138,6 @@
     object-fit: contain;
   }
 
-  .action-btn.install {
-    background: var(--bearingpoint-color-action-primary-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.install:hover:not(:disabled) {
-    background: var(--bearingpoint-color-action-primary-bg-hover);
-  }
-
-  .action-btn.uninstall {
-    background: var(--bearingpoint-color-action-danger-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.uninstall:hover {
-    background: var(--bearingpoint-color-action-danger-bg-hover);
-  }
-
-  .action-btn.enable {
-    background: var(--bearingpoint-color-action-secondary-bg);
-    color: var(--bearingpoint-color-surface);
-  }
-
-  .action-btn.enable:hover {
-    background: var(--bearingpoint-color-action-secondary-bg-hover);
-  }
-
-  .action-btn.disable {
-    background: var(--bearingpoint-color-surface);
-    color: var(--bearingpoint-color-action-secondary-bg);
-  }
-
-  .action-btn.disable:hover {
-    background: #eee; /* subtle neutral hover, keep for now */
-    color: var(--bearingpoint-color-action-secondary-bg);
-  }
-
   .plugin-description {
     display: -webkit-box;
     line-clamp: 3;

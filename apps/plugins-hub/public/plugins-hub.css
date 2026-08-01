@@ -1,5 +1,5 @@
 /**
- * Plugins-Hub-specific styles (badge tokens + badge classes).
+ * Plugins-Hub-specific styles (badges + shared action buttons).
  * Loaded via apps/plugins-hub/public/global.css.
  */
 :root,
@@ -74,4 +74,42 @@
   background: var(--badge-kind-bg);
   padding: 2px 6px 2px 4px;
   border-radius: 2px;
+}
+
+/* Shared action buttons (Install / Enable / Disable / Remove) */
+.action-btn.install {
+  background: var(--bearingpoint-color-action-primary-bg);
+  color: var(--bearingpoint-color-surface);
+}
+
+.action-btn.install:hover:not(:disabled) {
+  background: var(--bearingpoint-color-action-primary-bg-hover);
+}
+
+.action-btn.enable {
+  background: var(--bearingpoint-color-action-secondary-bg);
+  color: var(--bearingpoint-color-surface);
+}
+
+.action-btn.enable:hover {
+  background: var(--bearingpoint-color-action-secondary-bg-hover);
+}
+
+.action-btn.disable {
+  background: var(--bearingpoint-color-surface);
+  color: var(--bearingpoint-color-action-secondary-bg);
+}
+
+.action-btn.disable:hover {
+  background: #eee; /* subtle neutral hover; tokenized in a later task */
+  color: var(--bearingpoint-color-action-secondary-bg);
+}
+
+.action-btn.remove {
+  background: var(--bearingpoint-color-action-danger-bg);
+  color: var(--bearingpoint-color-surface);
+}
+
+.action-btn.remove:hover {
+  background: var(--bearingpoint-color-action-danger-bg-hover);
 }
