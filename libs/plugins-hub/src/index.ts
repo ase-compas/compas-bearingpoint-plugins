@@ -6,6 +6,15 @@ export type {
   SupportedCoreVersion,
   InstallationState,
   ActivationState,
+  PluginKind,
+  PluginKindText,
+  PluginKindIcon,
+  MenuPosition,
+} from './lib/types/plugin';
+export {
+  PLUGIN_KINDS,
+  PluginKindTextMapping,
+  PluginKindIconMapping,
 } from './lib/types/plugin';
 export type { StoredPlugin } from './lib/types/stored-plugin';
 

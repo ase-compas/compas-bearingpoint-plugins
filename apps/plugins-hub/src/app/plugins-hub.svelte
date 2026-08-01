@@ -2,8 +2,7 @@
   import Textfield from '@smui/textfield';
   import Select, { Option } from '@smui/select';
   import Icon from '@smui/textfield/icon';
-  import type { Provider, StoredPlugin } from '@compas-bearingpoint/plugins-hub';
-  import type { Plugin } from '@compas-bearingpoint/plugins-hub';
+  import type { Provider, StoredPlugin, Plugin, PluginKind } from '@compas-bearingpoint/plugins-hub';
   import {
     loadAllProviders,
     buildPlugin,
@@ -16,14 +15,13 @@
     getAppVersion,
     getLayout,
     proxyUrl,
+    PLUGIN_KINDS,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
 
   // general stylings
   import '../../public/global.css';
-  
-  import type { PluginKind } from '../../../../libs/plugins-hub/src/lib/types/plugin';
 
   interface Props {
     coreVersion?: string;
@@ -247,9 +245,9 @@
       style={`background: var(--bearingpoint-color-surface, #fff)`}
       variant="outlined">
         <Option value="all">All kinds</Option>
-        <Option value="editor">Editor</Option>
-        <Option value="menu">Menu</Option>
-        <Option value="validator">Validator</Option>
+        {#each PLUGIN_KINDS as kind}
+          <Option value={kind}>{kind.charAt(0).toUpperCase() + kind.slice(1)}</Option>
+        {/each}
     </Select>
 
   </div>
