@@ -21,7 +21,7 @@
   import PluginDetails from './plugin-details.svelte';
 
   // general stylings
-  import '../../public/global.css';
+  import '../styles/global.css';
 
   interface Props {
     coreVersion?: string;

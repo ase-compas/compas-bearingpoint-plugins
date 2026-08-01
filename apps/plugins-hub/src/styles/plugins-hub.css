@@ -1,6 +1,6 @@
 /**
  * Plugins-Hub-specific styles (badges + shared action buttons).
- * Loaded via apps/plugins-hub/public/global.css.
+ * Loaded via apps/plugins-hub/src/styles/global.css.
  */
 .badge {
   padding: 2px 8px;

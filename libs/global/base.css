@@ -1,6 +1,6 @@
 /**
  * Shared BearingPoint element defaults (links, form controls, buttons).
- * e.g. Loaded via apps/plugins-hub/public/global.css.
+ * e.g. Loaded via apps/plugins-hub/src/styles/global.css.
  */
 a {
   color: var(--bearingpoint-color-link);
