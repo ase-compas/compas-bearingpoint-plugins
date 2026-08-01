@@ -4,6 +4,7 @@ import { createFakeCompasLayout, listenOscdConfigurePlugin } from './dev/fake-op
 
 // Dev-only: full-viewport html/body to simulate the host plugin container.
 // Production loads plugin-wrapper.svelte.ts (not this file) and must not include these rules.
+// eslint-disable-next-line @nx/enforce-module-boundaries -- dev-only CSS outside the lib graph; main.ts is not the production entry
 import '../../../libs/global/dev-container.css';
 
 // =============================================
