@@ -70,9 +70,11 @@
   --bearingpoint-color-action-secondary-bg: #0ca6c4;
   --bearingpoint-color-action-secondary-bg-hover: #09829a;
 
+  /* Subtle neutral hover (e.g. Disable button) */
+  --bearingpoint-color-action-neutral-text: #0ca6c4;
+  --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
+  --bearingpoint-color-action-neutral-bg-hover: #eee;
+
   --bearingpoint-color-action-danger-bg: #dc2626;
   --bearingpoint-color-action-danger-bg-hover: #b91c1c;
-
-  /* Subtle neutral hover (e.g. Disable button) */
-  --bearingpoint-color-action-neutral-bg-hover: #eee;
 }

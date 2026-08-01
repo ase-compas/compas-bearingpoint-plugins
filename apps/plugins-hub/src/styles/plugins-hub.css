@@ -73,13 +73,13 @@
 }
 
 .action-btn.disable {
-  background: var(--bearingpoint-color-surface);
-  color: var(--bearingpoint-color-action-secondary-bg);
+  background: var(--bearingpoint-color-action-neutral-bg);
+  color: var(--bearingpoint-color-action-neutral-text);
 }
 
 .action-btn.disable:hover {
   background: var(--bearingpoint-color-action-neutral-bg-hover);
-  color: var(--bearingpoint-color-action-secondary-bg);
+  color: var(--bearingpoint-color-action-neutral-text);
 }
 
 .action-btn.remove {
