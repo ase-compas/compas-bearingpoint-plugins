@@ -73,14 +73,12 @@
   <div class="plugin-description bp-typo-body">{plugin.description}</div>
 
   <div class="plugin-badges">
-    {#if plugin.compatible}
-      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
-        {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
-      </span>
-    {/if}
-    {#if plugin.installationState === 'INSTALLED'}
+    <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
+      {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
+    </span>
+    {#if isInstalled}
       <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
-        {plugin.activationState === 'ACTIVE' ? 'Active' : 'Inactive'}
+        {isActive ? 'Active' : 'Inactive'}
       </span>
     {/if}
     {#if !plugin.compatible}
