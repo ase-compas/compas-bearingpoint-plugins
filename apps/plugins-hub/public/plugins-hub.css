@@ -78,7 +78,7 @@
 }
 
 .action-btn.disable:hover {
-  background: #eee; /* subtle neutral hover; tokenized in a later task */
+  background: var(--bearingpoint-color-action-neutral-bg-hover);
   color: var(--bearingpoint-color-action-secondary-bg);
 }
 

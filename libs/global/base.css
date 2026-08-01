@@ -3,7 +3,7 @@
  * e.g. Loaded via apps/plugins-hub/public/global.css.
  */
 a {
-  color: rgb(0, 100, 200);
+  color: var(--bearingpoint-color-link);
   text-decoration: none;
 }
 
@@ -12,7 +12,7 @@ a:hover {
 }
 
 a:visited {
-  color: rgb(0, 80, 160);
+  color: var(--bearingpoint-color-link-visited);
 }
 
 label {
@@ -25,12 +25,12 @@ select,
 textarea {
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bearingpoint-color-border-strong);
   border-radius: 2px;
 }
 
 input:disabled {
-  color: #ccc;
+  color: var(--bearingpoint-color-text-disabled);
 }
 
 button {

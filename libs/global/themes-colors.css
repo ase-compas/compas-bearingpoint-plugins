@@ -44,9 +44,16 @@
   --bearingpoint-color-text-primary: #004552;
   /* Secondary / "Gray Dark" used for provider descriptions and kind badges per mockup */
   --bearingpoint-color-text-secondary: #6b9197;
+  --bearingpoint-color-text-disabled: #ccc;
+
+  /* Links */
+  --bearingpoint-color-link: rgb(0, 100, 200);
+  --bearingpoint-color-link-visited: rgb(0, 80, 160);
 
   /* Borders & Dividers */
   --bearingpoint-color-border: #dae3e6;
+  --bearingpoint-color-border-strong: #ccc;
+  --bearingpoint-color-border-hover: #9ca3af;
   --bearingpoint-color-divider: #0000001f;
 
   /* Overlays */
@@ -65,4 +72,7 @@
 
   --bearingpoint-color-action-danger-bg: #dc2626;
   --bearingpoint-color-action-danger-bg-hover: #b91c1c;
+
+  /* Subtle neutral hover (e.g. Disable button) */
+  --bearingpoint-color-action-neutral-bg-hover: #eee;
 }

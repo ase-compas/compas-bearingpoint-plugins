@@ -104,7 +104,7 @@
   }
 
   .plugin-card:hover {
-    border-color: #9ca3af; /* keep slightly darker neutral hover for now */
+    border-color: var(--bearingpoint-color-border-hover);
   }
 
   .plugin-card.selected {
