@@ -78,7 +78,7 @@ h2,
   font-style: normal;
 }
 
-/** BearingPoint/DELETE - H3 — Inter Semi Bold 18 / 24 */
+/** BearingPoint/H3 — Inter Semi Bold 18 / 24 */
 h3,
 .bp-typo-h3 {
   font-family: var(--bearingpoint-font-inter);
@@ -99,7 +99,7 @@ h3,
   font-style: normal;
 }
 
-/** BearingPoint/DELETE - 16 Regular — Inter Regular 16 / 22 */
+/** BearingPoint/16 Regular — Inter Regular 16 / 22 */
 .bp-typo-16-regular {
   font-family: var(--bearingpoint-font-inter);
   font-size: var(--bearingpoint-text-16-size);
@@ -109,7 +109,7 @@ h3,
   font-style: normal;
 }
 
-/** BearingPoint/DELETE - 16 Bold — Inter Semi Bold 16 / 22 */
+/** BearingPoint/16 Bold — Inter Semi Bold 16 / 22 */
 .bp-typo-16-bold {
   font-family: var(--bearingpoint-font-inter);
   font-size: var(--bearingpoint-text-16-size);
@@ -119,7 +119,7 @@ h3,
   font-style: normal;
 }
 
-/** BearingPoint/DELETE - 14 Bold — Inter Semi Bold 14 / 20 */
+/** BearingPoint/14 Bold — Inter Semi Bold 14 / 20 */
 .bp-typo-14-bold {
   font-family: var(--bearingpoint-font-inter);
   font-size: var(--bearingpoint-text-14-bold-size);
