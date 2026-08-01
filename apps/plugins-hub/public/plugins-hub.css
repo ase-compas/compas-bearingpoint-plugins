@@ -2,29 +2,6 @@
  * Plugins-Hub-specific styles (badges + shared action buttons).
  * Loaded via apps/plugins-hub/public/global.css.
  */
-:root,
-:host {
-  /* Badges */
-  --badge-installed-text: #02a75d;
-  --badge-installed-bg: #e4fbef;
-
-  --badge-available-text: #1d4ed8;
-  --badge-available-bg: #eff6ff;
-
-  --badge-active-text: #0d3d4a;
-  --badge-active-bg: #ecfeff;
-
-  --badge-inactive-text: #004552;
-  --badge-inactive-bg: #edf1f2;
-
-  --badge-incompatible-text: #b45309;
-  --badge-incompatible-bg: #fffbeb;
-
-  --badge-kind-text: #6b9197;
-  --badge-kind-bg: #f3f4f6;
-}
-
-
 .badge {
   padding: 2px 8px;
   border-radius: 12px;
@@ -39,39 +16,39 @@
 }
 
 .badge-installed {
-  color: var(--badge-installed-text);
-  border-color: color-mix(in oklab, var(--badge-installed-text), var(--badge-installed-bg) 90%);
-  background: var(--badge-installed-bg);
+  color: #02a75d;
+  border-color: color-mix(in oklab, #02a75d, #e4fbef 90%);
+  background: #e4fbef;
 }
 
 .badge-available {
-  color: var(--badge-available-text);
-  border-color: color-mix(in oklab, var(--badge-available-text), var(--badge-available-bg) 90%);
-  background: var(--badge-available-bg);
+  color: #1d4ed8;
+  border-color: color-mix(in oklab, #1d4ed8, #eff6ff 90%);
+  background: #eff6ff;
 }
 
 .badge-active {
-  color: var(--badge-active-text);
-  border-color: color-mix(in oklab, var(--badge-active-text), var(--badge-active-bg) 90%);
-  background: var(--badge-active-bg);
+  color: #0d3d4a;
+  border-color: color-mix(in oklab, #0d3d4a, #ecfeff 90%);
+  background: #ecfeff;
 }
 
 .badge-inactive {
-  color: var(--badge-inactive-text);
-  border-color: color-mix(in oklab, var(--badge-inactive-text), var(--badge-inactive-bg) 90%);
-  background: var(--badge-inactive-bg);
+  color: #004552;
+  border-color: color-mix(in oklab, #004552, #edf1f2 90%);
+  background: #edf1f2;
 }
 
 .badge-incompatible {
-  color: var(--badge-incompatible-text);
-  border-color: color-mix(in oklab, var(--badge-incompatible-text), var(--badge-incompatible-bg) 90%);
-  background: var(--badge-incompatible-bg);
+  color: #b45309;
+  border-color: color-mix(in oklab, #b45309, #fffbeb 90%);
+  background: #fffbeb;
 }
 
 .badge-kind {
-  color: var(--badge-kind-text);
-  border-color: color-mix(in oklab, var(--badge-kind-text), var(--badge-kind-bg) 90%);
-  background: var(--badge-kind-bg);
+  color: #6b9197;
+  border-color: color-mix(in oklab, #6b9197, #f3f4f6 90%);
+  background: #f3f4f6;
   padding: 2px 6px 2px 4px;
   border-radius: 2px;
 }
