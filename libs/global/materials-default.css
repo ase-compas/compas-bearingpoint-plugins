@@ -1,0 +1,74 @@
+/**
+ * Reset Google Material (MDC / MD) CSS custom properties to their baseline defaults.
+ *
+ * OpenSCD injects Solarized-based theme overrides on `*` (see @compas-oscd/open-scd
+ * dist/themes.js). Those custom properties inherit into the plugin Shadow DOM and
+ * break SMUI/MDC components that expect Material defaults.
+ *
+ * NOTE: Different themes for this plugin are NOT supported yet.
+ * Multi-theme / host-theme integration will come with a later requirement.
+ *
+ * Defaults sourced from Material Components Web (mdc-theme) and Material Design 3
+ * baseline light tokens used as --md-sys-color-* fallbacks.
+ */
+:root,
+:host {
+  /* ── MDC theme (Material Components Web baseline) ── */
+  --mdc-theme-primary: #6200ee;
+  --mdc-theme-secondary: #018786;
+  --mdc-theme-background: #fff;
+  --mdc-theme-surface: #fff;
+  --mdc-theme-on-primary: #fff;
+  --mdc-theme-on-secondary: #fff;
+  --mdc-theme-on-background: #000;
+  --mdc-theme-on-surface: #000;
+  --mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);
+  --mdc-theme-text-secondary-on-background: rgba(0, 0, 0, 0.54);
+  --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.38);
+  --mdc-theme-error: #b00020;
+
+  /* ── MDC component tokens OpenSCD overrides ── */
+  --mdc-button-disabled-ink-color: rgba(0, 0, 0, 0.38);
+
+  --mdc-drawer-heading-ink-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-text-field-fill-color: rgba(0, 0, 0, 0.04);
+  --mdc-text-field-disabled-fill-color: rgba(0, 0, 0, 0.02);
+  --mdc-text-field-ink-color: rgba(0, 0, 0, 0.87);
+  --mdc-text-field-label-ink-color: rgba(0, 0, 0, 0.6);
+
+  --mdc-select-fill-color: rgba(0, 0, 0, 0.04);
+  --mdc-select-disabled-fill-color: rgba(0, 0, 0, 0.02);
+  --mdc-select-ink-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-dialog-heading-ink-color: rgba(0, 0, 0, 0.87);
+
+  /* Project loads Material Icons Outlined (see material-icons.css); keep that family. */
+  --mdc-icon-font: 'Material Icons Outlined';
+
+  /* ── Material Design 3 system colors (OpenSCD maps these to Solarized) ── */
+  --md-sys-color-primary: #6750a4;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-secondary: #625b71;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #e8def8;
+  --md-sys-color-surface: #fef7ff;
+  --md-sys-color-on-surface: #1d1b20;
+  --md-sys-color-surface-variant: #e7e0ec;
+  --md-sys-color-on-surface-variant: #49454f;
+  --md-sys-color-surface-bright: #fef7ff;
+  --md-sys-color-surface-container: #f3edf7;
+  --md-sys-color-surface-container-high: #ece6f0;
+  --md-sys-color-surface-container-highest: #e6e0e9;
+  --md-sys-color-outline-variant: #cac4d0;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-error: #b3261e;
+  --md-sys-color-on-error: #ffffff;
+
+  --md-icon-button-disabled-icon-color: rgba(0, 0, 0, 0.38);
+
+  --md-filled-text-field-container-color: rgba(0, 0, 0, 0.04);
+  --md-filled-text-field-disabled-container-color: rgba(0, 0, 0, 0.02);
+  --md-filled-text-field-disabled-input-text-color: rgba(0, 0, 0, 0.38);
+  --md-filled-text-field-disabled-label-text-color: rgba(0, 0, 0, 0.38);
+}

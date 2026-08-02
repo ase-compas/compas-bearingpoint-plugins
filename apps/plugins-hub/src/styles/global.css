@@ -3,6 +3,9 @@
    See: https://sveltematerialui.com/INSTALL.md — "The Default Theme" / bare.css */
 @import 'svelte-material-ui/bare.css';
 
+/* Reset OpenSCD-overridden Material tokens to baseline defaults (see file comment). */
+@import '../../../../libs/global/materials-default.css';
+
 @import '../../../../libs/global/themes.css';
 @import '../../../../libs/global/material-icons.css';
 @import '../../../../libs/global/base.css';
