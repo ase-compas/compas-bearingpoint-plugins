@@ -54,16 +54,16 @@
   <div class="details-meta">
     <div class="meta-item">
       <span class="meta-label bp-typo-label">Provider</span>
-      <span class="meta-value bp-typo-16-regular">{plugin.provider.prefix.toUpperCase()}</span>
+      <span class="bp-typo-16-regular">{plugin.provider.prefix.toUpperCase()}</span>
     </div>
     <div class="meta-item">
       <span class="meta-label bp-typo-label">Author</span>
-      <span class="meta-value bp-typo-16-regular">{plugin.author}</span>
+      <span class="bp-typo-16-regular">{plugin.author}</span>
     </div>
     {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
         <span class="meta-label bp-typo-label">Supported Version</span>
-        <span class="meta-value bp-typo-16-regular">
+        <span class="bp-typo-16-regular">
           {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
             {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
           {:else if plugin.supportedCoreVersion.from}
@@ -76,12 +76,12 @@
     {/if}
     <div class="meta-item">
       <span class="meta-label bp-typo-label">Plugin ID</span>
-      <span class="meta-value bp-typo-16-regular">{plugin.id}</span>
+      <span class="bp-typo-16-regular">{plugin.id}</span>
     </div>
     {#if coreVersion}
       <div class="meta-item">
         <span class="meta-label bp-typo-label">Current Core</span>
-        <span class="meta-value bp-typo-16-regular">{coreVersion}</span>
+        <span class="bp-typo-16-regular">{coreVersion}</span>
       </div>
     {/if}
   </div>
@@ -154,7 +154,7 @@
   .details-name {
     flex: 1;
     margin: 0;
-    color: var(--bearingpoint-color-text-primary);
+    color: var(--bearingpoint-color-text-dark);
   }
 
   .close-btn {
@@ -203,10 +203,6 @@
 
   .meta-label {
     color: var(--bearingpoint-color-text-secondary);
-  }
-
-  .meta-value {
-    font-weight: 500;
   }
 
   .details-url {
