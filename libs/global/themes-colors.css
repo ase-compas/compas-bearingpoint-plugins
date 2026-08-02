@@ -42,6 +42,7 @@
 
   /* Text */
   --bearingpoint-color-text-primary: #004552;
+  --bearingpoint-color-text-dark: #002B37;
   /* Secondary / "Gray Dark" used for provider descriptions and kind badges per mockup */
   --bearingpoint-color-text-secondary: #6b9197;
   --bearingpoint-color-text-disabled: #ccc;

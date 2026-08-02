@@ -136,6 +136,10 @@
     object-fit: contain;
   }
 
+  .plugin-name {
+    color: var(--bearingpoint-color-text-dark);
+  }
+
   .plugin-description {
     display: -webkit-box;
     line-clamp: 3;
