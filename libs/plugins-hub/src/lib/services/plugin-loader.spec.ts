@@ -2,9 +2,14 @@ import { describe, it, expect } from 'vitest';
 import { buildPluginId, isUrlTrusted } from './plugin-loader';
 
 describe('buildPluginId', () => {
-  it('combines prefix and slugified name', () => {
+  it('combines prefix and plugin name for remote plugins', () => {
     expect(buildPluginId('BP', 'Transformer Importer')).toBe('BP - Transformer Importer');
     expect(buildPluginId('openscd', 'History Viewer')).toBe('openscd - History Viewer');
+  });
+
+  it('returns plain host name for builtin plugins (no prefix)', () => {
+    expect(buildPluginId('CoMPAS', 'Substation', { builtin: true })).toBe('Substation');
+    expect(buildPluginId('OpenSCD', 'IED', { builtin: true })).toBe('IED');
   });
 });
 

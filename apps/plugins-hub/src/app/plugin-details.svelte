@@ -13,7 +13,8 @@
 
   let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable, coreVersion }: Props = $props();
 
-  const isInstalled = $derived(plugin.installationState === 'INSTALLED');
+  const isBuiltin = $derived(plugin.builtin === true);
+  const isInstalled = $derived(plugin.installationState === 'INSTALLED' || isBuiltin);
   const isActive = $derived(plugin.activationState === 'ACTIVE');
 </script>
 
@@ -37,9 +38,13 @@
     <p class="details-short-desc bp-typo-body">{plugin.description}</p>
 
     <div class="details-badges">
-      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
-        {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
-      </span>
+      {#if isBuiltin}
+        <span class="badge badge-builtin bp-typo-button">Built-in</span>
+      {:else}
+        <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
+          {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
+        </span>
+      {/if}
       {#if isInstalled}
         <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
           {isActive ? 'Active' : 'Inactive'}
@@ -60,6 +65,16 @@
       <span class="meta-label bp-typo-label">Author</span>
       <span class="bp-typo-16-regular">{plugin.author}</span>
     </div>
+    {#if isBuiltin}
+      <div class="meta-item">
+        <span class="meta-label bp-typo-label">Active by default</span>
+        <span class="bp-typo-16-regular">{plugin.activeByDefault ? 'Yes' : 'No'}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label bp-typo-label">Requires document</span>
+        <span class="bp-typo-16-regular">{plugin.requireDoc ? 'Yes' : 'No'}</span>
+      </div>
+    {/if}
     {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
       <div class="meta-item">
         <span class="meta-label bp-typo-label">Supported Version</span>
@@ -101,7 +116,13 @@
 
   <div class="details-actions">
     <div style="flex: 1"></div>
-    {#if !isInstalled}
+    {#if isBuiltin}
+      {#if isActive}
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.id)}>Disable</button>
+      {:else}
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.id)}>Enable</button>
+      {/if}
+    {:else if !isInstalled}
       <button
         class="action-btn install bp-typo-button"
         onclick={() => onInstall(plugin.id)}

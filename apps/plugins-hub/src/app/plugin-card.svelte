@@ -13,7 +13,8 @@
 
   let { plugin, selected, onSelect, onInstall, onUninstall, onEnable, onDisable }: Props = $props();
 
-  const isInstalled = $derived(plugin.installationState === 'INSTALLED');
+  const isBuiltin = $derived(plugin.builtin === true);
+  const isInstalled = $derived(plugin.installationState === 'INSTALLED' || isBuiltin);
   const isActive = $derived(plugin.activationState === 'ACTIVE');
 
   function handleActionClick(e: MouseEvent) {
@@ -48,7 +49,7 @@
       class="action-btn bp-typo-button"
       class:disable={isInstalled && isActive}
       class:enable={isInstalled && !isActive}
-      class:install={!isInstalled}
+      class:install={!isInstalled && !isBuiltin}
       onclick={handleActionClick}
       disabled={!isInstalled && !plugin.compatible}
       aria-label={!isInstalled ? 'Install' : isActive ? 'Disable' : 'Enable'}
@@ -73,9 +74,13 @@
   <div class="plugin-description bp-typo-body">{plugin.description}</div>
 
   <div class="plugin-badges">
-    <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
-      {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
-    </span>
+    {#if isBuiltin}
+      <span class="badge badge-builtin bp-typo-button">Built-in</span>
+    {:else}
+      <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
+        {plugin.installationState === 'INSTALLED' ? 'Installed' : 'Available'}
+      </span>
+    {/if}
     {#if isInstalled}
       <span class="badge badge-{plugin.activationState.toLowerCase()} bp-typo-button">
         {isActive ? 'Active' : 'Inactive'}

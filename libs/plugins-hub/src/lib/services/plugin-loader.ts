@@ -11,6 +11,7 @@ import type { Provider } from '../types/provider';
 function buildTrustedOrigins(providers: Provider[]): Set<string> {
   const origins = new Set<string>();
   for (const p of providers) {
+    if (!p.pluginsUrl) continue;
     try {
       origins.add(new URL(p.pluginsUrl).origin);
     } catch (e) {
@@ -44,9 +45,19 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
 
 /**
  * Builds the unique plugin ID from provider prefix and plugin name.
- * Format: "<providerPrefix>:<pluginName>"
- * e.g. "BP - Transformermporter"
+ * Format: "<providerPrefix> - <pluginName>"
+ * e.g. "BP - Transformer Importer"
+ *
+ * For host built-in plugins pass `builtin: true` so the ID is the plain
+ * host name (matches OpenSCD/CoMPAS plugin manager, no prefix).
  */
-export function buildPluginId(providerPrefix: string, pluginName: string): string {
+export function buildPluginId(
+  providerPrefix: string,
+  pluginName: string,
+  options?: { builtin?: boolean },
+): string {
+  if (options?.builtin) {
+    return pluginName;
+  }
   return `${providerPrefix} - ${pluginName}`;
 }

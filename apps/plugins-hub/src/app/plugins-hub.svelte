@@ -5,6 +5,7 @@
   import type { Provider, StoredPlugin, Plugin, PluginKind } from '@compas-bearingpoint/plugins-hub';
   import {
     loadAllProviders,
+    loadBuiltinProviders,
     buildPlugin,
     loadStoredPlugins,
     providersConfig,
@@ -30,6 +31,7 @@
   let { coreVersion = getAppVersion() }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
+  let providers = $state<Provider[]>([]);
   let loading = $state(true);
   let loadErrors = $state<string[]>([]);
   let selectedPlugin = $state<Plugin | null>(null);
@@ -39,28 +41,44 @@
   let providerFilter = $state<string>('all');
   let kindFilter = $state<'all' | PluginKind>('all');
 
-  const providers: Provider[] = (providersConfig as Provider[]).map(p => ({...p, icon: proxyUrl(p.icon)}));
+  const remoteProviders: Provider[] = (providersConfig as Provider[]).map(p => ({
+    ...p,
+    icon: proxyUrl(p.icon),
+  }));
 
   async function initHub() {
     loading = true;
     loadErrors = [];
+    // TODO: extract Custom configured Plugins from stored.
+    //       Custom Plugins are stored (locaStorage) plugins with an src-URL which doesn't match any known Plugin from any Provider
+    //       Then add Custom Plugin to an Fake-Provider named "Custom" which is also added at the end of allProviders if it has more then one plugin. 
+    //       Custom Plugins can be enabled/disabled and uninstalled. When uninstalled it wil be disabier from this Custom Providers List.
+    
     const stored = loadStoredPlugins();
-    const results = await loadAllProviders(providers);
     const allPlugins: Plugin[] = [];
+    const allProviders: Provider[] = [];
 
+    const builtinResults = await loadBuiltinProviders(stored, coreVersion);
+    for (const result of builtinResults) {
+      allProviders.push(result.provider);
+      allPlugins.push(...result.plugins);
+    }
+
+    const results = await loadAllProviders(remoteProviders);
     for (const result of results) {
       if (result.error) {
         loadErrors = [
           ...loadErrors,
-          `Error loading Provider '${result.provider.name}'': ${result.error}`,
+          `Error loading Provider '${result.provider.name}': ${result.error}`,
         ];
       }
-      const provider = result.provider;
+      allProviders.push(result.provider);
       for (const entry of result.plugins) {
-        allPlugins.push(buildPlugin(entry, provider, coreVersion, stored));
+        allPlugins.push(buildPlugin(entry, result.provider, coreVersion, stored));
       }
     }
 
+    providers = allProviders;
     plugins = allPlugins;
     loading = false;
   }
@@ -99,7 +117,7 @@
 
   function handleInstall(pluginId: string) {
     const target = plugins.find((p) => p.id === pluginId);
-    if (!target?.compatible) {
+    if (!target?.compatible || target.builtin) {
       return;
     }
 
@@ -115,13 +133,16 @@
 
   function handleUninstall(pluginId: string) {
     const pluginBefore = plugins.find((p) => p.id === pluginId);
+    if (pluginBefore?.builtin) {
+      return;
+    }
     const { updated, success } = uninstallPlugin(plugins, pluginId);
     plugins = updated;
     const updatedPlugin = plugins.find((p) => p.id === pluginId);
     if (selectedPlugin?.id === pluginId) {
       selectedPlugin = updatedPlugin ?? null;
     }
-    if (pluginBefore) {
+    if (pluginBefore && success) {
       dispatchConfigurePlugin({ id: pluginBefore.id, kind: pluginBefore.kind }, true);
     }
   }
@@ -168,33 +189,41 @@
     activationState?: 'ACTIVE' | 'INACTIVE';
     installationState?: 'INSTALLED' | 'AVAILABLE';
     provider?: Provider;
+    builtin?: boolean;
+    activeByDefault?: boolean;
+    requireDoc?: boolean;
   }
 
   /**
    * Dispatches the oscd-configure-plugin event to integrate with the OpenSCD host.
-   * Uses the namespaced plugin.id as the unique registration key (detail.name) to
-   * prevent collisions across providers. The config payload includes display metadata.
+   * Remote plugins use the namespaced plugin.id as detail.name.
+   * Builtin plugins use the plain host name (no prefix) so the host findPluginIndex matches.
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
-    const detail: {name: string, kind: PluginKind, config: StoredPlugin | null } = remove
+    const registrationName = target.builtin
+      ? (target.name ?? target.id)
+      : target.id;
+
+    const detail: { name: string; kind: PluginKind; config: StoredPlugin | null } = remove
       ? {
-          name: target.id,
+          name: registrationName,
           kind: target.kind,
           config: null,
         }
       : {
-          name: target.id,
+          name: registrationName,
           kind: target.kind,
           config: {
-            name: target.id, // use identifier which is provider-prefix plus provider-plugin.name
+            name: registrationName,
             author: target.author || target.provider?.name,
-            src: proxyUrl(target.src!),
+            src: target.builtin ? target.src! : proxyUrl(target.src!),
             icon: target.icon!,
             kind: target.kind,
             description: target.description,
-            requireDoc: true,
+            requireDoc: target.requireDoc ?? true,
             position: target.position || (target.kind === 'menu' ? 'middle' : undefined),
             active: target.activationState === 'ACTIVE',
+            activeByDefault: target.activeByDefault,
             installed: target.installationState === 'INSTALLED',
           },
         };

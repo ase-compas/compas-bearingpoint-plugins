@@ -18,10 +18,19 @@ Three modes are available — all require WireMock running in parallel.
 
 ```bash
 npm run run:plugins-hub   # terminal 1 — dev server with HMR
-npm run wiremock          # terminal 2 — mock API on port 8181
+npm run wiremock          # terminal 2 — mock API on port 8181 (required)
 ```
 
 Open: http://localhost:4301
+
+WireMock also serves host builtin catalogues for dual-provider testing:
+
+| Path (proxied by Vite → 8181) | Provider |
+|---|---|
+| `/public/js/plugins.js` | CoMPAS Dummy (1 plugin) |
+| `/openscd/src/plugins.js` | Open-SCD Dummy (1 plugin) |
+
+Without WireMock, those paths fail and no builtin providers appear in standalone mode.
 
 ---
 

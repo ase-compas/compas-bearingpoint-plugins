@@ -8,46 +8,76 @@ with more functionality and a more sophisticated UI.
 
 ## Overview
 
-Plugins-Hub ships with a **hardcoded list of plugin providers**. Each provider
-hosts a JSON manifest of the plugins it offers. Plugins-Hub aggregates all of
-them, filters them by the host's OpenSCD core version, and allows the user to
-browse, inspect, and load plugins on demand.
+Plugins-Hub ships with a **hardcoded list of remote plugin providers**. Each
+provider hosts a JSON manifest of the plugins it offers. In addition, the hub
+**discovers host built-in plugins** from the running Open-SCD or CoMPAS
+instance (`officialPlugins` in the host's `plugins.js`).
 
-New providers onboard themselves via **Pull Request** to the central
+Plugins-Hub aggregates remote + built-in catalogues, filters remotes by the
+host's OpenSCD core version, and allows the user to browse, inspect, enable,
+and (for remotes) install plugins on demand.
+
+New remote providers onboard themselves via **Pull Request** to the central
 `providers.json`.
 
 ## Architecture (ASCII)
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                         OpenSCD Core (Host App)                         │
-│                      Core Version: e.g. 1.4.0 (runtime)                │
+│                    OpenSCD / CoMPAS Host App                             │
+│   officialPlugins ← /public/js/plugins.js  OR  {base}/src/plugins.js     │
+│                      Core Version: e.g. 0.44.0 (runtime)                 │
 └───────────────────────────────┬──────────────────────────────────────────┘
                                 ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                           Plugins-Hub Plugin                            │
 │  ┌────────────────────┐  ┌────────────────────┐  ┌──────────────────┐   │
 │  │  UI Layer (Svelte) │  │   Hub Services     │  │  Local State     │   │
-│  │  - plugins-hub     │◄─┤ - ProviderLoader   │─►│  - providers[]   │   │
-│  │  - provider-card   │  │ - PluginLoader     │  │  - plugins[]     │   │
+│  │  - plugins-hub     │◄─┤ - BuiltinLoader    │─►│  - providers[]   │   │
+│  │  - provider-card   │  │ - ProviderLoader   │  │  - plugins[]     │   │
 │  │  - plugin-card     │  │ - VersionResolver  │  │  - plugin states │   │
-│  │  - plugin-details  │  │ - PluginStore      │  │                  │   │
+│  │  - plugin-details  │  │ - PluginStore      │  │  - probe cache   │   │
 │  └────────────────────┘  └─────────┬──────────┘  └──────────────────┘   │
 │                                    │                                     │
-│                     ┌──────────────▼───────────────┐                    │
-│                     │  providers.json (hardcoded)  │                    │
-│                     └──────────────┬───────────────┘                    │
-└────────────────────────────────────┼──────────────────────────────────────┘
-                                     │  HTTPS fetch
-         ┌───────────────────────────┼──────────────────────┐
-         ▼                           ▼                      ▼
-   Provider A                  Provider B             Provider C
-   plugins.json                plugins.json           plugins.json
-         │                           │                      │
-         └───────────────────────────┴──────────────────────┘
-                                     │
-                       Remote ESM plugin bundles (lazy-loaded)
+│              ┌─────────────────────┼─────────────────────┐              │
+│              ▼                     ▼                     ▼              │
+│     host plugins.js      providers.json          remote plugins.json    │
+│   (CoMPAS / Open-SCD)     (hardcoded)              (HTTPS fetch)        │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Built-in providers (Open-SCD / CoMPAS)
+
+At startup the hub probes host catalogues. Paths are resolved against
+**`location.origin` of the host page** (not the plugin module origin). That
+matters when the hub is loaded from e.g. `http://localhost:4301/index.js`
+inside CoMPAS on `http://localhost:8080/` — imports must hit **8080**, not 4301.
+
+| Host | Path candidate (→ `new URL(path, location.origin)`) | Provider name |
+|---|---|---|
+| CoMPAS | `/public/js/plugins.js` | **CoMPAS** |
+| Open-SCD | `{basePath}src/plugins.js`, `/openscd/src/plugins.js` | **Open-SCD** |
+
+- Every **reachable** catalogue becomes its own provider (both when both work).
+- Probe results are cached in `localStorage` key `plugins-hub.builtin-probe`:
+
+  ```ts
+  {
+    ts: number,
+    buildInProviders: Array<{ host: 'compas' | 'open-scd'; url: string }>
+  }
+  ```
+
+  | Situation | Behaviour |
+  |---|---|
+  | Cache empty, ≥1 success | Write **all** working providers (local dual → both; prod → one) |
+  | Cache empty, 0 successes | Do **not** write cache |
+  | Cache present | Load **only** cached providers |
+  | Cache present, all fail | **Clear** cache (next load rediscovers) |
+  | Cache present, ≥1 success | Keep cache unchanged |
+- Built-in plugins: `builtin: true`, always treated as installed, **no Install/Remove**, only Enable/Disable.
+- Plugin `id` / configure `name` is the **plain host name** (no provider prefix), matching the host plugin manager.
+- Detail view shows `activeByDefault` and `requireDoc`.
 
 ## JSON Contracts
 
@@ -59,9 +89,10 @@ Array of `Provider`:
 interface Provider {
   prefix: string;      // unique short prefix, e.g. "bp", "openscd" — used for plugin IDs
   name: string;        // display name (1–64 chars)
-  icon: string;        // URL, .svg preferred
+  icon: string;        // URL, .svg preferred (or Material icon name for builtins)
   description: string; // ≤ 280 chars
-  pluginsUrl: string;  // HTTPS URL to plugins.json
+  pluginsUrl?: string; // HTTPS URL to plugins.json (omit for source: 'builtin')
+  source?: 'remote' | 'builtin'; // default remote
 }
 ```
 
@@ -94,14 +125,17 @@ Each plugin in the hub store has a unique **ID** and two state fields. Most mani
 
 ```ts
 interface Plugin extends PluginManifestEntry {
-  /** Unique ID. Format: "<providerPrefix>:<slug>", e.g. "bp:transformer-importer" */
+  /** Unique ID. Remote: "BP - Name". Builtin: plain host name (no prefix). */
   id: string;
   provider: Provider;                // full provider object
-  compatible: boolean;               // true if coreVersion ∈ [from, to)
+  compatible: boolean;               // true if coreVersion ∈ [from, to); builtins always true
   kindText: string;                  // e.g. "Editor plugin", "Navigation plugin", "Validation plugin"
   kindIcon: string;                  // Material icon for the kind badge
   installationState: 'INSTALLED' | 'AVAILABLE';
   activationState:   'ACTIVE'    | 'INACTIVE';
+  builtin?: boolean;
+  activeByDefault?: boolean;
+  requireDoc?: boolean;
 }
 ```
 

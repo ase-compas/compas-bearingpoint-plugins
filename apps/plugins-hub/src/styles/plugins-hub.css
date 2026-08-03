@@ -21,6 +21,12 @@
   background: #e4fbef;
 }
 
+.badge-builtin {
+  color: #5b21b6;
+  border-color: color-mix(in oklab, #5b21b6, #f5f3ff 90%);
+  background: #f5f3ff;
+}
+
 .badge-available {
   color: #1d4ed8;
   border-color: color-mix(in oklab, #1d4ed8, #eff6ff 90%);

@@ -64,6 +64,13 @@ export interface PluginManifestEntry {
   position?: MenuPosition;
   /** Supported OpenSCD core version range (optional). */
   supportedCoreVersion?: SupportedCoreVersion;
+  // TODO Move this thre property "builtin", "activeByDefault", "requireDoc" from PluginManifestEntry into Plugin
+  /** Host built-in flag (officialPlugins). */
+  builtin?: boolean;
+  /** Host default activation (officialPlugins). */
+  activeByDefault?: boolean;
+  /** Whether the host plugin requires an open document. */
+  requireDoc?: boolean;
 }
 
 /**
@@ -72,9 +79,9 @@ export interface PluginManifestEntry {
  */
 export interface Plugin extends PluginManifestEntry {
   /**
-   * Unique identifier scoped by provider prefix.
-   * Format: "<providerPrefix>:<slugified-name>"
-   * Example: "bp:transformer-importer"
+   * Unique identifier.
+   * Remote: "<providerPrefix> - <name>" (e.g. "BP - PluginHub").
+   * Builtin: host plugin name only (e.g. "Substation") — no prefix.
    */
   id: string;
   /** The provider that supplies this plugin. */

@@ -25,6 +25,23 @@ export function loadStoredPlugins(): StoredPlugin[] {
 }
 
 /**
+ * Finds a stored plugin matching the given source URL.
+ * Compares raw src, proxied src, and exact name for host built-ins.
+ */
+function findStoredMatch(
+  entry: PluginManifestEntry,
+  stored: StoredPlugin[],
+): StoredPlugin | undefined {
+  const proxied = proxyUrl(entry.src);
+  return stored.find(
+    (p) =>
+      p.src === entry.src ||
+      p.src === proxied ||
+      (entry.builtin && p.name === entry.name && p.kind === entry.kind),
+  );
+}
+
+/**
  * Builds a Plugin record from a manifest entry, provider, and core version.
  */
 export function buildPlugin(
@@ -33,24 +50,35 @@ export function buildPlugin(
   coreVersion: string,
   stored: StoredPlugin[],
 ): Plugin {
-  let id = buildPluginId(provider.prefix, entry.name);
-  const matching = stored.find((p) => p.src === proxyUrl(entry.src));
-  if (matching) {
+  const isBuiltin = entry.builtin === true || provider.source === 'builtin';
+  let id = buildPluginId(provider.prefix, entry.name, { builtin: isBuiltin });
+  const matching = findStoredMatch(entry, stored);
+  if (matching && !isBuiltin) {
     id = matching.name;
   }
-  const installationState: InstallationState = matching
+  const installationState: InstallationState = isBuiltin
     ? 'INSTALLED'
-    : 'AVAILABLE';
-  const activationState: ActivationState =
-    matching && matching.active ? 'ACTIVE' : 'INACTIVE';
-  const compatible = isVersionCompatible(
-    coreVersion,
-    entry.supportedCoreVersion?.from,
-    entry.supportedCoreVersion?.to,
-  );
+    : matching
+      ? 'INSTALLED'
+      : 'AVAILABLE';
+  const activationState: ActivationState = matching
+    ? matching.active
+      ? 'ACTIVE'
+      : 'INACTIVE'
+    : isBuiltin && entry.activeByDefault
+      ? 'ACTIVE'
+      : 'INACTIVE';
+  const compatible = isBuiltin
+    ? true
+    : isVersionCompatible(
+        coreVersion,
+        entry.supportedCoreVersion?.from,
+        entry.supportedCoreVersion?.to,
+      );
 
   return {
     ...entry,
+    builtin: isBuiltin,
     id,
     provider: provider,
     compatible,
@@ -63,11 +91,11 @@ export function buildPlugin(
 
 /**
  * Installs a plugin by adding it to stored plugins with active: false.
- * Incompatible plugins are left unchanged.
+ * Incompatible plugins and built-ins are left unchanged.
  */
 export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
   return plugins.map((p) => {
-    if (p.id !== pluginId || !p.compatible) {
+    if (p.id !== pluginId || !p.compatible || p.builtin) {
       return p;
     }
     return {
@@ -79,12 +107,16 @@ export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
 }
 
 /**
- * Uninstalls a plugin if not active.
+ * Uninstalls a plugin if not active. Built-ins cannot be uninstalled.
  */
 export function uninstallPlugin(
   plugins: Plugin[],
   pluginId: string,
 ): { updated: Plugin[]; success: boolean } {
+  const target = plugins.find((p) => p.id === pluginId);
+  if (target?.builtin) {
+    return { updated: plugins, success: false };
+  }
   const updated = plugins.map((p) =>
     p.id === pluginId
       ? {

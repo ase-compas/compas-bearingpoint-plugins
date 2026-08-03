@@ -21,6 +21,18 @@ export type { StoredPlugin } from './lib/types/stored-plugin';
 export { loadProvider, loadAllProviders } from './lib/services/provider-loader';
 export type { ProviderLoadResult } from './lib/services/provider-loader';
 
+export {
+  loadBuiltinProviders,
+  buildBuiltinCandidates,
+  mapOfficialPluginToManifest,
+  BUILTIN_PROBE_CACHE_KEY,
+} from './lib/services/builtin-plugin-loader';
+export type {
+  BuiltinLoadResult,
+  BuiltinHostId,
+  OfficialPluginRaw,
+} from './lib/services/builtin-plugin-loader';
+
 export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';

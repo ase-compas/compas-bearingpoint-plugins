@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPath": "/public/js/plugins.js"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "text/javascript; charset=utf-8",
+            "Access-Control-Allow-Origin": "*"
+        },
+        "bodyFileName": "external-api/provider/compas-builtin-plugins.js"
+    },
+    "priority": 10
+}
