@@ -155,7 +155,17 @@
     if (isCustomPlugin(pluginBefore)) {
       plugins = plugins.filter((p) => p.id !== pluginId);
       if (!plugins.some((p) => isCustomPlugin(p))) {
-        providers = providers.filter((p) => p.prefix !== CUSTOM_PROVIDER.prefix);
+        // Reset filter first while Custom <Option> still exists.
+        if (providerFilter === CUSTOM_PROVIDER.prefix) {
+          providerFilter = 'all';
+        }
+        // Removing the selected option in the same tick crashes SMUI Select
+        // (getElement null on getPrimaryText). Defer provider list update.
+        setTimeout(() => {
+          providers = providers.filter(
+            (p) => p.prefix !== CUSTOM_PROVIDER.prefix,
+          );
+        }, 1);
       }
       if (selectedPlugin?.id === pluginId) {
         selectedPlugin = null;
