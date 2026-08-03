@@ -32,7 +32,7 @@
       <h3 class="provider-name bp-typo-h3">{provider.name}</h3>
       <span class="provider-description bp-typo-body">{provider.description}</span>
     </div>
-    {#if provider.icon.startsWith('http') || provider.icon.startsWith('/')}
+    {#if provider.icon.startsWith('http') || provider.icon.startsWith('/') || provider.icon.startsWith('data:')}
       <img
         class="provider-icon"
         src={provider.icon}
@@ -91,7 +91,6 @@
   }
 
   .provider-icon {
-    width: 40px;
     height: 40px;
     object-fit: contain;
     border-radius: 4px;

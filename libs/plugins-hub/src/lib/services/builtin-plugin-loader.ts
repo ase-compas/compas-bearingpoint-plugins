@@ -11,6 +11,9 @@ import {
 } from '../types/plugin';
 import type { StoredPlugin } from '../types/stored-plugin';
 import { buildPlugin } from '../store/plugin-store';
+// Inline as data-URL so icons ship inside index.js (hub loaded from another origin).
+import openscdIcon from '../assets/openscd.png?inline';
+import compasIcon from '../assets/compas.png?inline';
 
 /** localStorage key for successful builtin probe results. */
 export const BUILTIN_PROBE_CACHE_KEY = 'plugins-hub.builtin-probe';
@@ -183,7 +186,7 @@ function createBuiltinProvider(host: BuiltinHostId): Provider {
     return {
       prefix: 'CoMPAS',
       name: 'CoMPAS',
-      icon: 'hub',
+      icon: compasIcon,
       description: 'Built-in plugins of the CoMPAS OpenSCD host.',
       source: 'builtin',
     };
@@ -191,7 +194,7 @@ function createBuiltinProvider(host: BuiltinHostId): Provider {
   return {
     prefix: 'OpenSCD',
     name: 'Open-SCD',
-    icon: 'developer_board',
+    icon: openscdIcon,
     description: 'Built-in plugins of the OpenSCD host.',
     source: 'builtin',
   };
