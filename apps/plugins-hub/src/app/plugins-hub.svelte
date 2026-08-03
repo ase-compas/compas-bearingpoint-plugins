@@ -17,6 +17,9 @@
     getLayout,
     proxyUrl,
     PLUGIN_KINDS,
+    CUSTOM_PROVIDER,
+    collectKnownPluginSrcs,
+    buildCustomPluginsFromStored,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -49,11 +52,6 @@
   async function initHub() {
     loading = true;
     loadErrors = [];
-    // TODO: extract Custom configured Plugins from stored.
-    //       Custom Plugins are stored (locaStorage) plugins with an src-URL which doesn't match any known Plugin from any Provider
-    //       Then add Custom Plugin to an Fake-Provider named "Custom" which is also added at the end of allProviders if it has more then one plugin. 
-    //       Custom Plugins can be enabled/disabled and uninstalled. When uninstalled it wil be disabier from this Custom Providers List.
-    
     const stored = loadStoredPlugins();
     const allPlugins: Plugin[] = [];
     const allProviders: Provider[] = [];
@@ -78,9 +76,25 @@
       }
     }
 
+    // Custom: stored plugins whose src is not covered by any loaded catalogue
+    const knownSrcs = collectKnownPluginSrcs(allPlugins);
+    const customPlugins = buildCustomPluginsFromStored(
+      stored,
+      knownSrcs,
+      coreVersion,
+    );
+    if (customPlugins.length >= 1) {
+      allProviders.push(CUSTOM_PROVIDER);
+      allPlugins.push(...customPlugins);
+    }
+
     providers = allProviders;
     plugins = allPlugins;
     loading = false;
+  }
+
+  function isCustomPlugin(plugin: Plugin | undefined): boolean {
+    return plugin?.provider?.prefix === CUSTOM_PROVIDER.prefix;
   }
 
   $effect(() => {
@@ -136,6 +150,27 @@
     if (pluginBefore?.builtin) {
       return;
     }
+
+    // Custom plugins leave the hub list entirely when uninstalled
+    if (isCustomPlugin(pluginBefore)) {
+      plugins = plugins.filter((p) => p.id !== pluginId);
+      if (!plugins.some((p) => isCustomPlugin(p))) {
+        providers = providers.filter((p) => p.prefix !== CUSTOM_PROVIDER.prefix);
+      }
+      if (selectedPlugin?.id === pluginId) {
+        selectedPlugin = null;
+      }
+      dispatchConfigurePlugin(
+        {
+          id: pluginBefore!.id,
+          kind: pluginBefore!.kind,
+          name: pluginBefore!.name,
+        },
+        true,
+      );
+      return;
+    }
+
     const { updated, success } = uninstallPlugin(plugins, pluginId);
     plugins = updated;
     const updatedPlugin = plugins.find((p) => p.id === pluginId);

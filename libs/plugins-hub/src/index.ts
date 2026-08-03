@@ -33,6 +33,12 @@ export type {
   OfficialPluginRaw,
 } from './lib/services/builtin-plugin-loader';
 
+export {
+  CUSTOM_PROVIDER,
+  collectKnownPluginSrcs,
+  buildCustomPluginsFromStored,
+} from './lib/services/custom-plugin-loader';
+
 export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
