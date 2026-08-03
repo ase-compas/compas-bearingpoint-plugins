@@ -230,9 +230,6 @@ export function mapOfficialPluginToManifest(
     icon,
     description: `Built-in ${kind} plugin`,
     position: isMenuPosition(raw.position) ? raw.position : undefined,
-    builtin: true,
-    activeByDefault: raw.activeByDefault === true,
-    requireDoc: raw.requireDoc === true,
   };
 }
 
@@ -311,7 +308,13 @@ function toLoadResults(
     for (const entry of raw) {
       const manifest = mapOfficialPluginToManifest(entry, provider.name);
       if (!manifest) continue;
-      plugins.push(buildPlugin(manifest, provider, coreVersion, stored));
+      plugins.push(
+        buildPlugin(manifest, provider, coreVersion, stored, {
+          builtin: true,
+          activeByDefault: entry.activeByDefault === true,
+          requireDoc: entry.requireDoc === true,
+        }),
+      );
     }
     return { provider, plugins, host, url };
   });

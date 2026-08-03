@@ -76,12 +76,13 @@ describe('mapOfficialPluginToManifest', () => {
     expect(m).toMatchObject({
       name: 'Substation',
       author: 'CoMPAS',
-      builtin: true,
-      activeByDefault: true,
-      requireDoc: true,
       kind: 'editor',
       description: 'Built-in editor plugin',
     });
+    // Host-only fields live on Plugin (via buildPlugin options), not the manifest
+    expect(m).not.toHaveProperty('builtin');
+    expect(m).not.toHaveProperty('activeByDefault');
+    expect(m).not.toHaveProperty('requireDoc');
   });
 
   it('rejects invalid entries', () => {

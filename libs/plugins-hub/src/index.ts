@@ -37,7 +37,15 @@ export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
-export { buildPlugin, installPlugin, uninstallPlugin, activatePlugin, deactivatePlugin, loadStoredPlugins } from './lib/store/plugin-store';
+export {
+  buildPlugin,
+  installPlugin,
+  uninstallPlugin,
+  activatePlugin,
+  deactivatePlugin,
+  loadStoredPlugins,
+} from './lib/store/plugin-store';
+export type { BuildPluginOptions } from './lib/store/plugin-store';
 export { getAppVersion } from './lib/store/app-version-store';
 
 export { getLayout } from './lib/dom/open-scd-helpers';

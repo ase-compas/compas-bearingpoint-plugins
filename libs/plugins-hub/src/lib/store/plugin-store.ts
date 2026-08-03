@@ -24,6 +24,13 @@ export function loadStoredPlugins(): StoredPlugin[] {
   }
 }
 
+/** Optional host/runtime fields not present on remote plugins.json manifests. */
+export interface BuildPluginOptions {
+  builtin?: boolean;
+  activeByDefault?: boolean;
+  requireDoc?: boolean;
+}
+
 /**
  * Finds a stored plugin matching the given source URL.
  * Compares raw src, proxied src, and exact name for host built-ins.
@@ -31,31 +38,35 @@ export function loadStoredPlugins(): StoredPlugin[] {
 function findStoredMatch(
   entry: PluginManifestEntry,
   stored: StoredPlugin[],
+  isBuiltin: boolean,
 ): StoredPlugin | undefined {
   const proxied = proxyUrl(entry.src);
   return stored.find(
     (p) =>
       p.src === entry.src ||
       p.src === proxied ||
-      (entry.builtin && p.name === entry.name && p.kind === entry.kind),
+      (isBuiltin && p.name === entry.name && p.kind === entry.kind),
   );
 }
 
 /**
  * Builds a Plugin record from a manifest entry, provider, and core version.
+ * Host-only fields (builtin, activeByDefault, requireDoc) come via options.
  */
 export function buildPlugin(
   entry: PluginManifestEntry,
   provider: Provider,
   coreVersion: string,
   stored: StoredPlugin[],
+  options?: BuildPluginOptions,
 ): Plugin {
-  const isBuiltin = entry.builtin === true || provider.source === 'builtin';
+  const isBuiltin = options?.builtin === true || provider.source === 'builtin';
   let id = buildPluginId(provider.prefix, entry.name, { builtin: isBuiltin });
-  const matching = findStoredMatch(entry, stored);
+  const matching = findStoredMatch(entry, stored, isBuiltin);
   if (matching && !isBuiltin) {
     id = matching.name;
   }
+  const activeByDefault = options?.activeByDefault === true;
   const installationState: InstallationState = isBuiltin
     ? 'INSTALLED'
     : matching
@@ -65,7 +76,7 @@ export function buildPlugin(
     ? matching.active
       ? 'ACTIVE'
       : 'INACTIVE'
-    : isBuiltin && entry.activeByDefault
+    : isBuiltin && activeByDefault
       ? 'ACTIVE'
       : 'INACTIVE';
   const compatible = isBuiltin
@@ -79,6 +90,8 @@ export function buildPlugin(
   return {
     ...entry,
     builtin: isBuiltin,
+    activeByDefault: options?.activeByDefault,
+    requireDoc: options?.requireDoc,
     id,
     provider: provider,
     compatible,

@@ -64,13 +64,6 @@ export interface PluginManifestEntry {
   position?: MenuPosition;
   /** Supported OpenSCD core version range (optional). */
   supportedCoreVersion?: SupportedCoreVersion;
-  // TODO Move this thre property "builtin", "activeByDefault", "requireDoc" from PluginManifestEntry into Plugin
-  /** Host built-in flag (officialPlugins). */
-  builtin?: boolean;
-  /** Host default activation (officialPlugins). */
-  activeByDefault?: boolean;
-  /** Whether the host plugin requires an open document. */
-  requireDoc?: boolean;
 }
 
 /**
@@ -96,4 +89,10 @@ export interface Plugin extends PluginManifestEntry {
   installationState: InstallationState;
   /** Activation state (only meaningful when installationState === 'INSTALLED'). */
   activationState: ActivationState;
+  /** Host built-in flag (officialPlugins). Not part of remote plugins.json. */
+  builtin?: boolean;
+  /** Host default activation (officialPlugins). */
+  activeByDefault?: boolean;
+  /** Whether the host plugin requires an open document. */
+  requireDoc?: boolean;
 }
