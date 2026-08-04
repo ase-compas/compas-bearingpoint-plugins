@@ -100,7 +100,7 @@ describe('loadBuiltinProviders', () => {
 
     expect(results).toHaveLength(1);
     expect(results[0].host).toBe('compas');
-    expect(results[0].provider.name).toBe('CoMPAS');
+    expect(results[0].provider.name).toBe('CoMPAS Plugins');
     expect(results[0].provider.prefix).toBeFalsy();
     expect(results[0].provider.source).toBe('builtin');
     expect(results[0].plugins).toHaveLength(1);
@@ -131,7 +131,7 @@ describe('loadBuiltinProviders', () => {
       detectEdition: () => 'open-scd',
     });
 
-    expect(results[0].provider.name).toBe('Open-SCD');
+    expect(results[0].provider.name).toBe('Open-SCD Plugins');
     expect(results[0].plugins[0].activationState).toBe('INACTIVE');
     expect(results[0].plugins[0].activeByDefault).toBe(false);
   });
