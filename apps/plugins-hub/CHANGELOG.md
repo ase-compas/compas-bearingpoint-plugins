@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show each reachable catalogue as its own provider; enable/disable only (no install/remove).
 - Provider logos shipped in the hub bundle (`compas.png` / `openscd.png`).
 
-![Built-in plugins](doc/img/0.0.3_Built-In_Plugins.png)
+![Built-in CoMPAS plugins](doc/img/0.0.3_Built-In_CoMPAS_Plugins.png)
+![Built-in Open-SCD plugins](doc/img/0.0.3_Built-In_Open-SCD_Plugins.png)
 
 **Custom provider**
 
