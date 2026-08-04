@@ -48,32 +48,51 @@ npm run preview:plugins-hub-prod     # production providers
 **Terminal 3 — Compas Open-SCD (one-time setup):**
 ```bash
 git clone https://github.com/com-pas/compas-open-scd
-cd compas-open-scd
-git submodule update --init --recursive
-npm install
-npm run build
-cd packages/compas-open-scd
-npm start
+pnpm install
+pnpm start
 ```
 
 Open: http://localhost:8080
 
-### Required patch in compas-open-scd
+### Required patch in Compas / Open-SCD (Vite proxy)
 
-Edit [`packages/compas-open-scd/snowpack.config.mjs`](https://github.com/com-pas/compas-open-scd/blob/main/packages/compas-open-scd/snowpack.config.mjs) — add a proxy route so API calls reach WireMock:
+Compas Open-SCD and the OpenSCD monorepo use **Vite**. For local WireMock, proxy
+`/external-api` and `/proxy` to port **8181** on both `server` and `preview`.
 
-```js
-routes: [
-  {
-    src: '/(external-api|proxy)/.*',
-    dest: (req, res) => {
-      proxy.web(req, res, { hostname: 'localhost', port: 8181 });
+| Project layout | Vite config file |
+|----------------|------------------|
+| **CoMPAS Open-SCD** (single-app) | root `vite.config.ts` |
+| **OpenSCD monorepo** | `packages/distribution/vite.config.ts` |
+
+Merge into the existing `defineConfig` (keep existing port/plugins; do not remove other proxies):
+
+```ts
+server: {
+  port: 8080,
+  // Local backend (e.g. WireMock / Compas API) – replaces former Snowpack routes
+  proxy: {
+    '^/(external-api|proxy)/.*': {
+      target: 'http://localhost:8181',
+      changeOrigin: true,
     },
   },
-],
+},
+preview: {
+  port: 8080,
+  proxy: {
+    '^/(external-api|proxy)/.*': {
+      target: 'http://localhost:8181',
+      changeOrigin: true,
+    },
+  },
+},
 ```
 
-![COMPAS - snowpack.config.mjs adaptation](doc/img/compas-snowpack.config.mjs.png)
+**Notes:**
+
+- WireMock must listen on **8181** (`npm run wiremock` in this repo).
+- Vite serves Open-SCD on **8080**.
+- This is a **local monkey patch** — do not commit it unless you intend to upstream it.
 
 ### First-time plugin registration
 
