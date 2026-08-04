@@ -13,10 +13,36 @@ import type { StoredPlugin } from '../types/stored-plugin';
 /** Persistent store key for installed plugins */
 const STORAGE_KEY = 'plugins';
 
+/**
+ * Deduplicates stored plugins by hub identity key `src` (strict string equality).
+ *
+ * Host localStorage may contain duplicates (OpenSCD keys by name+kind). The hub
+ * UI keys cards by `src`, so duplicates would crash Svelte's keyed `{#each}`.
+ *
+ * - Entries without a non-empty string `src` are dropped.
+ * - Later entries overwrite earlier ones for the same `src` (last-wins fields).
+ * - `active` is OR-merged so an enabled duplicate is not lost to a later inactive one.
+ */
+export function dedupeStoredPluginsBySrc(stored: StoredPlugin[]): StoredPlugin[] {
+  const bySrc = new Map<string, StoredPlugin>();
+  for (const p of stored) {
+    if (typeof p?.src !== 'string' || !p.src) continue;
+    const prev = bySrc.get(p.src);
+    bySrc.set(
+      p.src,
+      prev ? { ...prev, ...p, active: Boolean(prev.active || p.active) } : p,
+    );
+  }
+  return [...bySrc.values()];
+}
+
 export function loadStoredPlugins(): StoredPlugin[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as StoredPlugin[]) : [];
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return dedupeStoredPluginsBySrc(parsed as StoredPlugin[]);
   } catch {
     return [];
   }
