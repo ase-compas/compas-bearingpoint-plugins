@@ -13,8 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Built-in providers (Open-SCD / CoMPAS)**
 
-- Discover host `officialPlugins` at runtime (`/public/js/plugins.js`, Open-SCD `src/plugins.js` paths).
-- Show each reachable catalogue as its own provider; enable/disable only (no install/remove).
+- Discover host `officialPlugins` at runtime.
+- Show each reachable catalogue as its own provider; enable/disable only (no install/remove for build-in plugins).
 - Provider logos shipped in the hub bundle (`compas.png` / `openscd.png`).
 
 ![Built-in CoMPAS plugins](doc/img/0.0.3_Built-In_CoMPAS_Plugins.png)
