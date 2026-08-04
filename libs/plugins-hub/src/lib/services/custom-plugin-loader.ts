@@ -1,0 +1,105 @@
+import type { Provider } from '../types/provider';
+import type { Plugin, PluginKind, PluginManifestEntry } from '../types/plugin';
+import {
+  PLUGIN_KINDS,
+  PluginKindIconMapping,
+} from '../types/plugin';
+import type { StoredPlugin } from '../types/stored-plugin';
+import { buildPlugin } from '../store/plugin-store';
+
+/** Fake provider for host plugins not listed by any remote/builtin catalogue. */
+export const CUSTOM_PROVIDER: Provider = {
+  // no prefix — host registration uses plain stored plugin name
+  name: 'Custom Plugins',
+  icon: 'extension',
+  description:
+    'Manually configured plugins (not listed by a remote provider).',
+};
+
+/**
+ * Collects known plugin source URLs so stored entries that match a catalogue
+ * plugin are not treated as custom. Strict src equality only.
+ */
+export function collectKnownPluginSrcs(plugins: Plugin[]): Set<string> {
+  const known = new Set<string>();
+  for (const p of plugins) {
+    if (!p.src) continue;
+    known.add(p.src);
+  }
+  return known;
+}
+
+function isPluginKind(value: unknown): value is PluginKind {
+  return (
+    typeof value === 'string' &&
+    (PLUGIN_KINDS as readonly string[]).includes(value)
+  );
+}
+
+/**
+ * Returns true when a stored plugin's src matches a known catalogue plugin.
+ */
+export function isKnownStoredSrc(
+  stored: StoredPlugin,
+  knownSrcs: Set<string>,
+): boolean {
+  if (!stored.src) return false;
+  return knownSrcs.has(stored.src);
+}
+
+/**
+ * Builds Plugin records for stored plugins whose src is not covered by any
+ * loaded builtin or remote provider catalogue.
+ *
+ * Description is the source URL only (product requirement).
+ * Hub unique key is src; host configure uses plain stored name (no prefix).
+ */
+export function buildCustomPluginsFromStored(
+  stored: StoredPlugin[],
+  knownSrcs: Set<string>,
+  coreVersion: string,
+): Plugin[] {
+  const customs: Plugin[] = [];
+
+  for (const s of stored) {
+    if (isKnownStoredSrc(s, knownSrcs)) continue;
+    if (typeof s.name !== 'string' || !s.name) continue;
+    if (typeof s.src !== 'string' || !s.src) continue;
+    if (!isPluginKind(s.kind)) continue;
+
+    const kind = s.kind;
+    const entry: PluginManifestEntry = {
+      name: s.name,
+      author: s.author ?? CUSTOM_PROVIDER.name,
+      src: s.src,
+      kind,
+      icon:
+        typeof s.icon === 'string' && s.icon
+          ? s.icon
+          : PluginKindIconMapping[kind],
+      // Product: description is the source URL only
+      description: s.src,
+      position: s.position,
+    };
+
+    const plugin = buildPlugin(
+      entry,
+      CUSTOM_PROVIDER,
+      coreVersion,
+      stored,
+      {
+        activeByDefault: s.activeByDefault === true,
+        requireDoc: s.requireDoc === true,
+      },
+    );
+
+    customs.push({
+      ...plugin,
+      installationState: 'INSTALLED',
+      activationState: s.active ? 'ACTIVE' : 'INACTIVE',
+      compatible: true,
+    });
+  }
+
+  return customs;
+}

@@ -8,47 +8,60 @@ with more functionality and a more sophisticated UI.
 
 ## Overview
 
-Plugins-Hub ships with a **hardcoded list of plugin providers**. Each provider
-hosts a JSON manifest of the plugins it offers. Plugins-Hub aggregates all of
-them, filters them by the host's OpenSCD core version, and allows the user to
-browse, inspect, and load plugins on demand.
+Plugins-Hub ships with a **hardcoded list of remote plugin providers**. Each
+provider hosts a JSON manifest of the plugins it offers. In addition, the hub
+**loads host built-in plugins** from the running Open-SCD or CoMPAS instance via
+`document.querySelector('open-scd').getBuiltInPlugins()`.
 
-New providers onboard themselves via **Pull Request** to the central
+Plugins-Hub aggregates remote + built-in catalogues, filters remotes by the
+host's OpenSCD core version, and allows the user to browse, inspect, enable,
+and (for remotes) install plugins on demand.
+
+New remote providers onboard themselves via **Pull Request** to the central
 `providers.json`.
 
 ## Architecture (ASCII)
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                         OpenSCD Core (Host App)                         │
-│                      Core Version: e.g. 1.4.0 (runtime)                │
+│                    OpenSCD / CoMPAS Host App                             │
+│   getBuiltInPlugins()  +  layout: compas-layout | oscd-layout            │
+│                      Core Version: e.g. 0.44.0 (runtime)                 │
 └───────────────────────────────┬──────────────────────────────────────────┘
                                 ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                           Plugins-Hub Plugin                            │
 │  ┌────────────────────┐  ┌────────────────────┐  ┌──────────────────┐   │
 │  │  UI Layer (Svelte) │  │   Hub Services     │  │  Local State     │   │
-│  │  - plugins-hub     │◄─┤ - ProviderLoader   │─►│  - providers[]   │   │
-│  │  - provider-card   │  │ - PluginLoader     │  │  - plugins[]     │   │
+│  │  - plugins-hub     │◄─┤ - BuiltinLoader    │─►│  - providers[]   │   │
+│  │  - provider-card   │  │ - ProviderLoader   │  │  - plugins[]     │   │
 │  │  - plugin-card     │  │ - VersionResolver  │  │  - plugin states │   │
 │  │  - plugin-details  │  │ - PluginStore      │  │                  │   │
 │  └────────────────────┘  └─────────┬──────────┘  └──────────────────┘   │
 │                                    │                                     │
-│                     ┌──────────────▼───────────────┐                    │
-│                     │  providers.json (hardcoded)  │                    │
-│                     └──────────────┬───────────────┘                    │
-└────────────────────────────────────┼──────────────────────────────────────┘
-                                     │  HTTPS fetch
-         ┌───────────────────────────┼──────────────────────┐
-         ▼                           ▼                      ▼
-   Provider A                  Provider B             Provider C
-   plugins.json                plugins.json           plugins.json
-         │                           │                      │
-         └───────────────────────────┴──────────────────────┘
-                                     │
-                       Remote ESM plugin bundles (lazy-loaded)
+│              ┌─────────────────────┼─────────────────────┐              │
+│              ▼                     ▼                     ▼              │
+│   host.getBuiltInPlugins()  providers.json       remote plugins.json    │
+│   (same document)            (hardcoded)           (HTTPS fetch)        │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 
+### Built-in providers (Open-SCD / CoMPAS)
+
+At startup the hub calls **`getBuiltInPlugins()`** on `<open-scd>` (no
+`plugins.js` import, no URL probing, no probe cache).
+
+Host edition (provider branding) is detected from the layout in the host shadow DOM:
+
+| Signal | Provider name |
+|---|---|
+| `compas-layout` (or `compas-session`) | **CoMPAS** |
+| `oscd-layout` | **Open-SCD** |
+
+- Built-in plugins: `builtin: true`, always treated as installed, **no Install/Remove**, only Enable/Disable.
+- Configure `name` uses plain host plugin name (no provider prefix).
+- Unique hub key is always **`src`**.
+- Detail view shows `activeByDefault` and `requireDoc`.
 ## JSON Contracts
 
 ### `providers.json` (shipped in-repo at `libs/plugins-hub/src/lib/config/providers.json`)
@@ -57,11 +70,12 @@ Array of `Provider`:
 
 ```ts
 interface Provider {
-  prefix: string;      // unique short prefix, e.g. "bp", "openscd" — used for plugin IDs
-  name: string;        // display name (1–64 chars)
-  icon: string;        // URL, .svg preferred
+  prefix?: string;     // optional; host registration name = "prefix - name" when set
+  name: string;        // display name (1–64 chars); also UI filter key
+  icon: string;        // URL, data-URL, or Material icon name
   description: string; // ≤ 280 chars
-  pluginsUrl: string;  // HTTPS URL to plugins.json
+  pluginsUrl?: string; // HTTPS URL to plugins.json (omit for source: 'builtin')
+  source?: 'remote' | 'builtin'; // default remote
 }
 ```
 
@@ -90,18 +104,20 @@ interface Provider {
 
 ### Plugin (runtime, with state)
 
-Each plugin in the hub store has a unique **ID** and two state fields. Most manifest fields (including the new `longDescription`) are inherited.
+Unique key in the hub is always **`src`** (strict string equality). State fields are added on top of the manifest.
 
 ```ts
 interface Plugin extends PluginManifestEntry {
-  /** Unique ID. Format: "<providerPrefix>:<slug>", e.g. "bp:transformer-importer" */
-  id: string;
-  provider: Provider;                // full provider object
-  compatible: boolean;               // true if coreVersion ∈ [from, to)
-  kindText: string;                  // e.g. "Editor plugin", "Navigation plugin", "Validation plugin"
-  kindIcon: string;                  // Material icon for the kind badge
+  // src is the unique key
+  provider: Provider;
+  compatible: boolean;
+  kindText: string;
+  kindIcon: string;
   installationState: 'INSTALLED' | 'AVAILABLE';
   activationState:   'ACTIVE'    | 'INACTIVE';
+  builtin?: boolean;
+  activeByDefault?: boolean;
+  requireDoc?: boolean;
 }
 ```
 
@@ -113,15 +129,17 @@ interface Plugin extends PluginManifestEntry {
 - `ACTIVE` — plugin is enabled and running.
 - `INACTIVE` — plugin is installed but currently disabled.
 
-## Plugin ID Uniqueness
+## Host registration name (not hub identity)
 
-Each provider is assigned a short `prefix` (e.g. `"bp"` for BearingPoint).
-Plugin IDs are namespaced as `"<prefix>:<slug>"` to avoid collisions across providers.
+For `oscd-configure-plugin`, OpenSCD still uses `name` + `kind`. The hub builds:
 
+```ts
+registrationName(provider, plugin.name)
+// → "BP - PluginHub" when provider.prefix is set
+// → "Substation" when prefix is omitted (built-in / Custom)
 ```
-bp:transformer-importer
-openscd:history-viewer
-```
+
+`proxyUrl(src)` is applied only to `config.src` in that event, never when comparing plugins in the hub.
 
 ## UI Features
 

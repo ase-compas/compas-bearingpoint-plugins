@@ -18,10 +18,14 @@ Three modes are available — all require WireMock running in parallel.
 
 ```bash
 npm run run:plugins-hub   # terminal 1 — dev server with HMR
-npm run wiremock          # terminal 2 — mock API on port 8181
+npm run wiremock          # terminal 2 — mock API on port 8181 (required)
 ```
 
 Open: http://localhost:4301
+
+Built-in plugins in standalone dev come from the **fake OpenSCD host**
+(`createFakeCompasLayout` → `getBuiltInPlugins()`), not from WireMock.
+WireMock is only needed for remote provider manifests under `/external-api`.
 
 ---
 

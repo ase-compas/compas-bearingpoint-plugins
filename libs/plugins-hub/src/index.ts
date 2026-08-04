@@ -21,14 +21,44 @@ export type { StoredPlugin } from './lib/types/stored-plugin';
 export { loadProvider, loadAllProviders } from './lib/services/provider-loader';
 export type { ProviderLoadResult } from './lib/services/provider-loader';
 
-export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
+export {
+  loadBuiltinProviders,
+  mapOfficialPluginToManifest,
+} from './lib/services/builtin-plugin-loader';
+export type {
+  BuiltinLoadResult,
+  BuiltinHostId,
+  OfficialPluginRaw,
+} from './lib/services/builtin-plugin-loader';
+
+export {
+  CUSTOM_PROVIDER,
+  collectKnownPluginSrcs,
+  buildCustomPluginsFromStored,
+} from './lib/services/custom-plugin-loader';
+
+export { registrationName, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
-export { buildPlugin, installPlugin, uninstallPlugin, activatePlugin, deactivatePlugin, loadStoredPlugins } from './lib/store/plugin-store';
+export {
+  buildPlugin,
+  installPlugin,
+  uninstallPlugin,
+  activatePlugin,
+  deactivatePlugin,
+  loadStoredPlugins,
+} from './lib/store/plugin-store';
+export type { BuildPluginOptions } from './lib/store/plugin-store';
 export { getAppVersion } from './lib/store/app-version-store';
 
-export { getLayout } from './lib/dom/open-scd-helpers';
+export {
+  getLayout,
+  getOpenSCDHost,
+  detectHostEdition,
+  getBuiltInPluginsFromHost,
+} from './lib/dom/open-scd-helpers';
+export type { HostEdition, OpenScdHost } from './lib/dom/open-scd-helpers';
 
 export { proxyUrl } from './lib/utils/proxy-url';
 

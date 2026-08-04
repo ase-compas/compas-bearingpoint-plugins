@@ -68,15 +68,10 @@ export interface PluginManifestEntry {
 
 /**
  * Enriched plugin record held in the hub's state.
- * Combines manifest data with runtime state and a unique identifier.
+ * Combines manifest data with runtime state.
+ * Unique key in the hub is always {@link PluginManifestEntry.src} (strict string equality).
  */
 export interface Plugin extends PluginManifestEntry {
-  /**
-   * Unique identifier scoped by provider prefix.
-   * Format: "<providerPrefix>:<slugified-name>"
-   * Example: "bp:transformer-importer"
-   */
-  id: string;
   /** The provider that supplies this plugin. */
   provider: Provider;
   /** Whether the plugin is compatible with the running core version. */
@@ -89,4 +84,10 @@ export interface Plugin extends PluginManifestEntry {
   installationState: InstallationState;
   /** Activation state (only meaningful when installationState === 'INSTALLED'). */
   activationState: ActivationState;
+  /** Host built-in flag (officialPlugins). Not part of remote plugins.json. */
+  builtin?: boolean;
+  /** Host default activation (officialPlugins). */
+  activeByDefault?: boolean;
+  /** Whether the host plugin requires an open document. */
+  requireDoc?: boolean;
 }

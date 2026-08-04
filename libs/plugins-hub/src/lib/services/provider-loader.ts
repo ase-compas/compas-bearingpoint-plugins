@@ -18,6 +18,14 @@ export interface ProviderLoadResult {
 export async function loadProvider(
   provider: Provider,
 ): Promise<ProviderLoadResult> {
+  if (provider.source === 'builtin' || !provider.pluginsUrl) {
+    return {
+      provider,
+      plugins: [],
+      error: 'Builtin providers must be loaded via loadBuiltinProviders().',
+    };
+  }
+
   try {
     // Use proxy URL for external URLs when running on localhost
     const response = await fetch(proxyUrl(provider.pluginsUrl));

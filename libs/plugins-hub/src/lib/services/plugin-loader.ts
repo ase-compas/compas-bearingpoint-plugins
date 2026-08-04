@@ -11,6 +11,7 @@ import type { Provider } from '../types/provider';
 function buildTrustedOrigins(providers: Provider[]): Set<string> {
   const origins = new Set<string>();
   for (const p of providers) {
+    if (!p.pluginsUrl) continue;
     try {
       origins.add(new URL(p.pluginsUrl).origin);
     } catch (e) {
@@ -43,10 +44,17 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
 }
 
 /**
- * Builds the unique plugin ID from provider prefix and plugin name.
- * Format: "<providerPrefix>:<pluginName>"
- * e.g. "BP - Transformermporter"
+ * Host registration name for `oscd-configure-plugin` (OpenSCD detail.name).
+ * Uses `"${prefix} - ${pluginName}"` when the provider has a non-empty prefix;
+ * otherwise returns the plain plugin name (built-in / Custom).
  */
-export function buildPluginId(providerPrefix: string, pluginName: string): string {
-  return `${providerPrefix} - ${pluginName}`;
+export function registrationName(
+  provider: Pick<Provider, 'prefix'> | undefined,
+  pluginName: string,
+): string {
+  const prefix = provider?.prefix?.trim();
+  if (prefix) {
+    return `${prefix} - ${pluginName}`;
+  }
+  return pluginName;
 }

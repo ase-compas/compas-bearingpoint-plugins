@@ -14,8 +14,7 @@ npm-debug.log
 yarn-error.log
 
 # NX
-.nx/cache
-.nx/workspace-data
+.nx/
 
 # IDEs and editors
 /.idea
