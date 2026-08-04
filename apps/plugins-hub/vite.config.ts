@@ -13,17 +13,6 @@ export default defineConfig(async (): Promise<UserConfig> => {
       changeOrigin: true,
       // rewrite: (path) => path.replace(/^\/api/, ''), // falls der path-prefix '/api' stört
     },
-    // Host builtin catalogues (WireMock) for local dual-provider testing
-    '/public/js/plugins.js': {
-      target: 'http://localhost:8181',
-      secure: false,
-      changeOrigin: true,
-    },
-    '/openscd/src/plugins.js': {
-      target: 'http://localhost:8181',
-      secure: false,
-      changeOrigin: true,
-    },
   };
   return {
     root: __dirname,

@@ -23,9 +23,7 @@ export type { ProviderLoadResult } from './lib/services/provider-loader';
 
 export {
   loadBuiltinProviders,
-  buildBuiltinCandidates,
   mapOfficialPluginToManifest,
-  BUILTIN_PROBE_CACHE_KEY,
 } from './lib/services/builtin-plugin-loader';
 export type {
   BuiltinLoadResult,
@@ -54,7 +52,13 @@ export {
 export type { BuildPluginOptions } from './lib/store/plugin-store';
 export { getAppVersion } from './lib/store/app-version-store';
 
-export { getLayout } from './lib/dom/open-scd-helpers';
+export {
+  getLayout,
+  getOpenSCDHost,
+  detectHostEdition,
+  getBuiltInPluginsFromHost,
+} from './lib/dom/open-scd-helpers';
+export type { HostEdition, OpenScdHost } from './lib/dom/open-scd-helpers';
 
 export { proxyUrl } from './lib/utils/proxy-url';
 

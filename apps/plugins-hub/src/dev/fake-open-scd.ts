@@ -1,18 +1,44 @@
-// a fake implementation ti simulate the save into the lo0calStorage via open-scd.ts
-// See  public handleConfigurationPluginEvent(e: ConfigurePluginEvent) - https://github.com/openscd/open-scd/blob/main/packages/openscd/src/open-scd.ts#L156-L184
+// Fake host environment for standalone plugins-hub dev (no real OpenSCD/CoMPAS).
+// Mirrors handleConfigurationPluginEvent + getBuiltInPlugins from open-scd.ts
 import type { StoredPlugin } from '@compas-bearingpoint/plugins-hub';
 
+const FAKE_BUILTINS = [
+  {
+    name: 'Fake Substation',
+    src: '/plugins/dist/editors/Substation.js',
+    icon: 'margin',
+    kind: 'editor',
+    activeByDefault: true,
+    requireDoc: true,
+  },
+  {
+    name: 'Fake Help',
+    src: '/plugins/dist/menu/Help.js',
+    icon: 'help',
+    kind: 'menu',
+    activeByDefault: false,
+    requireDoc: false,
+    position: 'bottom',
+  },
+] as const;
+
 /**
- * Fake der Host-Umgebung (nur Dev)
+ * Fake der Host-Umgebung (nur Dev).
+ * Provides getBuiltInPlugins() instead of serving plugins.js via WireMock.
  */
 export function createFakeCompasLayout(): HTMLElement | null {
   if (!import.meta.env?.DEV) return null;
 
-  const fakeOpenScd = document.createElement('open-scd');
+  const fakeOpenScd = document.createElement('open-scd') as HTMLElement & {
+    getBuiltInPlugins: () => typeof FAKE_BUILTINS;
+  };
   const shadow = fakeOpenScd.attachShadow({ mode: 'open' });
 
   const fakeCompasLayout = document.createElement('compas-layout');
   shadow.appendChild(fakeCompasLayout);
+
+  // Same API as real OpenSCD / CoMPAS host
+  fakeOpenScd.getBuiltInPlugins = () => [...FAKE_BUILTINS];
 
   document.body.appendChild(fakeOpenScd);
 

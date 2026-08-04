@@ -23,14 +23,9 @@ npm run wiremock          # terminal 2 — mock API on port 8181 (required)
 
 Open: http://localhost:4301
 
-WireMock also serves host builtin catalogues for dual-provider testing:
-
-| Path (proxied by Vite → 8181) | Provider |
-|---|---|
-| `/public/js/plugins.js` | CoMPAS Dummy (1 plugin) |
-| `/openscd/src/plugins.js` | Open-SCD Dummy (1 plugin) |
-
-Without WireMock, those paths fail and no builtin providers appear in standalone mode.
+Built-in plugins in standalone dev come from the **fake OpenSCD host**
+(`createFakeCompasLayout` → `getBuiltInPlugins()`), not from WireMock.
+WireMock is only needed for remote provider manifests under `/external-api`.
 
 ---
 

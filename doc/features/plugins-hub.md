@@ -10,8 +10,8 @@ with more functionality and a more sophisticated UI.
 
 Plugins-Hub ships with a **hardcoded list of remote plugin providers**. Each
 provider hosts a JSON manifest of the plugins it offers. In addition, the hub
-**discovers host built-in plugins** from the running Open-SCD or CoMPAS
-instance (`officialPlugins` in the host's `plugins.js`).
+**loads host built-in plugins** from the running Open-SCD or CoMPAS instance via
+`document.querySelector('open-scd').getBuiltInPlugins()`.
 
 Plugins-Hub aggregates remote + built-in catalogues, filters remotes by the
 host's OpenSCD core version, and allows the user to browse, inspect, enable,
@@ -25,7 +25,7 @@ New remote providers onboard themselves via **Pull Request** to the central
 ```text
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                    OpenSCD / CoMPAS Host App                             │
-│   officialPlugins ← /public/js/plugins.js  OR  {base}/src/plugins.js     │
+│   getBuiltInPlugins()  +  layout: compas-layout | oscd-layout            │
 │                      Core Version: e.g. 0.44.0 (runtime)                 │
 └───────────────────────────────┬──────────────────────────────────────────┘
                                 ▼
@@ -36,49 +36,32 @@ New remote providers onboard themselves via **Pull Request** to the central
 │  │  - plugins-hub     │◄─┤ - BuiltinLoader    │─►│  - providers[]   │   │
 │  │  - provider-card   │  │ - ProviderLoader   │  │  - plugins[]     │   │
 │  │  - plugin-card     │  │ - VersionResolver  │  │  - plugin states │   │
-│  │  - plugin-details  │  │ - PluginStore      │  │  - probe cache   │   │
+│  │  - plugin-details  │  │ - PluginStore      │  │                  │   │
 │  └────────────────────┘  └─────────┬──────────┘  └──────────────────┘   │
 │                                    │                                     │
 │              ┌─────────────────────┼─────────────────────┐              │
 │              ▼                     ▼                     ▼              │
-│     host plugins.js      providers.json          remote plugins.json    │
-│   (CoMPAS / Open-SCD)     (hardcoded)              (HTTPS fetch)        │
+│   host.getBuiltInPlugins()  providers.json       remote plugins.json    │
+│   (same document)            (hardcoded)           (HTTPS fetch)        │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Built-in providers (Open-SCD / CoMPAS)
 
-At startup the hub probes host catalogues. Paths are resolved against
-**`location.origin` of the host page** (not the plugin module origin). That
-matters when the hub is loaded from e.g. `http://localhost:4301/index.js`
-inside CoMPAS on `http://localhost:8080/` — imports must hit **8080**, not 4301.
+At startup the hub calls **`getBuiltInPlugins()`** on `<open-scd>` (no
+`plugins.js` import, no URL probing, no probe cache).
 
-| Host | Path candidate (→ `new URL(path, location.origin)`) | Provider name |
-|---|---|---|
-| CoMPAS | `/public/js/plugins.js` | **CoMPAS** |
-| Open-SCD | `{basePath}src/plugins.js`, `/openscd/src/plugins.js` | **Open-SCD** |
+Host edition (provider branding) is detected from the layout in the host shadow DOM:
 
-- Every **reachable** catalogue becomes its own provider (both when both work).
-- Probe results are cached in `localStorage` key `plugins-hub.builtin-probe`:
+| Signal | Provider name |
+|---|---|
+| `compas-layout` (or `compas-session`) | **CoMPAS** |
+| `oscd-layout` | **Open-SCD** |
 
-  ```ts
-  {
-    ts: number,
-    buildInProviders: Array<{ host: 'compas' | 'open-scd'; url: string }>
-  }
-  ```
-
-  | Situation | Behaviour |
-  |---|---|
-  | Cache empty, ≥1 success | Write **all** working providers (local dual → both; prod → one) |
-  | Cache empty, 0 successes | Do **not** write cache |
-  | Cache present | Load **only** cached providers |
-  | Cache present, all fail | **Clear** cache (next load rediscovers) |
-  | Cache present, ≥1 success | Keep cache unchanged |
 - Built-in plugins: `builtin: true`, always treated as installed, **no Install/Remove**, only Enable/Disable.
-- Plugin `id` / configure `name` is the **plain host name** (no provider prefix), matching the host plugin manager.
+- Configure `name` uses plain host plugin name (no provider prefix).
+- Unique hub key is always **`src`**.
 - Detail view shows `activeByDefault` and `requireDoc`.
-
 ## JSON Contracts
 
 ### `providers.json` (shipped in-repo at `libs/plugins-hub/src/lib/config/providers.json`)
