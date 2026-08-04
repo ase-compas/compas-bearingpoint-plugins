@@ -20,6 +20,7 @@
     CUSTOM_PROVIDER,
     collectKnownPluginSrcs,
     buildCustomPluginsFromStored,
+    registrationName,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -41,6 +42,7 @@
 
   let searchTerm = $state('');
   let statusFilter = $state<'all' | 'installed' | 'available'>('all');
+  /** Filter key is provider.name (prefix is optional on built-in/Custom). */
   let providerFilter = $state<string>('all');
   let kindFilter = $state<'all' | PluginKind>('all');
 
@@ -94,7 +96,7 @@
   }
 
   function isCustomPlugin(plugin: Plugin | undefined): boolean {
-    return plugin?.provider?.prefix === CUSTOM_PROVIDER.prefix;
+    return plugin?.provider?.name === CUSTOM_PROVIDER.name;
   }
 
   $effect(() => {
@@ -103,8 +105,8 @@
     initHub();
   });
 
-  function getPluginsForProvider(prefix: string): Plugin[] {
-    return filteredPlugins.filter((p) => p.provider.prefix === prefix);
+  function getPluginsForProvider(providerName: string): Plugin[] {
+    return filteredPlugins.filter((p) => p.provider.name === providerName);
   }
 
   const filteredPlugins = $derived(
@@ -120,7 +122,7 @@
         (statusFilter === 'available' && p.installationState === 'AVAILABLE');
 
       const matchesProvider =
-        providerFilter === 'all' || p.provider?.prefix === providerFilter;
+        providerFilter === 'all' || p.provider?.name === providerFilter;
 
       const matchesKind =
         kindFilter === 'all' || p.kind === kindFilter;
@@ -129,15 +131,15 @@
     }),
   );
 
-  function handleInstall(pluginId: string) {
-    const target = plugins.find((p) => p.id === pluginId);
+  function handleInstall(pluginSrc: string) {
+    const target = plugins.find((p) => p.src === pluginSrc);
     if (!target?.compatible || target.builtin) {
       return;
     }
 
-    plugins = installPlugin(plugins, pluginId);
-    const updatedPlugin = plugins.find((p) => p.id === pluginId);
-    if (selectedPlugin?.id === pluginId) {
+    plugins = installPlugin(plugins, pluginSrc);
+    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
+    if (selectedPlugin?.src === pluginSrc) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -145,57 +147,52 @@
     }
   }
 
-  function handleUninstall(pluginId: string) {
-    const pluginBefore = plugins.find((p) => p.id === pluginId);
+  function handleUninstall(pluginSrc: string) {
+    const pluginBefore = plugins.find((p) => p.src === pluginSrc);
     if (pluginBefore?.builtin) {
       return;
     }
 
     // Custom plugins leave the hub list entirely when uninstalled
     if (isCustomPlugin(pluginBefore)) {
-      plugins = plugins.filter((p) => p.id !== pluginId);
+      plugins = plugins.filter((p) => p.src !== pluginSrc);
       if (!plugins.some((p) => isCustomPlugin(p))) {
         // Reset filter first while Custom <Option> still exists.
-        if (providerFilter === CUSTOM_PROVIDER.prefix) {
+        if (providerFilter === CUSTOM_PROVIDER.name) {
           providerFilter = 'all';
         }
         // Removing the selected option in the same tick crashes SMUI Select
         // (getElement null on getPrimaryText). Defer provider list update.
         setTimeout(() => {
           providers = providers.filter(
-            (p) => p.prefix !== CUSTOM_PROVIDER.prefix,
+            (p) => p.name !== CUSTOM_PROVIDER.name,
           );
         }, 1);
       }
-      if (selectedPlugin?.id === pluginId) {
+      if (selectedPlugin?.src === pluginSrc) {
         selectedPlugin = null;
       }
-      dispatchConfigurePlugin(
-        {
-          id: pluginBefore!.id,
-          kind: pluginBefore!.kind,
-          name: pluginBefore!.name,
-        },
-        true,
-      );
+      if (pluginBefore) {
+        dispatchConfigurePlugin(pluginBefore, true);
+      }
       return;
     }
 
-    const { updated, success } = uninstallPlugin(plugins, pluginId);
+    const { updated, success } = uninstallPlugin(plugins, pluginSrc);
     plugins = updated;
-    const updatedPlugin = plugins.find((p) => p.id === pluginId);
-    if (selectedPlugin?.id === pluginId) {
+    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
+    if (selectedPlugin?.src === pluginSrc) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (pluginBefore && success) {
-      dispatchConfigurePlugin({ id: pluginBefore.id, kind: pluginBefore.kind }, true);
+      dispatchConfigurePlugin(pluginBefore, true);
     }
   }
 
-  function handleEnable(pluginId: string) {
-    plugins = activatePlugin(plugins, pluginId);
-    const updatedPlugin = plugins.find((p) => p.id === pluginId);
-    if (selectedPlugin?.id === pluginId) {
+  function handleEnable(pluginSrc: string) {
+    plugins = activatePlugin(plugins, pluginSrc);
+    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
+    if (selectedPlugin?.src === pluginSrc) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -203,10 +200,10 @@
     }
   }
 
-  function handleDisable(pluginId: string) {
-    plugins = deactivatePlugin(plugins, pluginId);
-    const updatedPlugin = plugins.find((p) => p.id === pluginId);
-    if (selectedPlugin?.id === pluginId) {
+  function handleDisable(pluginSrc: string) {
+    plugins = deactivatePlugin(plugins, pluginSrc);
+    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
+    if (selectedPlugin?.src === pluginSrc) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -215,7 +212,7 @@
   }
 
   function handleSelectPlugin(plugin: Plugin) {
-    selectedPlugin = selectedPlugin?.id === plugin.id ? null : plugin;
+    selectedPlugin = selectedPlugin?.src === plugin.src ? null : plugin;
   }
 
   function handleCloseDetails() {
@@ -223,11 +220,10 @@
   }
 
   interface ConfigureTarget {
-    id: string;
     kind: 'editor' | 'menu' | 'validator';
-    name?: string;
+    name: string;
     author?: string;
-    src?: string;
+    src: string;
     icon?: string;
     description?: string;
     position?: 'top' | 'middle' | 'bottom';
@@ -240,28 +236,26 @@
   }
 
   /**
-   * Dispatches the oscd-configure-plugin event to integrate with the OpenSCD host.
-   * Remote plugins use the namespaced plugin.id as detail.name.
-   * Builtin plugins use the plain host name (no prefix) so the host findPluginIndex matches.
+   * Dispatches oscd-configure-plugin to the OpenSCD host.
+   * detail.name = optional provider prefix + plugin name (registrationName).
+   * config.src uses proxyUrl only for remote/custom absolute URLs when needed.
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
-    const registrationName = target.builtin
-      ? (target.name ?? target.id)
-      : target.id;
+    const regName = registrationName(target.provider, target.name);
 
     const detail: { name: string; kind: PluginKind; config: StoredPlugin | null } = remove
       ? {
-          name: registrationName,
+          name: regName,
           kind: target.kind,
           config: null,
         }
       : {
-          name: registrationName,
+          name: regName,
           kind: target.kind,
           config: {
-            name: registrationName,
+            name: regName,
             author: target.author || target.provider?.name,
-            src: target.builtin ? target.src! : proxyUrl(target.src!),
+            src: target.builtin ? target.src : proxyUrl(target.src),
             icon: target.icon!,
             kind: target.kind,
             description: target.description,
@@ -318,7 +312,7 @@
       variant="outlined">
         <Option value="all">All contributors</Option>
         {#each providers as provider}
-          <Option value={provider.prefix}>{provider.name}</Option>
+          <Option value={provider.name}>{provider.name}</Option>
         {/each}
     </Select>
 
@@ -350,12 +344,12 @@
         <div class="empty-state bp-typo-body">No plugins match your search.</div>
       {:else}
         {#each providers as provider}
-          {@const providerPlugins = getPluginsForProvider(provider.prefix)}
+          {@const providerPlugins = getPluginsForProvider(provider.name)}
           {#if providerPlugins.length > 0}
             <ProviderCard
               {provider}
               plugins={providerPlugins}
-              selectedPluginId={selectedPlugin?.id ?? null}
+              selectedPluginSrc={selectedPlugin?.src ?? null}
               onSelectPlugin={handleSelectPlugin}
               onInstall={handleInstall}
               onUninstall={handleUninstall}

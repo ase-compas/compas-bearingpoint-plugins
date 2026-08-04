@@ -22,7 +22,6 @@ function makePlugin(partial: Partial<Plugin> & Pick<Plugin, 'name' | 'src'>): Pl
     kind: 'editor',
     icon: 'edit',
     description: 'd',
-    id: partial.id ?? `BP - ${partial.name}`,
     provider: remoteProvider,
     compatible: true,
     kindText: 'Editor plugin',
@@ -34,7 +33,7 @@ function makePlugin(partial: Partial<Plugin> & Pick<Plugin, 'name' | 'src'>): Pl
 }
 
 describe('collectKnownPluginSrcs', () => {
-  it('includes raw and proxied src values', () => {
+  it('includes raw src values only', () => {
     const known = collectKnownPluginSrcs([
       makePlugin({
         name: 'A',
@@ -51,7 +50,7 @@ describe('collectKnownPluginSrcs', () => {
 });
 
 describe('isKnownStoredSrc', () => {
-  it('matches exact and proxied src', () => {
+  it('matches exact src only', () => {
     const known = new Set(['https://example.com/a.js', '/local/b.js']);
     expect(
       isKnownStoredSrc(
@@ -96,9 +95,10 @@ describe('buildCustomPluginsFromStored', () => {
     const customs = buildCustomPluginsFromStored(stored, known, '0.44.0');
     expect(customs).toHaveLength(1);
     expect(customs[0].name).toBe('My Manual Plugin');
-    expect(customs[0].provider.prefix).toBe(CUSTOM_PROVIDER.prefix);
+    expect(customs[0].provider.name).toBe(CUSTOM_PROVIDER.name);
+    expect(customs[0].provider.prefix).toBeFalsy();
     expect(customs[0].description).toBe('https://cdn.example.org/manual.js');
-    expect(customs[0].id).toBe('My Manual Plugin');
+    expect(customs[0].src).toBe('https://cdn.example.org/manual.js');
     expect(customs[0].installationState).toBe('INSTALLED');
     expect(customs[0].activationState).toBe('INACTIVE');
     expect(customs[0].builtin).toBe(false);

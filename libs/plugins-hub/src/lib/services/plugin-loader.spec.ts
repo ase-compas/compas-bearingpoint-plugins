@@ -1,15 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { buildPluginId, isUrlTrusted } from './plugin-loader';
+import { registrationName, isUrlTrusted } from './plugin-loader';
 
-describe('buildPluginId', () => {
-  it('combines prefix and plugin name for remote plugins', () => {
-    expect(buildPluginId('BP', 'Transformer Importer')).toBe('BP - Transformer Importer');
-    expect(buildPluginId('openscd', 'History Viewer')).toBe('openscd - History Viewer');
+describe('registrationName', () => {
+  it('uses prefix - name when prefix is set', () => {
+    expect(registrationName({ prefix: 'BP' }, 'Transformer Importer')).toBe(
+      'BP - Transformer Importer',
+    );
+    expect(registrationName({ prefix: 'openscd' }, 'History Viewer')).toBe(
+      'openscd - History Viewer',
+    );
   });
 
-  it('returns plain host name for builtin plugins (no prefix)', () => {
-    expect(buildPluginId('CoMPAS', 'Substation', { builtin: true })).toBe('Substation');
-    expect(buildPluginId('OpenSCD', 'IED', { builtin: true })).toBe('IED');
+  it('returns plain name when prefix is missing or empty', () => {
+    expect(registrationName({}, 'Substation')).toBe('Substation');
+    expect(registrationName({ prefix: '' }, 'IED')).toBe('IED');
+    expect(registrationName({ prefix: '   ' }, 'Help')).toBe('Help');
+    expect(registrationName(undefined, 'Cleanup')).toBe('Cleanup');
   });
 });
 

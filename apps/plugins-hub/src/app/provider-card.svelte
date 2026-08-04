@@ -6,18 +6,18 @@
   interface Props {
     provider: Provider;
     plugins: Plugin[];
-    selectedPluginId: string | null;
+    selectedPluginSrc: string | null;
     onSelectPlugin: (plugin: Plugin) => void;
-    onInstall: (pluginId: string) => void;
-    onUninstall: (pluginId: string) => void;
-    onEnable: (pluginId: string) => void;
-    onDisable: (pluginId: string) => void;
+    onInstall: (pluginSrc: string) => void;
+    onUninstall: (pluginSrc: string) => void;
+    onEnable: (pluginSrc: string) => void;
+    onDisable: (pluginSrc: string) => void;
   }
 
   let {
     provider,
     plugins,
-    selectedPluginId,
+    selectedPluginSrc,
     onSelectPlugin,
     onInstall,
     onUninstall,
@@ -46,15 +46,15 @@
   </div>
 
   <div class="plugins-grid">
-    {#each plugins as plugin (plugin.id)}
+    {#each plugins as plugin (plugin.src)}
       <PluginCard
         {plugin}
-        selected={selectedPluginId === plugin.id}
+        selected={selectedPluginSrc === plugin.src}
         onSelect={() => onSelectPlugin(plugin)}
-        onInstall={() => onInstall(plugin.id)}
-        onUninstall={() => onUninstall(plugin.id)}
-        onEnable={() => onEnable(plugin.id)}
-        onDisable={() => onDisable(plugin.id)}
+        onInstall={() => onInstall(plugin.src)}
+        onUninstall={() => onUninstall(plugin.src)}
+        onEnable={() => onEnable(plugin.src)}
+        onDisable={() => onDisable(plugin.src)}
       />
     {/each}
   </div>

@@ -1,13 +1,14 @@
 <script lang="ts">
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
+  import { registrationName } from '@compas-bearingpoint/plugins-hub';
 
   interface Props {
     plugin: Plugin;
     onClose: () => void;
-    onInstall: (pluginId: string) => void;
-    onUninstall: (pluginId: string) => void;
-    onEnable: (pluginId: string) => void;
-    onDisable: (pluginId: string) => void;
+    onInstall: (pluginSrc: string) => void;
+    onUninstall: (pluginSrc: string) => void;
+    onEnable: (pluginSrc: string) => void;
+    onDisable: (pluginSrc: string) => void;
     coreVersion?: string;
   }
 
@@ -16,13 +17,14 @@
   const isBuiltin = $derived(plugin.builtin === true);
   const isInstalled = $derived(plugin.installationState === 'INSTALLED' || isBuiltin);
   const isActive = $derived(plugin.activationState === 'ACTIVE');
+  const displayName = $derived(registrationName(plugin.provider, plugin.name));
 </script>
 
 <aside class="plugin-details">
   <div class="details-header">
     <div class="details-title-row bp-typo-h1">
       <span class="material-icons details-icon">{plugin.icon}</span>
-      <h3 class="details-name">{plugin.name}</h3>
+      <h3 class="details-name">{displayName}</h3>
       <button class="close-btn" onclick={onClose} aria-label="Close details"
         >✕</button
       >
@@ -59,7 +61,7 @@
   <div class="details-meta">
     <div class="meta-item">
       <span class="meta-label bp-typo-label">Provider</span>
-      <span class="bp-typo-16-regular">{plugin.provider.prefix.toUpperCase()}</span>
+      <span class="bp-typo-16-regular">{plugin.provider.name}</span>
     </div>
     <div class="meta-item">
       <span class="meta-label bp-typo-label">Author</span>
@@ -89,10 +91,6 @@
         </span>
       </div>
     {/if}
-    <div class="meta-item">
-      <span class="meta-label bp-typo-label">Plugin ID</span>
-      <span class="bp-typo-16-regular">{plugin.id}</span>
-    </div>
     {#if coreVersion}
       <div class="meta-item">
         <span class="meta-label bp-typo-label">Current Core</span>
@@ -118,24 +116,24 @@
     <div style="flex: 1"></div>
     {#if isBuiltin}
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.id)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.id)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
       {/if}
     {:else if !isInstalled}
       <button
         class="action-btn install bp-typo-button"
-        onclick={() => onInstall(plugin.id)}
+        onclick={() => onInstall(plugin.src)}
         disabled={!plugin.compatible}
       >
         Install
       </button>
     {:else}
-      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.id)}>Remove</button>
+      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.src)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.id)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.id)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
       {/if}
     {/if}
   </div>

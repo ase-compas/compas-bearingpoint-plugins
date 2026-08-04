@@ -44,20 +44,17 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
 }
 
 /**
- * Builds the unique plugin ID from provider prefix and plugin name.
- * Format: "<providerPrefix> - <pluginName>"
- * e.g. "BP - Transformer Importer"
- *
- * For host built-in plugins pass `builtin: true` so the ID is the plain
- * host name (matches OpenSCD/CoMPAS plugin manager, no prefix).
+ * Host registration name for `oscd-configure-plugin` (OpenSCD detail.name).
+ * Uses `"${prefix} - ${pluginName}"` when the provider has a non-empty prefix;
+ * otherwise returns the plain plugin name (built-in / Custom).
  */
-export function buildPluginId(
-  providerPrefix: string,
+export function registrationName(
+  provider: Pick<Provider, 'prefix'> | undefined,
   pluginName: string,
-  options?: { builtin?: boolean },
 ): string {
-  if (options?.builtin) {
-    return pluginName;
+  const prefix = provider?.prefix?.trim();
+  if (prefix) {
+    return `${prefix} - ${pluginName}`;
   }
-  return `${providerPrefix} - ${pluginName}`;
+  return pluginName;
 }

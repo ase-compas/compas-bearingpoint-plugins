@@ -216,8 +216,9 @@ describe('loadBuiltinProviders', () => {
     expect(results).toHaveLength(2);
     expect(results.map((r) => r.host).sort()).toEqual(['compas', 'open-scd']);
     expect(results[0].plugins[0].builtin).toBe(true);
-    expect(results[0].plugins[0].id).toBe(results[0].plugins[0].name);
+    expect(results[0].plugins[0].src).toBeTruthy();
     expect(results[0].plugins[0].installationState).toBe('INSTALLED');
+    expect(results[0].provider.prefix).toBeFalsy();
 
     const cache = readBuiltinProbeCache();
     expect(cache?.buildInProviders).toHaveLength(2);
@@ -257,8 +258,9 @@ describe('loadBuiltinProviders', () => {
 
     expect(results).toHaveLength(1);
     expect(results[0].host).toBe('compas');
-    expect(results[0].plugins[0].id).toBe('IED');
+    expect(results[0].plugins[0].name).toBe('IED');
     expect(results[0].plugins[0].activationState).toBe('ACTIVE');
+    expect(results[0].provider.prefix).toBeFalsy();
     expect(readBuiltinProbeCache()?.buildInProviders).toEqual([
       {
         host: 'compas',

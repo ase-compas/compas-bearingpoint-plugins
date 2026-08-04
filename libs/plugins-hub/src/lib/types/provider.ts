@@ -11,9 +11,13 @@ export type ProviderSource = 'remote' | 'builtin';
  * discovered at runtime from the host's officialPlugins module.
  */
 export interface Provider {
-  /** Unique short prefix for this provider (e.g. "bp", "openscd"). Used to namespace plugin IDs. */
-  prefix: string;
-  /** Display name of the provider (1–64 chars). */
+  /**
+   * Optional short prefix for host registration names (e.g. "BP").
+   * When set, OpenSCD config name is `"${prefix} - ${plugin.name}"`.
+   * Omit for built-in and Custom providers (register with plain plugin name).
+   */
+  prefix?: string;
+  /** Display name of the provider (1–64 chars). Used as filter key in the UI. */
   name: string;
   /** Icon URL (.svg preferred, square ≤ 64 KB) or Material icon name. */
   icon: string;

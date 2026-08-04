@@ -39,7 +39,7 @@ export {
   buildCustomPluginsFromStored,
 } from './lib/services/custom-plugin-loader';
 
-export { buildPluginId, isUrlTrusted } from './lib/services/plugin-loader';
+export { registrationName, isUrlTrusted } from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 

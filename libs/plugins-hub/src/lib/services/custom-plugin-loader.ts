@@ -6,27 +6,25 @@ import {
 } from '../types/plugin';
 import type { StoredPlugin } from '../types/stored-plugin';
 import { buildPlugin } from '../store/plugin-store';
-import { proxyUrl } from '../utils/proxy-url';
 
 /** Fake provider for host plugins not listed by any remote/builtin catalogue. */
 export const CUSTOM_PROVIDER: Provider = {
-  prefix: 'Custom',
-  name: 'Custom',
+  // no prefix — host registration uses plain stored plugin name
+  name: 'Custom Plugins',
   icon: 'extension',
   description:
     'Manually configured plugins (not listed by a remote provider).',
 };
 
 /**
- * Collects all known plugin source URLs (raw + proxied) so stored entries
- * that match a catalogue plugin are not treated as custom.
+ * Collects known plugin source URLs so stored entries that match a catalogue
+ * plugin are not treated as custom. Strict src equality only.
  */
 export function collectKnownPluginSrcs(plugins: Plugin[]): Set<string> {
   const known = new Set<string>();
   for (const p of plugins) {
     if (!p.src) continue;
     known.add(p.src);
-    known.add(proxyUrl(p.src));
   }
   return known;
 }
@@ -46,9 +44,7 @@ export function isKnownStoredSrc(
   knownSrcs: Set<string>,
 ): boolean {
   if (!stored.src) return false;
-  if (knownSrcs.has(stored.src)) return true;
-  if (knownSrcs.has(proxyUrl(stored.src))) return true;
-  return false;
+  return knownSrcs.has(stored.src);
 }
 
 /**
@@ -56,7 +52,7 @@ export function isKnownStoredSrc(
  * loaded builtin or remote provider catalogue.
  *
  * Description is the source URL only (product requirement).
- * Plugin id is the stored host name (for oscd-configure-plugin matching).
+ * Hub unique key is src; host configure uses plain stored name (no prefix).
  */
 export function buildCustomPluginsFromStored(
   stored: StoredPlugin[],
@@ -99,8 +95,6 @@ export function buildCustomPluginsFromStored(
 
     customs.push({
       ...plugin,
-      // Host registration key is the stored name (may already be namespaced)
-      id: s.name,
       installationState: 'INSTALLED',
       activationState: s.active ? 'ACTIVE' : 'INACTIVE',
       compatible: true,

@@ -7,10 +7,8 @@ import {
 } from '../types/plugin';
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
-import { buildPluginId } from '../services/plugin-loader';
 import { isVersionCompatible } from '../services/version-resolver';
 import type { StoredPlugin } from '../types/stored-plugin';
-import { proxyUrl } from '../utils/proxy-url';
 
 /** Persistent store key for installed plugins */
 const STORAGE_KEY = 'plugins';
@@ -32,26 +30,23 @@ export interface BuildPluginOptions {
 }
 
 /**
- * Finds a stored plugin matching the given source URL.
- * Compares raw src, proxied src, and exact name for host built-ins.
+ * Finds a stored plugin matching the given source URL (strict equality).
  */
 function findStoredMatch(
   entry: PluginManifestEntry,
   stored: StoredPlugin[],
   isBuiltin: boolean,
 ): StoredPlugin | undefined {
-  const proxied = proxyUrl(entry.src);
   return stored.find(
     (p) =>
       p.src === entry.src ||
-      p.src === proxied ||
       (isBuiltin && p.name === entry.name && p.kind === entry.kind),
   );
 }
 
 /**
  * Builds a Plugin record from a manifest entry, provider, and core version.
- * Host-only fields (builtin, activeByDefault, requireDoc) come via options.
+ * Unique key in the hub is always `entry.src`.
  */
 export function buildPlugin(
   entry: PluginManifestEntry,
@@ -61,11 +56,7 @@ export function buildPlugin(
   options?: BuildPluginOptions,
 ): Plugin {
   const isBuiltin = options?.builtin === true || provider.source === 'builtin';
-  let id = buildPluginId(provider.prefix, entry.name, { builtin: isBuiltin });
   const matching = findStoredMatch(entry, stored, isBuiltin);
-  if (matching && !isBuiltin) {
-    id = matching.name;
-  }
   const activeByDefault = options?.activeByDefault === true;
   const installationState: InstallationState = isBuiltin
     ? 'INSTALLED'
@@ -92,7 +83,6 @@ export function buildPlugin(
     builtin: isBuiltin,
     activeByDefault: options?.activeByDefault,
     requireDoc: options?.requireDoc,
-    id,
     provider: provider,
     compatible,
     kindText: PluginKindTextMapping[entry.kind],
@@ -103,12 +93,12 @@ export function buildPlugin(
 }
 
 /**
- * Installs a plugin by adding it to stored plugins with active: false.
+ * Installs a plugin by src (sets INSTALLED + INACTIVE).
  * Incompatible plugins and built-ins are left unchanged.
  */
-export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+export function installPlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
   return plugins.map((p) => {
-    if (p.id !== pluginId || !p.compatible || p.builtin) {
+    if (p.src !== pluginSrc || !p.compatible || p.builtin) {
       return p;
     }
     return {
@@ -120,18 +110,18 @@ export function installPlugin(plugins: Plugin[], pluginId: string): Plugin[] {
 }
 
 /**
- * Uninstalls a plugin if not active. Built-ins cannot be uninstalled.
+ * Uninstalls a plugin by src. Built-ins cannot be uninstalled.
  */
 export function uninstallPlugin(
   plugins: Plugin[],
-  pluginId: string,
+  pluginSrc: string,
 ): { updated: Plugin[]; success: boolean } {
-  const target = plugins.find((p) => p.id === pluginId);
+  const target = plugins.find((p) => p.src === pluginSrc);
   if (target?.builtin) {
     return { updated: plugins, success: false };
   }
   const updated = plugins.map((p) =>
-    p.id === pluginId
+    p.src === pluginSrc
       ? {
           ...p,
           installationState: 'AVAILABLE' as InstallationState,
@@ -143,11 +133,11 @@ export function uninstallPlugin(
 }
 
 /**
- * Activates an installed plugin (sets active: true in storage).
+ * Activates an installed plugin by src.
  */
-export function activatePlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+export function activatePlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
   return plugins.map((p) =>
-    p.id === pluginId
+    p.src === pluginSrc
       ? {
           ...p,
           activationState: 'ACTIVE' as ActivationState,
@@ -157,11 +147,14 @@ export function activatePlugin(plugins: Plugin[], pluginId: string): Plugin[] {
 }
 
 /**
- * Deactivates an installed plugin (sets active: false in storage).
+ * Deactivates an installed plugin by src.
  */
-export function deactivatePlugin(plugins: Plugin[], pluginId: string): Plugin[] {
+export function deactivatePlugin(
+  plugins: Plugin[],
+  pluginSrc: string,
+): Plugin[] {
   return plugins.map((p) =>
-    p.id === pluginId
+    p.src === pluginSrc
       ? {
           ...p,
           activationState: 'INACTIVE' as ActivationState,

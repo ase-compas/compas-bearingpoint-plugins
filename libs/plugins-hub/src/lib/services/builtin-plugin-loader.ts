@@ -184,16 +184,16 @@ export function writeBuiltinProbeCacheFromSuccesses(
 function createBuiltinProvider(host: BuiltinHostId): Provider {
   if (host === 'compas') {
     return {
-      prefix: 'CoMPAS',
-      name: 'CoMPAS',
+      // no prefix — host registration uses plain plugin name
+      name: 'CoMPAS Plugins',
       icon: compasIcon,
       description: 'Built-in plugins of the CoMPAS OpenSCD host.',
       source: 'builtin',
     };
   }
   return {
-    prefix: 'OpenSCD',
-    name: 'Open-SCD',
+    // no prefix — host registration uses plain plugin name
+    name: 'Open-SCD Plugins',
     icon: openscdIcon,
     description: 'Built-in plugins of the OpenSCD host.',
     source: 'builtin',

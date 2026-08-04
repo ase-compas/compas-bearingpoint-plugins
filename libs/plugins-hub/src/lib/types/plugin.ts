@@ -68,15 +68,10 @@ export interface PluginManifestEntry {
 
 /**
  * Enriched plugin record held in the hub's state.
- * Combines manifest data with runtime state and a unique identifier.
+ * Combines manifest data with runtime state.
+ * Unique key in the hub is always {@link PluginManifestEntry.src} (strict string equality).
  */
 export interface Plugin extends PluginManifestEntry {
-  /**
-   * Unique identifier.
-   * Remote: "<providerPrefix> - <name>" (e.g. "BP - PluginHub").
-   * Builtin: host plugin name only (e.g. "Substation") — no prefix.
-   */
-  id: string;
   /** The provider that supplies this plugin. */
   provider: Provider;
   /** Whether the plugin is compatible with the running core version. */

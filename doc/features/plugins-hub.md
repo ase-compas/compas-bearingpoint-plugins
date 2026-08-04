@@ -87,9 +87,9 @@ Array of `Provider`:
 
 ```ts
 interface Provider {
-  prefix: string;      // unique short prefix, e.g. "bp", "openscd" — used for plugin IDs
-  name: string;        // display name (1–64 chars)
-  icon: string;        // URL, .svg preferred (or Material icon name for builtins)
+  prefix?: string;     // optional; host registration name = "prefix - name" when set
+  name: string;        // display name (1–64 chars); also UI filter key
+  icon: string;        // URL, data-URL, or Material icon name
   description: string; // ≤ 280 chars
   pluginsUrl?: string; // HTTPS URL to plugins.json (omit for source: 'builtin')
   source?: 'remote' | 'builtin'; // default remote
@@ -121,16 +121,15 @@ interface Provider {
 
 ### Plugin (runtime, with state)
 
-Each plugin in the hub store has a unique **ID** and two state fields. Most manifest fields (including the new `longDescription`) are inherited.
+Unique key in the hub is always **`src`** (strict string equality). State fields are added on top of the manifest.
 
 ```ts
 interface Plugin extends PluginManifestEntry {
-  /** Unique ID. Remote: "BP - Name". Builtin: plain host name (no prefix). */
-  id: string;
-  provider: Provider;                // full provider object
-  compatible: boolean;               // true if coreVersion ∈ [from, to); builtins always true
-  kindText: string;                  // e.g. "Editor plugin", "Navigation plugin", "Validation plugin"
-  kindIcon: string;                  // Material icon for the kind badge
+  // src is the unique key
+  provider: Provider;
+  compatible: boolean;
+  kindText: string;
+  kindIcon: string;
   installationState: 'INSTALLED' | 'AVAILABLE';
   activationState:   'ACTIVE'    | 'INACTIVE';
   builtin?: boolean;
@@ -147,15 +146,17 @@ interface Plugin extends PluginManifestEntry {
 - `ACTIVE` — plugin is enabled and running.
 - `INACTIVE` — plugin is installed but currently disabled.
 
-## Plugin ID Uniqueness
+## Host registration name (not hub identity)
 
-Each provider is assigned a short `prefix` (e.g. `"bp"` for BearingPoint).
-Plugin IDs are namespaced as `"<prefix>:<slug>"` to avoid collisions across providers.
+For `oscd-configure-plugin`, OpenSCD still uses `name` + `kind`. The hub builds:
 
+```ts
+registrationName(provider, plugin.name)
+// → "BP - PluginHub" when provider.prefix is set
+// → "Substation" when prefix is omitted (built-in / Custom)
 ```
-bp:transformer-importer
-openscd:history-viewer
-```
+
+`proxyUrl(src)` is applied only to `config.src` in that event, never when comparing plugins in the hub.
 
 ## UI Features
 
