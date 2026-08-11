@@ -7,7 +7,7 @@
     "pluginsUrl": "https://ase-compas.github.io/compas-bearingpoint-plugins/plugins.json"
   },
   {
-    "prefix": "TransnetBW",
+    "prefix": "TBW",
     "name": "TransnetBW Plugins",
     "icon": "https://ase-compas.github.io/compas-transnetbw-plugins/transnetbw.svg",
     "description": "Official TransnetBW plugin provider for OpenSCD.",

@@ -7,7 +7,7 @@
     "pluginsUrl": "/external-api/provider/bearingpoint-plugins.json"
   },
   {
-    "prefix": "TransnetBW",
+    "prefix": "TBW",
     "name": "TransnetBW Plugins",
     "icon": "/external-api/provider/transnetbw.svg",
     "description": "Official TransnetBW plugin provider for OpenSCD.",
