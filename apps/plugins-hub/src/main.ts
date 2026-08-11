@@ -1,6 +1,8 @@
 import PluginsHub from './app/plugins-hub.svelte';
 import { mount } from 'svelte';
 import { createFakeCompasLayout, listenOscdConfigurePlugin } from './dev/fake-open-scd';
+// eslint-disable-next-line @nx/enforce-module-boundaries -- dev-only; main.ts is not the production entry
+import { initThemePlayground } from '../../../libs/global/dev/theme-playground';
 
 // Dev-only: full-viewport html/body to simulate the host plugin container.
 // Production loads plugin-wrapper.svelte.ts (not this file) and must not include these rules.
@@ -8,15 +10,18 @@ import { createFakeCompasLayout, listenOscdConfigurePlugin } from './dev/fake-op
 import '../../../libs/global/dev-container.css';
 
 // =============================================
-// Dev-Only: Fake erstellen + Event abhören
+// Dev-Only: Fake host + theme playground
 // =============================================
 let fakeCompasLayout: HTMLElement | null = null;
 if (import.meta.env?.DEV) {
+  // Host theme vars before mount so first paint already matches the selected preset
+  initThemePlayground();
+
   fakeCompasLayout = createFakeCompasLayout();
 
   if (fakeCompasLayout) {
     fakeCompasLayout.addEventListener('oscd-configure-plugin', (e: Event) => listenOscdConfigurePlugin(e));
-    
+
     console.log(
       '%c✅ [Dev] Fake open-scd + compas-layout created und oscd-configure-plugin listener registered',
       'color:#0ea5e9; font-weight:bold',

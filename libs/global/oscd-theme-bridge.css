@@ -1,0 +1,190 @@
+/**
+ * OpenSCD host-theme bridge for Plugins-Hub.
+ *
+ * Maps distro-provided theme variables to:
+ *  1. Internal --oscd-* palette (stable for plugin code)
+ *  2. MDC / Material Design 3 tokens used by SMUI
+ *  3. Existing --bearingpoint-* aliases so component CSS needs no rename
+ *
+ * Fallback chain (newer hosts → older OpenSCD/CoMPAS → Solarized hex):
+ *  --oscd-theme-*  (official distro API)
+ *  --primary / --base* / --cyan … (host themes.ts bare tokens, inherit into Shadow DOM)
+ *  literal Solarized defaults
+ *
+ * Rules (see oscd-api docs/theming.md):
+ *  - Do initialize --oscd-* from theme vars with safe defaults
+ *  - Do NOT set --oscd-theme-* inside the production plugin
+ *  - Do NOT hardcode brand colours as production defaults beyond fallbacks
+ *
+ * :host covers Shadow DOM (production plugin); :root covers standalone mount.
+ * Scope: full Plugins-Hub UI (toolbar, cards, details, badges, SMUI controls).
+ */
+:root,
+:host {
+  /* ── Internal OpenSCD palette ── */
+  --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--cyan, #2aa198)));
+  --oscd-secondary: var(
+    --oscd-theme-secondary,
+    var(--secondary, var(--violet, #6c71c4))
+  );
+  /* Do not fall back to --mdc-theme-error here: we rebind MDC from --oscd-* below (cycle). */
+  --oscd-error: var(--oscd-theme-error, var(--red, #dc322f));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03, #002b36));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02, #073642));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01, #586e75));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00, #657b83));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0, #839496));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1, #93a1a1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2, #eee8d5));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3, #fdf6e3));
+
+  --oscd-shape: var(--oscd-theme-shape, 8px);
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+
+  /* Accent helpers (host Solarized sets --green/--blue/etc. on *; fallbacks match themes.ts) */
+  --oscd-accent-green: var(--green, #859900);
+  --oscd-accent-blue: var(--blue, #268bd2);
+  --oscd-accent-yellow: var(--yellow, #b58900);
+  --oscd-accent-orange: var(--orange, #cb4b16);
+  --oscd-accent-magenta: var(--magenta, #d33682);
+  --oscd-accent-cyan: var(--cyan, #2aa198);
+
+  /* ── MDC theme (aligned with OpenSCD packages/openscd/src/themes.ts) ── */
+  --mdc-theme-primary: var(--oscd-primary);
+  --mdc-theme-secondary: var(--oscd-secondary);
+  --mdc-theme-background: var(--oscd-base3);
+  --mdc-theme-surface: var(--oscd-base3);
+  --mdc-theme-on-primary: var(--oscd-base2);
+  --mdc-theme-on-secondary: var(--oscd-base2);
+  --mdc-theme-on-background: var(--oscd-base00);
+  --mdc-theme-on-surface: var(--oscd-base00);
+  --mdc-theme-text-primary-on-background: var(--oscd-base01);
+  --mdc-theme-text-secondary-on-background: var(--oscd-base00);
+  --mdc-theme-text-icon-on-background: var(--oscd-base00);
+  --mdc-theme-error: var(--oscd-error);
+
+  --mdc-button-disabled-ink-color: var(--oscd-base1);
+
+  --mdc-drawer-heading-ink-color: var(--oscd-base00);
+
+  --mdc-text-field-fill-color: var(--oscd-base2);
+  --mdc-text-field-disabled-fill-color: var(--oscd-base3);
+  --mdc-text-field-ink-color: var(--oscd-base00);
+  --mdc-text-field-label-ink-color: var(--oscd-base00);
+
+  --mdc-select-fill-color: var(--oscd-base2);
+  --mdc-select-disabled-fill-color: var(--oscd-base3);
+  --mdc-select-ink-color: var(--oscd-base00);
+
+  --mdc-dialog-heading-ink-color: var(--oscd-base00);
+
+  /* Project loads Material Icons Outlined (see material-icons.css) */
+  --mdc-icon-font: 'Material Icons Outlined';
+
+  /* ── Material Design 3 system colours ── */
+  --md-sys-color-primary: var(--oscd-primary);
+  --md-sys-color-on-primary: var(--oscd-base3);
+  --md-sys-color-secondary: var(--oscd-secondary);
+  --md-sys-color-on-secondary: var(--oscd-base3);
+  --md-sys-color-secondary-container: var(--oscd-base2);
+  --md-sys-color-surface: var(--oscd-base3);
+  --md-sys-color-on-surface: var(--oscd-base00);
+  --md-sys-color-surface-variant: var(--oscd-base3);
+  --md-sys-color-on-surface-variant: var(--oscd-base00);
+  --md-sys-color-surface-bright: var(--oscd-base2);
+  --md-sys-color-surface-container: var(--oscd-base3);
+  --md-sys-color-surface-container-high: var(--oscd-base3);
+  --md-sys-color-surface-container-highest: var(--oscd-base3);
+  --md-sys-color-outline-variant: var(--oscd-primary);
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-error: var(--oscd-error);
+  --md-sys-color-on-error: var(--oscd-base3);
+
+  --md-icon-button-disabled-icon-color: var(--oscd-base3);
+
+  --md-filled-text-field-container-color: var(--oscd-base2);
+  --md-filled-text-field-disabled-container-color: var(--oscd-base3);
+  --md-filled-text-field-disabled-input-text-color: var(--oscd-base00);
+  --md-filled-text-field-disabled-label-text-color: var(--oscd-base00);
+
+  /* ── Shape scale from --oscd-shape (docs) ── */
+  --md-sys-shape-corner-none: 0;
+  --md-sys-shape-corner-extra-small: calc(var(--oscd-shape) * 0.5);
+  --md-sys-shape-corner-small: var(--oscd-shape);
+  --md-sys-shape-corner-medium: calc(var(--oscd-shape) * 1.5);
+  --md-sys-shape-corner-large: calc(var(--oscd-shape) * 2);
+
+  /* ── Semantic --bearingpoint-* aliases (component CSS keeps these names) ── */
+  --bearingpoint-color-primary: var(--oscd-primary);
+  /* Header / emphasis bar: brand primary (base02 inverts on Solarized dark) */
+  --bearingpoint-color-primary-dark: var(--oscd-primary);
+
+  --bearingpoint-color-positive: var(--oscd-accent-green);
+  --bearingpoint-color-negative: var(--oscd-error);
+  --bearingpoint-color-warning: var(--oscd-accent-yellow);
+
+  --bearingpoint-color-focus: var(--oscd-secondary);
+
+  --bearingpoint-color-bg-page: var(--oscd-base2);
+  --bearingpoint-color-surface: var(--oscd-base3);
+
+  /* Body text uses palette foregrounds (primary brand can be loud on dark) */
+  --bearingpoint-color-text-primary: var(--oscd-base00);
+  --bearingpoint-color-text-dark: var(--oscd-base03);
+  --bearingpoint-color-text-secondary: var(--oscd-base01);
+  --bearingpoint-color-text-disabled: var(--oscd-base1);
+
+  --bearingpoint-color-link: var(--oscd-accent-blue);
+  --bearingpoint-color-link-visited: var(--oscd-secondary);
+
+  --bearingpoint-color-border: var(--oscd-base1);
+  --bearingpoint-color-border-strong: var(--oscd-base0);
+  --bearingpoint-color-border-hover: var(--oscd-base00);
+  --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
+
+  --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
+
+  --bearingpoint-color-warning-bg: color-mix(
+    in oklab,
+    var(--oscd-accent-yellow) 22%,
+    var(--oscd-base3)
+  );
+  --bearingpoint-color-warning-text: var(--oscd-base02);
+
+  --bearingpoint-color-action-primary-bg: var(--oscd-primary);
+  --bearingpoint-color-action-primary-bg-hover: color-mix(
+    in oklab,
+    var(--oscd-primary) 82%,
+    var(--oscd-base03)
+  );
+
+  --bearingpoint-color-action-secondary-bg: var(--oscd-accent-cyan);
+  --bearingpoint-color-action-secondary-bg-hover: color-mix(
+    in oklab,
+    var(--oscd-accent-cyan) 82%,
+    var(--oscd-base03)
+  );
+
+  --bearingpoint-color-action-neutral-text: var(--oscd-accent-cyan);
+  --bearingpoint-color-action-neutral-bg: var(--oscd-base3);
+  --bearingpoint-color-action-neutral-bg-hover: var(--oscd-base2);
+
+  --bearingpoint-color-action-danger-bg: var(--oscd-error);
+  --bearingpoint-color-action-danger-bg-hover: color-mix(
+    in oklab,
+    var(--oscd-error) 82%,
+    var(--oscd-base03)
+  );
+
+  /* Font stacks prefer host text font */
+  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+  --bearingpoint-font-inter: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-rubik: var(--oscd-text-font), system-ui, sans-serif;
+}

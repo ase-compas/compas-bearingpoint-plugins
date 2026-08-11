@@ -117,8 +117,12 @@ npm run verify                     # lint + check + test
   No stores, no `export let`. See `apps/plugins-hub/src/app/plugins-hub.svelte`.
 - Component communication via callback props (`onInstall={handleInstall}`), not events.
 - CSS in a `<style>` block per component, scoped; use `:global(...)` for
-  SMUI/MDC internals; use the BearingPoint design tokens
-  (`var(--bearingpoint-color-*)`, `var(--bearingpoint-font-*)`, `var(--bearingpoint-text-*)`).
+  SMUI/MDC internals; use design tokens via the host theme bridge
+  (`libs/global/oscd-theme-bridge.css`): prefer `var(--bearingpoint-color-*)`
+  / `var(--bearingpoint-text-*)` aliases (mapped from `--oscd-theme-*` →
+  `--oscd-*`). Do not hardcode brand colours or set `--oscd-theme-*` in the
+  plugin. Dev-only host brand/light-dark switching lives under
+  `libs/global/dev/` (wired from app `main.ts`, not the production entry).
 
 ### Error handling
 

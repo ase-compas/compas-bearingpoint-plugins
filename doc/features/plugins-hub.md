@@ -20,6 +20,42 @@ and (for remotes) install plugins on demand.
 New remote providers onboard themselves via **Pull Request** to the central
 `providers.json`.
 
+## Theming
+
+Plugins-Hub **does not ship a fixed brand look**. It consumes the host
+OpenSCD / CoMPAS theme so customer-branded distros stay visually consistent.
+**Scope:** the full Hub UI (header, toolbar/SMUI controls, provider/plugin
+cards, detail pane, badges, action buttons).
+
+| Layer | Responsibility |
+| --- | --- |
+| Host / distro | Defines optional `--oscd-theme-*` and/or bare Solarized tokens (`--primary`, `--base*`, `--cyan`, …) |
+| Plugin bridge (`libs/global/oscd-theme-bridge.css`) | Maps host vars → internal `--oscd-*` with Solarized fallbacks; binds MDC / MD3; keeps `--bearingpoint-*` as semantic **aliases** for existing component CSS |
+| Components | Use `var(--bearingpoint-*)` / SMUI (reads MDC vars) |
+
+Fallback chain (so older hosts without `--oscd-theme-*` still brand correctly):
+
+1. `--oscd-theme-*` (official distro API)
+2. Host bare tokens that inherit into Shadow DOM (`--primary`, `--base03`…, `--cyan`, …)
+3. Solarized hex defaults (readable unbranded OpenSCD look)
+
+Rules aligned with [OpenSCD theming docs](https://github.com/stee-re/oscd-api/blob/feat_add-theming-docs/docs/theming.md):
+
+- **Do** initialize internal colours from theme variables with safe defaults.
+- **Do** style from internal `--oscd-*` / mapped MDC / aliases.
+- **Do not** hardcode brand colours in production token sources.
+- **Do not** set `--oscd-theme-*` in the production plugin (dev playground may set them on `documentElement` only to *simulate* a host).
+
+Light and dark: when the host inverts the Solarized base scale (or the local
+playground toggles mode), surfaces/text/badges follow `--oscd-base*` /
+accents.
+
+**Local presets:** CSS classes in
+`libs/global/dev/host-theme-presets.css` (e.g. `html.bearingpoint-light`,
+`html.transnetbw-dark`). The playground only switches that class on `<html>`.
+Toolbar + `?brand=&mode=` on the real Hub dev page; not shipped in the
+production plugin bundle. See `DEVELOPMENT.md`.
+
 ## Architecture (ASCII)
 
 ```text

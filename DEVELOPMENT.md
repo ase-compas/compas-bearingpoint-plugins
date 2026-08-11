@@ -27,11 +27,63 @@ Built-in plugins in standalone dev come from the **fake OpenSCD host**
 (`createFakeCompasLayout` → `getBuiltInPlugins()`), not from WireMock.
 WireMock is only needed for remote provider manifests under `/external-api`.
 
+### Host theme playground (standalone only)
+
+Standalone `run:plugins-hub` lets you smoke-test host theming **on the real Hub
+page** without registering the plugin in OpenSCD/CoMPAS.
+
+#### How presets are maintained
+
+| Piece | Role |
+|--------|------|
+| **`libs/global/dev/host-theme-presets.css`** | **Source of truth** — `html` holds derived MDC/`--oscd-*` via `var(...)`; brand+mode classes only override the Solarized palette (`--base*`, accents) |
+| **`libs/global/dev/host-themes.ts`** | Brand labels + class-name helpers for the toolbar |
+| **`libs/global/dev/theme-playground.ts`** | Only toggles the class on `<html>` (+ toolbar / query / localStorage) |
+
+JS does **not** set individual CSS variables. To add a brand: add
+`html.{brand}-light` / `html.{brand}-dark` blocks in the CSS and one entry in
+`HOST_THEME_PRESETS`.
+
+| Option | Used? |
+|--------|-------|
+| Fixture CSS classes | **Yes** |
+| UI switcher | **Yes** |
+| Query params (`?brand=&mode=`) | **Yes** |
+| Separate story/demo page | No |
+
+Runtime is wired from `apps/plugins-hub/src/main.ts` only (**not** the production
+plugin entry). Fake OpenSCD host stays in `apps/plugins-hub/src/dev/fake-open-scd.ts`.
+
+#### Using it
+
+| Control | Options |
+|---------|---------|
+| Brand preset | `openscd` (Solarized), `transnetbw` (TransnetBW teal), `bearingpoint` (demo) |
+| Mode | `light` / `dark` |
+
+- Toolbar: top-left on http://localhost:4301 — small 16×16 palette icon toggles
+  the panel open/closed (open state in `localStorage`)
+- Query examples (open directly; also updated when you use the toolbar):
+
+```text
+http://localhost:4301/?brand=openscd&mode=light
+http://localhost:4301/?brand=transnetbw&mode=dark
+http://localhost:4301/?brand=bearingpoint&mode=light
+```
+
+- Priority on load: **query** → `localStorage` (`plugins-hub-dev-theme`) → OpenSCD light.
+- Sets a single class on `<html>` (e.g. `transnetbw-dark`); CSS defines the host
+  variables; production bridge maps them into Hub / SMUI tokens.
+
+Production still inherits the **real** host theme when loaded as a plugin; use
+the full Compas stack below for end-to-end host integration (events, layout).
+
 ---
 
 ## Preview with full Compas stack
 
-Needed for a realistic end-to-end test of the plugin inside Open-SCD.
+Needed for a realistic end-to-end test of the plugin inside Open-SCD
+(install events, layout, real host theme cascade).
 
 **Terminal 1 — mocks:**
 ```bash

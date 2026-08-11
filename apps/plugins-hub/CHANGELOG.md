@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Host theme inheritance:** Plugin Hub maps OpenSCD `--oscd-theme-*`
+  (and older host tokens such as `--primary` / `--base*`) into internal
+  `--oscd-*`, MDC/MD3, and existing `--bearingpoint-*` aliases, with Solarized
+  fallbacks. It no longer forces a fixed BearingPoint palette or Material
+  purple MDC reset, so the Hub matches branded OpenSCD / CoMPAS hosts.
+- Badges and status colours derive from the theme palette (including dark mode).
+
+### Added
+
+- **Dev host theme playground** (standalone `run:plugins-hub` only): toggles a
+  CSS class on `<html>` (e.g. `bearingpoint-light`); presets live in
+  `libs/global/dev/`. Brands: `openscd` | `transnetbw` | `bearingpoint`.
+  Floating toolbar and `?brand=&mode=` for light+dark without a full host.
+
 ## [0.0.4]
 
 ### Changed
