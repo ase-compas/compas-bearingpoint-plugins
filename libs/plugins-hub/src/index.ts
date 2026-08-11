@@ -33,11 +33,18 @@ export type {
 
 export {
   CUSTOM_PROVIDER,
-  collectKnownPluginSrcs,
+  collectKnownPluginIdentities,
   buildCustomPluginsFromStored,
 } from './lib/services/custom-plugin-loader';
 
-export { registrationName, isUrlTrusted } from './lib/services/plugin-loader';
+export {
+  registrationName,
+  pluginIdentityKey,
+  hubPluginKey,
+  matchesStoredPlugin,
+  sameHubPlugin,
+  isUrlTrusted,
+} from './lib/services/plugin-loader';
 
 export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
 
@@ -49,7 +56,10 @@ export {
   deactivatePlugin,
   loadStoredPlugins,
 } from './lib/store/plugin-store';
-export type { BuildPluginOptions } from './lib/store/plugin-store';
+export type {
+  BuildPluginOptions,
+  PluginIdentityTarget,
+} from './lib/store/plugin-store';
 export { getAppVersion } from './lib/store/app-version-store';
 
 export {

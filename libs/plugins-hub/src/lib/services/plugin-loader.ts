@@ -1,26 +1,6 @@
+import type { Plugin, PluginKind } from '../types/plugin';
 import type { Provider } from '../types/provider';
-
-/**
- * Extracts unique trusted origins from the given providers.
- * Each provider's pluginsUrl is parsed and its origin (protocol + host) is collected.
- * Invalid URLs are skipped.
- *
- * @param providers - Array of providers to extract origins from.
- * @returns Set of trusted origins (e.g. "https://example.com").
- */
-function buildTrustedOrigins(providers: Provider[]): Set<string> {
-  const origins = new Set<string>();
-  for (const p of providers) {
-    if (!p.pluginsUrl) continue;
-    try {
-      origins.add(new URL(p.pluginsUrl).origin);
-    } catch (e) {
-      // skip invalid URLs
-      console.debug('invalid URL:', p.pluginsUrl, e);
-    }
-  }
-  return origins;
-}
+import type { StoredPlugin } from '../types/stored-plugin';
 
 /**
  * Validates that a plugin URL belongs to a trusted origin.
@@ -47,6 +27,10 @@ export function isUrlTrusted(url: string, trustedOrigins: Set<string>): boolean 
  * Host registration name for `oscd-configure-plugin` (OpenSCD detail.name).
  * Uses `"${prefix} - ${pluginName}"` when the provider has a non-empty prefix;
  * otherwise returns the plain plugin name (built-in / Custom).
+ *
+ * @param provider - Provider that may supply a registration prefix.
+ * @param pluginName - Manifest / display plugin name.
+ * @returns Host registration name used as the OpenSCD identity `name`.
  */
 export function registrationName(
   provider: Pick<Provider, 'prefix'> | undefined,
@@ -57,4 +41,60 @@ export function registrationName(
     return `${prefix} - ${pluginName}`;
   }
   return pluginName;
+}
+
+/**
+ * Stable string key for a host plugin identity (`name` + `kind`).
+ * `name` must already be the host registration name (see {@link registrationName}).
+ *
+ * @param name - Host registration name.
+ * @param kind - Plugin kind.
+ * @returns Opaque identity key for maps / Svelte `{#each}` keys.
+ */
+export function pluginIdentityKey(name: string, kind: PluginKind): string {
+  return `${name}\0${kind}`;
+}
+
+/**
+ * Hub identity key for a catalogue / runtime plugin: registration name + kind.
+ * Aligns with OpenSCD (`oscd-configure-plugin`); `src` is not part of identity.
+ *
+ * @param plugin - Plugin with manifest name, kind, and provider (for prefix).
+ * @returns Opaque identity key.
+ */
+export function hubPluginKey(
+  plugin: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+): string {
+  return pluginIdentityKey(
+    registrationName(plugin.provider, plugin.name),
+    plugin.kind,
+  );
+}
+
+/**
+ * Returns true when a stored host plugin matches the given host name + kind.
+ *
+ * @param stored - Entry from host localStorage `plugins`.
+ * @param hostName - Host registration name.
+ * @param kind - Plugin kind.
+ */
+export function matchesStoredPlugin(
+  stored: Pick<StoredPlugin, 'name' | 'kind'>,
+  hostName: string,
+  kind: PluginKind,
+): boolean {
+  return stored.name === hostName && stored.kind === kind;
+}
+
+/**
+ * Returns true when two hub plugins share the same host identity.
+ *
+ * @param a - First plugin.
+ * @param b - Second plugin.
+ */
+export function sameHubPlugin(
+  a: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+  b: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+): boolean {
+  return hubPluginKey(a) === hubPluginKey(b);
 }

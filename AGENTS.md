@@ -146,8 +146,10 @@ npm run verify                     # lint + check + test
 
 ## Architecture / domain rules
 
-- **A plugin's unique key is its `src`** (strict string equality). Never key by
-  name or id. `dedupeStoredPluginsBySrc` enforces this for stored plugins.
+- **A plugin's unique key is registration `name` + `kind`** (OpenSCD host
+  identity). Use `registrationName(provider, plugin.name)` + `kind` /
+  `hubPluginKey(plugin)`. `src` is the load URL only. Stored host plugins are
+  deduped with `dedupeStoredPluginsByNameAndKind`.
 - Providers: remote (from `providers.json` / `providers.dev.json`) and builtin
   (from the host's `getBuiltInPlugins()`); JSON config is selected by
   `import.meta.env.MODE === 'development'`.

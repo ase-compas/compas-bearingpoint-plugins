@@ -60,7 +60,7 @@ Host edition (provider branding) is detected from the layout in the host shadow 
 
 - Built-in plugins: `builtin: true`, always treated as installed, **no Install/Remove**, only Enable/Disable.
 - Configure `name` uses plain host plugin name (no provider prefix).
-- Unique hub key is always **`src`**.
+- Unique hub key is always **registration `name` + `kind`** (not `src`).
 - Detail view shows `activeByDefault` and `requireDoc`.
 ## JSON Contracts
 
@@ -104,11 +104,13 @@ interface Provider {
 
 ### Plugin (runtime, with state)
 
-Unique key in the hub is always **`src`** (strict string equality). State fields are added on top of the manifest.
+Unique key in the hub (and OpenSCD host) is always **registration `name` + `kind`**.
+`src` is the resource URL used to load the plugin, not the identity.
 
 ```ts
 interface Plugin extends PluginManifestEntry {
-  // src is the unique key
+  // identity: registrationName(provider, name) + kind
+  // src: load URL only
   provider: Provider;
   compatible: boolean;
   kindText: string;
@@ -129,9 +131,14 @@ interface Plugin extends PluginManifestEntry {
 - `ACTIVE` — plugin is enabled and running.
 - `INACTIVE` — plugin is installed but currently disabled.
 
-## Host registration name (not hub identity)
+## Plugin identity (name + kind)
 
-For `oscd-configure-plugin`, OpenSCD still uses `name` + `kind`. The hub builds:
+Aligned with OpenSCD [`oscd-configure-plugin`](https://github.com/com-pas/open-scd/blob/main/packages/openscd/src/plugin.events.ts)
+and [open-scd#157](https://github.com/com-pas/open-scd/issues/157):
+
+> The combination of name and kind uniquely identifies the plugin to be configured.
+
+The hub builds the host `name` as:
 
 ```ts
 registrationName(provider, plugin.name)
@@ -139,7 +146,17 @@ registrationName(provider, plugin.name)
 // → "Substation" when prefix is omitted (built-in / Custom)
 ```
 
-`proxyUrl(src)` is applied only to `config.src` in that event, never when comparing plugins in the hub.
+| Concern | Key |
+| --- | --- |
+| Hub list / selection / install state | `registrationName` + `kind` (`hubPluginKey`) |
+| Host localStorage match | stored `name` + `kind` |
+| Load path | `src` (catalogue URL; `proxyUrl` only on configure `config.src`) |
+
+Changing `src` for the same registration name + kind (version bump, offline path, mirror) updates that plugin instead of creating a second entry. Custom plugins are stored entries whose **name+kind** is not covered by any remote or built-in catalogue.
+
+### Migration / duplicates
+
+If host localStorage still contains name+kind duplicates (historical open-scd#157), the hub **dedupes on read** (`dedupeStoredPluginsByNameAndKind`: last-wins fields, `active` OR-merged). The hub does not rewrite host storage by itself; a permanent cleanup needs the host fix or reconfigure of the surviving entry.
 
 ## UI Features
 

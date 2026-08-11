@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { registrationName, isUrlTrusted } from './plugin-loader';
+import type { Plugin } from '../types/plugin';
+import type { Provider } from '../types/provider';
+import {
+  registrationName,
+  pluginIdentityKey,
+  hubPluginKey,
+  matchesStoredPlugin,
+  sameHubPlugin,
+  isUrlTrusted,
+} from './plugin-loader';
 
 describe('registrationName', () => {
   it('uses prefix - name when prefix is set', () => {
@@ -16,6 +25,75 @@ describe('registrationName', () => {
     expect(registrationName({ prefix: '' }, 'IED')).toBe('IED');
     expect(registrationName({ prefix: '   ' }, 'Help')).toBe('Help');
     expect(registrationName(undefined, 'Cleanup')).toBe('Cleanup');
+  });
+});
+
+describe('plugin identity helpers', () => {
+  const provider: Provider = {
+    prefix: 'BP',
+    name: 'BearingPoint',
+    icon: 'hub',
+    description: 't',
+  };
+
+  it('pluginIdentityKey combines host name and kind', () => {
+    expect(pluginIdentityKey('BP - PluginHub', 'editor')).toBe(
+      'BP - PluginHub\0editor',
+    );
+  });
+
+  it('hubPluginKey uses registration name', () => {
+    const plugin = {
+      name: 'PluginHub',
+      kind: 'editor' as const,
+      provider,
+    };
+    expect(hubPluginKey(plugin)).toBe(pluginIdentityKey('BP - PluginHub', 'editor'));
+  });
+
+  it('matchesStoredPlugin compares name and kind only', () => {
+    expect(
+      matchesStoredPlugin(
+        {
+          name: 'BP - PluginHub',
+          kind: 'editor',
+          src: '/old.js',
+          icon: 'e',
+          active: true,
+        },
+        'BP - PluginHub',
+        'editor',
+      ),
+    ).toBe(true);
+    expect(
+      matchesStoredPlugin(
+        {
+          name: 'BP - PluginHub',
+          kind: 'menu',
+          src: '/old.js',
+          icon: 'e',
+          active: true,
+        },
+        'BP - PluginHub',
+        'editor',
+      ),
+    ).toBe(false);
+  });
+
+  it('sameHubPlugin is true when registration name+kind match', () => {
+    const a = {
+      name: 'PluginHub',
+      kind: 'editor' as const,
+      provider,
+      src: '/1.js',
+    } as Pick<Plugin, 'name' | 'kind' | 'provider'>;
+    const b = {
+      name: 'PluginHub',
+      kind: 'editor' as const,
+      provider,
+      src: '/2.js',
+    } as Pick<Plugin, 'name' | 'kind' | 'provider'>;
+    expect(sameHubPlugin(a, b)).toBe(true);
   });
 });
 

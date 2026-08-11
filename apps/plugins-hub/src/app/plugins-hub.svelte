@@ -18,9 +18,11 @@
     proxyUrl,
     PLUGIN_KINDS,
     CUSTOM_PROVIDER,
-    collectKnownPluginSrcs,
+    collectKnownPluginIdentities,
     buildCustomPluginsFromStored,
     registrationName,
+    hubPluginKey,
+    sameHubPlugin,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -78,11 +80,11 @@
       }
     }
 
-    // Custom: stored plugins whose src is not covered by any loaded catalogue
-    const knownSrcs = collectKnownPluginSrcs(allPlugins);
+    // Custom: stored plugins whose name+kind is not covered by any loaded catalogue
+    const knownIdentities = collectKnownPluginIdentities(allPlugins);
     const customPlugins = buildCustomPluginsFromStored(
       stored,
-      knownSrcs,
+      knownIdentities,
       coreVersion,
     );
     if (customPlugins.length >= 1) {
@@ -131,15 +133,14 @@
     }),
   );
 
-  function handleInstall(pluginSrc: string) {
-    const target = plugins.find((p) => p.src === pluginSrc);
-    if (!target?.compatible || target.builtin) {
+  function handleInstall(target: Plugin) {
+    if (!target.compatible || target.builtin) {
       return;
     }
 
-    plugins = installPlugin(plugins, pluginSrc);
-    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
-    if (selectedPlugin?.src === pluginSrc) {
+    plugins = installPlugin(plugins, target);
+    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
+    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -147,15 +148,15 @@
     }
   }
 
-  function handleUninstall(pluginSrc: string) {
-    const pluginBefore = plugins.find((p) => p.src === pluginSrc);
+  function handleUninstall(target: Plugin) {
+    const pluginBefore = plugins.find((p) => sameHubPlugin(p, target));
     if (pluginBefore?.builtin) {
       return;
     }
 
     // Custom plugins leave the hub list entirely when uninstalled
     if (isCustomPlugin(pluginBefore)) {
-      plugins = plugins.filter((p) => p.src !== pluginSrc);
+      plugins = plugins.filter((p) => !sameHubPlugin(p, target));
       if (!plugins.some((p) => isCustomPlugin(p))) {
         // Reset filter first while Custom <Option> still exists.
         if (providerFilter === CUSTOM_PROVIDER.name) {
@@ -169,7 +170,7 @@
           );
         }, 1);
       }
-      if (selectedPlugin?.src === pluginSrc) {
+      if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
         selectedPlugin = null;
       }
       if (pluginBefore) {
@@ -178,10 +179,10 @@
       return;
     }
 
-    const { updated, success } = uninstallPlugin(plugins, pluginSrc);
+    const { updated, success } = uninstallPlugin(plugins, target);
     plugins = updated;
-    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
-    if (selectedPlugin?.src === pluginSrc) {
+    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
+    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (pluginBefore && success) {
@@ -189,10 +190,10 @@
     }
   }
 
-  function handleEnable(pluginSrc: string) {
-    plugins = activatePlugin(plugins, pluginSrc);
-    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
-    if (selectedPlugin?.src === pluginSrc) {
+  function handleEnable(target: Plugin) {
+    plugins = activatePlugin(plugins, target);
+    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
+    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -200,10 +201,10 @@
     }
   }
 
-  function handleDisable(pluginSrc: string) {
-    plugins = deactivatePlugin(plugins, pluginSrc);
-    const updatedPlugin = plugins.find((p) => p.src === pluginSrc);
-    if (selectedPlugin?.src === pluginSrc) {
+  function handleDisable(target: Plugin) {
+    plugins = deactivatePlugin(plugins, target);
+    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
+    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -212,7 +213,8 @@
   }
 
   function handleSelectPlugin(plugin: Plugin) {
-    selectedPlugin = selectedPlugin?.src === plugin.src ? null : plugin;
+    selectedPlugin =
+      selectedPlugin && sameHubPlugin(selectedPlugin, plugin) ? null : plugin;
   }
 
   function handleCloseDetails() {
@@ -349,7 +351,7 @@
             <ProviderCard
               {provider}
               plugins={providerPlugins}
-              selectedPluginSrc={selectedPlugin?.src ?? null}
+              selectedPluginKey={selectedPlugin ? hubPluginKey(selectedPlugin) : null}
               onSelectPlugin={handleSelectPlugin}
               onInstall={handleInstall}
               onUninstall={handleUninstall}

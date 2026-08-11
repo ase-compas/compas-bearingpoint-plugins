@@ -8,41 +8,60 @@ import {
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
 import { isVersionCompatible } from '../services/version-resolver';
+import {
+  matchesStoredPlugin,
+  registrationName,
+  sameHubPlugin,
+} from '../services/plugin-loader';
 import type { StoredPlugin } from '../types/stored-plugin';
 
 /** Persistent store key for installed plugins */
 const STORAGE_KEY = 'plugins';
 
 /**
- * Deduplicates stored plugins by hub identity key `src` (strict string equality).
+ * Deduplicates stored plugins by host identity key `name` + `kind`.
  *
- * Host localStorage may contain duplicates (OpenSCD keys by name+kind). The hub
- * UI keys cards by `src`, so duplicates would crash Svelte's keyed `{#each}`.
+ * Host localStorage may contain duplicates (e.g. open-scd#157 when `src` was
+ * used as a secondary uniqueness path). The hub keys by name+kind, so duplicates
+ * would crash Svelte's keyed `{#each}` and confuse install state.
  *
- * - Entries without a non-empty string `src` are dropped.
- * - Later entries overwrite earlier ones for the same `src` (last-wins fields).
+ * - Entries without a non-empty `name`, `kind`, or `src` are dropped.
+ * - Later entries overwrite earlier ones for the same name+kind (last-wins fields).
  * - `active` is OR-merged so an enabled duplicate is not lost to a later inactive one.
+ *
+ * @param stored - Raw plugins array from host localStorage.
+ * @returns Deduplicated plugins in first-seen identity order.
  */
-export function dedupeStoredPluginsBySrc(stored: StoredPlugin[]): StoredPlugin[] {
-  const bySrc = new Map<string, StoredPlugin>();
+export function dedupeStoredPluginsByNameAndKind(
+  stored: StoredPlugin[],
+): StoredPlugin[] {
+  const byIdentity = new Map<string, StoredPlugin>();
   for (const p of stored) {
+    if (typeof p?.name !== 'string' || !p.name) continue;
+    if (typeof p?.kind !== 'string' || !p.kind) continue;
     if (typeof p?.src !== 'string' || !p.src) continue;
-    const prev = bySrc.get(p.src);
-    bySrc.set(
-      p.src,
+    const key = `${p.name}\0${p.kind}`;
+    const prev = byIdentity.get(key);
+    byIdentity.set(
+      key,
       prev ? { ...prev, ...p, active: Boolean(prev.active || p.active) } : p,
     );
   }
-  return [...bySrc.values()];
+  return [...byIdentity.values()];
 }
 
+/**
+ * Loads and deduplicates plugins from host localStorage (`plugins` key).
+ *
+ * @returns Deduplicated stored plugins, or `[]` on missing/invalid data.
+ */
 export function loadStoredPlugins(): StoredPlugin[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
-    return dedupeStoredPluginsBySrc(parsed as StoredPlugin[]);
+    return dedupeStoredPluginsByNameAndKind(parsed as StoredPlugin[]);
   } catch {
     return [];
   }
@@ -56,23 +75,33 @@ export interface BuildPluginOptions {
 }
 
 /**
- * Finds a stored plugin matching the given source URL (strict equality).
+ * Finds a stored plugin matching host registration name + kind.
+ *
+ * @param entry - Catalogue manifest entry.
+ * @param provider - Provider (supplies registration prefix when set).
+ * @param stored - Host localStorage plugins.
  */
 function findStoredMatch(
   entry: PluginManifestEntry,
+  provider: Provider,
   stored: StoredPlugin[],
-  isBuiltin: boolean,
 ): StoredPlugin | undefined {
-  return stored.find(
-    (p) =>
-      p.src === entry.src ||
-      (isBuiltin && p.name === entry.name && p.kind === entry.kind),
-  );
+  const hostName = registrationName(provider, entry.name);
+  return stored.find((p) => matchesStoredPlugin(p, hostName, entry.kind));
 }
 
 /**
  * Builds a Plugin record from a manifest entry, provider, and core version.
- * Unique key in the hub is always `entry.src`.
+ * Unique key in the hub is registration {@link PluginManifestEntry.name} +
+ * {@link PluginManifestEntry.kind} (via provider prefix when set). `src` is
+ * the load URL only.
+ *
+ * @param entry - Manifest entry from a provider catalogue or host builtins.
+ * @param provider - Owning provider.
+ * @param coreVersion - Running OpenSCD core version string.
+ * @param stored - Host localStorage plugins (install/active state).
+ * @param options - Optional builtin / host flags.
+ * @returns Enriched hub plugin with installation and activation state.
  */
 export function buildPlugin(
   entry: PluginManifestEntry,
@@ -82,7 +111,7 @@ export function buildPlugin(
   options?: BuildPluginOptions,
 ): Plugin {
   const isBuiltin = options?.builtin === true || provider.source === 'builtin';
-  const matching = findStoredMatch(entry, stored, isBuiltin);
+  const matching = findStoredMatch(entry, provider, stored);
   const activeByDefault = options?.activeByDefault === true;
   const installationState: InstallationState = isBuiltin
     ? 'INSTALLED'
@@ -118,13 +147,23 @@ export function buildPlugin(
   };
 }
 
+/** Identity fields needed to target a plugin in hub state mutations. */
+export type PluginIdentityTarget = Pick<Plugin, 'name' | 'kind' | 'provider'>;
+
 /**
- * Installs a plugin by src (sets INSTALLED + INACTIVE).
+ * Installs a plugin by name+kind identity (sets INSTALLED + INACTIVE).
  * Incompatible plugins and built-ins are left unchanged.
+ *
+ * @param plugins - Current hub plugin list.
+ * @param target - Plugin identity to install.
+ * @returns Updated plugin list.
  */
-export function installPlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
+export function installPlugin(
+  plugins: Plugin[],
+  target: PluginIdentityTarget,
+): Plugin[] {
   return plugins.map((p) => {
-    if (p.src !== pluginSrc || !p.compatible || p.builtin) {
+    if (!sameHubPlugin(p, target) || !p.compatible || p.builtin) {
       return p;
     }
     return {
@@ -136,18 +175,22 @@ export function installPlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
 }
 
 /**
- * Uninstalls a plugin by src. Built-ins cannot be uninstalled.
+ * Uninstalls a plugin by name+kind identity. Built-ins cannot be uninstalled.
+ *
+ * @param plugins - Current hub plugin list.
+ * @param target - Plugin identity to uninstall.
+ * @returns Updated list and whether uninstall was allowed.
  */
 export function uninstallPlugin(
   plugins: Plugin[],
-  pluginSrc: string,
+  target: PluginIdentityTarget,
 ): { updated: Plugin[]; success: boolean } {
-  const target = plugins.find((p) => p.src === pluginSrc);
-  if (target?.builtin) {
+  const match = plugins.find((p) => sameHubPlugin(p, target));
+  if (match?.builtin) {
     return { updated: plugins, success: false };
   }
   const updated = plugins.map((p) =>
-    p.src === pluginSrc
+    sameHubPlugin(p, target)
       ? {
           ...p,
           installationState: 'AVAILABLE' as InstallationState,
@@ -159,11 +202,18 @@ export function uninstallPlugin(
 }
 
 /**
- * Activates an installed plugin by src.
+ * Activates an installed plugin by name+kind identity.
+ *
+ * @param plugins - Current hub plugin list.
+ * @param target - Plugin identity to activate.
+ * @returns Updated plugin list.
  */
-export function activatePlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
+export function activatePlugin(
+  plugins: Plugin[],
+  target: PluginIdentityTarget,
+): Plugin[] {
   return plugins.map((p) =>
-    p.src === pluginSrc
+    sameHubPlugin(p, target)
       ? {
           ...p,
           activationState: 'ACTIVE' as ActivationState,
@@ -173,14 +223,18 @@ export function activatePlugin(plugins: Plugin[], pluginSrc: string): Plugin[] {
 }
 
 /**
- * Deactivates an installed plugin by src.
+ * Deactivates an installed plugin by name+kind identity.
+ *
+ * @param plugins - Current hub plugin list.
+ * @param target - Plugin identity to deactivate.
+ * @returns Updated plugin list.
  */
 export function deactivatePlugin(
   plugins: Plugin[],
-  pluginSrc: string,
+  target: PluginIdentityTarget,
 ): Plugin[] {
   return plugins.map((p) =>
-    p.src === pluginSrc
+    sameHubPlugin(p, target)
       ? {
           ...p,
           activationState: 'INACTIVE' as ActivationState,

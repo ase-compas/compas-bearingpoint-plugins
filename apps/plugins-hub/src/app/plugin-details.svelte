@@ -5,10 +5,10 @@
   interface Props {
     plugin: Plugin;
     onClose: () => void;
-    onInstall: (pluginSrc: string) => void;
-    onUninstall: (pluginSrc: string) => void;
-    onEnable: (pluginSrc: string) => void;
-    onDisable: (pluginSrc: string) => void;
+    onInstall: (plugin: Plugin) => void;
+    onUninstall: (plugin: Plugin) => void;
+    onEnable: (plugin: Plugin) => void;
+    onDisable: (plugin: Plugin) => void;
     coreVersion?: string;
   }
 
@@ -116,24 +116,24 @@
     <div style="flex: 1"></div>
     {#if isBuiltin}
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {:else if !isInstalled}
       <button
         class="action-btn install bp-typo-button"
-        onclick={() => onInstall(plugin.src)}
+        onclick={() => onInstall(plugin)}
         disabled={!plugin.compatible}
       >
         Install
       </button>
     {:else}
-      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.src)}>Remove</button>
+      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {/if}
   </div>
