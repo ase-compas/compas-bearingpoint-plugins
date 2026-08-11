@@ -7,6 +7,7 @@
     loadAllProviders,
     loadBuiltinProviders,
     buildPlugin,
+    markPluginsOverlappingBuiltins,
     loadStoredPlugins,
     providersConfig,
     installPlugin,
@@ -21,8 +22,8 @@
     collectKnownPluginIdentities,
     buildCustomPluginsFromStored,
     registrationName,
-    hubPluginKey,
-    sameHubPlugin,
+    hubPluginListKey,
+    sameHubPluginEntry,
   } from '@compas-bearingpoint/plugins-hub';
   import ProviderCard from './provider-card.svelte';
   import PluginDetails from './plugin-details.svelte';
@@ -92,8 +93,10 @@
       allPlugins.push(...customPlugins);
     }
 
+    // Remote/custom entries with the same manifest name+kind as a host built-in
+    // are marked built-in too (badge, no install/remove).
     providers = allProviders;
-    plugins = allPlugins;
+    plugins = markPluginsOverlappingBuiltins(allPlugins);
     loading = false;
   }
 
@@ -134,13 +137,13 @@
   );
 
   function handleInstall(target: Plugin) {
-    if (!target.compatible || target.builtin) {
+    if (!target.compatible || target.builtin || target.shadowedByHostBuiltin) {
       return;
     }
 
     plugins = installPlugin(plugins, target);
-    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
-    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
+    const updatedPlugin = plugins.find((p) => sameHubPluginEntry(p, target));
+    if (selectedPlugin && sameHubPluginEntry(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -149,14 +152,14 @@
   }
 
   function handleUninstall(target: Plugin) {
-    const pluginBefore = plugins.find((p) => sameHubPlugin(p, target));
-    if (pluginBefore?.builtin) {
+    const pluginBefore = plugins.find((p) => sameHubPluginEntry(p, target));
+    if (pluginBefore?.builtin || pluginBefore?.shadowedByHostBuiltin) {
       return;
     }
 
     // Custom plugins leave the hub list entirely when uninstalled
     if (isCustomPlugin(pluginBefore)) {
-      plugins = plugins.filter((p) => !sameHubPlugin(p, target));
+      plugins = plugins.filter((p) => !sameHubPluginEntry(p, target));
       if (!plugins.some((p) => isCustomPlugin(p))) {
         // Reset filter first while Custom <Option> still exists.
         if (providerFilter === CUSTOM_PROVIDER.name) {
@@ -170,7 +173,7 @@
           );
         }, 1);
       }
-      if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
+      if (selectedPlugin && sameHubPluginEntry(selectedPlugin, target)) {
         selectedPlugin = null;
       }
       if (pluginBefore) {
@@ -181,8 +184,8 @@
 
     const { updated, success } = uninstallPlugin(plugins, target);
     plugins = updated;
-    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
-    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
+    const updatedPlugin = plugins.find((p) => sameHubPluginEntry(p, target));
+    if (selectedPlugin && sameHubPluginEntry(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (pluginBefore && success) {
@@ -191,9 +194,12 @@
   }
 
   function handleEnable(target: Plugin) {
+    if (target.shadowedByHostBuiltin) {
+      return;
+    }
     plugins = activatePlugin(plugins, target);
-    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
-    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
+    const updatedPlugin = plugins.find((p) => sameHubPluginEntry(p, target));
+    if (selectedPlugin && sameHubPluginEntry(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -202,9 +208,12 @@
   }
 
   function handleDisable(target: Plugin) {
+    if (target.shadowedByHostBuiltin) {
+      return;
+    }
     plugins = deactivatePlugin(plugins, target);
-    const updatedPlugin = plugins.find((p) => sameHubPlugin(p, target));
-    if (selectedPlugin && sameHubPlugin(selectedPlugin, target)) {
+    const updatedPlugin = plugins.find((p) => sameHubPluginEntry(p, target));
+    if (selectedPlugin && sameHubPluginEntry(selectedPlugin, target)) {
       selectedPlugin = updatedPlugin ?? null;
     }
     if (updatedPlugin) {
@@ -214,7 +223,9 @@
 
   function handleSelectPlugin(plugin: Plugin) {
     selectedPlugin =
-      selectedPlugin && sameHubPlugin(selectedPlugin, plugin) ? null : plugin;
+      selectedPlugin && sameHubPluginEntry(selectedPlugin, plugin)
+        ? null
+        : plugin;
   }
 
   function handleCloseDetails() {
@@ -239,11 +250,30 @@
 
   /**
    * Dispatches oscd-configure-plugin to the OpenSCD host.
-   * detail.name = optional provider prefix + plugin name (registrationName).
-   * config.src uses proxyUrl only for remote/custom absolute URLs when needed.
+   * Built-ins use plain plugin name (no provider prefix) and the host official
+   * `src` when a twin exists. Remotes use registrationName + proxyUrl(src).
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
-    const regName = registrationName(target.provider, target.name);
+    const hostBuiltinTwin =
+      target.builtin === true
+        ? plugins.find(
+            (p) =>
+              p.provider?.source === 'builtin' &&
+              p.name === target.name &&
+              p.kind === target.kind,
+          )
+        : undefined;
+
+    // Official / built-in host identity is always plain name (no remote prefix).
+    const regName =
+      target.builtin === true
+        ? target.name
+        : registrationName(target.provider, target.name);
+
+    const configSrc =
+      target.builtin === true
+        ? (hostBuiltinTwin?.src ?? target.src)
+        : proxyUrl(target.src);
 
     const detail: { name: string; kind: PluginKind; config: StoredPlugin | null } = remove
       ? {
@@ -257,14 +287,14 @@
           config: {
             name: regName,
             author: target.author || target.provider?.name,
-            src: target.builtin ? target.src : proxyUrl(target.src),
+            src: configSrc,
             icon: target.icon!,
             kind: target.kind,
             description: target.description,
             requireDoc: target.requireDoc ?? true,
             position: target.position || (target.kind === 'menu' ? 'middle' : undefined),
             active: target.activationState === 'ACTIVE',
-            activeByDefault: target.activeByDefault,
+            activeByDefault: hostBuiltinTwin?.activeByDefault ?? target.activeByDefault,
             installed: target.installationState === 'INSTALLED',
           },
         };
@@ -351,7 +381,7 @@
             <ProviderCard
               {provider}
               plugins={providerPlugins}
-              selectedPluginKey={selectedPlugin ? hubPluginKey(selectedPlugin) : null}
+              selectedPluginKey={selectedPlugin ? hubPluginListKey(selectedPlugin) : null}
               onSelectPlugin={handleSelectPlugin}
               onInstall={handleInstall}
               onUninstall={handleUninstall}

@@ -74,7 +74,7 @@
   color: var(--bearingpoint-color-surface);
 }
 
-.action-btn.enable:hover {
+.action-btn.enable:hover:not(:disabled) {
   background: var(--bearingpoint-color-action-secondary-bg-hover);
 }
 
@@ -83,9 +83,14 @@
   color: var(--bearingpoint-color-action-neutral-text);
 }
 
-.action-btn.disable:hover {
+.action-btn.disable:hover:not(:disabled) {
   background: var(--bearingpoint-color-action-neutral-bg-hover);
   color: var(--bearingpoint-color-action-neutral-text);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .action-btn.remove {

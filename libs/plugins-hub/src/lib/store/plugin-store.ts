@@ -10,6 +10,7 @@ import type { PluginManifestEntry } from '../types/plugin';
 import { isVersionCompatible } from '../services/version-resolver';
 import {
   matchesStoredPlugin,
+  pluginIdentityKey,
   registrationName,
   sameHubPlugin,
 } from '../services/plugin-loader';
@@ -148,11 +149,71 @@ export function buildPlugin(
 }
 
 /** Identity fields needed to target a plugin in hub state mutations. */
-export type PluginIdentityTarget = Pick<Plugin, 'name' | 'kind' | 'provider'>;
+export type PluginIdentityTarget = Pick<
+  Plugin,
+  'name' | 'kind' | 'provider' | 'builtin' | 'shadowedByHostBuiltin'
+>;
+
+/**
+ * Tooltip when a provider/custom entry is blocked because a host built-in already
+ * uses the same registration name + kind.
+ *
+ * @param hostBuiltinName - Host built-in registration name (identity `name`).
+ */
+export function shadowedByHostBuiltinTooltip(hostBuiltinName: string): string {
+  return `A built-in plugin with the name "${hostBuiltinName}" already exists.`;
+}
+
+/**
+ * Marks remote/custom catalogue entries whose **registration name + kind**
+ * matches a host built-in (`registrationName(provider, name)` equals the
+ * built-in's host name).
+ *
+ * Those entries stay under their provider, show as installed/built-in-like, and
+ * must not be installed, removed, or enable/disabled (manage the host built-in).
+ *
+ * @param plugins - Full hub list including host built-ins and remote catalogues.
+ * @returns Updated list with `shadowedByHostBuiltin` set where applicable.
+ */
+export function markPluginsOverlappingBuiltins(plugins: Plugin[]): Plugin[] {
+  const hostBuiltins = plugins.filter(
+    (p) => p.builtin === true && p.provider?.source === 'builtin',
+  );
+  if (hostBuiltins.length === 0) return plugins;
+
+  // Host built-ins: identity name is plain `name` (no provider prefix).
+  const twinByKey = new Map<string, Plugin>();
+  for (const b of hostBuiltins) {
+    twinByKey.set(pluginIdentityKey(b.name, b.kind), b);
+  }
+
+  return plugins.map((p) => {
+    if (p.provider?.source === 'builtin') return p;
+    // Compare registration name (with prefix when set) to host built-in name.
+    const twin = twinByKey.get(
+      pluginIdentityKey(registrationName(p.provider, p.name), p.kind),
+    );
+    if (!twin) return p;
+    return {
+      ...p,
+      shadowedByHostBuiltin: true,
+      installationState: 'INSTALLED' as InstallationState,
+      activationState: twin.activationState,
+      activeByDefault: twin.activeByDefault,
+      requireDoc: twin.requireDoc,
+    };
+  });
+}
+
+function isLockedByHostBuiltin(
+  plugin: Pick<Plugin, 'builtin' | 'shadowedByHostBuiltin'> | undefined,
+): boolean {
+  return plugin?.builtin === true || plugin?.shadowedByHostBuiltin === true;
+}
 
 /**
  * Installs a plugin by name+kind identity (sets INSTALLED + INACTIVE).
- * Incompatible plugins and built-ins are left unchanged.
+ * Incompatible plugins, built-ins, and host-shadowed entries are left unchanged.
  *
  * @param plugins - Current hub plugin list.
  * @param target - Plugin identity to install.
@@ -163,7 +224,11 @@ export function installPlugin(
   target: PluginIdentityTarget,
 ): Plugin[] {
   return plugins.map((p) => {
-    if (!sameHubPlugin(p, target) || !p.compatible || p.builtin) {
+    if (
+      !sameHubPlugin(p, target) ||
+      !p.compatible ||
+      isLockedByHostBuiltin(p)
+    ) {
       return p;
     }
     return {
@@ -175,7 +240,8 @@ export function installPlugin(
 }
 
 /**
- * Uninstalls a plugin by name+kind identity. Built-ins cannot be uninstalled.
+ * Uninstalls a plugin by name+kind identity.
+ * Built-ins and host-shadowed provider entries cannot be uninstalled.
  *
  * @param plugins - Current hub plugin list.
  * @param target - Plugin identity to uninstall.
@@ -186,7 +252,7 @@ export function uninstallPlugin(
   target: PluginIdentityTarget,
 ): { updated: Plugin[]; success: boolean } {
   const match = plugins.find((p) => sameHubPlugin(p, target));
-  if (match?.builtin) {
+  if (isLockedByHostBuiltin(match) || isLockedByHostBuiltin(target)) {
     return { updated: plugins, success: false };
   }
   const updated = plugins.map((p) =>
@@ -202,7 +268,8 @@ export function uninstallPlugin(
 }
 
 /**
- * Activates an installed plugin by name+kind identity.
+ * Activates an installed plugin by identity.
+ * Host-shadowed provider entries are not activated (use the built-in instead).
  *
  * @param plugins - Current hub plugin list.
  * @param target - Plugin identity to activate.
@@ -212,8 +279,11 @@ export function activatePlugin(
   plugins: Plugin[],
   target: PluginIdentityTarget,
 ): Plugin[] {
+  if (target.shadowedByHostBuiltin) {
+    return plugins;
+  }
   return plugins.map((p) =>
-    sameHubPlugin(p, target)
+    sameHubPlugin(p, target) && !p.shadowedByHostBuiltin
       ? {
           ...p,
           activationState: 'ACTIVE' as ActivationState,
@@ -223,7 +293,8 @@ export function activatePlugin(
 }
 
 /**
- * Deactivates an installed plugin by name+kind identity.
+ * Deactivates an installed plugin by identity.
+ * Host-shadowed provider entries are not deactivated (use the built-in instead).
  *
  * @param plugins - Current hub plugin list.
  * @param target - Plugin identity to deactivate.
@@ -233,8 +304,11 @@ export function deactivatePlugin(
   plugins: Plugin[],
   target: PluginIdentityTarget,
 ): Plugin[] {
+  if (target.shadowedByHostBuiltin) {
+    return plugins;
+  }
   return plugins.map((p) =>
-    sameHubPlugin(p, target)
+    sameHubPlugin(p, target) && !p.shadowedByHostBuiltin
       ? {
           ...p,
           activationState: 'INACTIVE' as ActivationState,

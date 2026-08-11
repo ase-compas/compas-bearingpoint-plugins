@@ -72,6 +72,20 @@ export function hubPluginKey(
 }
 
 /**
+ * UI / list entry key: provider + registration name + kind.
+ * Distinguishes the same host identity listed under different providers
+ * (e.g. host built-in vs shadowed remote catalogue entry).
+ *
+ * @param plugin - Plugin with provider, name, and kind.
+ * @returns Opaque list key for selection and Svelte `{#each}`.
+ */
+export function hubPluginListKey(
+  plugin: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+): string {
+  return `${plugin.provider.name}\0${hubPluginKey(plugin)}`;
+}
+
+/**
  * Returns true when a stored host plugin matches the given host name + kind.
  *
  * @param stored - Entry from host localStorage `plugins`.
@@ -97,4 +111,18 @@ export function sameHubPlugin(
   b: Pick<Plugin, 'name' | 'kind' | 'provider'>,
 ): boolean {
   return hubPluginKey(a) === hubPluginKey(b);
+}
+
+/**
+ * Returns true when two entries are the same hub list item (provider + host identity).
+ * Use for UI selection; use {@link sameHubPlugin} for host configure identity.
+ *
+ * @param a - First plugin.
+ * @param b - Second plugin.
+ */
+export function sameHubPluginEntry(
+  a: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+  b: Pick<Plugin, 'name' | 'kind' | 'provider'>,
+): boolean {
+  return hubPluginListKey(a) === hubPluginListKey(b);
 }

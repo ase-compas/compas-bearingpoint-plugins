@@ -89,6 +89,12 @@ export interface Plugin extends PluginManifestEntry {
   activationState: ActivationState;
   /** Host built-in flag (officialPlugins). Not part of remote plugins.json. */
   builtin?: boolean;
+  /**
+   * True when this catalogue entry's registration name + kind matches a host
+   * built-in. Listed under the provider, but install/remove and enable/disable
+   * are blocked (manage the host built-in instead).
+   */
+  shadowedByHostBuiltin?: boolean;
   /** Host default activation (officialPlugins). */
   activeByDefault?: boolean;
   /** Whether the host plugin requires an open document. */

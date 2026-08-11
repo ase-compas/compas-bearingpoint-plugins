@@ -41,8 +41,10 @@ export {
   registrationName,
   pluginIdentityKey,
   hubPluginKey,
+  hubPluginListKey,
   matchesStoredPlugin,
   sameHubPlugin,
+  sameHubPluginEntry,
   isUrlTrusted,
 } from './lib/services/plugin-loader';
 
@@ -50,6 +52,8 @@ export { isVersionCompatible, compareSemver } from './lib/services/version-resol
 
 export {
   buildPlugin,
+  markPluginsOverlappingBuiltins,
+  shadowedByHostBuiltinTooltip,
   installPlugin,
   uninstallPlugin,
   activatePlugin,

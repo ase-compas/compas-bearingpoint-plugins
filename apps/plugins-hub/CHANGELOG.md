@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Host localStorage duplicates for the same name+kind are collapsed when the hub
   reads them (last-wins fields, `active` OR-merged). Permanent host storage
   cleanup still depends on the host fix or reconfigure.
+- Provider (or custom) catalogue entries whose **registration name + kind**
+  matches a host built-in are marked **Built-in** in that provider section
+  (`shadowedByHostBuiltin`): Enable/Disable is disabled with a tooltip that a
+  built-in of that name already exists; install/remove are blocked.
 
 ## [0.0.3]
 

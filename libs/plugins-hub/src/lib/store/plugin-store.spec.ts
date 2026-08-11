@@ -9,6 +9,7 @@ import {
   dedupeStoredPluginsByNameAndKind,
   installPlugin,
   loadStoredPlugins,
+  markPluginsOverlappingBuiltins,
   uninstallPlugin,
 } from './plugin-store';
 
@@ -242,6 +243,97 @@ describe('buildPlugin identity matching', () => {
   });
 });
 
+describe('markPluginsOverlappingBuiltins', () => {
+  function makePlugin(partial: Partial<Plugin> & Pick<Plugin, 'name'>): Plugin {
+    return {
+      src: '/a.js',
+      kind: 'editor',
+      icon: 'edit',
+      description: 'd',
+      provider: remoteProvider,
+      compatible: true,
+      kindText: 'Editor plugin',
+      kindIcon: 'tab',
+      installationState: 'AVAILABLE',
+      activationState: 'INACTIVE',
+      ...partial,
+    };
+  }
+
+  it('marks remote when registration name+kind matches host built-in name', () => {
+    // Host built-in name is already the full registration identity ("BP - Cleanup").
+    // Remote "Cleanup" with prefix BP → registration "BP - Cleanup".
+    const plugins = markPluginsOverlappingBuiltins([
+      makePlugin({
+        name: 'BP - Cleanup',
+        provider: builtinProvider,
+        builtin: true,
+        src: '/plugins/dist/editors/Cleanup.js',
+        installationState: 'INSTALLED',
+        activationState: 'ACTIVE',
+        activeByDefault: true,
+        requireDoc: true,
+      }),
+      makePlugin({
+        name: 'Cleanup',
+        src: 'https://cdn.example/cleanup.js',
+        installationState: 'AVAILABLE',
+        activationState: 'INACTIVE',
+      }),
+      makePlugin({
+        name: 'Other',
+        src: 'https://cdn.example/other.js',
+      }),
+    ]);
+
+    expect(plugins[1].shadowedByHostBuiltin).toBe(true);
+    expect(plugins[1].builtin).toBeFalsy();
+    expect(plugins[1].installationState).toBe('INSTALLED');
+    expect(plugins[1].activationState).toBe('ACTIVE');
+    expect(plugins[1].activeByDefault).toBe(true);
+    expect(plugins[1].requireDoc).toBe(true);
+    expect(plugins[1].provider.name).toBe(remoteProvider.name);
+    expect(plugins[1].src).toBe('https://cdn.example/cleanup.js');
+    expect(plugins[2].shadowedByHostBuiltin).toBeFalsy();
+    expect(plugins[2].installationState).toBe('AVAILABLE');
+  });
+
+  it('does not mark remote when registration name differs from built-in name', () => {
+    // Built-in plain "Cleanup" ≠ remote registration "BP - Cleanup"
+    const plugins = markPluginsOverlappingBuiltins([
+      makePlugin({
+        name: 'Cleanup',
+        provider: builtinProvider,
+        builtin: true,
+        installationState: 'INSTALLED',
+      }),
+      makePlugin({
+        name: 'Cleanup',
+        src: 'https://cdn.example/cleanup.js',
+      }),
+    ]);
+    expect(plugins[1].shadowedByHostBuiltin).toBeFalsy();
+  });
+
+  it('does not mark remote when only kind differs', () => {
+    const plugins = markPluginsOverlappingBuiltins([
+      makePlugin({
+        name: 'BP - Cleanup',
+        kind: 'editor',
+        provider: builtinProvider,
+        builtin: true,
+        installationState: 'INSTALLED',
+      }),
+      makePlugin({
+        name: 'Cleanup',
+        kind: 'menu',
+        src: 'https://cdn.example/cleanup-menu.js',
+      }),
+    ]);
+    expect(plugins[1].shadowedByHostBuiltin).toBeFalsy();
+  });
+});
+
 describe('install / uninstall / activate / deactivate by identity', () => {
   function makePlugin(partial: Partial<Plugin> & Pick<Plugin, 'name'>): Plugin {
     return {
@@ -269,6 +361,20 @@ describe('install / uninstall / activate / deactivate by identity', () => {
     expect(updated[1].installationState).toBe('AVAILABLE');
   });
 
+  it('installPlugin leaves host-shadowed remotes unchanged', () => {
+    const plugins = [
+      makePlugin({
+        name: 'Cleanup',
+        shadowedByHostBuiltin: true,
+        installationState: 'INSTALLED',
+        activationState: 'ACTIVE',
+      }),
+    ];
+    const updated = installPlugin(plugins, plugins[0]);
+    expect(updated[0].installationState).toBe('INSTALLED');
+    expect(updated[0].activationState).toBe('ACTIVE');
+  });
+
   it('activatePlugin and deactivatePlugin target by identity', () => {
     const plugins = [
       makePlugin({
@@ -283,12 +389,37 @@ describe('install / uninstall / activate / deactivate by identity', () => {
     expect(inactive[0].activationState).toBe('INACTIVE');
   });
 
+  it('activatePlugin ignores host-shadowed provider entries', () => {
+    const remoteTwin = makePlugin({
+      name: 'Cleanup',
+      shadowedByHostBuiltin: true,
+      src: 'https://cdn.example/cleanup.js',
+      installationState: 'INSTALLED',
+      activationState: 'INACTIVE',
+    });
+    const updated = activatePlugin([remoteTwin], remoteTwin);
+    expect(updated[0].activationState).toBe('INACTIVE');
+  });
+
   it('uninstallPlugin refuses built-ins', () => {
     const plugins = [
       makePlugin({
         name: 'Builtin',
         provider: builtinProvider,
         builtin: true,
+        installationState: 'INSTALLED',
+      }),
+    ];
+    const { updated, success } = uninstallPlugin(plugins, plugins[0]);
+    expect(success).toBe(false);
+    expect(updated[0].installationState).toBe('INSTALLED');
+  });
+
+  it('uninstallPlugin refuses host-shadowed remotes', () => {
+    const plugins = [
+      makePlugin({
+        name: 'Cleanup',
+        shadowedByHostBuiltin: true,
         installationState: 'INSTALLED',
       }),
     ];

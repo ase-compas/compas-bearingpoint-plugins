@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Provider } from '@compas-bearingpoint/plugins-hub';
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
-  import { hubPluginKey } from '@compas-bearingpoint/plugins-hub';
+  import { hubPluginListKey } from '@compas-bearingpoint/plugins-hub';
   import PluginCard from './plugin-card.svelte';
 
   interface Props {
@@ -47,10 +47,10 @@
   </div>
 
   <div class="plugins-grid">
-    {#each plugins as plugin (hubPluginKey(plugin))}
+    {#each plugins as plugin (hubPluginListKey(plugin))}
       <PluginCard
         {plugin}
-        selected={selectedPluginKey === hubPluginKey(plugin)}
+        selected={selectedPluginKey === hubPluginListKey(plugin)}
         onSelect={() => onSelectPlugin(plugin)}
         onInstall={() => onInstall(plugin)}
         onUninstall={() => onUninstall(plugin)}

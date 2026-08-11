@@ -154,6 +154,13 @@ registrationName(provider, plugin.name)
 
 Changing `src` for the same registration name + kind (version bump, offline path, mirror) updates that plugin instead of creating a second entry. Custom plugins are stored entries whose **name+kind** is not covered by any remote or built-in catalogue.
 
+If a **remote (or custom) catalogue entry** has the same **registration name +
+kind** as a host built-in (`registrationName(provider, name)` equals the built-in
+`name`), the hub still lists it under that provider with a **Built-in** badge
+(`shadowedByHostBuiltin`). Enable/Disable is disabled with a tooltip that a
+built-in of that name already exists; install/remove are blocked. Manage the
+entry under the host built-in provider instead.
+
 ### Migration / duplicates
 
 If host localStorage still contains name+kind duplicates (historical open-scd#157), the hub **dedupes on read** (`dedupeStoredPluginsByNameAndKind`: last-wins fields, `active` OR-merged). The hub does not rewrite host storage by itself; a permanent cleanup needs the host fix or reconfigure of the surviving entry.

@@ -5,8 +5,10 @@ import {
   registrationName,
   pluginIdentityKey,
   hubPluginKey,
+  hubPluginListKey,
   matchesStoredPlugin,
   sameHubPlugin,
+  sameHubPluginEntry,
   isUrlTrusted,
 } from './plugin-loader';
 
@@ -94,6 +96,29 @@ describe('plugin identity helpers', () => {
       src: '/2.js',
     } as Pick<Plugin, 'name' | 'kind' | 'provider'>;
     expect(sameHubPlugin(a, b)).toBe(true);
+  });
+
+  it('hubPluginListKey and sameHubPluginEntry include provider', () => {
+    const remote = {
+      name: 'PluginHub',
+      kind: 'editor' as const,
+      provider,
+    };
+    const builtin = {
+      name: 'BP - PluginHub',
+      kind: 'editor' as const,
+      provider: {
+        name: 'CoMPAS Plugins',
+        icon: 'c',
+        description: 'b',
+        source: 'builtin' as const,
+      },
+    };
+    // Same host registration identity, different providers
+    expect(hubPluginKey(remote)).toBe(hubPluginKey(builtin));
+    expect(sameHubPlugin(remote, builtin)).toBe(true);
+    expect(hubPluginListKey(remote)).not.toBe(hubPluginListKey(builtin));
+    expect(sameHubPluginEntry(remote, builtin)).toBe(false);
   });
 });
 
