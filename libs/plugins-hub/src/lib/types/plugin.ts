@@ -69,7 +69,10 @@ export interface PluginManifestEntry {
 /**
  * Enriched plugin record held in the hub's state.
  * Combines manifest data with runtime state.
- * Unique key in the hub is always {@link PluginManifestEntry.src} (strict string equality).
+ *
+ * Unique key in the hub (and OpenSCD host) is registration **name** + **kind**
+ * (see `registrationName` / `hubPluginKey`). {@link PluginManifestEntry.src}
+ * is the load URL only, not the identity.
  */
 export interface Plugin extends PluginManifestEntry {
   /** The provider that supplies this plugin. */
@@ -86,6 +89,12 @@ export interface Plugin extends PluginManifestEntry {
   activationState: ActivationState;
   /** Host built-in flag (officialPlugins). Not part of remote plugins.json. */
   builtin?: boolean;
+  /**
+   * True when this catalogue entry's registration name + kind matches a host
+   * built-in. Listed under the provider, but install/remove and enable/disable
+   * are blocked (manage the host built-in instead).
+   */
+  shadowedByHostBuiltin?: boolean;
   /** Host default activation (officialPlugins). */
   activeByDefault?: boolean;
   /** Whether the host plugin requires an open document. */

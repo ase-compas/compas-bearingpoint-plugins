@@ -1,23 +1,24 @@
 <script lang="ts">
   import type { Provider } from '@compas-bearingpoint/plugins-hub';
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
+  import { hubPluginListKey } from '@compas-bearingpoint/plugins-hub';
   import PluginCard from './plugin-card.svelte';
 
   interface Props {
     provider: Provider;
     plugins: Plugin[];
-    selectedPluginSrc: string | null;
+    selectedPluginKey: string | null;
     onSelectPlugin: (plugin: Plugin) => void;
-    onInstall: (pluginSrc: string) => void;
-    onUninstall: (pluginSrc: string) => void;
-    onEnable: (pluginSrc: string) => void;
-    onDisable: (pluginSrc: string) => void;
+    onInstall: (plugin: Plugin) => void;
+    onUninstall: (plugin: Plugin) => void;
+    onEnable: (plugin: Plugin) => void;
+    onDisable: (plugin: Plugin) => void;
   }
 
   let {
     provider,
     plugins,
-    selectedPluginSrc,
+    selectedPluginKey,
     onSelectPlugin,
     onInstall,
     onUninstall,
@@ -46,15 +47,15 @@
   </div>
 
   <div class="plugins-grid">
-    {#each plugins as plugin (plugin.src)}
+    {#each plugins as plugin (hubPluginListKey(plugin))}
       <PluginCard
         {plugin}
-        selected={selectedPluginSrc === plugin.src}
+        selected={selectedPluginKey === hubPluginListKey(plugin)}
         onSelect={() => onSelectPlugin(plugin)}
-        onInstall={() => onInstall(plugin.src)}
-        onUninstall={() => onUninstall(plugin.src)}
-        onEnable={() => onEnable(plugin.src)}
-        onDisable={() => onDisable(plugin.src)}
+        onInstall={() => onInstall(plugin)}
+        onUninstall={() => onUninstall(plugin)}
+        onEnable={() => onEnable(plugin)}
+        onDisable={() => onDisable(plugin)}
       />
     {/each}
   </div>

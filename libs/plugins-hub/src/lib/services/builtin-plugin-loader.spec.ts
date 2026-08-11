@@ -136,7 +136,7 @@ describe('loadBuiltinProviders', () => {
     expect(results[0].plugins[0].activeByDefault).toBe(false);
   });
 
-  it('merges active state from stored plugins by src', () => {
+  it('merges active state from stored plugins by name+kind', () => {
     const host = {
       getBuiltInPlugins: () => [
         {
@@ -154,7 +154,8 @@ describe('loadBuiltinProviders', () => {
       [
         {
           name: 'Cleanup',
-          src: '/plugins/dist/editors/Cleanup.js',
+          // Different src than the builtin catalogue — identity is name+kind
+          src: '/plugins/dist/editors/Cleanup-offline.js',
           kind: 'editor',
           icon: 'cleaning_services',
           active: true,
@@ -165,6 +166,7 @@ describe('loadBuiltinProviders', () => {
     );
 
     expect(results[0].plugins[0].activationState).toBe('ACTIVE');
+    expect(results[0].plugins[0].src).toBe('/plugins/dist/editors/Cleanup.js');
   });
 });
 

@@ -20,6 +20,13 @@ const FAKE_BUILTINS = [
     requireDoc: false,
     position: 'bottom',
   },
+  {
+    name: "BP - PluginHub",
+    kind: "editor",
+    description: "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
+    src: "/plugins-bearingpoint/plugin-hub/index.js",
+    icon: "hub",
+  },
 ] as const;
 
 /**

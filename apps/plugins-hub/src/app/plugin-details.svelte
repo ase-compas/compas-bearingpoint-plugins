@@ -1,23 +1,30 @@
 <script lang="ts">
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
-  import { registrationName } from '@compas-bearingpoint/plugins-hub';
+  import {
+    registrationName,
+    shadowedByHostBuiltinTooltip,
+  } from '@compas-bearingpoint/plugins-hub';
 
   interface Props {
     plugin: Plugin;
     onClose: () => void;
-    onInstall: (pluginSrc: string) => void;
-    onUninstall: (pluginSrc: string) => void;
-    onEnable: (pluginSrc: string) => void;
-    onDisable: (pluginSrc: string) => void;
+    onInstall: (plugin: Plugin) => void;
+    onUninstall: (plugin: Plugin) => void;
+    onEnable: (plugin: Plugin) => void;
+    onDisable: (plugin: Plugin) => void;
     coreVersion?: string;
   }
 
   let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable, coreVersion }: Props = $props();
 
   const isBuiltin = $derived(plugin.builtin === true);
-  const isInstalled = $derived(plugin.installationState === 'INSTALLED' || isBuiltin);
+  const isShadowed = $derived(plugin.shadowedByHostBuiltin === true);
+  const isInstalled = $derived(
+    plugin.installationState === 'INSTALLED' || isBuiltin || isShadowed,
+  );
   const isActive = $derived(plugin.activationState === 'ACTIVE');
   const displayName = $derived(registrationName(plugin.provider, plugin.name));
+  const shadowTooltip = $derived(shadowedByHostBuiltinTooltip(displayName));
 </script>
 
 <aside class="plugin-details">
@@ -40,7 +47,7 @@
     <p class="details-short-desc bp-typo-body">{plugin.description}</p>
 
     <div class="details-badges">
-      {#if isBuiltin}
+      {#if isBuiltin || isShadowed}
         <span class="badge badge-builtin bp-typo-button">Built-in</span>
       {:else}
         <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">
@@ -114,26 +121,42 @@
 
   <div class="details-actions">
     <div style="flex: 1"></div>
-    {#if isBuiltin}
+    {#if isShadowed}
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
+        <button
+          class="action-btn disable bp-typo-button"
+          disabled
+          title={shadowTooltip}
+          aria-label="Disable"
+        >Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
+        <button
+          class="action-btn enable bp-typo-button"
+          disabled
+          title={shadowTooltip}
+          aria-label="Enable"
+        >Enable</button>
+      {/if}
+    {:else if isBuiltin}
+      {#if isActive}
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
+      {:else}
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {:else if !isInstalled}
       <button
         class="action-btn install bp-typo-button"
-        onclick={() => onInstall(plugin.src)}
+        onclick={() => onInstall(plugin)}
         disabled={!plugin.compatible}
       >
         Install
       </button>
     {:else}
-      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin.src)}>Remove</button>
+      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin.src)}>Disable</button>
+        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin.src)}>Enable</button>
+        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {/if}
   </div>

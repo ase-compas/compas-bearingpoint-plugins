@@ -6,6 +6,10 @@ import {
 } from '../types/plugin';
 import type { StoredPlugin } from '../types/stored-plugin';
 import { buildPlugin } from '../store/plugin-store';
+import {
+  hubPluginKey,
+  pluginIdentityKey,
+} from './plugin-loader';
 
 /** Fake provider for host plugins not listed by any remote/builtin catalogue. */
 export const CUSTOM_PROVIDER: Provider = {
@@ -17,14 +21,16 @@ export const CUSTOM_PROVIDER: Provider = {
 };
 
 /**
- * Collects known plugin source URLs so stored entries that match a catalogue
- * plugin are not treated as custom. Strict src equality only.
+ * Collects known host identities (registration name + kind) so stored entries
+ * that match a catalogue plugin are not treated as custom.
+ *
+ * @param plugins - Already-built catalogue plugins (remote + builtin).
+ * @returns Set of {@link hubPluginKey} values.
  */
-export function collectKnownPluginSrcs(plugins: Plugin[]): Set<string> {
+export function collectKnownPluginIdentities(plugins: Plugin[]): Set<string> {
   const known = new Set<string>();
   for (const p of plugins) {
-    if (!p.src) continue;
-    known.add(p.src);
+    known.add(hubPluginKey(p));
   }
   return known;
 }
@@ -37,32 +43,41 @@ function isPluginKind(value: unknown): value is PluginKind {
 }
 
 /**
- * Returns true when a stored plugin's src matches a known catalogue plugin.
+ * Returns true when a stored plugin's name+kind matches a known catalogue plugin.
+ *
+ * @param stored - Host localStorage plugin entry.
+ * @param knownIdentities - Set from {@link collectKnownPluginIdentities}.
  */
-export function isKnownStoredSrc(
+export function isKnownStoredPlugin(
   stored: StoredPlugin,
-  knownSrcs: Set<string>,
+  knownIdentities: Set<string>,
 ): boolean {
-  if (!stored.src) return false;
-  return knownSrcs.has(stored.src);
+  if (typeof stored.name !== 'string' || !stored.name) return false;
+  if (!isPluginKind(stored.kind)) return false;
+  return knownIdentities.has(pluginIdentityKey(stored.name, stored.kind));
 }
 
 /**
- * Builds Plugin records for stored plugins whose src is not covered by any
+ * Builds Plugin records for stored plugins whose name+kind is not covered by any
  * loaded builtin or remote provider catalogue.
  *
  * Description is the source URL only (product requirement).
- * Hub unique key is src; host configure uses plain stored name (no prefix).
+ * Hub unique key is name+kind; host configure uses plain stored name (no prefix).
+ *
+ * @param stored - Host localStorage plugins.
+ * @param knownIdentities - Catalogue identities to exclude.
+ * @param coreVersion - Running core version (passed through to {@link buildPlugin}).
+ * @returns Custom plugins marked INSTALLED with stored activation state.
  */
 export function buildCustomPluginsFromStored(
   stored: StoredPlugin[],
-  knownSrcs: Set<string>,
+  knownIdentities: Set<string>,
   coreVersion: string,
 ): Plugin[] {
   const customs: Plugin[] = [];
 
   for (const s of stored) {
-    if (isKnownStoredSrc(s, knownSrcs)) continue;
+    if (isKnownStoredPlugin(s, knownIdentities)) continue;
     if (typeof s.name !== 'string' || !s.name) continue;
     if (typeof s.src !== 'string' || !s.src) continue;
     if (!isPluginKind(s.kind)) continue;

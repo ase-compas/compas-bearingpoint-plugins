@@ -1,5 +1,9 @@
 <script lang="ts">
   import type { Plugin } from '@compas-bearingpoint/plugins-hub';
+  import {
+    registrationName,
+    shadowedByHostBuiltinTooltip,
+  } from '@compas-bearingpoint/plugins-hub';
 
   interface Props {
     plugin: Plugin;
@@ -14,11 +18,20 @@
   let { plugin, selected, onSelect, onInstall, onUninstall, onEnable, onDisable }: Props = $props();
 
   const isBuiltin = $derived(plugin.builtin === true);
-  const isInstalled = $derived(plugin.installationState === 'INSTALLED' || isBuiltin);
+  const isShadowed = $derived(plugin.shadowedByHostBuiltin === true);
+  const isInstalled = $derived(
+    plugin.installationState === 'INSTALLED' || isBuiltin || isShadowed,
+  );
   const isActive = $derived(plugin.activationState === 'ACTIVE');
+  const hostBuiltinName = $derived(registrationName(plugin.provider, plugin.name));
+  const shadowTooltip = $derived(shadowedByHostBuiltinTooltip(hostBuiltinName));
+  const actionDisabled = $derived(
+    isShadowed || (!isInstalled && !plugin.compatible),
+  );
 
   function handleActionClick(e: MouseEvent) {
     e.stopPropagation();
+    if (isShadowed) return;
     if (!isInstalled) {
       if (!plugin.compatible) return;
       onInstall();
@@ -49,9 +62,10 @@
       class="action-btn bp-typo-button"
       class:disable={isInstalled && isActive}
       class:enable={isInstalled && !isActive}
-      class:install={!isInstalled && !isBuiltin}
+      class:install={!isInstalled && !isBuiltin && !isShadowed}
       onclick={handleActionClick}
-      disabled={!isInstalled && !plugin.compatible}
+      disabled={actionDisabled}
+      title={isShadowed ? shadowTooltip : undefined}
       aria-label={!isInstalled ? 'Install' : isActive ? 'Disable' : 'Enable'}
     >
       {#if !isInstalled}
@@ -74,7 +88,7 @@
   <div class="plugin-description bp-typo-body">{plugin.description}</div>
 
   <div class="plugin-badges">
-    {#if isBuiltin}
+    {#if isBuiltin || isShadowed}
       <span class="badge badge-builtin bp-typo-button">Built-in</span>
     {:else}
       <span class="badge badge-{plugin.installationState.toLowerCase()} bp-typo-button">

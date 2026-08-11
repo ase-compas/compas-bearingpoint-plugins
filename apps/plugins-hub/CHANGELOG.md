@@ -5,6 +5,30 @@ All notable changes to the **plugins-hub** application are documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.0.4]
+
+### Changed
+
+- Implements [Issue #11](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/11):
+  Plugin Hub uses **registration `name` + `kind`** as the unique identifier
+  instead of `src` (aligned with OpenSCD /
+  [open-scd#157](https://github.com/com-pas/open-scd/issues/157)).
+  - `src` remains the resource URL to load the plugin only.
+  - Install, active/inactive state, and Custom catalogue membership follow
+    name+kind, so version bumps, offline paths, or host rewrites no longer create
+    duplicate hub entries for the same plugin.
+  - Host localStorage duplicates for the same name+kind are collapsed when the
+    hub reads them (last-wins fields, `active` OR-merged). Permanent host storage
+    cleanup still depends on the host fix or reconfigure.
+  - Provider (or custom) catalogue entries whose registration name+kind matches a
+    host built-in are marked **Built-in** in that provider section
+    (`shadowedByHostBuiltin`): Enable/Disable is disabled with a tooltip that a
+    built-in of that name already exists; install/remove are blocked.
+  - UI selection keys list entries by **provider + name + kind**, so a host
+    built-in and a shadowed provider card can be selected independently.
+
 ## [0.0.3]
 
 ### Added
