@@ -1,0 +1,37 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="heuQqjTVRsBsB4t9frBq">
+    <mxGraphModel dx="1006" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-7" edge="1" parent="1" source="ZMY295W2YNuLwFS8QiN6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZMY295W2YNuLwFS8QiN6-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-8" edge="1" parent="1" source="ZMY295W2YNuLwFS8QiN6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZMY295W2YNuLwFS8QiN6-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-9" edge="1" parent="1" source="ZMY295W2YNuLwFS8QiN6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZMY295W2YNuLwFS8QiN6-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-10" edge="1" parent="1" source="ZMY295W2YNuLwFS8QiN6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZMY295W2YNuLwFS8QiN6-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-1" parent="1" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.mobile_hub;fillColor=#AD688A;gradientColor=#F58435;gradientDirection=west;pointerEvents=1" value="Plugins-Hub Plugin" vertex="1">
+          <mxGeometry height="81" width="75" x="272.72" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-2" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/management_governance/Resources_Provider.svg;" value="TransnetBW" vertex="1">
+          <mxGeometry height="68" width="60.440000000000005" x="110" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-3" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/management_governance/Resources_Provider.svg;" value="BearingPoint" vertex="1">
+          <mxGeometry height="68" width="60.440000000000005" x="280" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-4" parent="1" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/management_governance/Resources_Provider.svg;" value="Additional Provider" vertex="1">
+          <mxGeometry height="68" width="60.440000000000005" x="450" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMY295W2YNuLwFS8QiN6-5" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;fontColor=#4277BB;labelBackgroundColor=default;fontSize=12;spacingTop=3;image=img/lib/ibm/management/provider_cloud_portal_service.svg;" value="Distribution&lt;br&gt;Built-In Plugins" vertex="1">
+          <mxGeometry height="60" width="60" x="280.44" y="390" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
