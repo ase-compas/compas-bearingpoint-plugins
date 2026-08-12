@@ -11,14 +11,3 @@ BearingPoint provides currently following Plugins:
 | Plugins-Hub | Central plugin for integrating and managing plugins from multiple providers | [documentation](./plugins/plugins-hub/README.md) |
 
 The distribution file for the Plugins-Hub plugin provided by BearingPoint can be found here: [plugins.json](./plugins.json)
-
-## Installation via Plugin-Hub:
-
-BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers
-
-GOTO: [https://openscd.github.io/](https://openscd.github.io/) or any other OpenSCD or Compas Instance and add the Plugin:
-
-* **Name:** BP-PluginHub
-* **URL:** https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/index.js
-
-![Install PluginHub](img/install-pluginhub.png)
