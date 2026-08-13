@@ -20,7 +20,7 @@ The Plugin is organised as following:
 
 <img src="img/organisation.png" alt="Plugins-Hub help" width="500">
 
-The plugin can loads plugins from a JSON file (for example, plugins.json) provided by one or more plugin providers. The distributor can centrally define the list of supported plugin providers for their distribution, allowing the plugin to discover and load all plugins they publish.
+The plugin loads plugins from a JSON file (for example, plugins.json) provided by one or more plugin providers. The distributor can centrally define the list of supported plugin providers for their distribution, allowing the plugin to discover and load all plugins they publish.
 
 The json file structure a provider needs to provide looks as following:
 ```
