@@ -9,6 +9,7 @@ import './host-theme-presets.css';
 import {
   HOST_THEME_CLASSES,
   HOST_THEME_PRESETS,
+  HOST_MODE_PRESETS,
   hostThemeClass,
   type ThemeBrand,
   type ThemeMode,
@@ -124,7 +125,9 @@ export function applyHostTheme(state: ThemePlaygroundState): void {
   const nextClass = hostThemeClass(state.brand, state.mode);
 
   root.classList.remove(...HOST_THEME_CLASSES);
+  root.classList.remove(...HOST_MODE_PRESETS);
   root.classList.add(nextClass);
+  root.classList.add(state.mode);
   root.dataset.themeBrand = state.brand;
   root.dataset.themeMode = state.mode;
 

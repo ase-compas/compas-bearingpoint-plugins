@@ -4,7 +4,6 @@
 @import 'svelte-material-ui/bare.css';
 
 /* Host theme bridge: --oscd-theme-* → --oscd-* / MDC / --bearingpoint-* aliases */
-@import '../../../../libs/global/themes.css';
-@import '../../../../libs/global/material-icons.css';
-@import '../../../../libs/global/base.css';
+@import '../../../../libs/global/material-icons.css'; /** TODO: check if this is needed, or should be part of global-dev shame */
+@import '../../../../libs/global/bearingpoint-theme.css';
 @import './plugins-hub.css';

@@ -1,6 +1,0 @@
-/**
- * @deprecated MDC / MD token mapping now lives in oscd-theme-bridge.css
- * (bound to host OpenSCD theme variables, not Material purple defaults).
- * This file remains only so existing @import paths keep resolving.
- */
-@import './oscd-theme-bridge.css';

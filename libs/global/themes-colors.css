@@ -1,6 +1,0 @@
-/**
- * @deprecated Colour tokens now live in oscd-theme-bridge.css
- * (host --oscd-theme-* → --oscd-* → --bearingpoint-* aliases).
- * This file remains only so existing @import paths keep resolving.
- */
-@import './oscd-theme-bridge.css';

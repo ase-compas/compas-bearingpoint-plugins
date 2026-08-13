@@ -19,118 +19,68 @@
  * :host covers Shadow DOM (production plugin); :root covers standalone mount.
  * Scope: full Plugins-Hub UI (toolbar, cards, details, badges, SMUI controls).
  */
+
+.plugins-hub, /** for the hack of the design upgrade before host is upgraded (downward compatible, see "@container style(..." ).*/
 :root,
 :host {
-  /* ── Internal OpenSCD palette ── */
-  --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--cyan, #2aa198)));
-  --oscd-secondary: var(
-    --oscd-theme-secondary,
-    var(--secondary, var(--violet, #6c71c4))
-  );
-  /* Do not fall back to --mdc-theme-error here: we rebind MDC from --oscd-* below (cycle). */
-  --oscd-error: var(--oscd-theme-error, var(--red, #dc322f));
 
-  --oscd-base03: var(--oscd-theme-base03, var(--base03, #002b36));
-  --oscd-base02: var(--oscd-theme-base02, var(--base02, #073642));
-  --oscd-base01: var(--oscd-theme-base01, var(--base01, #586e75));
-  --oscd-base00: var(--oscd-theme-base00, var(--base00, #657b83));
-  --oscd-base0: var(--oscd-theme-base0, var(--base0, #839496));
-  --oscd-base1: var(--oscd-theme-base1, var(--base1, #93a1a1));
-  --oscd-base2: var(--oscd-theme-base2, var(--base2, #eee8d5));
-  --oscd-base3: var(--oscd-theme-base3, var(--base3, #fdf6e3));
-
+  /* ------- START NEW ------- */
+  /* Some Variables which could be added in the future open-scd source: */
   --oscd-shape: var(--oscd-theme-shape, 8px);
-
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-
-  /* Accent helpers (host Solarized sets --green/--blue/etc. on *; fallbacks match themes.ts) */
-  --oscd-accent-green: var(--green, #859900);
-  --oscd-accent-blue: var(--blue, #268bd2);
-  --oscd-accent-yellow: var(--yellow, #b58900);
+  /* NEW - Accent helpers (host Solarized sets --green/--blue/etc. on *; fallbacks match themes.ts) */
+  
+  --oscd-accent-yellow: var(--yellow, #FFCC17);
   --oscd-accent-orange: var(--orange, #cb4b16);
+  --oscd-accent-red: var(--red, #2aa198);
   --oscd-accent-magenta: var(--magenta, #d33682);
+  --oscd-accent-violet: var(--violet, #6c71c4);
+  --oscd-accent-blue: var(--blue, #268bd2);
   --oscd-accent-cyan: var(--cyan, #2aa198);
+  --oscd-accent-green: var(--green, #859900);
+  --oscd-accent-white: var(--white, #ffffff);
+  --oscd-accent-black: var(--black, #000000);
+  --oscd-success: var(--success, var(--oscd-accent-green));
+  --oscd-warning: var(--warning, var(--oscd-accent-yellow));
+  --oscd-danger: var(--danger, var(--oscd-accent-red));
 
-  /* ── MDC theme (aligned with OpenSCD packages/openscd/src/themes.ts) ── */
-  --mdc-theme-primary: var(--oscd-primary);
-  --mdc-theme-secondary: var(--oscd-secondary);
-  --mdc-theme-background: var(--oscd-base3);
-  --mdc-theme-surface: var(--oscd-base3);
-  --mdc-theme-on-primary: var(--oscd-base2);
-  --mdc-theme-on-secondary: var(--oscd-base2);
-  --mdc-theme-on-background: var(--oscd-base00);
-  --mdc-theme-on-surface: var(--oscd-base00);
-  --mdc-theme-text-primary-on-background: var(--oscd-base01);
-  --mdc-theme-text-secondary-on-background: var(--oscd-base00);
-  --mdc-theme-text-icon-on-background: var(--oscd-base00);
-  --mdc-theme-error: var(--oscd-error);
+  /* ------- END NEW ------- */
 
-  --mdc-button-disabled-ink-color: var(--oscd-base1);
+  /* ------- START FIX OLD ------- */
+  /* TODO: fix oscd-primary and oscd-secondary in open-scd source: */
+  --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--cyan)));
+  --oscd-primary-base: var(--oscd-theme-primary-base, var(--primary-base, var(--cyan)));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--secondary, var(--violet)));
+  /* ------- END FIX OLD ------- */
 
-  --mdc-drawer-heading-ink-color: var(--oscd-base00);
 
-  --mdc-text-field-fill-color: var(--oscd-base2);
-  --mdc-text-field-disabled-fill-color: var(--oscd-base3);
-  --mdc-text-field-ink-color: var(--oscd-base00);
-  --mdc-text-field-label-ink-color: var(--oscd-base00);
+  /* ------- START UNCHANGED PRESETS ------- */
+  /** but must be laoded again because of the overwrite of prime-colors. */
+  --oscd-error: var(--oscd-theme-error, var(--red));
+  
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+  /* ------- START UNCHANGED PRESETS ------- */
 
-  --mdc-select-fill-color: var(--oscd-base2);
-  --mdc-select-disabled-fill-color: var(--oscd-base3);
-  --mdc-select-ink-color: var(--oscd-base00);
 
-  --mdc-dialog-heading-ink-color: var(--oscd-base00);
-
-  /* Project loads Material Icons Outlined (see material-icons.css) */
-  --mdc-icon-font: 'Material Icons Outlined';
-
-  /* ── Material Design 3 system colours ── */
-  --md-sys-color-primary: var(--oscd-primary);
-  --md-sys-color-on-primary: var(--oscd-base3);
-  --md-sys-color-secondary: var(--oscd-secondary);
-  --md-sys-color-on-secondary: var(--oscd-base3);
-  --md-sys-color-secondary-container: var(--oscd-base2);
-  --md-sys-color-surface: var(--oscd-base3);
-  --md-sys-color-on-surface: var(--oscd-base00);
-  --md-sys-color-surface-variant: var(--oscd-base3);
-  --md-sys-color-on-surface-variant: var(--oscd-base00);
-  --md-sys-color-surface-bright: var(--oscd-base2);
-  --md-sys-color-surface-container: var(--oscd-base3);
-  --md-sys-color-surface-container-high: var(--oscd-base3);
-  --md-sys-color-surface-container-highest: var(--oscd-base3);
-  --md-sys-color-outline-variant: var(--oscd-primary);
-  --md-sys-color-scrim: #000000;
-  --md-sys-color-error: var(--oscd-error);
-  --md-sys-color-on-error: var(--oscd-base3);
-
-  --md-icon-button-disabled-icon-color: var(--oscd-base3);
-
-  --md-filled-text-field-container-color: var(--oscd-base2);
-  --md-filled-text-field-disabled-container-color: var(--oscd-base3);
-  --md-filled-text-field-disabled-input-text-color: var(--oscd-base00);
-  --md-filled-text-field-disabled-label-text-color: var(--oscd-base00);
-
-  /* ── Shape scale from --oscd-shape (docs) ── */
-  --md-sys-shape-corner-none: 0;
-  --md-sys-shape-corner-extra-small: calc(var(--oscd-shape) * 0.5);
-  --md-sys-shape-corner-small: var(--oscd-shape);
-  --md-sys-shape-corner-medium: calc(var(--oscd-shape) * 1.5);
-  --md-sys-shape-corner-large: calc(var(--oscd-shape) * 2);
-
-  /* ── Semantic --bearingpoint-* aliases (component CSS keeps these names) ── */
+  /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
   --bearingpoint-color-primary: var(--oscd-primary);
-  /* Header / emphasis bar: brand primary (base02 inverts on Solarized dark) */
-  --bearingpoint-color-primary-dark: var(--oscd-primary);
+  /* Primary-dark is used for boarders */
+  --bearingpoint-color-primary-dark: color-mix(in oklab, var(--primary), var(--oscd-accent-black) 42%);
 
   --bearingpoint-color-positive: var(--oscd-accent-green);
   --bearingpoint-color-negative: var(--oscd-error);
-  --bearingpoint-color-warning: var(--oscd-accent-yellow);
+  --bearingpoint-color-warning: var(--oscd-accent-warning);
 
   --bearingpoint-color-focus: var(--oscd-secondary);
 
   --bearingpoint-color-bg-page: var(--oscd-base2);
-  --bearingpoint-color-surface: var(--oscd-base3);
+  --bearingpoint-color-surface: var(--oscd-accent-white);
 
   /* Body text uses palette foregrounds (primary brand can be loud on dark) */
   --bearingpoint-color-text-primary: var(--oscd-base00);
@@ -148,17 +98,13 @@
 
   --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
 
-  --bearingpoint-color-warning-bg: color-mix(
-    in oklab,
-    var(--oscd-accent-yellow) 22%,
-    var(--oscd-base3)
-  );
+  --bearingpoint-color-warning-bg: var(--oscd-warning);
   --bearingpoint-color-warning-text: var(--oscd-base02);
 
-  --bearingpoint-color-action-primary-bg: var(--oscd-primary);
+  --bearingpoint-color-action-primary-bg: var(--oscd-primary-base);
   --bearingpoint-color-action-primary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-primary) 82%,
+    var(--oscd-primary-base) 82%,
     var(--oscd-base03)
   );
 
@@ -187,4 +133,184 @@
   --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
   --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
   --bearingpoint-font-rubik: var(--oscd-text-font), system-ui, sans-serif;
+  
+  /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
+  
+  
+}
+
+@container style(--primary: #004552) and style(--base03: #002b36) {
+  /** simulate better branded Transnet-BW host. Simmulate missing adaptations */
+  .plugins-hub {
+    --transnetbw-mode: "light";  /** enables more robust @container style queries */
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #EDF1F2;
+    --base3: #DAE3E6;
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+    
+    /* NEW: */
+    --primary-base: #004552; /* for dark-modus it is inverted, where primary keeps to original color */
+    --white: #FFFFFF;
+    --black: #000000;
+    --success: #2e7d32;
+    --warning: #f57c00;
+    --danger: #c62828;
+  }
+  
+}
+
+
+@container style(--primary: #004552) and style(--base03: #fdf6e3) {
+  /** simulate better branded Transnet-BW host. Simmulate missing adaptations */
+  .plugins-hub {
+    --transnetbw-mode: "dark";  /** enables more robust @container style queries */
+    
+    --base03: #fdf6e3;
+    --base02: #eee8d5;
+    --base01: #93a1a1;
+    --base00: #839496;
+    --base0: #657b83;
+    --base1: #586e75;
+    --base2: #073642;
+    --base3: #002b36;
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+    
+    /* NEW: */
+    --primary-base: #DCF4F8; /* for dark-modus it is inverted, where primary keeps to original color */
+    --white: #000000; /* for dark-modus white => black */
+    --black: #FFFFFF; /* for dark-modus black => white */
+    --success: #14532d;
+    --warning: #78350f;
+    --danger:  #7f1d1d;
+  }
+  .plugins-hub .hub-toolbar {
+    color: #fff;
+  }
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
+    color: rgba(255, 255, 255, 0.54);
+  }
+}
+
+@container style(--primary: #330000) and style(--base03: #002b36) {
+  /** simulate better branded bearingpoint host. Simmulate missing adaptations */
+  .plugins-hub {
+    --bearingpoint-mode: "light";  /** enables more robust @container style queries */
+
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #FAF8F7;
+    --base3: #fdf6e3;
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+    
+    /* NEW: */
+    --primary-base: #330000; /* for dark-modus it is inverted, where primary keeps to original color */
+    --white: #FFFFFF;
+    --black: #000000;
+    --success: #2e7d32;
+    --warning: #FFCC17;
+    --danger: #c62828;
+  }
+}
+
+@container style(--primary: #330000) and style(--base03: #fdf6e3) {
+  /** simulate better branded bearingpoint host. Simmulate missing adaptations */
+  .plugins-hub {
+    --bearingpoint-mode: "dark";  /** enables more robust @container style queries */
+
+    --base03: #fdf6e3;
+    --base02: #eee8d5;
+    --base01: #93a1a1;
+    --base00: #839496;
+    --base0: #657b83;
+    --base1: #586e75;
+    --base2: #073642;
+    --base3: #002b36;
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+    
+    /* NEW: */
+    --primary-base: #DD0000; /* for dark-modus it is inverted, where primary keeps to original color */
+    --white: #000000; /* for dark-modus white => black */
+    --black: #FFFFFF; /* for dark-modus black => white */
+    --success: #14532d;
+    --warning: #78350f;
+    --danger:  #7f1d1d;
+  }
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: rgba(255, 255, 255, 0.87);
+  }
+}
+
+@container style(--base03: #fdf6e3) {
+  /* Default for dark-mode. */
+
+  * {
+    /** Default values should be moved to open-scd */
+    --openscd-mode: "dark";  /** enables more robust @container style queries */
+    --white: #000000;
+    --black: #FFFFFF;
+
+    --success: #14532d;
+    --warning: #78350f;
+    --danger:  #7f1d1d;
+  }
+  
+  /** dark mode set color for smui componenten. */
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
+    color: rgba(255, 255, 255, 0.54);
+  }
+  .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
+    fill: rgba(255, 255, 255, 0.54);
+  }
+  .mdc-menu .mdc-deprecated-list {
+    color: rgba(255, 255, 255, 0.87);
+  }
 }

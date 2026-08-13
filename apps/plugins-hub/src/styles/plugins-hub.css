@@ -7,6 +7,14 @@
   padding: 2px 8px;
   border-radius: 12px;
   border: 1px solid currentColor;
+  
+  --badge-installed: #02a75d;
+  --badge-builtin: #5b21b6;
+  --badge-available: #1d4ed8;
+  --badge-active: #0d3d4a;
+  --badge-inactive: #004552;
+  --badge-incompatible: #b45309;
+  --badge-kind: #6b9197;
 }
 
 .badge-icon {
@@ -17,45 +25,45 @@
 }
 
 .badge-installed {
-  color: var(--oscd-accent-green);
-  border-color: color-mix(in oklab, var(--oscd-accent-green), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-accent-green) 14%, var(--oscd-base3));
+  color: var(--badge-installed);
+  border-color: color-mix(in oklab, var(--badge-installed), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-installed) 14%, var(--bearingpoint-color-surface));
 }
 
 .badge-builtin {
-  color: var(--oscd-secondary);
-  border-color: color-mix(in oklab, var(--oscd-secondary), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-secondary) 14%, var(--oscd-base3));
+  color: var(--badge-builtin);
+  border-color: color-mix(in oklab, var(--badge-builtin), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-builtin) 14%, var(--bearingpoint-color-surface));
 }
 
 .badge-available {
-  color: var(--oscd-accent-blue);
-  border-color: color-mix(in oklab, var(--oscd-accent-blue), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-accent-blue) 14%, var(--oscd-base3));
+  color: var(--badge-available);
+  border-color: color-mix(in oklab, var(--badge-available), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-available) 14%, var(--bearingpoint-color-surface));
 }
 
 .badge-active {
-  color: var(--oscd-primary);
-  border-color: color-mix(in oklab, var(--oscd-primary), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-primary) 14%, var(--oscd-base3));
+  color: var(--badge-active);
+  border-color: color-mix(in oklab, var(--badge-active), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-active) 14%, var(--bearingpoint-color-surface));
 }
 
 .badge-inactive {
-  color: var(--oscd-base01);
-  border-color: color-mix(in oklab, var(--oscd-base01), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-base01) 10%, var(--oscd-base3));
+  color: var(--badge-inactive);
+  border-color: color-mix(in oklab, var(--badge-inactive), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-inactive) 10%, var(--bearingpoint-color-surface));
 }
 
 .badge-incompatible {
-  color: var(--oscd-accent-orange);
-  border-color: color-mix(in oklab, var(--oscd-accent-orange), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-accent-orange) 14%, var(--oscd-base3));
+  color: var(--badge-incompatible);
+  border-color: color-mix(in oklab, var(--badge-incompatible), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-incompatible) 14%, var(--bearingpoint-color-surface));
 }
 
 .badge-kind {
-  color: var(--oscd-base01);
-  border-color: color-mix(in oklab, var(--oscd-base01), var(--oscd-base3) 90%);
-  background: color-mix(in oklab, var(--oscd-base01) 10%, var(--oscd-base3));
+  color: var(--badge-kind);
+  border-color: color-mix(in oklab, var(--badge-kind), var(--bearingpoint-color-surface) 90%);
+  background: color-mix(in oklab, var(--badge-kind) 10%, var(--bearingpoint-color-surface));
   padding: 2px 6px 2px 4px;
   border-radius: 2px;
 }

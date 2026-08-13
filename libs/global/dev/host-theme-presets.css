@@ -9,26 +9,28 @@
  * Sources: open-scd themes.ts, transnetbw theme colors, bearingpoint demo themes.js
  */
 
-/* ── Default palette (OpenSCD Solarized light) + host-style derived tokens ── */
-html {
-  --base03: #002b36;
-  --base02: #073642;
-  --base01: #586e75;
-  --base00: #657b83;
-  --base0: #839496;
-  --base1: #93a1a1;
-  --base2: #eee8d5;
-  --base3: #fdf6e3;
-  --yellow: #b58900;
-  --orange: #cb4b16;
-  --red: #dc322f;
-  --magenta: #d33682;
-  --violet: #6c71c4;
-  --blue: #268bd2;
-  --cyan: #2aa198;
-  --green: #859900;
+/**
+ * simulate the host container that later wraps the plugin
+ * (full-viewport html/body). Not loaded in the production plugin bundle.
+ * Imported from apps/plugins-hub/src/main.ts only.
+ */
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  /* Derived — same pattern as OpenSCD packages/openscd/src/themes.ts */
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/**
+  START Default palette (OpenSCD Solarized light) + host-style derived tokens.
+  Should be the same as: https://github.com/com-pas/open-scd/blob/main/packages/openscd/src/themes.ts
+*/
+html {
   --primary: var(--cyan);
   --secondary: var(--violet);
   --mdc-theme-primary: var(--primary);
@@ -43,28 +45,28 @@ html {
   --mdc-theme-text-secondary-on-background: var(--base00);
   --mdc-theme-text-icon-on-background: var(--base00);
   --mdc-theme-error: var(--red);
-
+  
   --mdc-button-disabled-ink-color: var(--base1);
-
+  
   --mdc-drawer-heading-ink-color: var(--base00);
-
+  
   --mdc-text-field-fill-color: var(--base2);
   --mdc-text-field-disabled-fill-color: var(--base3);
   --mdc-text-field-ink-color: var(--base00);
   --mdc-text-field-label-ink-color: var(--base00);
-
+  
   --mdc-select-fill-color: var(--base2);
   --mdc-select-disabled-fill-color: var(--base3);
   --mdc-select-ink-color: var(--base00);
-
+  
   --mdc-dialog-heading-ink-color: var(--base00);
-
+  
   --mdc-icon-font: 'Material Icons Outlined';
 
   --oscd-primary: var(--oscd-theme-primary, var(--cyan));
   --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
   --oscd-error: var(--oscd-theme-error, var(--red));
-
+  
   --oscd-base03: var(--oscd-theme-base03, var(--base03));
   --oscd-base02: var(--oscd-theme-base02, var(--base02));
   --oscd-base01: var(--oscd-theme-base01, var(--base01));
@@ -73,11 +75,11 @@ html {
   --oscd-base1: var(--oscd-theme-base1, var(--base1));
   --oscd-base2: var(--oscd-theme-base2, var(--base2));
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
-
+  
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-
-  /* Material Design 3 */
+  
+  /* Fallbacks for Material Design variables */
   --md-sys-color-primary: var(--oscd-primary);
   --md-sys-color-on-primary: var(--oscd-base3);
   --md-sys-color-secondary: var(--oscd-secondary);
@@ -96,34 +98,40 @@ html {
   --md-sys-color-error: var(--oscd-error);
   --md-sys-color-on-error: var(--oscd-base3);
   --md-icon-button-disabled-icon-color: var(--oscd-base3);
-
+  /* --md-menu-item-selected-label-text-color: var(--oscd-base01); */
+  --md-icon-button-disabled-icon-color: var(--oscd-base3);
+  
+  /* textfield */
   --md-filled-text-field-container-color: var(--oscd-base2);
   --md-filled-text-field-disabled-container-color: var(--oscd-base3);
   --md-filled-text-field-disabled-input-text-color: var(--oscd-base00);
   --md-filled-text-field-disabled-label-text-color: var(--oscd-base00);
 }
 
+.mdc-drawer span.mdc-drawer__title {
+  color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
+abbr {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+mwc-textfield[iconTrailing='search'] {
+  --mdc-shape-small: 28px;
+}
+/** END Default palette (OpenSCD Solarized light) + host-style derived tokens. */
+
 /* Host shell page background (OpenSCD bodyStyles track the active base2) */
 html body {
+   /** open-scd set this hardcoded (because of dependency-problems), but all known brands uses the same value as --oscd-base2 */
   background: var(--oscd-base2);
 }
 
-/* Shared dark base scale (Solarized inversion) — accents stay from html unless overridden */
-html.openscd-dark,
-html.transnetbw-dark,
-html.bearingpoint-dark {
-  --base03: #fdf6e3;
-  --base02: #eee8d5;
-  --base01: #93a1a1;
-  --base00: #839496;
-  --base0: #657b83;
-  --base1: #586e75;
-  --base2: #073642;
-  --base3: #002b36;
-}
 
-/* OpenSCD light = default palette; class still needed so dark → light resets bases */
-html.openscd-light {
+/* OpenSCD light bases (shared block) */
+html.light, /* default */
+html.openscd-light.light {
   --base03: #002b36;
   --base02: #073642;
   --base01: #586e75;
@@ -132,34 +140,69 @@ html.openscd-light {
   --base1: #93a1a1;
   --base2: #eee8d5;
   --base3: #fdf6e3;
-  --cyan: #2aa198;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
   --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
 }
 
 /* OpenSCD dark: only inverted bases (shared block); accents = default cyan/violet */
+html.dark, /* default */
+html.openscd-dark.dark {
+  --base03: #fdf6e3;
+  --base02: #eee8d5;
+  --base01: #93a1a1;
+  --base00: #839496;
+  --base0: #657b83;
+  --base1: #586e75;
+  --base2: #073642;
+  --base3: #002b36;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+}
 
 /* TransnetBW light: CoMPAS-like surfaces + brand primary via --cyan */
-html.transnetbw-light {
-  --base2: #edf1f2;
-  --base3: #dae3e6;
-  --cyan: #004552;
+html.transnetbw-light.light {
+  --primary: #004552;
+  --secondary: #004552;
+  --mdc-theme-primary: #004552;
+  --mdc-theme-secondary: #004552;
+  
+  --base2: #ffffff; /* #eee8d5; */
+  --base3: #e3e3e3; /* #fdf6e3; */
 }
 
 /* TransnetBW dark: inverted bases + brand accent */
-html.transnetbw-dark {
-  --cyan: #0ca6c4;
+html.transnetbw-dark.dark {
+  --primary: #004552;
+  --secondary: #004552;
+  
+  --mdc-theme-primary: #004552;
+  --mdc-theme-secondary: #004552;
 }
 
 /* BearingPoint light: demo surfaces + brand primary/secondary */
-html.bearingpoint-light {
-  --base2: #ffffff;
-  --base3: #e3e3e3;
-  --cyan: #330000;
-  --violet: #98847a;
+html.bearingpoint-light.light {
+  --primary: #330000;  /* var(--cyan); */
+  --secondary: #98847A; /* var(--violet); */
+  
+  --base2: #ffffff; /* #eee8d5; */
+  --base3: #e3e3e3; /* #fdf6e3; */
 }
 
 /* BearingPoint dark: inverted bases + brand accents */
-html.bearingpoint-dark {
-  --cyan: #330000;
-  --violet: #98847a;
+html.bearingpoint-dark.dark {
+  --primary: #330000;  /* var(--cyan); */
+  --secondary: #98847A; /* var(--violet); */
+  --mdc-theme-secondary: #98847A; /* var(--secondary); */
 }
