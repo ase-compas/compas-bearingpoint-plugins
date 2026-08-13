@@ -20,7 +20,7 @@ The Plugin is organised as following:
 
 <img src="img/organisation.png" alt="Plugins-Hub help" width="500">
 
-The plugin can load plugins from a JSON file (for example, plugins.json) provided by one or more plugin providers. The distributor can centrally define the list of supported plugin providers for their distribution, allowing the plugin to discover and load all plugins they publish.
+The plugin can loads plugins from a JSON file (for example, plugins.json) provided by one or more plugin providers. The distributor can centrally define the list of supported plugin providers for their distribution, allowing the plugin to discover and load all plugins they publish.
 
 The json file structure a provider needs to provide looks as following:
 ```
@@ -32,10 +32,7 @@ The json file structure a provider needs to provide looks as following:
                 "description": "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
                 "src": "https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/index.js",
                 "documentationUrl": "https://ase-compas.github.io/compas-bearingpoint-plugins/plugins/plugins-hub",
-                "icon": "hub",
-                "supportedCoreVersion": {
-                    "from": "0.44.0"
-                }
+                "icon": "hub"
             }
         ]
     }
