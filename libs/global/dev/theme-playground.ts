@@ -1,6 +1,6 @@
 /**
- * Dev-only host theme playground: toggle a single CSS class on <html>
- * (e.g. bearingpoint-light). Variable values live in host-theme-presets.css.
+ * Dev-only host theme playground: toggle brand + mode classes on <html>
+ * (e.g. bearingpoint + light). Variable values live in host-theme-presets.css.
  *
  * UX: floating toolbar + optional ?brand=&mode= query params.
  * Import only from app main.ts (never from the production plugin entry).
@@ -10,7 +10,7 @@ import {
   HOST_THEME_CLASSES,
   HOST_THEME_PRESETS,
   HOST_MODE_PRESETS,
-  hostThemeClass,
+  usesColorScheme,
   type ThemeBrand,
   type ThemeMode,
 } from './host-themes';
@@ -117,19 +117,25 @@ function saveThemeState(state: ThemePlaygroundState): void {
 }
 
 /**
- * Apply host theme by setting one class on <html> (e.g. bearingpoint-light).
- * CSS in host-theme-presets.css defines all --oscd-theme-* / bare tokens.
+ * Apply host theme by setting brand + mode as separate classes on <html>
+ * (e.g. bearingpoint and light). `-new` brands also set color-scheme so
+ * CSS light-dark() resolves; other brands clear it.
  */
 export function applyHostTheme(state: ThemePlaygroundState): void {
   const root = document.documentElement;
-  const nextClass = hostThemeClass(state.brand, state.mode);
 
   root.classList.remove(...HOST_THEME_CLASSES);
   root.classList.remove(...HOST_MODE_PRESETS);
-  root.classList.add(nextClass);
+  root.classList.add(state.brand);
   root.classList.add(state.mode);
   root.dataset.themeBrand = state.brand;
   root.dataset.themeMode = state.mode;
+
+  if (usesColorScheme(state.brand)) {
+    root.style.colorScheme = state.mode;
+  } else {
+    root.style.removeProperty('color-scheme');
+  }
 
   // Clear any leftover inline body background from older playground versions
   document.body.style.background = '';
@@ -326,7 +332,7 @@ export function initThemePlayground(): ThemePlaygroundState {
   applyHostTheme(state);
   mountThemeToolbar(state);
   console.log(
-    '%c[Dev] Host theme class on <html> — toolbar or ?brand=&mode=',
+    '%c[Dev] Host theme classes on <html> — toolbar or ?brand=&mode=',
     'color:#0ea5e9; font-weight:bold',
   );
   return state;

@@ -423,8 +423,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--bearingpoint-color-primary-dark);
-    color: var(--bearingpoint-color-surface);
+    background: var(--bearingpoint-color-primary);
+    color: var(--bearingpoint-color-on-primary);
     padding: 16px 24px;
   }
 

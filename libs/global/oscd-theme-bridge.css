@@ -24,63 +24,20 @@
 :root,
 :host {
 
-  /* ------- START NEW ------- */
-  /* Some Variables which could be added in the future open-scd source: */
-  --oscd-shape: var(--oscd-theme-shape, 8px);
-  /* NEW - Accent helpers (host Solarized sets --green/--blue/etc. on *; fallbacks match themes.ts) */
-  
-  --oscd-accent-yellow: var(--yellow, #FFCC17);
-  --oscd-accent-orange: var(--orange, #cb4b16);
-  --oscd-accent-red: var(--red, #2aa198);
-  --oscd-accent-magenta: var(--magenta, #d33682);
-  --oscd-accent-violet: var(--violet, #6c71c4);
-  --oscd-accent-blue: var(--blue, #268bd2);
-  --oscd-accent-cyan: var(--cyan, #2aa198);
-  --oscd-accent-green: var(--green, #859900);
-  --oscd-accent-white: var(--white, #ffffff);
-  --oscd-accent-black: var(--black, #000000);
-  --oscd-success: var(--success, var(--oscd-accent-green));
-  --oscd-warning: var(--warning, var(--oscd-accent-yellow));
-  --oscd-danger: var(--danger, var(--oscd-accent-red));
-
-  /* ------- END NEW ------- */
-
-  /* ------- START FIX OLD ------- */
-  /* TODO: fix oscd-primary and oscd-secondary in open-scd source: */
-  --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--cyan)));
-  --oscd-primary-base: var(--oscd-theme-primary-base, var(--primary-base, var(--cyan)));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--secondary, var(--violet)));
-  /* ------- END FIX OLD ------- */
-
-
-  /* ------- START UNCHANGED PRESETS ------- */
-  /** but must be laoded again because of the overwrite of prime-colors. */
-  --oscd-error: var(--oscd-theme-error, var(--red));
-  
-  --oscd-base03: var(--oscd-theme-base03, var(--base03));
-  --oscd-base02: var(--oscd-theme-base02, var(--base02));
-  --oscd-base01: var(--oscd-theme-base01, var(--base01));
-  --oscd-base00: var(--oscd-theme-base00, var(--base00));
-  --oscd-base0: var(--oscd-theme-base0, var(--base0));
-  --oscd-base1: var(--oscd-theme-base1, var(--base1));
-  --oscd-base2: var(--oscd-theme-base2, var(--base2));
-  --oscd-base3: var(--oscd-theme-base3, var(--base3));
-  /* ------- START UNCHANGED PRESETS ------- */
-
-
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
   --bearingpoint-color-primary: var(--oscd-primary);
+  --bearingpoint-color-on-primary: var(--oscd-on-primary);
   /* Primary-dark is used for boarders */
-  --bearingpoint-color-primary-dark: color-mix(in oklab, var(--primary), var(--oscd-accent-black) 42%);
+  --bearingpoint-color-primary-dark: var(--oscd-primary);
 
-  --bearingpoint-color-positive: var(--oscd-accent-green);
+  --bearingpoint-color-positive: var(--oscd-green);
   --bearingpoint-color-negative: var(--oscd-error);
-  --bearingpoint-color-warning: var(--oscd-accent-warning);
+  --bearingpoint-color-warning: var(--oscd-warning);
 
   --bearingpoint-color-focus: var(--oscd-secondary);
 
   --bearingpoint-color-bg-page: var(--oscd-base2);
-  --bearingpoint-color-surface: var(--oscd-accent-white);
+  --bearingpoint-color-surface: var(--oscd-white);
 
   /* Body text uses palette foregrounds (primary brand can be loud on dark) */
   --bearingpoint-color-text-primary: var(--oscd-base00);
@@ -88,7 +45,7 @@
   --bearingpoint-color-text-secondary: var(--oscd-base01);
   --bearingpoint-color-text-disabled: var(--oscd-base1);
 
-  --bearingpoint-color-link: var(--oscd-accent-blue);
+  --bearingpoint-color-link: var(--oscd-blue);
   --bearingpoint-color-link-visited: var(--oscd-secondary);
 
   --bearingpoint-color-border: var(--oscd-base1);
@@ -99,25 +56,29 @@
   --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
 
   --bearingpoint-color-warning-bg: var(--oscd-warning);
-  --bearingpoint-color-warning-text: var(--oscd-base02);
+  --bearingpoint-color-warning-text: var(--oscd-primary);
 
-  --bearingpoint-color-action-primary-bg: var(--oscd-primary-base);
+  --bearingpoint-color-action-primary-bg: var(--oscd-primary);
   --bearingpoint-color-action-primary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-primary-base) 82%,
+    var(--oscd-primary) 82%,
     var(--oscd-base03)
   );
 
-  --bearingpoint-color-action-secondary-bg: var(--oscd-accent-cyan);
+  --bearingpoint-color-action-secondary-bg: var(--oscd-cyan);
   --bearingpoint-color-action-secondary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-accent-cyan) 82%,
+    var(--oscd-cyan) 82%,
     var(--oscd-base03)
   );
 
-  --bearingpoint-color-action-neutral-text: var(--oscd-accent-cyan);
-  --bearingpoint-color-action-neutral-bg: var(--oscd-base3);
-  --bearingpoint-color-action-neutral-bg-hover: var(--oscd-base2);
+  --bearingpoint-color-action-neutral-text: var(--oscd-cyan);
+  --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
+  --bearingpoint-color-action-neutral-bg-hover: color-mix(
+    in oklab,
+    var(--bearingpoint-color-surface) 82%,
+    var(--oscd-base03)
+  );
 
   --bearingpoint-color-action-danger-bg: var(--oscd-error);
   --bearingpoint-color-action-danger-bg-hover: color-mix(
@@ -138,11 +99,181 @@
   
   
 }
+@container style(--oscd-primary: var(--cyan)) and style(--primary: #330000) and style(--oscd-base03: #002b36) {
+  /* old bearingpoint style light */
+  * {
+   --oscd-primary: var(--primary);
+   --oscd-warning: #ffcc17;
+   --oscd-white: #ffffff;
+   --oscd-black: #000000;
+   
+    /* Gray scale */
+    --gray-10: #faf8f7;
+    --gray-20: #e6deda;
+    --gray-30: #ccc1bc;
+    --gray-40: #b2a59f;
+    --gray-50: #98847a;
+    --gray-60: #806659;
+    --gray-70: #735c50;
+    --gray-80: #665247;
+    --gray-90: #5a473e;
+    
+    --oscd-base03: var(--gray-90);
+    --oscd-base02: var(--gray-80);
+    --oscd-base01: var(--gray-70);
+    --oscd-base00: var(--gray-60);
+    --oscd-base0: var(--gray-40);
+    --oscd-base1: var(--gray-30);
+    --oscd-base2: var(--gray-20);
+    --oscd-base3: var(--gray-10);
+    
+/*     --oscd-yellow: #b58900; */
+/*     --oscd-orange: #cb4b16; */
+/*     --oscd-red: #dc322f; */
+/*     --oscd-magenta: #d33682; */
+/*     --oscd-violet: #6c71c4; */
+/*     --oscd-blue: #268bd2; */
+/*     --oscd-cyan: #2aa198; */
+/*     --oscd-green: #859900; */
+  }
+}
 
-@container style(--primary: #004552) and style(--base03: #002b36) {
-  /** simulate better branded Transnet-BW host. Simmulate missing adaptations */
+@container style(--oscd-on-primary: initial) and style(--primary: #330000) and style(--oscd-base03: #fdf6e3) {
+  /* old bearingpoint style dark */
+  * {
+    --oscd-warning: #ffcc17;
+    --oscd-white: #000000;
+    --oscd-black: #ffffff;
+   
+    /* Gray scale */
+    --gray-10: #faf8f7;
+    --gray-20: #e6deda;
+    --gray-30: #ccc1bc;
+    --gray-40: #b2a59f;
+    --gray-50: #98847a;
+    --gray-60: #806659;
+    --gray-70: #735c50;
+    --gray-80: #665247;
+    --gray-90: #5a473e;
+    
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--gray-20);
+    --oscd-secondary: var(--gray-50);
+    --oscd-on-secondary: var(--black);
+    
+    --oscd-base03: var(--gray-10);
+    --oscd-base02: var(--gray-20);
+    --oscd-base01: var(--gray-30);
+    --oscd-base00: var(--gray-40);
+    --oscd-base0: var(--gray-60);
+    --oscd-base1: var(--gray-70);
+    --oscd-base2: var(--gray-80);
+    --oscd-base3: var(--gray-90);
+
+  }
+}
+
+@container style(--oscd-yellow: initial) {
+  * {
+    --oscd-yellow: var(--yellow);
+  }
+}
+@container style(--oscd-orange: initial) {
+  * {
+    --oscd-orange: var(--orange);
+  }
+}
+@container style(--oscd-red: initial) {
+  * {
+    --oscd-red: var(--red);
+  }
+}
+@container style(--oscd-magenta: initial) {
+  * {
+    --oscd-magenta: var(--magenta);
+  }
+}
+@container style(--oscd-violet: initial) {
+  * {
+    --oscd-violet: var(--violet);
+  }
+}
+@container style(--oscd-blue: initial) {
+  * {
+    --oscd-blue: var(--blue);
+  }
+}
+@container style(--oscd-cyan: initial) {
+  * {
+    --oscd-cyan: var(--cyan);
+  }
+}
+@container style(--oscd-green: initial) {
+  * {
+    --oscd-green: var(--green);
+  }
+}
+
+@container style(--oscd-success: initial) {
+  * {
+    --oscd-success: green;
+  }
+}
+@container style(--oscd-warning: initial) {
+  * {
+    --oscd-warning: #ffcc17;
+  }
+}
+@container style(--oscd-error: initial) {
+  * {
+    --oscd-error: red;
+  }
+}
+@container style(--oscd-white: initial) {
+  * {
+    --oscd-white: #ffffff;
+  }
+}
+@container style(--oscd-black: initial) {
+  * {
+    --oscd-black: #000000;
+  }
+}
+@container style(--primary) and style(--oscd-primary: var(--cyan)) {
+  /* Old Open-SCD style do not set the oscd-primary correctly */
+  * {
+    --oscd-primary: var(--oscd-theme-primary, var(--primary));
+  }
+}
+@container style(--oscd-on-primary: initial) {
+  * {
+    --oscd-on-primary: #ffffff;
+  }
+}
+
+@container style(--primary: #004552) and style(--oscd-base03: #002b36) {
+  /** simulate better branded Transnet-BW host light. Simmulate missing adaptations */
   .plugins-hub {
-    --transnetbw-mode: "light";  /** enables more robust @container style queries */
+    --oscd-transnetbw-mode: "light";  /** enables more robust @container style queries */
+    --oscd-base2: var(--base2);
+    --oscd-base1: var(--base1);
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--base2);
+  }
+}
+@container style(--primary: #004552) and style(--oscd-base03: #DAE3E6) {
+  /** simulate better branded Transnet-BW host light. Simmulate missing adaptations */
+  .plugins-hub {
+    --oscd-transnetbw-mode: "dark";  /** enables more robust @container style queries */
+    --oscd-base2: #073642;
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--base2);
+  }
+}
+@container style(--xxprimary: #004552) and style(--oscd-base03: #002b36) {
+  /** simulate better branded Transnet-BW host light. Simmulate missing adaptations */
+  .plugins-hub {
+    --oscd-on-primary: var(--base2);
     --base03: #002b36;
     --base02: #073642;
     --base01: #586e75;
@@ -161,156 +292,49 @@
     --green: #859900;
     
     /* NEW: */
-    --primary-base: #004552; /* for dark-modus it is inverted, where primary keeps to original color */
     --white: #FFFFFF;
     --black: #000000;
     --success: #2e7d32;
     --warning: #f57c00;
-    --danger: #c62828;
+    --error: #c62828;
   }
   
 }
 
 
-@container style(--primary: #004552) and style(--base03: #fdf6e3) {
-  /** simulate better branded Transnet-BW host. Simmulate missing adaptations */
-  .plugins-hub {
-    --transnetbw-mode: "dark";  /** enables more robust @container style queries */
-    
-    --base03: #fdf6e3;
-    --base02: #eee8d5;
-    --base01: #93a1a1;
-    --base00: #839496;
-    --base0: #657b83;
-    --base1: #586e75;
-    --base2: #073642;
-    --base3: #002b36;
-    --yellow: #b58900;
-    --orange: #cb4b16;
-    --red: #dc322f;
-    --magenta: #d33682;
-    --violet: #6c71c4;
-    --blue: #268bd2;
-    --cyan: #2aa198;
-    --green: #859900;
-    
-    /* NEW: */
-    --primary-base: #DCF4F8; /* for dark-modus it is inverted, where primary keeps to original color */
-    --white: #000000; /* for dark-modus white => black */
-    --black: #FFFFFF; /* for dark-modus black => white */
-    --success: #14532d;
-    --warning: #78350f;
-    --danger:  #7f1d1d;
-  }
-  .plugins-hub .hub-toolbar {
-    color: #fff;
-  }
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
-    color: rgba(255, 255, 255, 0.54);
-  }
-}
-
-@container style(--primary: #330000) and style(--base03: #002b36) {
-  /** simulate better branded bearingpoint host. Simmulate missing adaptations */
-  .plugins-hub {
-    --bearingpoint-mode: "light";  /** enables more robust @container style queries */
-
-    --base03: #002b36;
-    --base02: #073642;
-    --base01: #586e75;
-    --base00: #657b83;
-    --base0: #839496;
-    --base1: #93a1a1;
-    --base2: #FAF8F7;
-    --base3: #fdf6e3;
-    --yellow: #b58900;
-    --orange: #cb4b16;
-    --red: #dc322f;
-    --magenta: #d33682;
-    --violet: #6c71c4;
-    --blue: #268bd2;
-    --cyan: #2aa198;
-    --green: #859900;
-    
-    /* NEW: */
-    --primary-base: #330000; /* for dark-modus it is inverted, where primary keeps to original color */
-    --white: #FFFFFF;
-    --black: #000000;
-    --success: #2e7d32;
-    --warning: #FFCC17;
-    --danger: #c62828;
-  }
-}
-
-@container style(--primary: #330000) and style(--base03: #fdf6e3) {
-  /** simulate better branded bearingpoint host. Simmulate missing adaptations */
-  .plugins-hub {
-    --bearingpoint-mode: "dark";  /** enables more robust @container style queries */
-
-    --base03: #fdf6e3;
-    --base02: #eee8d5;
-    --base01: #93a1a1;
-    --base00: #839496;
-    --base0: #657b83;
-    --base1: #586e75;
-    --base2: #073642;
-    --base3: #002b36;
-    --yellow: #b58900;
-    --orange: #cb4b16;
-    --red: #dc322f;
-    --magenta: #d33682;
-    --violet: #6c71c4;
-    --blue: #268bd2;
-    --cyan: #2aa198;
-    --green: #859900;
-    
-    /* NEW: */
-    --primary-base: #DD0000; /* for dark-modus it is inverted, where primary keeps to original color */
-    --white: #000000; /* for dark-modus white => black */
-    --black: #FFFFFF; /* for dark-modus black => white */
-    --success: #14532d;
-    --warning: #78350f;
-    --danger:  #7f1d1d;
-  }
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-    color: rgba(255, 255, 255, 0.87);
-  }
-}
-
-@container style(--base03: #fdf6e3) {
-  /* Default for dark-mode. */
-
+@container style(--base03: #fdf6e3) and style(--on-primary: initial) {
+  /* default dark-mode in old branding styles. */
   * {
     /** Default values should be moved to open-scd */
     --openscd-mode: "dark";  /** enables more robust @container style queries */
-    --white: #000000;
-    --black: #FFFFFF;
+    --oscd-white: #000000;
+    --oscd-black: #FFFFFF;
+    --oscd-on-primary: var(--oscd-black);
 
-    --success: #14532d;
-    --warning: #78350f;
-    --danger:  #7f1d1d;
-  }
-  
-  /** dark mode set color for smui componenten. */
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: rgba(255, 255, 255, 0.6);
-  }
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
-    color: rgba(255, 255, 255, 0.54);
-  }
-  .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
-    color: rgba(255, 255, 255, 0.87);
-  }
-  .mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
-    fill: rgba(255, 255, 255, 0.54);
-  }
-  .mdc-menu .mdc-deprecated-list {
-    color: rgba(255, 255, 255, 0.87);
+    --oscd-success: #14532d;
+    --oscd-warning: #ffcc17;
+    --oscd-on-warning: #073642;
+    --oscd-error:  #7f1d1d;
   }
 }
+
+/** dark mode set color for smui componenten. */
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: color-mix(in srgb, var(--oscd-black) 60%, transparent);
+}
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color:  color-mix(in srgb, var(--oscd-black) 87%, transparent);
+}
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
+  color:  color-mix(in srgb, var(--oscd-black) 54%, transparent);
+}
+.mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
+  color:  color-mix(in srgb, var(--oscd-black) 87%, transparent);
+}
+.mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
+  fill:  color-mix(in srgb, var(--oscd-black) 54%, transparent);
+}
+.mdc-menu .mdc-deprecated-list {
+  color:  color-mix(in srgb, var(--oscd-black) 87%, transparent);
+}
+

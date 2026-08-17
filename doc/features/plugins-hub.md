@@ -51,8 +51,9 @@ playground toggles mode), surfaces/text/badges follow `--oscd-base*` /
 accents.
 
 **Local presets:** CSS classes in
-`libs/global/dev/host-theme-presets.css` (e.g. `html.bearingpoint-light`,
-`html.transnetbw-dark`). The playground only switches that class on `<html>`.
+`libs/global/dev/host-theme-presets.css` (e.g. `html.bearingpoint.light`,
+`html.transnetbw.dark`). The playground sets brand + mode as separate classes
+on `<html>`; `-new` brands also set `color-scheme` so `light-dark()` works.
 Toolbar + `?brand=&mode=` on the real Hub dev page; not shipped in the
 production plugin bundle. See `DEVELOPMENT.md`.
 

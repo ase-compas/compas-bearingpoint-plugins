@@ -38,11 +38,12 @@ page** without registering the plugin in OpenSCD/CoMPAS.
 |--------|------|
 | **`libs/global/dev/host-theme-presets.css`** | **Source of truth** — `html` holds derived MDC/`--oscd-*` via `var(...)`; brand+mode classes only override the Solarized palette (`--base*`, accents) |
 | **`libs/global/dev/host-themes.ts`** | Brand labels + class-name helpers for the toolbar |
-| **`libs/global/dev/theme-playground.ts`** | Only toggles the class on `<html>` (+ toolbar / query / localStorage) |
+| **`libs/global/dev/theme-playground.ts`** | Toggles brand + mode classes on `<html>` (+ toolbar / query / localStorage); `-new` brands also set `color-scheme` |
 
 JS does **not** set individual CSS variables. To add a brand: add
-`html.{brand}-light` / `html.{brand}-dark` blocks in the CSS and one entry in
-`HOST_THEME_PRESETS`.
+`html.{brand}.light` / `html.{brand}.dark` blocks in the CSS and one entry in
+`HOST_THEME_PRESETS`. `-new` brands additionally set `document.documentElement.style.colorScheme`
+so CSS `light-dark()` works.
 
 | Option | Used? |
 |--------|-------|
@@ -58,7 +59,7 @@ plugin entry). Fake OpenSCD host stays in `apps/plugins-hub/src/dev/fake-open-sc
 
 | Control | Options |
 |---------|---------|
-| Brand preset | `openscd` (Solarized), `transnetbw` (TransnetBW teal), `bearingpoint` (demo) |
+| Brand preset | `openscd` (Solarized), `transnetbw` (TransnetBW teal), `bearingpoint` (demo), plus `-new` variants (`openscd-new`, `transnetbw-new`, `bearingpoint-new`) that enable `light-dark()` via `color-scheme` |
 | Mode | `light` / `dark` |
 
 - Toolbar: top-left on http://localhost:4301 — small 16×16 palette icon toggles
@@ -69,11 +70,13 @@ plugin entry). Fake OpenSCD host stays in `apps/plugins-hub/src/dev/fake-open-sc
 http://localhost:4301/?brand=openscd&mode=light
 http://localhost:4301/?brand=transnetbw&mode=dark
 http://localhost:4301/?brand=bearingpoint&mode=light
+http://localhost:4301/?brand=openscd-new&mode=dark
 ```
 
 - Priority on load: **query** → `localStorage` (`plugins-hub-dev-theme`) → OpenSCD light.
-- Sets a single class on `<html>` (e.g. `transnetbw-dark`); CSS defines the host
+- Sets brand + mode as separate classes on `<html>` (e.g. `transnetbw` + `dark`); CSS defines the host
   variables; production bridge maps them into Hub / SMUI tokens.
+  `-new` brands also set `color-scheme` so `light-dark()` resolves.
 
 Production still inherits the **real** host theme when loaded as a plugin; use
 the full Compas stack below for end-to-end host integration (events, layout).

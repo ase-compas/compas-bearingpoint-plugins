@@ -18,10 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Dev host theme playground** (standalone `run:plugins-hub` only): toggles a
-  CSS class on `<html>` (e.g. `bearingpoint-light`); presets live in
-  `libs/global/dev/`. Brands: `openscd` | `transnetbw` | `bearingpoint`.
-  Floating toolbar and `?brand=&mode=` for light+dark without a full host.
+- **Dev host theme playground** (standalone `run:plugins-hub` only): toggles
+  brand + mode as separate CSS classes on `<html>` (e.g. `bearingpoint` +
+  `light`); presets live in `libs/global/dev/`. Brands: `openscd` |
+  `transnetbw` | `bearingpoint`, plus `-new` variants that set
+  `color-scheme` so CSS `light-dark()` works. Floating toolbar and
+  `?brand=&mode=` for light+dark without a full host.
 
 ## [0.0.4]
 
