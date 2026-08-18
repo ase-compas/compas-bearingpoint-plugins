@@ -10153,7 +10153,7 @@ const sf = [
     pluginsUrl: "https://ase-compas.github.io/compas-transnetbw-plugins/plugins.json"
   },
   {
-    prefix: "SprintEins",
+    prefix: "SE",
     name: "SprintEins Plugins",
     icon: "https://avatars.githubusercontent.com/u/44259540?s=200&v=4",
     description: "SprintEins plugin provider for OpenSCD.",
