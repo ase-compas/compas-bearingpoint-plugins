@@ -2,56 +2,56 @@
   "plugins": [
     {
       "name": "Archive Explorer",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/archive-explorer/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/archive-explorer/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "Engineering Wizard",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/engineering-wizard/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/engineering-wizard/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "History Viewer",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/history-viewer/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/history-viewer/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "Location Manager",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/location-manager/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/location-manager/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "Location Viewer",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/location-viewer/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/location-viewer/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "Template Generator",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/template-generator/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/template-generator/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "TSLD",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/tsld/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/tsld/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""
     },
     {
       "name": "Type Distributor",
-      "src": "/external-api/compas-transnetbw-plugins/bearingpoint/compas/plugins/type-distributor/index.js",
+      "src": "/external-api/compas-transnetbw-plugins/compas/plugins/type-distributor/index.js",
       "kind": "editor",
       "icon": "edit",
       "description": ""

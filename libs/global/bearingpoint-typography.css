@@ -3,14 +3,8 @@
 
 :root,
 :host {
-  /* Font stacks */
-  --bearingpoint-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --bearingpoint-font-inter: "Inter", system-ui, sans-serif;
-  --bearingpoint-font-roboto: "Roboto", system-ui, sans-serif;
-  --bearingpoint-font-source-sans: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
-  --bearingpoint-font-rubik: "Rubik", system-ui, sans-serif;
-
-  /* Type scale tokens (px) */
+  /* Font stacks are set in oscd-theme-bridge.css from --oscd-text-font.
+     Type scale tokens (layout-only; not brand-specific): */
   --bearingpoint-text-h1-size: 20px;
   --bearingpoint-text-h1-line: 24px;
   --bearingpoint-text-h1-weight: 600;

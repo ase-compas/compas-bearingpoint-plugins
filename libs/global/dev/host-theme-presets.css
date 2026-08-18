@@ -1,0 +1,595 @@
+/**
+ * Dev-only host theme presets (standalone plugin apps).
+ *
+ * - `html` sets Solarized light bases + all derived host tokens (MDC / --oscd-*).
+ * - Brand+mode classes only override palette tokens that differ from that default.
+ * - Playground sets brand + mode as separate classes on <html> (e.g. bearingpoint + light).
+ * Production never loads this file.
+ *
+ * Sources: open-scd themes.ts, transnetbw theme colors, bearingpoint demo themes.js
+ */
+
+/**
+ * simulate the host container that later wraps the plugin
+ * (full-viewport html/body). Not loaded in the production plugin bundle.
+ * Imported from apps/plugins-hub/src/main.ts only.
+ */
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/**
+  START Default palette (OpenSCD Solarized light) + host-style derived tokens.
+  Should be the same as: https://github.com/com-pas/open-scd/blob/main/packages/openscd/src/themes.ts
+*/
+html {
+  --primary: var(--cyan);
+  --secondary: var(--violet);
+  
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+  
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+  
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  
+}
+
+.mdc-drawer span.mdc-drawer__title {
+  color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
+abbr {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+mwc-textfield[iconTrailing='search'] {
+  --mdc-shape-small: 28px;
+}
+/** END Default palette (OpenSCD Solarized light) + host-style derived tokens. */
+
+/* Host shell page background (OpenSCD bodyStyles track the active base2) */
+html body {
+   /** open-scd set this hardcoded (because of dependency-problems), but all known brands uses the same value as --oscd-base2 */
+  background: var(--oscd-base2);
+}
+
+
+/* OpenSCD light bases (shared block) */
+html.light, /* default */
+html.openscd.light {
+  --base03: #002b36;
+  --base02: #073642;
+  --base01: #586e75;
+  --base00: #657b83;
+  --base0: #839496;
+  --base1: #93a1a1;
+  --base2: #eee8d5;
+  --base3: #fdf6e3;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+  
+  --primary: var(--cyan);
+  --secondary: var(--violet);
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+/* OpenSCD dark: only inverted bases (shared block); accents = default cyan/violet */
+html.dark, /* default */
+html.openscd.dark {
+  --base03: #fdf6e3;
+  --base02: #eee8d5;
+  --base01: #93a1a1;
+  --base00: #839496;
+  --base0: #657b83;
+  --base1: #586e75;
+  --base2: #073642;
+  --base3: #002b36;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+  
+  --primary: var(--cyan);
+  --secondary: var(--violet);
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+/* TransnetBW light: CoMPAS-like surfaces + brand primary via --cyan */
+html.transnetbw.light {
+  --primary-base: #004552;
+  --base03: #002b36;
+  --base02: #073642;
+  --base01: #586e75;
+  --base00: #657b83;
+  --base0: #839496;
+  --base1: #93a1a1;
+  --base2: #EDF1F2;
+  --base3: #DAE3E6;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+  --white: #FFFFFF;
+  --success: #2e7d32;
+  --warning: #f57c00;
+  --danger: #c62828;
+  
+  --primary: #004552;
+  --secondary: #004552;
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+/* TransnetBW dark: inverted bases + brand accent */
+html.transnetbw.dark {
+  --base03: #fdf6e3;
+  --base02: #eee8d5;
+  --base01: #93a1a1;
+  --base00: #839496;
+  --base0: #657b83;
+  --base1: #586e75;
+  --base2: #073642;
+  --base3: #002b36;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+  --success: #2e7d32;
+  --warning: #f57c00;
+  --danger: #c62828;
+  
+  --primary: #004552;
+  --secondary: #004552;
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+/* BearingPoint light: demo surfaces + brand primary/secondary */
+html.bearingpoint.light {
+  --base03: #002b36;
+  --base02: #073642;
+  --base01: #586e75;
+  --base00: #657b83;
+  --base0: #839496;
+  --base1: #93a1a1;
+  --base2: #ffffff;
+  --base3: #e3e3e3;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+
+
+  --primary: #330000;
+  --secondary: #98847A;
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+    
+    
+}
+
+/* BearingPoint dark: inverted bases + brand accents */
+html.bearingpoint.dark {
+  --base03: #fdf6e3;
+  --base02: #eee8d5;
+  --base01: #93a1a1;
+  --base00: #839496;
+  --base0: #657b83;
+  --base1: #586e75;
+  --base2: #073642;
+  --base3: #002b36;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;
+  --violet: #6c71c4;
+  --blue: #268bd2;
+  --cyan: #2aa198;
+  --green: #859900;
+
+  --primary: #330000;
+  --secondary: #98847A;
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  
+}
+
+/*
+ * `-new` brands: playground sets color-scheme so light-dark() resolves.
+ * Paste detailed presets into these blocks.
+ */
+html.openscd-new {
+
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
+  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
+  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
+  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
+  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
+  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
+  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
+  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
+  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
+  --oscd-yellow: var(--oscd-theme-yellow, #b58900);
+  --oscd-orange: var(--oscd-theme-orange, #cb4b16);
+  --oscd-red: var(--oscd-theme-red, #dc322f);
+  --oscd-magenta: var(--oscd-theme-magenta, #d33682);
+  --oscd-violet: var(--oscd-theme-violet, #6c71c4);
+  --oscd-blue: var(--oscd-theme-blue, #268bd2);
+  --oscd-cyan: var(--oscd-theme-cyan, #2aa198);
+  --oscd-green: var(--oscd-theme-green, #859900);
+
+  /* Semantic tokens.
+   * Primary/secondary/error stay stable across light/dark unless the
+   * matching --oscd-theme-* override uses light-dark(). Contrast colors
+   * (--oscd-on-*) are independent so branding can keep a fixed primary
+   * and still pick a readable ink (or let ink follow base2). */
+  --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
+  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
+  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
+  --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
+  --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+html.transnetbw-new {
+  --oscd-theme-branding: TransnetBW;
+
+  /* White / Black */
+  --white: #ffffff;
+  --black: #004552;
+
+  /* Gray scale */
+  --gray-10: #DAE3E6;
+  --gray-20: #EDF1F2;
+  --gray-30: #93a1a1;
+  --gray-40: #839496;
+  --gray-60: #657b83;
+  --gray-70: #586e75;
+  --gray-80: #073642;
+  --gray-90: #002b36;
+
+  /* Interactive */
+  --interactive-100: #e5d6ff;
+  --interactive-500: #a070ff;
+  --interactive-700: #704eb2;
+
+  /* Success */
+  --success-100: #def0e6;
+  --success-500: #239c5b;
+  --success-700: #1c7d49;
+
+  /* Warning */
+  --warning-100: #fff0b9;
+  --warning-500: #ffcc17;
+  --warning-700: #e5b815;
+
+  /* Danger */
+  --danger-100: #ffd6d8;
+  --danger-500: #ff3d47;
+  --danger-700: #cc2931;
+
+  --oscd-theme-body-bg: light-dark(var(--white), var(--black));
+  --oscd-theme-primary: #004552;
+  --oscd-theme-on-primary: var(--white);
+  --oscd-theme-secondary: #D9D800;
+  --oscd-theme-on-secondary: var(--black);
+  --oscd-theme-error: var(--danger-500);
+  --oscd-theme-warning: var(--warning-500);
+  --oscd-theme-success: var(--success-500);
+  
+  --oscd-theme-base03: light-dark(var(--gray-90), var(--gray-10));
+  --oscd-theme-base02: light-dark(var(--gray-80), var(--gray-20));
+  --oscd-theme-base01: light-dark(var(--gray-70), var(--gray-30));
+  --oscd-theme-base00: light-dark(var(--gray-60), var(--gray-40));
+  --oscd-theme-base0: light-dark(var(--gray-40), var(--gray-60));
+  --oscd-theme-base1: light-dark(var(--gray-30), var(--gray-70));
+  --oscd-theme-base2: light-dark(var(--gray-20), var(--gray-80));
+  --oscd-theme-base3: light-dark(var(--gray-10), var(--gray-90));
+  --oscd-theme-yellow: #b58900;
+  --oscd-theme-orange: #cb4b16;
+  --oscd-theme-red: #dc322f;
+  --oscd-theme-magenta: #d33682;
+  --oscd-theme-violet: #6c71c4;
+  --oscd-theme-blue: #268bd2;
+  --oscd-theme-cyan: #2aa198;
+  --oscd-theme-green: #859900;
+  
+  --oscd-theme-text-font: 'Roboto';
+  --oscd-theme-icon-font: 'Material Icons Outlined';
+
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
+  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
+  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
+  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
+  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
+  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
+  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
+  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
+  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
+  --oscd-yellow: var(--oscd-theme-yellow, #b58900);
+  --oscd-orange: var(--oscd-theme-orange, #cb4b16);
+  --oscd-red: var(--oscd-theme-red, #dc322f);
+  --oscd-magenta: var(--oscd-theme-magenta, #d33682);
+  --oscd-violet: var(--oscd-theme-violet, #6c71c4);
+  --oscd-blue: var(--oscd-theme-blue, #268bd2);
+  --oscd-cyan: var(--oscd-theme-cyan, #2aa198);
+  --oscd-green: var(--oscd-theme-green, #859900);
+
+  /* Semantic tokens.
+   * Primary/secondary/error stay stable across light/dark unless the
+   * matching --oscd-theme-* override uses light-dark(). Contrast colors
+   * (--oscd-on-*) are independent so branding can keep a fixed primary
+   * and still pick a readable ink (or let ink follow base2). */
+  --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
+  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
+  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
+  --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
+  --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}
+
+html.bearingpoint-new {
+  --oscd-theme-branding: Bearingpoint;
+
+  /* White / Black */
+  --white: #ffffff;
+  --black: #330000;
+
+  /* Gray scale */
+  --gray-10: #faf8f7;
+  --gray-20: #e6deda;
+  --gray-30: #ccc1bc;
+  --gray-40: #b2a59f;
+  --gray-50: #98847a;
+  --gray-60: #806659;
+  --gray-70: #735c50;
+  --gray-80: #665247;
+  --gray-90: #5a473e;
+
+  /* Interactive */
+  --interactive-100: #e5d6ff;
+  --interactive-500: #a070ff;
+  --interactive-700: #704eb2;
+
+  /* Success */
+  --success-100: #def0e6;
+  --success-500: #239c5b;
+  --success-700: #1c7d49;
+
+  /* Warning */
+  --warning-100: #fff0b9;
+  --warning-500: #ffcc17;
+  --warning-700: #e5b815;
+
+  /* Danger */
+  --danger-100: #ffd6d8;
+  --danger-500: #ff3d47;
+  --danger-700: #cc2931;
+
+  --oscd-theme-body-bg: light-dark(var(--white), var(--black));
+  --oscd-theme-primary: var(--black);
+  --oscd-theme-on-primary: var(--white);
+  --oscd-theme-secondary: var(--gray-50);
+  --oscd-theme-on-secondary: var(--black);
+  --oscd-theme-error: var(--danger-500);
+  --oscd-theme-warning: var(--warning-500);
+  --oscd-theme-success: var(--success-500);
+  --oscd-theme-ink: light-dark(var(--black), var(--white));
+  --oscd-theme-paper: light-dark(var(--white), var(--black));
+  
+  --oscd-theme-base03: light-dark(var(--gray-90), var(--gray-10));
+  --oscd-theme-base02: light-dark(var(--gray-80), var(--gray-20));
+  --oscd-theme-base01: light-dark(var(--gray-70), var(--gray-30));
+  --oscd-theme-base00: light-dark(var(--gray-60), var(--gray-40));
+  --oscd-theme-base0: light-dark(var(--gray-40), var(--gray-60));
+  --oscd-theme-base1: light-dark(var(--gray-30), var(--gray-70));
+  --oscd-theme-base2: light-dark(var(--gray-20), var(--gray-80));
+  --oscd-theme-base3: light-dark(var(--gray-10), var(--gray-90));
+  --oscd-theme-yellow: #b58900;
+  --oscd-theme-orange: #cb4b16;
+  --oscd-theme-red: #dc322f;
+  --oscd-theme-magenta: #d33682;
+  --oscd-theme-violet: #6c71c4;
+  --oscd-theme-blue: #268bd2;
+  --oscd-theme-cyan: #2aa198;
+  --oscd-theme-green: #859900;
+  
+  --oscd-theme-text-font: 'Roboto';
+  --oscd-theme-icon-font: 'Material Icons Outlined';
+
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
+  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
+  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
+  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
+  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
+  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
+  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
+  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
+  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
+  --oscd-yellow: var(--oscd-theme-yellow, #b58900);
+  --oscd-orange: var(--oscd-theme-orange, #cb4b16);
+  --oscd-red: var(--oscd-theme-red, #dc322f);
+  --oscd-magenta: var(--oscd-theme-magenta, #d33682);
+  --oscd-violet: var(--oscd-theme-violet, #6c71c4);
+  --oscd-blue: var(--oscd-theme-blue, #268bd2);
+  --oscd-cyan: var(--oscd-theme-cyan, #2aa198);
+  --oscd-green: var(--oscd-theme-green, #859900);
+
+  /* Semantic tokens.
+   * Primary/secondary/error stay stable across light/dark unless the
+   * matching --oscd-theme-* override uses light-dark(). Contrast colors
+   * (--oscd-on-*) are independent so branding can keep a fixed primary
+   * and still pick a readable ink (or let ink follow base2). */
+  --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
+  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
+  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
+  --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
+  --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+}

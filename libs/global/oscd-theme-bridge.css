@@ -1,0 +1,246 @@
+/**
+ * OpenSCD host-theme bridge for Plugins-Hub.
+ *
+ * Maps distro-provided theme variables to --bearingpoint-* so component CSS
+ * needs no rename.
+ *
+ * --oscdfix-* fills gaps on old hosts without writing back onto --oscd-*:
+ *   --oscd-theme-*  (new host API)
+ *   --primary / --yellow … (old host bare tokens)
+ *   --oscd-* / Solarized hex
+ *
+ * Do NOT set --oscd-theme-* inside the production plugin.
+ *
+ * :host covers Shadow DOM (production plugin); :root covers standalone mount.
+ */
+
+.plugins-hub, /** old-host design upgrades via @container style(...) below */
+:root,
+:host {
+  /* fix for old instances of open-scd which doesn't have all --oscd-* variables. */
+  --oscdfix-primary: var(--oscd-theme-primary, var(--primary, var(--oscd-primary)));
+  --oscdfix-on-primary: var(--oscd-on-primary, #ffffff);
+  --oscdfix-secondary: var(--oscd-theme-secondary, var(--secondary, var(--oscd-secondary)));
+  --oscdfix-on-secondary: var(--oscd-on-secondary, var(--oscd-base2, #eee8d5));
+  --oscdfix-error: var(--oscd-error, var(--red, #ff3d47));
+  --oscdfix-on-error: var(--oscd-on-error, #073642);
+  --oscdfix-warning: var(--oscd-warning, #ffcc17);
+  --oscdfix-on-warning: var(--oscd-on-warning, #073642);
+  --oscdfix-success: var(--oscd-success, var(--oscd-green, var(--green, #239c5b)));
+  --oscdfix-on-success: var(--oscd-on-success, #073642);
+  
+  --oscdfix-yellow: var(--oscd-yellow, var(--yellow, #b58900));
+  --oscdfix-orange: var(--oscd-orange, var(--orange, #cb4b16));
+  --oscdfix-red: var(--oscd-red, var(--red, #dc322f));
+  --oscdfix-magenta: var(--oscd-magenta, var(--magenta, #d33682));
+  --oscdfix-violet: var(--oscd-violet, var(--violet, #6c71c4));
+  --oscdfix-blue: var(--oscd-blue, var(--blue, #268bd2));
+  --oscdfix-cyan: var(--oscd-cyan, var(--cyan, #2aa198));
+  --oscdfix-green: var(--oscd-green, var(--green, #859900));
+  --oscdfix-paper: var(--oscd-paper, var(--oscd-white, #ffffff));
+  --oscdfix-ink: var(--oscd-ink, var(--oscd-black, #000000));
+
+  /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
+  --bearingpoint-color-primary: var(--oscdfix-primary);
+  --bearingpoint-color-on-primary: var(--oscdfix-on-primary);
+  /* Primary-dark is used for boarders */
+  --bearingpoint-color-primary-dark: var(--oscdfix-primary);
+
+  --bearingpoint-color-positive: var(--oscdfix-green);
+  --bearingpoint-color-negative: var(--oscdfix-error);
+  --bearingpoint-color-warning: var(--oscdfix-warning);
+
+  --bearingpoint-color-focus: var(--oscdfix-secondary);
+
+  --bearingpoint-color-bg-page: var(--oscd-base2);
+  --bearingpoint-color-surface: var(--oscdfix-paper);
+
+  /* Body text uses palette foregrounds (primary brand can be loud on dark) */
+  --bearingpoint-color-text-primary: var(--oscd-base00);
+  --bearingpoint-color-text-dark: var(--oscd-base03);
+  --bearingpoint-color-text-secondary: var(--oscd-base01);
+  --bearingpoint-color-text-disabled: var(--oscd-base1);
+
+  --bearingpoint-color-link: var(--oscdfix-blue);
+  --bearingpoint-color-link-visited: var(--oscdfix-secondary);
+
+  --bearingpoint-color-border: var(--oscd-base1);
+  --bearingpoint-color-border-strong: var(--oscd-base0);
+  --bearingpoint-color-border-hover: var(--oscd-base00);
+  --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
+
+  --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
+
+  --bearingpoint-color-warning-bg: var(--oscdfix-warning);
+  --bearingpoint-color-warning-text: var(--oscdfix-on-warning);
+
+  --bearingpoint-color-action-primary-bg: var(--oscdfix-primary);
+  --bearingpoint-color-action-primary-bg-hover: color-mix(
+    in oklab,
+    var(--oscdfix-primary) 82%,
+    var(--oscd-base03)
+  );
+
+  --bearingpoint-color-action-secondary-bg: var(--oscdfix-cyan);
+  --bearingpoint-color-action-secondary-bg-hover: color-mix(
+    in oklab,
+    var(--oscdfix-cyan) 82%,
+    var(--oscd-base03)
+  );
+
+  --bearingpoint-color-action-neutral-text: var(--oscdfix-cyan);
+  --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
+  --bearingpoint-color-action-neutral-bg-hover: color-mix(
+    in oklab,
+    var(--bearingpoint-color-surface) 82%,
+    var(--oscd-base03)
+  );
+
+  --bearingpoint-color-action-danger-bg: var(--oscdfix-error);
+  --bearingpoint-color-action-danger-bg-hover: color-mix(
+    in oklab,
+    var(--oscdfix-error) 82%,
+    var(--oscd-base03)
+  );
+
+  /* Font stacks prefer host text font */
+  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+  --bearingpoint-font-inter: "Inter", system-ui, sans-serif;
+  --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-rubik: var(--oscd-text-font), system-ui, sans-serif;
+
+  /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
+}
+
+@container style(--oscd-on-primary: initial) and style(--primary: #330000) and style(--oscd-base03: #002b36) {
+  /* old bearingpoint style light */
+  * {
+
+    /* Gray scale */
+    --gray-10: #faf8f7;
+    --gray-20: #e6deda;
+    --gray-30: #ccc1bc;
+    --gray-40: #b2a59f;
+    --gray-50: #98847a;
+    --gray-60: #806659;
+    --gray-70: #735c50;
+    --gray-80: #665247;
+    --gray-90: #5a473e;
+
+    --oscd-primary: var(--primary);
+    --oscd-warning: #ffcc17;
+    --oscd-on-warning: var(--gray-80);
+    --oscd-paper: #ffffff;
+    --oscd-ink: #000000;
+    
+    --oscd-base03: var(--gray-90);
+    --oscd-base02: var(--gray-80);
+    --oscd-base01: var(--gray-70);
+    --oscd-base00: var(--gray-60);
+    --oscd-base0: var(--gray-40);
+    --oscd-base1: var(--gray-30);
+    --oscd-base2: var(--gray-20);
+    --oscd-base3: var(--gray-10);
+  }
+}
+
+@container style(--oscd-on-primary: initial) and style(--primary: #330000) and style(--oscd-base03: #fdf6e3) {
+  /* old bearingpoint style dark */
+  * {
+
+    /* Gray scale */
+    --gray-10: #faf8f7;
+    --gray-20: #e6deda;
+    --gray-30: #ccc1bc;
+    --gray-40: #b2a59f;
+    --gray-50: #98847a;
+    --gray-60: #806659;
+    --gray-70: #735c50;
+    --gray-80: #665247;
+    --gray-90: #5a473e;
+
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--gray-20);
+    --oscd-secondary: var(--gray-50);
+    --oscd-on-secondary: var(--black);
+
+    --oscd-warning: #ffcc17;
+    --oscd-on-warning: var(--gray-80);
+    --oscd-paper: #000000;
+    --oscd-ink: #ffffff;
+
+    --oscd-base03: var(--gray-10);
+    --oscd-base02: var(--gray-20);
+    --oscd-base01: var(--gray-30);
+    --oscd-base00: var(--gray-40);
+    --oscd-base0: var(--gray-60);
+    --oscd-base1: var(--gray-70);
+    --oscd-base2: var(--gray-80);
+    --oscd-base3: var(--gray-90);
+
+  }
+}
+
+@container style(--oscd-on-primary: initial) and style(--primary: #004552) and style(--oscd-base03: #002b36)  {
+  /** fix Server branded Transnet-BW host light. Old hosts only. */
+  .plugins-hub {
+    --oscd-base2: var(--base2);
+    --oscd-base1: var(--base1);
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--base2);
+  }
+}
+@container style(--oscd-on-primary: initial) and style(--primary: #004552) and style(--oscd-base03: #DAE3E6) {
+  /** fix Server branded Transnet-BW host dark. Old hosts only. */
+  .plugins-hub {
+    --oscd-base2: #073642;
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--base2);
+  }
+}
+@container style(--oscd-on-primary: initial) and style(--primary: #004552) and style(--oscd-base03: #fdf6e3) {
+  /** fix Server branded Transnet-BW host dark. Old hosts only. */
+  .plugins-hub {
+    --oscd-base2: #073642;
+    --oscd-primary: var(--primary);
+    --oscd-on-primary: var(--base2);
+  }
+}
+
+@container style(--oscd-on-primary: initial) and style(--base03: #fdf6e3) {
+  /* default dark-mode in old branding styles. */
+  * {
+    /** Default values should be moved to open-scd */
+    --oscd-paper: #000000;
+    --oscd-ink: #FFFFFF;
+    --oscd-on-primary: var(--oscd-ink);
+
+    --oscd-success: #14532d;
+    --oscd-warning: #ffcc17;
+    --oscd-on-warning: #073642;
+    --oscd-error:  #7f1d1d;
+    --oscd-on-warning: #073642;
+  }
+}
+
+/** dark mode set color for smui componenten. */
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: color-mix(in srgb, var(--oscdfix-ink) 60%, transparent);
+}
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color:  color-mix(in srgb, var(--oscdfix-ink) 87%, transparent);
+}
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
+  color:  color-mix(in srgb, var(--oscdfix-ink) 54%, transparent);
+}
+.mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
+  color:  color-mix(in srgb, var(--oscdfix-ink) 87%, transparent);
+}
+.mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
+  fill:  color-mix(in srgb, var(--oscdfix-ink) 54%, transparent);
+}
+.mdc-menu .mdc-deprecated-list {
+  color:  color-mix(in srgb, var(--oscdfix-ink) 87%, transparent);
+}

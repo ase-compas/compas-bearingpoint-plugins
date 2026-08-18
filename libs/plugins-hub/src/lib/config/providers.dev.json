@@ -28,7 +28,7 @@
     "pluginsUrl": "/external-api/provider/dummy-not-exist-plugins.json"
   },
   {
-    "prefix": "SprintEins",
+    "prefix": "SE",
     "name": "SprintEins Plugins",
     "icon": "/external-api/provider/sprinteins.jpg",
     "description": "SprintEins plugin provider for OpenSCD.",
