@@ -155,7 +155,6 @@ html.openscd.dark {
 
 /* TransnetBW light: CoMPAS-like surfaces + brand primary via --cyan */
 html.transnetbw.light {
-  
   --primary-base: #004552;
   --base03: #002b36;
   --base02: #073642;
@@ -262,35 +261,6 @@ html.bearingpoint.light {
 
   --primary: #330000;
   --secondary: #98847A;
-  --mdc-theme-primary: var(--primary);
-  --mdc-theme-secondary: #98847A;
-  --mdc-theme-background: var(--base3);
-  --mdc-theme-surface: var(--base3);
-  --mdc-theme-on-primary: var(--base2);
-  --mdc-theme-on-secondary: var(--base2);
-  --mdc-theme-on-background: var(--base00);
-  --mdc-theme-on-surface: var(--base00);
-  --mdc-theme-text-primary-on-background: var(--base01);
-  --mdc-theme-text-secondary-on-background: var(--base00);
-  --mdc-theme-text-icon-on-background: var(--base00);
-  --mdc-theme-error: var(--red);
-
-  --mdc-button-disabled-ink-color: var(--base1);
-
-  --mdc-drawer-heading-ink-color: var(--base00);
-
-  --mdc-text-field-fill-color: var(--base2);
-  --mdc-text-field-disabled-fill-color: var(--base3);
-  --mdc-text-field-ink-color: var(--base00);
-  --mdc-text-field-label-ink-color: var(--base00);
-
-  --mdc-select-fill-color: var(--base2);
-  --mdc-select-disabled-fill-color: var(--base3);
-  --mdc-select-ink-color: var(--base00);
-
-  --mdc-dialog-heading-ink-color: var(--base00);
-
-  --mdc-icon-font: 'Material Icons Outlined';
 
   --oscd-primary: var(--oscd-theme-primary, var(--cyan));
   --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
@@ -332,35 +302,6 @@ html.bearingpoint.dark {
 
   --primary: #330000;
   --secondary: #98847A;
-  --mdc-theme-primary: var(--primary);
-  --mdc-theme-secondary: #98847A;
-  --mdc-theme-background: var(--base3);
-  --mdc-theme-surface: var(--base3);
-  --mdc-theme-on-primary: var(--base2);
-  --mdc-theme-on-secondary: var(--base2);
-  --mdc-theme-on-background: var(--base00);
-  --mdc-theme-on-surface: var(--base00);
-  --mdc-theme-text-primary-on-background: var(--base01);
-  --mdc-theme-text-secondary-on-background: var(--base00);
-  --mdc-theme-text-icon-on-background: var(--base00);
-  --mdc-theme-error: var(--red);
-
-  --mdc-button-disabled-ink-color: var(--base1);
-
-  --mdc-drawer-heading-ink-color: var(--base00);
-
-  --mdc-text-field-fill-color: var(--base2);
-  --mdc-text-field-disabled-fill-color: var(--base3);
-  --mdc-text-field-ink-color: var(--base00);
-  --mdc-text-field-label-ink-color: var(--base00);
-
-  --mdc-select-fill-color: var(--base2);
-  --mdc-select-disabled-fill-color: var(--base3);
-  --mdc-select-ink-color: var(--base00);
-
-  --mdc-dialog-heading-ink-color: var(--base00);
-
-  --mdc-icon-font: 'Material Icons Outlined';
 
   --oscd-primary: var(--oscd-theme-primary, var(--cyan));
   --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
@@ -386,6 +327,8 @@ html.bearingpoint.dark {
  */
 html.openscd-new {
 
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
   --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
   --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
   --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
@@ -409,17 +352,19 @@ html.openscd-new {
    * (--oscd-on-*) are independent so branding can keep a fixed primary
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-error: var(--oscd-theme-error, var(--oscd-red));
-  --oscd-warning: var(--oscd-theme-warning, var(--oscd-yellow));
-  --oscd-success: var(--oscd-theme-success, var(--oscd-green));
-  --oscd-black: var(--oscd-theme-black, light-dark(#000000, #ffffff));
-  --oscd-white: var(--oscd-theme-white, light-dark(#ffffff, #000000));
-  --oscd-on-primary: var(--oscd-theme-on-primary, #e6deda);
   --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-on-error: var(--oscd-theme-on-error, var(--oscd-base3));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
   --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
   --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
   --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
@@ -427,8 +372,8 @@ html.openscd-new {
 }
 
 html.transnetbw-new {
-  
-  
+  --oscd-theme-branding: TransnetBW;
+
   /* White / Black */
   --white: #ffffff;
   --black: #004552;
@@ -438,7 +383,6 @@ html.transnetbw-new {
   --gray-20: #EDF1F2;
   --gray-30: #93a1a1;
   --gray-40: #839496;
-  --gray-50: #98847a;
   --gray-60: #657b83;
   --gray-70: #586e75;
   --gray-80: #073642;
@@ -493,6 +437,8 @@ html.transnetbw-new {
   --oscd-theme-text-font: 'Roboto';
   --oscd-theme-icon-font: 'Material Icons Outlined';
 
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
   --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
   --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
   --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
@@ -516,17 +462,19 @@ html.transnetbw-new {
    * (--oscd-on-*) are independent so branding can keep a fixed primary
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-error: var(--oscd-theme-error, var(--oscd-red));
-  --oscd-warning: var(--oscd-theme-warning, var(--oscd-yellow));
-  --oscd-success: var(--oscd-theme-success, var(--oscd-green));
-  --oscd-black: var(--oscd-theme-black, light-dark(#000000, #ffffff));
-  --oscd-white: var(--oscd-theme-white, light-dark(#ffffff, #000000));
-  --oscd-on-primary: var(--oscd-theme-on-primary, #e6deda);
   --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-on-error: var(--oscd-theme-on-error, var(--oscd-base3));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
   --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
   --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
   --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
@@ -534,7 +482,8 @@ html.transnetbw-new {
 }
 
 html.bearingpoint-new {
-  
+  --oscd-theme-branding: Bearingpoint;
+
   /* White / Black */
   --white: #ffffff;
   --black: #330000;
@@ -578,8 +527,8 @@ html.bearingpoint-new {
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-warning: var(--warning-500);
   --oscd-theme-success: var(--success-500);
-  --oscd-theme-black: light-dark(var(--black), var(--white));
-  --oscd-theme-white: light-dark(var(--white), var(--black));
+  --oscd-theme-ink: light-dark(var(--black), var(--white));
+  --oscd-theme-paper: light-dark(var(--white), var(--black));
   
   --oscd-theme-base03: light-dark(var(--gray-90), var(--gray-10));
   --oscd-theme-base02: light-dark(var(--gray-80), var(--gray-20));
@@ -601,6 +550,8 @@ html.bearingpoint-new {
   --oscd-theme-text-font: 'Roboto';
   --oscd-theme-icon-font: 'Material Icons Outlined';
 
+  /* Solarized palette. Dark mode inverts the base scale.
+   * https://ethanschoonover.com/solarized/ */
   --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
   --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
   --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
@@ -624,17 +575,19 @@ html.bearingpoint-new {
    * (--oscd-on-*) are independent so branding can keep a fixed primary
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-error: var(--oscd-theme-error, var(--oscd-red));
-  --oscd-warning: var(--oscd-theme-warning, var(--oscd-yellow));
-  --oscd-success: var(--oscd-theme-success, var(--oscd-green));
-  --oscd-black: var(--oscd-theme-black, light-dark(#000000, #ffffff));
-  --oscd-white: var(--oscd-theme-white, light-dark(#ffffff, #000000));
-  --oscd-on-primary: var(--oscd-theme-on-primary, #e6deda);
   --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-on-error: var(--oscd-theme-on-error, var(--oscd-base3));
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, #073642);
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
   --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
+  --oscd-success: var(--oscd-theme-success, #239c5b);
   --oscd-on-success: var(--oscd-theme-on-success, #073642);
+  
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
   --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
