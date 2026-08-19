@@ -321,245 +321,128 @@ html.bearingpoint.dark {
   
 }
 
-/*
- * `-new` brands: playground sets color-scheme so light-dark() resolves.
- * Paste detailed presets into these blocks.
- */
-html.openscd-new {
-
-  /* Solarized palette. Dark mode inverts the base scale.
-   * https://ethanschoonover.com/solarized/ */
-  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
-  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
-  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
-  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
-  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
-  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
-  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
-  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
-  --oscd-yellow: var(--oscd-theme-yellow, #b58900);
-  --oscd-orange: var(--oscd-theme-orange, #cb4b16);
-  --oscd-red: var(--oscd-theme-red, #dc322f);
-  --oscd-magenta: var(--oscd-theme-magenta, #d33682);
-  --oscd-violet: var(--oscd-theme-violet, #6c71c4);
-  --oscd-blue: var(--oscd-theme-blue, #268bd2);
-  --oscd-cyan: var(--oscd-theme-cyan, #2aa198);
-  --oscd-green: var(--oscd-theme-green, #859900);
-
-  /* Semantic tokens.
-   * Primary/secondary/error stay stable across light/dark unless the
-   * matching --oscd-theme-* override uses light-dark(). Contrast colors
-   * (--oscd-on-*) are independent so branding can keep a fixed primary
-   * and still pick a readable ink (or let ink follow base2). */
-  --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
-  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-error: var(--oscd-theme-error, #ff3d47);
-  --oscd-on-error: var(--oscd-theme-on-error, #073642);
-  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
-  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
-  --oscd-success: var(--oscd-theme-success, #239c5b);
-  --oscd-on-success: var(--oscd-theme-on-success, #073642);
-  
-  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
-  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
-  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
-  --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
-
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-}
-
 html.transnetbw-new {
   --oscd-theme-branding: TransnetBW;
 
   /* White / Black */
-  --white: #ffffff;
-  --black: #004552;
-
+  --oscd-theme-white: #ffffff;
+  --oscd-theme-black: color-mix(in oklab, var(--oscd-theme-gray-90) 50%, #000); /* little darker then darkest gray */
+  
   /* Gray scale */
-  --gray-10: #DAE3E6;
-  --gray-20: #EDF1F2;
-  --gray-30: #93a1a1;
-  --gray-40: #839496;
-  --gray-60: #657b83;
-  --gray-70: #586e75;
-  --gray-80: #073642;
-  --gray-90: #002b36;
+  --oscd-theme-gray-10: #F2F2F2; /* lightest */
+  --oscd-theme-gray-20: #EDF1F2;
+  --oscd-theme-gray-30: color-mix(in oklab, var(--oscd-theme-gray-20), var(--oscd-theme-gray-40));
+  --oscd-theme-gray-40: #9E9E9E;
+  --oscd-theme-gray-50: color-mix(in oklab, var(--oscd-theme-gray-40) 50%, var(--oscd-theme-gray-60));
+  --oscd-theme-gray-60: #616161;
+  --oscd-theme-gray-70: color-mix(in oklab, var(--oscd-theme-gray-60) 50%, var(--oscd-theme-gray-80));
+  --oscd-theme-gray-80: #073642;
+  --oscd-theme-gray-90: #002b36; /* darkest */
 
-  /* Interactive */
-  --interactive-100: #e5d6ff;
   --interactive-500: #a070ff;
-  --interactive-700: #704eb2;
-
-  /* Success */
-  --success-100: #def0e6;
   --success-500: #239c5b;
-  --success-700: #1c7d49;
-
-  /* Warning */
-  --warning-100: #fff0b9;
   --warning-500: #ffcc17;
-  --warning-700: #e5b815;
-
-  /* Danger */
-  --danger-100: #ffd6d8;
   --danger-500: #ff3d47;
-  --danger-700: #cc2931;
 
-  --oscd-theme-body-bg: light-dark(var(--white), var(--black));
+  --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
   --oscd-theme-primary: #004552;
-  --oscd-theme-on-primary: var(--white);
-  --oscd-theme-secondary: #D9D800;
-  --oscd-theme-on-secondary: var(--black);
+  --oscd-theme-on-primary: var(--oscd-theme-white);
+  --oscd-theme-nav-active: yellow; /* oder --warning-500 ? */
+  --oscd-theme-secondary: #004552;
+  --oscd-theme-on-secondary: var(--oscd-theme-white);
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-warning: var(--warning-500);
   --oscd-theme-success: var(--success-500);
   
-  --oscd-theme-base03: light-dark(var(--gray-90), var(--gray-10));
-  --oscd-theme-base02: light-dark(var(--gray-80), var(--gray-20));
-  --oscd-theme-base01: light-dark(var(--gray-70), var(--gray-30));
-  --oscd-theme-base00: light-dark(var(--gray-60), var(--gray-40));
-  --oscd-theme-base0: light-dark(var(--gray-40), var(--gray-60));
-  --oscd-theme-base1: light-dark(var(--gray-30), var(--gray-70));
-  --oscd-theme-base2: light-dark(var(--gray-20), var(--gray-80));
-  --oscd-theme-base3: light-dark(var(--gray-10), var(--gray-90));
-  --oscd-theme-yellow: #b58900;
-  --oscd-theme-orange: #cb4b16;
-  --oscd-theme-red: #dc322f;
-  --oscd-theme-magenta: #d33682;
-  --oscd-theme-violet: #6c71c4;
-  --oscd-theme-blue: #268bd2;
-  --oscd-theme-cyan: #2aa198;
-  --oscd-theme-green: #859900;
-  
-  --oscd-theme-text-font: 'Roboto';
-  --oscd-theme-icon-font: 'Material Icons Outlined';
-
-  /* Solarized palette. Dark mode inverts the base scale.
-   * https://ethanschoonover.com/solarized/ */
-  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
-  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
-  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
-  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
-  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
-  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
-  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
-  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
-  --oscd-yellow: var(--oscd-theme-yellow, #b58900);
-  --oscd-orange: var(--oscd-theme-orange, #cb4b16);
-  --oscd-red: var(--oscd-theme-red, #dc322f);
-  --oscd-magenta: var(--oscd-theme-magenta, #d33682);
-  --oscd-violet: var(--oscd-theme-violet, #6c71c4);
-  --oscd-blue: var(--oscd-theme-blue, #268bd2);
-  --oscd-cyan: var(--oscd-theme-cyan, #2aa198);
-  --oscd-green: var(--oscd-theme-green, #859900);
-
-  /* Semantic tokens.
-   * Primary/secondary/error stay stable across light/dark unless the
-   * matching --oscd-theme-* override uses light-dark(). Contrast colors
-   * (--oscd-on-*) are independent so branding can keep a fixed primary
-   * and still pick a readable ink (or let ink follow base2). */
-  --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
-  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-error: var(--oscd-theme-error, #ff3d47);
-  --oscd-on-error: var(--oscd-theme-on-error, #073642);
-  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
-  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
-  --oscd-success: var(--oscd-theme-success, #239c5b);
-  --oscd-on-success: var(--oscd-theme-on-success, #073642);
-  
-  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
-  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
-  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
-  --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
-
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
 }
 
 html.bearingpoint-new {
   --oscd-theme-branding: Bearingpoint;
 
   /* White / Black */
-  --white: #ffffff;
-  --black: #330000;
+  --oscd-theme-white: #ffffff;
+  --oscd-theme-black: color-mix(in oklab, var(--oscd-theme-primary) 60%, #000); /* little darker then primary */
 
   /* Gray scale */
-  --gray-10: #faf8f7;
-  --gray-20: #e6deda;
-  --gray-30: #ccc1bc;
-  --gray-40: #b2a59f;
-  --gray-50: #98847a;
-  --gray-60: #806659;
-  --gray-70: #735c50;
-  --gray-80: #665247;
-  --gray-90: #5a473e;
+  --oscd-theme-gray-10: #faf8f7; /* lightest */
+  --oscd-theme-gray-20: #e6deda;
+  --oscd-theme-gray-30: #ccc1bc;
+  --oscd-theme-gray-40: #b2a59f;
+  --oscd-theme-gray-50: #98847a;
+  --oscd-theme-gray-60: #806659;
+  --oscd-theme-gray-70: #735c50;
+  --oscd-theme-gray-80: #665247;
+  --oscd-theme-gray-90: #5a473e; /* darkest */
 
-  /* Interactive */
-  --interactive-100: #e5d6ff;
   --interactive-500: #a070ff;
-  --interactive-700: #704eb2;
-
-  /* Success */
-  --success-100: #def0e6;
   --success-500: #239c5b;
-  --success-700: #1c7d49;
-
-  /* Warning */
-  --warning-100: #fff0b9;
   --warning-500: #ffcc17;
-  --warning-700: #e5b815;
-
-  /* Danger */
-  --danger-100: #ffd6d8;
   --danger-500: #ff3d47;
-  --danger-700: #cc2931;
 
-  --oscd-theme-body-bg: light-dark(var(--white), var(--black));
-  --oscd-theme-primary: var(--black);
-  --oscd-theme-on-primary: var(--white);
-  --oscd-theme-secondary: var(--gray-50);
-  --oscd-theme-on-secondary: var(--black);
+  --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
+  --oscd-theme-primary: #330000;
+  --oscd-theme-on-primary: var(--oscd-theme-white);
+  --oscd-theme-primary-themed: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
+  --oscd-theme-on-primary-themed: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
+  --oscd-theme-nav-active: yellow; /* oder --warning-500 ? */
+  --oscd-theme-secondary: var(--oscd-theme-gray-50);
+  --oscd-theme-on-secondary: var(--oscd-theme-white);
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-warning: var(--warning-500);
   --oscd-theme-success: var(--success-500);
-  --oscd-theme-ink: light-dark(var(--black), var(--white));
-  --oscd-theme-paper: light-dark(var(--white), var(--black));
   
-  --oscd-theme-base03: light-dark(var(--gray-90), var(--gray-10));
-  --oscd-theme-base02: light-dark(var(--gray-80), var(--gray-20));
-  --oscd-theme-base01: light-dark(var(--gray-70), var(--gray-30));
-  --oscd-theme-base00: light-dark(var(--gray-60), var(--gray-40));
-  --oscd-theme-base0: light-dark(var(--gray-40), var(--gray-60));
-  --oscd-theme-base1: light-dark(var(--gray-30), var(--gray-70));
-  --oscd-theme-base2: light-dark(var(--gray-20), var(--gray-80));
-  --oscd-theme-base3: light-dark(var(--gray-10), var(--gray-90));
-  --oscd-theme-yellow: #b58900;
-  --oscd-theme-orange: #cb4b16;
-  --oscd-theme-red: #dc322f;
-  --oscd-theme-magenta: #d33682;
-  --oscd-theme-violet: #6c71c4;
-  --oscd-theme-blue: #268bd2;
-  --oscd-theme-cyan: #2aa198;
-  --oscd-theme-green: #859900;
+/*   --oscd-theme-yellow: #b58900; */
+/*   --oscd-theme-orange: #cb4b16; */
+/*   --oscd-theme-red: #dc322f; */
+/*   --oscd-theme-magenta: #d33682; */
+/*   --oscd-theme-violet: #6c71c4; */
+/*   --oscd-theme-blue: #268bd2; */
+/*   --oscd-theme-cyan: #2aa198; */
+/*   --oscd-theme-green: #859900; */
   
-  --oscd-theme-text-font: 'Roboto';
-  --oscd-theme-icon-font: 'Material Icons Outlined';
+/*   --oscd-theme-text-font: 'Roboto'; */
+/*   --oscd-theme-icon-font: 'Material Icons Outlined'; */
 
+}
+
+/**
+ * Plugin-Relevant DEFAULTS from Open-SCD PR: https://github.com/com-pas/open-scd/pull/169,
+ * https://github.com/brabenetz/compas-open-scd/blob/feature/issue-534_customer-branding/packages/openscd/src/themes.ts 
+ */
+html.openscd-new,
+html.transnetbw-new,
+html.bearingpoint-new {
+
+  /* Gray-Values should be fixed values */
+  --oscd-gray-10: var(--oscd-theme-gray-10, #fdf6e3); /* lightest */
+  --oscd-gray-20: var(--oscd-theme-gray-20, #eee8d5);
+  --oscd-gray-30: var(--oscd-theme-gray-30, #93a1a1);
+  --oscd-gray-40: var(--oscd-theme-gray-40, #839496);
+  --oscd-gray-50: var(--oscd-theme-gray-50, color-mix(in oklab, #839496 50%, #657b83));  /* #74888c */
+  --oscd-gray-60: var(--oscd-theme-gray-60, #657b83);
+  --oscd-gray-70: var(--oscd-theme-gray-70, #586e75);
+  --oscd-gray-80: var(--oscd-theme-gray-80, #073642);
+  --oscd-gray-90: var(--oscd-theme-gray-90, #002b36); /* darkest */
+  
+  /* darkest black and lightes white. Fixed values. */
+  --oscd-white: var(--oscd-theme-white, #ffffff);
+
+  --oscd-black: var(--oscd-theme-black, color-mix(in oklab, var(--oscd-gray-90) 50%, #000)); /* little darker then darkest gray */
+/*   --oscd-black: var(--oscd-theme-black, #000); */
+  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
+  --oscd-paper: var(--oscd-theme-paper, light-dark(var(--oscd-white), var(--oscd-black)));
+  --oscd-ink: var(--oscd-theme-ink, light-dark(var(--oscd-black), var(--oscd-white)));
+  
   /* Solarized palette. Dark mode inverts the base scale.
    * https://ethanschoonover.com/solarized/ */
-  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
-  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
-  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
-  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
-  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
-  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
-  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
-  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
+  --oscd-base03: var(--oscd-theme-base03, light-dark(var(--oscd-gray-90), var(--oscd-gray-10)));
+  --oscd-base02: var(--oscd-theme-base02, light-dark(var(--oscd-gray-80), var(--oscd-gray-20)));
+  --oscd-base01: var(--oscd-theme-base01, light-dark(var(--oscd-gray-70), var(--oscd-gray-30)));
+  --oscd-base00: var(--oscd-theme-base00, light-dark(var(--oscd-gray-60), var(--oscd-gray-40)));
+  --oscd-base0: var(--oscd-theme-base0, light-dark(var(--oscd-gray-40), var(--oscd-gray-60)));
+  --oscd-base1: var(--oscd-theme-base1, light-dark(var(--oscd-gray-30), var(--oscd-gray-70)));
+  --oscd-base2: var(--oscd-theme-base2, light-dark(var(--oscd-gray-20), var(--oscd-gray-80)));
+  --oscd-base3: var(--oscd-theme-base3, light-dark(var(--oscd-gray-10), var(--oscd-gray-90)));
   --oscd-yellow: var(--oscd-theme-yellow, #b58900);
   --oscd-orange: var(--oscd-theme-orange, #cb4b16);
   --oscd-red: var(--oscd-theme-red, #dc322f);
@@ -575,20 +458,21 @@ html.bearingpoint-new {
    * (--oscd-on-*) are independent so branding can keep a fixed primary
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
-  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-base2));
+  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-gray-20));
+  --oscd-primary-themed: var(--oscd-theme-primary-themed, var(--oscd-primary));
+  --oscd-on-primary-themed: var(--oscd-theme-on-primary-themed, var(--oscd-on-primary));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-base2));
-  --oscd-error: var(--oscd-theme-error, #ff3d47);
-  --oscd-on-error: var(--oscd-theme-on-error, #073642);
-  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
-  --oscd-on-warning: var(--oscd-theme-on-warning, #073642);
-  --oscd-success: var(--oscd-theme-success, #239c5b);
-  --oscd-on-success: var(--oscd-theme-on-success, #073642);
-  
-  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
-  --oscd-paper: var(--oscd-theme-paper, light-dark(#ffffff, #000000));
-  --oscd-ink: var(--oscd-theme-ink, light-dark(#000000, #ffffff));
+  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-gray-20));
+  --oscd-secondary-themed: var(--oscd-theme-secondary-themed, var(--oscd-secondary));
+  --oscd-on-secondary-themed: var(--oscd-theme-on-secondary-themed, var(--oscd-on-secondary));
   --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
+
+  --oscd-error: var(--oscd-theme-error, #ff3d47);
+  --oscd-on-error: var(--oscd-theme-on-error, var(--oscd-gray-90));
+  --oscd-warning: var(--oscd-theme-warning, #ffcc17);
+  --oscd-on-warning: var(--oscd-theme-on-warning, var(--oscd-gray-90));
+  --oscd-success: var(--oscd-theme-success, #239c5b);
+  --oscd-on-success: var(--oscd-theme-on-success, var(--oscd-gray-90));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
