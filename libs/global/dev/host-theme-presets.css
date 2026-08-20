@@ -347,9 +347,13 @@ html.transnetbw-new {
   --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
   --oscd-theme-primary: #004552;
   --oscd-theme-on-primary: var(--oscd-theme-white);
+  --oscd-theme-primary-adaptive: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
+  --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
   --oscd-theme-nav-active: yellow; /* oder --warning-500 ? */
   --oscd-theme-secondary: #004552;
   --oscd-theme-on-secondary: var(--oscd-theme-white);
+  --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), var(--oscd-theme-secondary));
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-warning: var(--warning-500);
   --oscd-theme-success: var(--success-500);
@@ -382,11 +386,13 @@ html.bearingpoint-new {
   --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
   --oscd-theme-primary: #330000;
   --oscd-theme-on-primary: var(--oscd-theme-white);
-  --oscd-theme-primary-themed: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
-  --oscd-theme-on-primary-themed: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
+  --oscd-theme-primary-adaptive: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
+  --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
   --oscd-theme-nav-active: yellow; /* oder --warning-500 ? */
   --oscd-theme-secondary: var(--oscd-theme-gray-50);
   --oscd-theme-on-secondary: var(--oscd-theme-white);
+  --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), var(--oscd-theme-secondary));
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-warning: var(--warning-500);
   --oscd-theme-success: var(--success-500);
@@ -426,9 +432,7 @@ html.bearingpoint-new {
   
   /* darkest black and lightes white. Fixed values. */
   --oscd-white: var(--oscd-theme-white, #ffffff);
-
   --oscd-black: var(--oscd-theme-black, color-mix(in oklab, var(--oscd-gray-90) 50%, #000)); /* little darker then darkest gray */
-/*   --oscd-black: var(--oscd-theme-black, #000); */
   /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
   --oscd-paper: var(--oscd-theme-paper, light-dark(var(--oscd-white), var(--oscd-black)));
   --oscd-ink: var(--oscd-theme-ink, light-dark(var(--oscd-black), var(--oscd-white)));
@@ -459,12 +463,12 @@ html.bearingpoint-new {
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
   --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-gray-20));
-  --oscd-primary-themed: var(--oscd-theme-primary-themed, var(--oscd-primary));
-  --oscd-on-primary-themed: var(--oscd-theme-on-primary-themed, var(--oscd-on-primary));
+  --oscd-primary-adaptive: var(--oscd-theme-primary-adaptive, var(--oscd-primary));
+  --oscd-on-primary-adaptive: var(--oscd-theme-on-primary-adaptive, var(--oscd-on-primary));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
   --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-gray-20));
-  --oscd-secondary-themed: var(--oscd-theme-secondary-themed, var(--oscd-secondary));
-  --oscd-on-secondary-themed: var(--oscd-theme-on-secondary-themed, var(--oscd-on-secondary));
+  --oscd-secondary-adaptive: var(--oscd-theme-secondary-adaptive, var(--oscd-secondary));
+  --oscd-on-secondary-adaptive: var(--oscd-theme-on-secondary-adaptive, var(--oscd-on-secondary));
   --oscd-nav-active: var(--oscd-theme-nav-active, var(--oscd-on-primary));
 
   --oscd-error: var(--oscd-theme-error, #ff3d47);
