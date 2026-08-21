@@ -12,7 +12,8 @@ export type ThemeBrand =
   | 'transnetbw'
   | 'transnetbw-new'
   | 'bearingpoint'
-  | 'bearingpoint-new';
+  | 'bearingpoint-new'
+  | 'omicron';
 
 export interface HostThemePreset {
   brand: ThemeBrand;
@@ -26,6 +27,7 @@ export const HOST_THEME_PRESETS: HostThemePreset[] = [
   { brand: 'transnetbw-new', label: 'TransnetBW new' },
   { brand: 'bearingpoint', label: 'BearingPoint' },
   { brand: 'bearingpoint-new', label: 'BearingPoint new' },
+  { brand: 'omicron', label: 'OMICRONEnergyOSS' },
 ];
 
 /** Brand class names on <html> (mode is a separate class). */

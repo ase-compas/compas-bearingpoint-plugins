@@ -321,6 +321,69 @@ html.bearingpoint.dark {
   
 }
 
+/* OMICRONEnergyOSS: thex do not support dark mode. */
+html.omicron.light,
+html.omicron.dark {
+  /* color variables names taken from Omicron Pallet (for reference) */
+  --french-blue-15: #0b335b;
+  --french-blue-55: #2485e5;
+
+  --omicron-yellow: #f5e214;
+
+  --slate-0: #121417; /* L* ≈ 7% */
+  --slate-5: #1a1e23; /* L* ≈ 10% */
+  --slate-25: #3d4651; /* L* ≈ 26% */
+  --slate-30: #46505d; /* L* ≈ 30% */
+  --slate-65: #8b97a7; /* L* ≈ 58% */
+  --slate-70: #96a1b0; /* L* ≈ 62% */
+  --slate-110: #f3f5f6; /* L* ≈ 94% */
+  --error: #dc322f;
+
+  --oscd-theme-primary: var(--french-blue-15);
+  --oscd-theme-secondary: var(--french-blue-55);
+  --oscd-theme-error: var(--oscd-theme-error, #dc322f);
+  --oscd-theme-base03: var(--slate-0);
+  --oscd-theme-base02: var(--slate-5);
+  --oscd-theme-base01: var(--slate-25);
+  --oscd-theme-base00: var(--slate-30);
+  --oscd-theme-base0: var(--slate-65);
+  --oscd-theme-base1: var(--slate-70);
+  --oscd-theme-base2: var(--slate-110);
+  --oscd-theme-base3: white;
+
+  --oscd-shell-app-bar-icon-height: 24px;
+  
+  /* SHOULD have been built with Figma plugin as per guidance for Material Web Components */
+  /* see https://github.com/material-components/material-web/blob/main/docs/theming/color.md */
+
+  --oscd-error: var(--oscd-theme-error, #dc322f) !important;
+
+  --oscd-text-font: var(--oscd-theme-text-font, "Roboto");
+  --oscd-icon-font: var(--oscd-theme-icon-font, "Material Symbols Outlined");
+  --oscd-text-font-mono: var(--oscd-theme-text-font-mono, "Roboto Mono");
+
+  --oscd-warning: var(--oscd-theme-warning, #b58900);
+    
+    
+
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+    
+}
+
 html.transnetbw-new {
   --oscd-theme-branding: TransnetBW;
 
