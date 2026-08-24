@@ -155,15 +155,14 @@ html.openscd.dark {
 
 /* TransnetBW light: CoMPAS-like surfaces + brand primary via --cyan */
 html.transnetbw.light {
-  --primary-base: #004552;
   --base03: #002b36;
   --base02: #073642;
   --base01: #586e75;
   --base00: #657b83;
   --base0: #839496;
   --base1: #93a1a1;
-  --base2: #EDF1F2;
-  --base3: #DAE3E6;
+  --base2: #ffffff;
+  --base3: #e3e3e3;
   --yellow: #b58900;
   --orange: #cb4b16;
   --red: #dc322f;
@@ -172,18 +171,12 @@ html.transnetbw.light {
   --blue: #268bd2;
   --cyan: #2aa198;
   --green: #859900;
-  --white: #FFFFFF;
-  --success: #2e7d32;
-  --warning: #f57c00;
-  --danger: #c62828;
   
   --primary: #004552;
   --secondary: #004552;
-
   --oscd-primary: var(--oscd-theme-primary, var(--cyan));
   --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
   --oscd-error: var(--oscd-theme-error, var(--red));
-
   --oscd-base03: var(--oscd-theme-base03, var(--base03));
   --oscd-base02: var(--oscd-theme-base02, var(--base02));
   --oscd-base01: var(--oscd-theme-base01, var(--base01));
@@ -192,7 +185,6 @@ html.transnetbw.light {
   --oscd-base1: var(--oscd-theme-base1, var(--base1));
   --oscd-base2: var(--oscd-theme-base2, var(--base2));
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
-
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
 }
@@ -215,17 +207,12 @@ html.transnetbw.dark {
   --blue: #268bd2;
   --cyan: #2aa198;
   --green: #859900;
-  --success: #2e7d32;
-  --warning: #f57c00;
-  --danger: #c62828;
   
   --primary: #004552;
   --secondary: #004552;
-
   --oscd-primary: var(--oscd-theme-primary, var(--cyan));
   --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
   --oscd-error: var(--oscd-theme-error, var(--red));
-
   --oscd-base03: var(--oscd-theme-base03, var(--base03));
   --oscd-base02: var(--oscd-theme-base02, var(--base02));
   --oscd-base01: var(--oscd-theme-base01, var(--base01));
@@ -234,7 +221,6 @@ html.transnetbw.dark {
   --oscd-base1: var(--oscd-theme-base1, var(--base1));
   --oscd-base2: var(--oscd-theme-base2, var(--base2));
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
-
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
 }
