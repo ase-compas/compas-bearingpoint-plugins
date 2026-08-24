@@ -19,20 +19,6 @@ label {
   display: block;
 }
 
-input,
-button,
-select,
-textarea {
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid var(--bearingpoint-color-border-strong);
-  border-radius: 2px;
-}
-
-input:disabled {
-  color: var(--bearingpoint-color-text-disabled);
-}
-
 button {
   height: 32px;
   opacity: 1;

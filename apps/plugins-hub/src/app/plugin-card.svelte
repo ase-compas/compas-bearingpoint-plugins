@@ -127,7 +127,7 @@
   }
 
   .plugin-card.selected {
-    border-color: var(--bearingpoint-color-primary-dark);
+    border-color: var(--bearingpoint-color-border-strong);
   }
 
   .plugin-card.incompatible {

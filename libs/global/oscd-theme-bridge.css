@@ -38,7 +38,7 @@
   --bearingpoint-color-link-visited: var(--oscd-secondary);
 
   --bearingpoint-color-border: var(--oscd-base1);
-  --bearingpoint-color-border-strong: var(--oscd-base0);
+  --bearingpoint-color-border-strong: var(--oscd-base03);
   --bearingpoint-color-border-hover: var(--oscd-base00);
   --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
 
@@ -332,6 +332,22 @@
     --oscd-base2: var(--oscd-gray-80);
     --oscd-base3: var(--oscd-gray-90);
   }
+}
+
+:root,
+:host {
+  /* SMUI outlined focus ring (Search / Status / Contributors / Kind) */
+  --mdc-theme-primary: var(--oscd-primary-adaptive);
+  --mdc-shape-small: 8px;
+}
+
+/* MDC filled shape rounds only the top; outlined notched outline rounds all
+   four corners. Match the container fill to the outline so the surface does
+   not poke out as square corners. */
+.mdc-text-field--outlined,
+.mdc-select--outlined,
+.mdc-select--outlined .mdc-select__anchor {
+  border-radius: var(--mdc-shape-small);
 }
 
 /** dark mode set color for smui componenten. */
