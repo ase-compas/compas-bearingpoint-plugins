@@ -16,8 +16,7 @@
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
   --bearingpoint-color-primary: var(--oscd-primary);
   --bearingpoint-color-on-primary: var(--oscd-on-primary);
-  /* Primary-dark is used for boarders */
-  --bearingpoint-color-ink: color-mix(var(--oscd-primary-adaptive), var(--oscd-ink));
+  --bearingpoint-color-ink: color-mix(in oklab, var(--oscd-primary-adaptive), var(--oscd-ink));
 
   --bearingpoint-color-positive: var(--oscd-green);
   --bearingpoint-color-negative: var(--oscd-error);
@@ -254,7 +253,7 @@
     --oscd-primary-adaptive: var(--oscd-on-primary);
     --oscd-on-primary-adaptive: var(--oscd-primary);
     --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: color-mix(var(--oscd-secondary) 30%, var(--oscd-black));
+    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
 
     --oscd-base03: var(--oscd-gray-10);
     --oscd-base02: var(--oscd-gray-20);
@@ -359,7 +358,7 @@
     --oscd-primary-adaptive: var(--oscd-on-primary);
     --oscd-on-primary-adaptive: var(--oscd-primary);
     --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: color-mix(var(--oscd-secondary) 30%, var(--oscd-black));
+    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
     
     --oscd-base03: var(--oscd-gray-10);
     --oscd-base02: var(--oscd-gray-20);

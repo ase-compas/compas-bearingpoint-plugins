@@ -402,7 +402,7 @@ html.transnetbw-new {
   --oscd-theme-secondary: #004552;
   --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
   --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(in oklab, var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-on-error: var(--oscd-theme-black);
   --oscd-theme-warning: var(--warning-500);
@@ -444,7 +444,7 @@ html.bearingpoint-new {
   --oscd-theme-secondary: var(--oscd-theme-gray-60);
   --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
   --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(in oklab, var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
   --oscd-theme-error: var(--danger-500);
   --oscd-theme-on-error: var(--oscd-theme-black);
   --oscd-theme-warning: var(--warning-500);
