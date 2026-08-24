@@ -127,7 +127,9 @@
   }
 
   .plugin-card.selected {
-    border-color: var(--bearingpoint-color-primary-dark);
+    border-color: var(--bearingpoint-color-border-strong);
+    /* Extra 1px as shadow so the box size (and neighbours) do not shift. */
+    box-shadow: 0 0 0 1px var(--bearingpoint-color-border-strong);
   }
 
   .plugin-card.incompatible {

@@ -22,8 +22,8 @@ export default defineConfig(async (): Promise<UserConfig> => {
       port: 4201,
       host: 'localhost',
       fs: {
-        // App root is apps/plugins-hub; shared fonts/CSS live in libs/global.
-        // Previous allow:['..'] only covered apps/ → @fs/.../libs/global/icons/*.woff2 = 403.
+        // App root is apps/plugins-hub; shared CSS/fonts live in libs/global
+        // (dev-only faces under libs/global/dev/google).
         allow: [path.resolve(__dirname, '../..')],
       },
       proxy,

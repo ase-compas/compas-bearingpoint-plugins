@@ -16,8 +16,7 @@
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
   --bearingpoint-color-primary: var(--oscd-primary);
   --bearingpoint-color-on-primary: var(--oscd-on-primary);
-  /* Primary-dark is used for boarders */
-  --bearingpoint-color-primary-dark: var(--oscd-primary);
+  --bearingpoint-color-ink: color-mix(in oklab, var(--oscd-primary-adaptive), var(--oscd-ink));
 
   --bearingpoint-color-positive: var(--oscd-green);
   --bearingpoint-color-negative: var(--oscd-error);
@@ -31,14 +30,14 @@
   /* Body text uses palette foregrounds (primary brand can be loud on dark) */
   --bearingpoint-color-text-primary: var(--oscd-base00);
   --bearingpoint-color-text-dark: var(--oscd-base03);
-  --bearingpoint-color-text-secondary: var(--oscd-base01);
+  --bearingpoint-color-text-secondary: var(--oscd-base00);
   --bearingpoint-color-text-disabled: var(--oscd-base1);
 
   --bearingpoint-color-link: var(--oscd-blue);
   --bearingpoint-color-link-visited: var(--oscd-secondary);
 
   --bearingpoint-color-border: var(--oscd-base1);
-  --bearingpoint-color-border-strong: var(--oscd-base0);
+  --bearingpoint-color-border-strong: var(--oscd-base03);
   --bearingpoint-color-border-hover: var(--oscd-base00);
   --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
 
@@ -80,9 +79,7 @@
   );
 
   /* Font stacks prefer host text font */
-  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto,
-    sans-serif;
-/*   --bearingpoint-font-inter: "Inter", system-ui, sans-serif; */
+  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --bearingpoint-font-inter: var(--oscd-text-font), system-ui, sans-serif;
   --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
   --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
@@ -178,13 +175,23 @@
     --oscd-gray-80: #665247;
     --oscd-gray-90: #5a473e;
     
+    --interactive-500: #a070ff;
+    --success-500: #239c5b;
+    --warning-500: #ffcc17;
+    --danger-500: #ff3d47;
+    
     --oscd-primary: var(--primary);
     --oscd-on-primary: var(--oscd-white);
-    --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-white);
-    
-    --oscd-warning: #ffcc17;
-    --oscd-on-warning: var(--oscd-gray-90);
+    --oscd-secondary: var(--oscd-gray-60);
+    --oscd-on-secondary: var(--oscd-gray-10);
+
+    --oscd-error: var(--danger-500);
+    --oscd-on-error: var(--oscd-black);
+    --oscd-warning: var(--warning-500);
+    --oscd-on-warning: var(--oscd-black);
+    --oscd-success: var(--success-500);
+    --oscd-on-success: var(--oscd-black);
+
     --oscd-white: #ffffff;
     --oscd-black: color-mix(in oklab, var(--primary) 50%, #000);
     --oscd-paper: var(--oscd-white);
@@ -220,14 +227,24 @@
     --oscd-gray-70: #735c50;
     --oscd-gray-80: #665247;
     --oscd-gray-90: #5a473e;
+    
+    --interactive-500: #a070ff;
+    --success-500: #239c5b;
+    --warning-500: #ffcc17;
+    --danger-500: #ff3d47;
 
     --oscd-primary: var(--primary);
     --oscd-on-primary: var(--oscd-white);
     --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-white);
+    --oscd-on-secondary: var(--oscd-gray-10);
 
-    --oscd-warning: #ffcc17;
-    --oscd-on-warning: var(--oscd-gray-90);
+    --oscd-error: var(--danger-500);
+    --oscd-on-error: var(--oscd-black);
+    --oscd-warning: var(--warning-500);
+    --oscd-on-warning: var(--oscd-black);
+    --oscd-success: var(--success-500);
+    --oscd-on-success: var(--oscd-black);
+    
     --oscd-white: #ffffff;
     --oscd-black: color-mix(in oklab, var(--primary) 50%, #000);
     --oscd-paper: var(--oscd-black);
@@ -236,7 +253,7 @@
     --oscd-primary-adaptive: var(--oscd-on-primary);
     --oscd-on-primary-adaptive: var(--oscd-primary);
     --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: var(--oscd-secondary);
+    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
 
     --oscd-base03: var(--oscd-gray-10);
     --oscd-base02: var(--oscd-gray-20);
@@ -264,13 +281,23 @@
     --oscd-gray-80: #073642;
     --oscd-gray-90: #002b36; /* darkest */
     
+    --interactive-500: #a070ff;
+    --success-500: #239c5b;
+    --warning-500: #ffcc17;
+    --danger-500: #ff3d47;
+    
     --oscd-primary: var(--primary);
     --oscd-on-primary: var(--oscd-white);
     --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-white);
-    
-    --oscd-warning: #ffcc17;
-    --oscd-on-warning: var(--oscd-gray-90);
+    --oscd-on-secondary: var(--oscd-gray-10);
+
+    --oscd-error: var(--danger-500);
+    --oscd-on-error: var(--oscd-black);
+    --oscd-warning: var(--warning-500);
+    --oscd-on-warning: var(--oscd-black);
+    --oscd-success: var(--success-500);
+    --oscd-on-success: var(--oscd-black);
+
     --oscd-white: #ffffff;
     --oscd-black: color-mix(in oklab, var(--oscd-gray-90) 50%, #000);
     --oscd-paper: var(--oscd-white);
@@ -305,14 +332,24 @@
     --oscd-gray-70: color-mix(in oklab, var(--oscd-gray-60) 50%, var(--oscd-gray-80));
     --oscd-gray-80: #073642;
     --oscd-gray-90: #002b36; /* darkest */
+    
+    --interactive-500: #a070ff;
+    --success-500: #239c5b;
+    --warning-500: #ffcc17;
+    --danger-500: #ff3d47;
 
     --oscd-primary: var(--primary);
     --oscd-on-primary: var(--oscd-white);
     --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-white);
+    --oscd-on-secondary: var(--oscd-gray-10);
 
-    --oscd-warning: #ffcc17;
-    --oscd-on-warning: var(--oscd-gray-90);
+    --oscd-error: var(--danger-500);
+    --oscd-on-error: var(--oscd-black);
+    --oscd-warning: var(--warning-500);
+    --oscd-on-warning: var(--oscd-black);
+    --oscd-success: var(--success-500);
+    --oscd-on-success: var(--oscd-black);
+
     --oscd-white: #ffffff;
     --oscd-black: color-mix(in oklab, var(--oscd-gray-90) 50%, #000);
     --oscd-paper: var(--oscd-black);
@@ -321,7 +358,7 @@
     --oscd-primary-adaptive: var(--oscd-on-primary);
     --oscd-on-primary-adaptive: var(--oscd-primary);
     --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: var(--oscd-secondary);
+    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
     
     --oscd-base03: var(--oscd-gray-10);
     --oscd-base02: var(--oscd-gray-20);
@@ -332,6 +369,22 @@
     --oscd-base2: var(--oscd-gray-80);
     --oscd-base3: var(--oscd-gray-90);
   }
+}
+
+:root,
+:host {
+  /* SMUI outlined focus ring (Search / Status / Contributors / Kind) */
+  --mdc-theme-primary: var(--oscd-primary-adaptive);
+  --mdc-shape-small: 8px;
+}
+
+/* MDC filled shape rounds only the top; outlined notched outline rounds all
+   four corners. Match the container fill to the outline so the surface does
+   not poke out as square corners. */
+.mdc-text-field--outlined,
+.mdc-select--outlined,
+.mdc-select--outlined .mdc-select__anchor {
+  border-radius: var(--mdc-shape-small);
 }
 
 /** dark mode set color for smui componenten. */

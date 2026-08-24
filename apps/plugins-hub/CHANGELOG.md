@@ -7,9 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5]
+
 ### Changed
 
-- **Host theme inheritance:** Plugin Hub maps OpenSCD `--oscd-theme-*`
+- Implements [Issue #18](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/18):
+  Plugin Hub no longer ships font files or loads Google Fonts. Icon classes
+  (`.material-icons`, `.material-icons-outlined`, `.material-symbols-outlined`)
+  live in `libs/global/oscd-typography.css` and use the host faces. Standalone
+  dev registers the same OpenSCD fonts from `libs/global/dev/google/`.
+  Text uses `var(--oscd-text-font)` (Roboto).
+- Implements [Issue #12](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/12):
+  **Host theme inheritance:** Plugin Hub maps OpenSCD `--oscd-theme-*`
   (and older host tokens such as `--primary` / `--base*`) into internal
   `--oscd-*`, MDC/MD3, and existing `--bearingpoint-*` aliases, with Solarized
   fallbacks. It no longer forces a fixed BearingPoint palette or Material

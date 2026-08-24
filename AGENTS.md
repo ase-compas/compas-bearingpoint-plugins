@@ -121,7 +121,9 @@ npm run verify                     # lint + check + test
   (`libs/global/oscd-theme-bridge.css`): prefer `var(--bearingpoint-color-*)`
   / `var(--bearingpoint-text-*)` aliases (mapped from `--oscd-theme-*` →
   `--oscd-*`). Do not hardcode brand colours or set `--oscd-theme-*` in the
-  plugin. Dev-only host brand/light-dark switching lives under
+  plugin. Do not ship `@font-face` / font files in the production plugin;
+  host icon classes live in `libs/global/oscd-typography.css`. Dev-only host
+  brand/light-dark switching and OpenSCD font faces live under
   `libs/global/dev/` (wired from app `main.ts`, not the production entry).
 
 ### Error handling
