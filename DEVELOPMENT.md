@@ -55,6 +55,17 @@ so CSS `light-dark()` works.
 Runtime is wired from `apps/plugins-hub/src/main.ts` only (**not** the production
 plugin entry). Fake OpenSCD host stays in `apps/plugins-hub/src/dev/fake-open-scd.ts`.
 
+#### Fonts (standalone only)
+
+Production inherits Roboto / Material Icons from the OpenSCD host and must **not**
+ship `@font-face` files. The plugin only bundles the host icon **classes** in
+`libs/global/oscd-typography.css` (needed inside Shadow DOM).
+
+Standalone `run:plugins-hub` registers the same faces as OpenSCD
+(`packages/distribution/public/google`) via `libs/global/dev/oscd-fonts.css` →
+`libs/global/dev/google/` (Roboto, Roboto Mono, Material Icons Outlined,
+Material Symbols Outlined).
+
 #### Using it
 
 | Control | Options |

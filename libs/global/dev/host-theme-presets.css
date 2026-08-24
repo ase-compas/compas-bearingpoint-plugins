@@ -400,12 +400,15 @@ html.transnetbw-new {
   --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
   --oscd-theme-on-primary-active: yellow; /* oder --warning-500 ? */
   --oscd-theme-secondary: #004552;
-  --oscd-theme-on-secondary: var(--oscd-theme-white);
+  --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
   --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), var(--oscd-theme-secondary));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
   --oscd-theme-error: var(--danger-500);
+  --oscd-theme-on-error: var(--oscd-theme-black);
   --oscd-theme-warning: var(--warning-500);
+  --oscd-theme-on-warning: var(--oscd-theme-black);
   --oscd-theme-success: var(--success-500);
+  --oscd-theme-on-success: var(--oscd-theme-black);
   
 }
 
@@ -438,13 +441,16 @@ html.bearingpoint-new {
   --oscd-theme-primary-adaptive: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
   --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
   --oscd-theme-on-primary-active: yellow; /* oder --warning-500 ? */
-  --oscd-theme-secondary: var(--oscd-theme-gray-50);
-  --oscd-theme-on-secondary: var(--oscd-theme-white);
+  --oscd-theme-secondary: var(--oscd-theme-gray-60);
+  --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
   --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), var(--oscd-theme-secondary));
+  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
   --oscd-theme-error: var(--danger-500);
+  --oscd-theme-on-error: var(--oscd-theme-black);
   --oscd-theme-warning: var(--warning-500);
+  --oscd-theme-on-warning: var(--oscd-theme-black);
   --oscd-theme-success: var(--success-500);
+  --oscd-theme-on-success: var(--oscd-theme-black);
   
 /*   --oscd-theme-yellow: #b58900; */
 /*   --oscd-theme-orange: #cb4b16; */

@@ -415,7 +415,7 @@
     height: 100%;
     min-height: 400px;
     background: var(--bearingpoint-color-bg-page);
-    color: var(--bearingpoint-color-text-primary);
+    color: var(--bearingpoint-color-ink);
     overflow: hidden;
   }
 

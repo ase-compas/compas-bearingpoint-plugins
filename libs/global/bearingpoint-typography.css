@@ -1,25 +1,22 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&family=Source+Sans+3:wght@400;600&family=Rubik:wght@400;500&display=swap");
-
 :root,
 :host {
   /* Font stacks are set in oscd-theme-bridge.css from --oscd-text-font.
      Type scale tokens (layout-only; not brand-specific): */
   --bearingpoint-text-h1-size: 20px;
   --bearingpoint-text-h1-line: 24px;
-  --bearingpoint-text-h1-weight: 600;
+  --bearingpoint-text-h1-weight: 500;
 
   --bearingpoint-text-h2-size: 16px;
   --bearingpoint-text-h2-line: 22px;
-  --bearingpoint-text-h2-weight: 600;
+  --bearingpoint-text-h2-weight: 500;
 
   --bearingpoint-text-h3-size: 18px;
   --bearingpoint-text-h3-line: 24px;
-  --bearingpoint-text-h3-weight: 600;
+  --bearingpoint-text-h3-weight: 500;
 
   --bearingpoint-text-16-size: 16px;
   --bearingpoint-text-16-line: 22px;
-  --bearingpoint-text-16-bold-weight: 600;
+  --bearingpoint-text-16-bold-weight: 500;
 
   --bearingpoint-text-body-size: 14px;
   --bearingpoint-text-body-line: 22px;
@@ -27,7 +24,7 @@
 
   --bearingpoint-text-14-bold-size: 14px;
   --bearingpoint-text-14-bold-line: 20px;
-  --bearingpoint-text-14-bold-weight: 600;
+  --bearingpoint-text-14-bold-weight: 500;
 
   --bearingpoint-text-caption-size: 12px;
   --bearingpoint-text-caption-line: 16px;
@@ -35,15 +32,15 @@
 
   --bearingpoint-text-label-size: 12px;
   --bearingpoint-text-label-line: 16px;
-  --bearingpoint-text-label-weight: 600;
+  --bearingpoint-text-label-weight: 500;
 
   --bearingpoint-text-tag-size: 12px;
   --bearingpoint-text-tag-line: 16px;
-  --bearingpoint-text-tag-weight: 600;
+  --bearingpoint-text-tag-weight: 500;
 
   --bearingpoint-text-button-size: 14px;
   --bearingpoint-text-button-line: 20px;
-  --bearingpoint-text-button-weight: 600;
+  --bearingpoint-text-button-weight: 500;
 }
 
 /* ---------------------------------------------------------------------------

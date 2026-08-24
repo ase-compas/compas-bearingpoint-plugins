@@ -6,6 +6,7 @@
  * Import only from app main.ts (never from the production plugin entry).
  */
 import './host-theme-presets.css';
+import './oscd-fonts.css';
 import {
   HOST_THEME_CLASSES,
   HOST_THEME_PRESETS,

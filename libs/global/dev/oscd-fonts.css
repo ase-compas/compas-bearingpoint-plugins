@@ -1,0 +1,10 @@
+/**
+ * Dev-only OpenSCD host fonts (@font-face).
+ * Same files as packages/distribution/public/google in OpenSCD.
+ * Production must never import this — the host already registers these faces.
+ * Wired from theme-playground.ts (standalone main.ts only).
+ */
+@import './google/fonts/roboto-v27.css';
+@import './google/fonts/roboto-mono-v13.css';
+@import './google/icons/material-icons-outlined.css';
+@import './google/icons/material-symbols-outlined.css';

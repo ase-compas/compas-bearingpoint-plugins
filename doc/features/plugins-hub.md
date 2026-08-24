@@ -54,6 +54,7 @@ accents.
 `libs/global/dev/host-theme-presets.css` (e.g. `html.bearingpoint.light`,
 `html.transnetbw.dark`). The playground sets brand + mode as separate classes
 on `<html>`; `-new` brands also set `color-scheme` so `light-dark()` works.
+Standalone also registers the OpenSCD font faces from `libs/global/dev/google/`.
 Toolbar + `?brand=&mode=` on the real Hub dev page; not shipped in the
 production plugin bundle. See `DEVELOPMENT.md`.
 
