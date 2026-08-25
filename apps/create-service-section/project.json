@@ -1,0 +1,74 @@
+{
+  "name": "create-service-section",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/create-service-section/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "command": "eslint apps/create-service-section/**/*.{ts,svelte,spec.ts}"
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "svelte-check",
+        "cwd": "apps/create-service-section"
+      }
+    },
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/create-service-section"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "create-service-section:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "create-service-section:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "create-service-section:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "create-service-section:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "create-service-section:build:development"
+        },
+        "production": {
+          "buildTarget": "create-service-section:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/apps/create-service-section"
+      }
+    }
+  }
+}
