@@ -7,7 +7,7 @@ export default defineConfig(async () => {
 
   return {
     root: __dirname,
-    cacheDir: '../../node_modules/.vite/apps/background-plugin',
+    cacheDir: '../../node_modules/.vite/apps/scl-quality-guard',
 
     server: {
       port: 4210,
@@ -22,10 +22,10 @@ export default defineConfig(async () => {
       host: 'localhost',
     },
 
-    plugins: [svelte(), nxViteTsPaths()],
+    plugins: [svelte({ compilerOptions: { css: 'injected' } }), nxViteTsPaths()],
 
     build: {
-      outDir: '../../dist/apps/background-plugin',
+      outDir: '../../dist/apps/scl-quality-guard',
       reportCompressedSize: true,
       commonjsOptions: {
         transformMixedEsModules: true,
@@ -52,7 +52,7 @@ export default defineConfig(async () => {
 
       reporters: ['default'],
       coverage: {
-        reportsDirectory: '../../coverage/apps/background-plugin',
+        reportsDirectory: '../../coverage/apps/scl-quality-guard',
         provider: 'v8',
       },
     },

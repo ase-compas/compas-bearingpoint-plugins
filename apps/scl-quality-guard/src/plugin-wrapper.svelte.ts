@@ -22,13 +22,13 @@ const UPGRADABLE_PROPERTIES = [
   'oscdApi',
 ] as const;
 
-export default class XPathValidator extends HTMLElement {
+export default class SclQualityGuard extends HTMLElement {
   constructor() {
     super();
 
     // OpenSCD registers this element's tag asynchronously (via a dynamic
     // `import()` followed by `customElements.define()`), while lit-html may
-    // already start rendering `<xpath-validator .doc=${doc} ...>` before
+    // already start rendering `<scl-quality-guard .doc=${doc} ...>` before
     // that registration completes. Any properties set on the element while
     // it is still an "undefined" custom element land as plain own
     // properties on the instance. When the browser later upgrades the

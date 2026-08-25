@@ -1,18 +1,18 @@
 {
-  "name": "validator-prototype",
+  "name": "scl-quality-guard",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/validator-prototype/src",
+  "sourceRoot": "apps/scl-quality-guard/src",
   "projectType": "application",
   "tags": [],
   "targets": {
     "lint": {
-      "command": "eslint apps/validator-prototype/**/*.{ts,svelte,spec.ts}"
+      "command": "eslint apps/scl-quality-guard/**/*.{ts,svelte,spec.ts}"
     },
     "check": {
       "executor": "nx:run-commands",
       "options": {
         "command": "svelte-check",
-        "cwd": "apps/validator-prototype"
+        "cwd": "apps/scl-quality-guard"
       }
     },
     "build": {
@@ -20,7 +20,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/validator-prototype"
+        "outputPath": "dist/apps/scl-quality-guard"
       },
       "configurations": {
         "development": {
@@ -35,15 +35,15 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "validator-prototype:build"
+        "buildTarget": "scl-quality-guard:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "validator-prototype:build:development",
+          "buildTarget": "scl-quality-guard:build:development",
           "hmr": true
         },
         "production": {
-          "buildTarget": "validator-prototype:build:production",
+          "buildTarget": "scl-quality-guard:build:production",
           "hmr": false
         }
       }
@@ -52,14 +52,14 @@
       "executor": "@nx/vite:preview-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "validator-prototype:build"
+        "buildTarget": "scl-quality-guard:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "validator-prototype:build:development"
+          "buildTarget": "scl-quality-guard:build:development"
         },
         "production": {
-          "buildTarget": "validator-prototype:build:production"
+          "buildTarget": "scl-quality-guard:build:production"
         }
       }
     },
@@ -67,7 +67,7 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/apps/validator-prototype"
+        "reportsDirectory": "../../coverage/apps/scl-quality-guard"
       }
     }
   }

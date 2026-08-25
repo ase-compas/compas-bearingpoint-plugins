@@ -17,14 +17,12 @@
     locale?: string;
     oscdApi?: unknown;
     host?: HTMLElement;
-    manualRunCount?: number;
   }
 
   let {
     doc,
     dev = false,
     editCount = 0,
-    manualRunCount = 0,
   }: Props = $props();
 
   let lastEvent = $state('waiting for document...');
@@ -47,21 +45,12 @@
     addEvent(`📝 Edit #${editCount}`);
   });
 
-  $effect(() => {
-    if (manualRunCount === 0) return;
-    lastEvent = `validation run triggered (run #${manualRunCount})`;
-    addEvent(`🔧 Validation run #${manualRunCount}`);
-  });
-
   onMount(() => {
     addEvent('✅ Validator plugin mounted');
   });
 </script>
 
 {#if dev}
-  <!-- Debug UI, only visible during `nx serve`. In production, this
-       validator runs silently in the background, reporting issues to
-       the Diagnostics pane rather than displaying UI. -->
   <pre class="status">XPath Validator: {lastEvent}</pre>
 {/if}
 

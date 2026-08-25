@@ -1,4 +1,4 @@
-# Validator Prototype – Debugging & Setup Guide
+# SCL Quality Guard – Debugging & Setup Guide
 
 ## Overview: OCL Validator Service
 
@@ -25,7 +25,7 @@ This plugin demonstrates a **background validator** that runs passively in OpenS
    - `activeByDefault: true` (to auto-enable)
    - Plugin name, icon, etc.
 
-2. **Build & Placement** – The built `dist/apps/validator-prototype/index.js` must be:
+2. **Build & Placement** – The built `dist/apps/scl-quality-guard/index.js` must be:
    - Copied to the CompAS distribution or served remotely
    - Served at the URL specified in `src`
 
@@ -36,41 +36,41 @@ This plugin demonstrates a **background validator** that runs passively in OpenS
    - `validate()` is called when the system runs validators
 
 4. **Console Logs** – Check:
-   - Browser DevTools → **Console** tab → look for `[VALIDATOR-PROTOTYPE]` messages
+   - Browser DevTools → **Console** tab → look for `[SCL-QUALITY-GUARD]` messages
    - Browser DevTools → **Network** tab → confirm `index.js` is fetched (200 status)
    - Browser DevTools → **Elements** → search for the validator's custom element tag
 
 ### Checklist for Setup
 
-- [ ] **Build** – Run `npm run build:validator-prototype`
+- [ ] **Build** – Run `npm run build:scl-quality-guard`
 - [ ] **Register** – Add entry to `packages/compas-open-scd/public/js/plugins.js`:
   ```javascript
   {
-    name: 'OCL Validator',
-    src: '/public/offline-plugins/compas/plugins/validator-prototype/0.0.1/index.js',
+    name: 'SCL Quality Guard',
+    src: '/public/offline-plugins/compas/plugins/scl-quality-guard/0.0.1/index.js',
     icon: 'check_circle',
     activeByDefault: true,
     kind: 'validator',
     requireDoc: true,  // Validator needs a document to work with
   }
   ```
-- [ ] **Copy Built Files** – From `dist/apps/validator-prototype/` to the CompAS offline plugins directory
+- [ ] **Copy Built Files** – From `dist/apps/scl-quality-guard/` to the CompAS offline plugins directory
 - [ ] **Start CompAS** – `npm run dev` or build & serve the distribution
 - [ ] **Open Browser DevTools** → Console tab
 - [ ] **Load/Create Document** in CompAS
-- [ ] **Monitor Console** for `[VALIDATOR-PROTOTYPE]` debug messages
+- [ ] **Monitor Console** for `[SCL-QUALITY-GUARD]` debug messages
 
 ### Expected Console Output
 
 Once the plugin is properly hooked up, you should see (in the **Console** tab):
 
 ```
-[VALIDATOR-PROTOTYPE] ✅ Constructor called - plugin is loading!
-[VALIDATOR-PROTOTYPE] ✅ connectedCallback fired - VALIDATOR MOUNTED!
-[VALIDATOR-PROTOTYPE] doc changed (XSD document node)
-[VALIDATOR-PROTOTYPE] editCount changed to 0
+[SCL-QUALITY-GUARD] ✅ Constructor called - plugin is loading!
+[SCL-QUALITY-GUARD] ✅ connectedCallback fired - VALIDATOR MOUNTED!
+[SCL-QUALITY-GUARD] doc changed (XSD document node)
+[SCL-QUALITY-GUARD] editCount changed to 0
 ... (on every edit)
-[VALIDATOR-PROTOTYPE] ✅ validate() called - VALIDATION TRIGGERED!
+[SCL-QUALITY-GUARD] ✅ validate() called - VALIDATION TRIGGERED!
 ```
 
 ### What the Plugin Does (Today)
@@ -84,7 +84,7 @@ Once the plugin is properly hooked up, you should see (in the **Console** tab):
 
 1. Register the plugin in `plugins.js` (see checkbox above)
 2. Run the full CompAS build or dev server
-3. Open DevTools Console and look for `[VALIDATOR-PROTOTYPE]` messages
+3. Open DevTools Console and look for `[SCL-QUALITY-GUARD]` messages
 4. If still no output, check **Network** tab to confirm `index.js` loaded (200 status)
 5. Once working, implement real OCL validation inside `validate()` method
 
@@ -92,7 +92,7 @@ Once the plugin is properly hooked up, you should see (in the **Console** tab):
 
 Run during development:
 ```bash
-cd apps/validator-prototype
+cd apps/scl-quality-guard
 npm run serve
 # Opens http://localhost:4210
 # Shows the validator in isolation (if dev UI is configured)
@@ -104,45 +104,45 @@ npm run serve
 
 1. **Rebuild the validator with debug logging**:
    ```bash
-   npm run build:validator-prototype
-   # Updates dist/apps/validator-prototype/index.js
+   npm run build:scl-quality-guard
+   # Updates dist/apps/scl-quality-guard/index.js
    ```
 
 2. **Re-add the plugin** in CompAS (or reload the page):
    - Open DevTools **Console** tab **before** adding the plugin
 
 3. **Watch Console for Lifecycle Events**:
-   - Should see: `[VALIDATOR-PROTOTYPE] ✅ Constructor called - plugin is loading!`
-   - Then: `[VALIDATOR-PROTOTYPE] ✅ connectedCallback fired - VALIDATOR MOUNTED!`
-   - Then: `[VALIDATOR-PROTOTYPE] doc changed`
+   - Should see: `[SCL-QUALITY-GUARD] ✅ Constructor called - plugin is loading!`
+   - Then: `[SCL-QUALITY-GUARD] ✅ connectedCallback fired - VALIDATOR MOUNTED!`
+   - Then: `[SCL-QUALITY-GUARD] doc changed`
 
 4. **If No Console Output At All**:
-   - Check **Network** tab → filter by `validator-prototype`
+   - Check **Network** tab → filter by `scl-quality-guard`
    - Look for `index.js` request and verify status is **200**
    - If **404** or **error**: file not served at that location
 
 5. **Trigger Validation**:
    - Load a document in CompAS
    - Look for menu entries with validators or trigger validation manually
-   - Console should show: `[VALIDATOR-PROTOTYPE] ✅ validate() called - VALIDATION TRIGGERED!`
+   - Console should show: `[SCL-QUALITY-GUARD] ✅ validate() called - VALIDATION TRIGGERED!`
 
 ---
 
 ## Summary
 
 **Before Plugin Activation:**
-- No `[VALIDATOR-PROTOTYPE]` messages in Console
+- No `[SCL-QUALITY-GUARD]` messages in Console
 
 **After Adding via Plugin Manager (with correct URL):**
-- Console shows: `[VALIDATOR-PROTOTYPE] ✅ Constructor called - plugin is loading!`
-- Console shows: `[VALIDATOR-PROTOTYPE] ✅ connectedCallback fired - VALIDATOR MOUNTED!`
+- Console shows: `[SCL-QUALITY-GUARD] ✅ Constructor called - plugin is loading!`
+- Console shows: `[SCL-QUALITY-GUARD] ✅ connectedCallback fired - VALIDATOR MOUNTED!`
 
 **After Loading a Document:**
-- Console shows: `[VALIDATOR-PROTOTYPE] doc changed [element]`
-- Console shows: `[VALIDATOR-PROTOTYPE] editCount changed to 0`
+- Console shows: `[SCL-QUALITY-GUARD] doc changed [element]`
+- Console shows: `[SCL-QUALITY-GUARD] editCount changed to 0`
 
 **When Validation Runs:**
-- Console shows: `[VALIDATOR-PROTOTYPE] ✅ validate() called - VALIDATION TRIGGERED!`
+- Console shows: `[SCL-QUALITY-GUARD] ✅ validate() called - VALIDATION TRIGGERED!`
 
 **If You See None of These:**
 - Verify the plugin URL and file are accessible (Network tab)
