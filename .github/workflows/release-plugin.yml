@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - plugins-hub
+          - export-icd
       RELEASE_TYPE:
         description: 'Release type: MAJOR, MINOR, or PATCH'
         required: false
