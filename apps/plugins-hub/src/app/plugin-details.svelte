@@ -210,7 +210,7 @@
   }
 
   .close-btn:hover {
-    color: var(--bearingpoint-color-text-primary);
+    color: var(--bearingpoint-color-text-dark);
   }
 
   .details-short-desc {

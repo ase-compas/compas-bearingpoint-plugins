@@ -311,10 +311,6 @@
 </script>
 
 <div class="plugins-hub bp-typo-body">
-  <div class="hub-header">
-    <h2 class="hub-title">Plugin Store</h2>
-  </div>
-
   <div class="hub-toolbar">
     <!--
       TODO(min-task): verify whether SMUI Textfield/Select surface background
@@ -419,30 +415,12 @@
     overflow: hidden;
   }
 
-  .hub-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--bearingpoint-color-primary);
-    color: var(--bearingpoint-color-on-primary);
-    padding: 16px 24px;
-  }
-
-  .hub-title {
-    margin: 0;
-    font-family: var(--bearingpoint-font-roboto);
-    font-weight: 500;
-    font-size: var(--bearingpoint-text-h1-size);
-    line-height: 32px;
-    letter-spacing: 0.25px;
-  }
-
   .hub-toolbar {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    background: var(--bearingpoint-color-bg-page);
+    background: var(--oscd-);
     border-bottom: 1px solid var(--bearingpoint-color-border);
     flex-wrap: wrap;
   }
