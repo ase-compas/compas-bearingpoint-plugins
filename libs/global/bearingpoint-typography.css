@@ -50,7 +50,7 @@
 /** BearingPoint/h1 — Inter Semi Bold 20 / 24 */
 h1,
 .bp-typo-h1 {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-h1-size);
   font-weight: var(--bearingpoint-text-h1-weight);
   line-height: var(--bearingpoint-text-h1-line);
@@ -61,7 +61,7 @@ h1,
 /** BearingPoint/h2 — Inter Semi Bold 16 / 22 */
 h2,
 .bp-typo-h2 {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-h2-size);
   font-weight: var(--bearingpoint-text-h2-weight);
   line-height: var(--bearingpoint-text-h2-line);
@@ -72,7 +72,7 @@ h2,
 /** BearingPoint/H3 — Inter Semi Bold 18 / 24 */
 h3,
 .bp-typo-h3 {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-h3-size);
   font-weight: var(--bearingpoint-text-h3-weight);
   line-height: var(--bearingpoint-text-h3-line);
@@ -82,7 +82,7 @@ h3,
 
 /** BearingPoint/body - 14 Regular — Inter Regular 14 / 22 */
 .bp-typo-body {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-body-size);
   font-weight: var(--bearingpoint-text-body-weight);
   line-height: var(--bearingpoint-text-body-line);
@@ -92,7 +92,7 @@ h3,
 
 /** BearingPoint/16 Regular — Inter Regular 16 / 22 */
 .bp-typo-16-regular {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-16-size);
   font-weight: var(--bearingpoint-text-body-weight);
   line-height: var(--bearingpoint-text-16-line);
@@ -102,7 +102,7 @@ h3,
 
 /** BearingPoint/16 Bold — Inter Semi Bold 16 / 22 */
 .bp-typo-16-bold {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-16-size);
   font-weight: var(--bearingpoint-text-16-bold-weight);
   line-height: var(--bearingpoint-text-16-line);
@@ -112,7 +112,7 @@ h3,
 
 /** BearingPoint/14 Bold — Inter Semi Bold 14 / 20 */
 .bp-typo-14-bold {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-14-bold-size);
   font-weight: var(--bearingpoint-text-14-bold-weight);
   line-height: var(--bearingpoint-text-14-bold-line);
@@ -122,7 +122,7 @@ h3,
 
 /** BearingPoint/caption - 12 Regular — Inter Regular 12 / 16 */
 .bp-typo-caption {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-caption-size);
   font-weight: var(--bearingpoint-text-caption-weight);
   line-height: var(--bearingpoint-text-caption-line);
@@ -132,7 +132,7 @@ h3,
 
 /** BearingPoint/label - 12 Semi — Inter Semi Bold 12 / 16 */
 .bp-typo-label {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-label-size);
   font-weight: var(--bearingpoint-text-label-weight);
   line-height: var(--bearingpoint-text-label-line);
@@ -142,7 +142,7 @@ h3,
 
 /** BearingPoint/tag - 12 Semi — Inter Semi Bold 12 / 16 */
 .bp-typo-tag {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-tag-size);
   font-weight: var(--bearingpoint-text-tag-weight);
   line-height: var(--bearingpoint-text-tag-line);
@@ -153,7 +153,7 @@ h3,
 /** BearingPoint/button — Inter Semi Bold 14 / 20 */
 button,
 .bp-typo-button {
-  font-family: var(--bearingpoint-font-inter);
+  font-family: var(--bearingpoint-font-oscd);
   font-size: var(--bearingpoint-text-button-size);
   font-weight: var(--bearingpoint-text-button-weight);
   line-height: var(--bearingpoint-text-button-line);
@@ -165,12 +165,4 @@ button,
    Font-family utility classes (families observed in the file)
    --------------------------------------------------------------------------- */
 
-.bp-font-inter { font-family: var(--bearingpoint-font-inter); }
-.bp-font-roboto { font-family: var(--bearingpoint-font-roboto); }
-.bp-font-source-sans { font-family: var(--bearingpoint-font-source-sans); }
-.bp-font-rubik { font-family: var(--bearingpoint-font-rubik); }
-
-.bp-font-weight-regular { font-weight: 400; }
-.bp-font-weight-medium { font-weight: 500; }
-.bp-font-weight-semibold { font-weight: 600; }
-.bp-font-weight-bold { font-weight: 700; }
+.bp-font-oscd { font-family: var(--bearingpoint-font-oscd); }

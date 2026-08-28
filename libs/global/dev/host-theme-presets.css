@@ -307,9 +307,28 @@ html.bearingpoint.dark {
   
 }
 
-/* OMICRONEnergyOSS: thex do not support dark mode. */
+/* OMICRONEnergyOSS: they do not have dark mode. */
+/* Source: https://github.com/OMICRONEnergyOSS/oscd-academy/blob/main/themes.css */
 html.omicron.light,
 html.omicron.dark {
+  /* Defaults from Openscd themes.ts */
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+
+  /* START /oscd-academy/blob/main/themes.css */
   /* color variables names taken from Omicron Pallet (for reference) */
   --french-blue-15: #0b335b;
   --french-blue-55: #2485e5;
@@ -349,25 +368,7 @@ html.omicron.dark {
   --oscd-text-font-mono: var(--oscd-theme-text-font-mono, "Roboto Mono");
 
   --oscd-warning: var(--oscd-theme-warning, #b58900);
-    
-    
 
-  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
-  --oscd-error: var(--oscd-theme-error, var(--red));
-
-  --oscd-base03: var(--oscd-theme-base03, var(--base03));
-  --oscd-base02: var(--oscd-theme-base02, var(--base02));
-  --oscd-base01: var(--oscd-theme-base01, var(--base01));
-  --oscd-base00: var(--oscd-theme-base00, var(--base00));
-  --oscd-base0: var(--oscd-theme-base0, var(--base0));
-  --oscd-base1: var(--oscd-theme-base1, var(--base1));
-  --oscd-base2: var(--oscd-theme-base2, var(--base2));
-  --oscd-base3: var(--oscd-theme-base3, var(--base3));
-
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-    
 }
 
 html.transnetbw-new {
@@ -376,11 +377,11 @@ html.transnetbw-new {
   /* Gray scale */
   --internal-gray-10: #FAFAFA; /* lightest */
   --internal-gray-20: #EDF1F2;
-  --internal-gray-30: color-mix(in oklab, var(--oscd-theme-gray-20), var(--oscd-theme-gray-40));
+  --internal-gray-30: color-mix(in oklab, var(--internal-gray-20), var(--internal-gray-40));
   --internal-gray-40: #9E9E9E;
-  --internal-gray-50: color-mix(in oklab, var(--oscd-theme-gray-40) 50%, var(--oscd-theme-gray-60));
+  --internal-gray-50: color-mix(in oklab, var(--internal-gray-40) 50%, var(--internal-gray-60));
   --internal-gray-60: #616161;
-  --internal-gray-70: color-mix(in oklab, var(--oscd-theme-gray-60) 50%, var(--oscd-theme-gray-80));
+  --internal-gray-70: color-mix(in oklab, var(--internal-gray-60) 50%, var(--internal-gray-80));
   --internal-gray-80: #073642;
   --internal-gray-90: #002b36; /* darkest */
 
@@ -452,11 +453,8 @@ html.bearingpoint-new {
 /*   --oscd-theme-blue: #268bd2; */
 /*   --oscd-theme-cyan: #2aa198; */
 /*   --oscd-theme-green: #859900; */
-  
 /*   --oscd-theme-text-font: 'Roboto'; */
 /*   --oscd-theme-icon-font: 'Material Icons Outlined'; */
-
-
 
 /*
  * Set by OSCD only,
@@ -470,8 +468,9 @@ html.bearingpoint-new {
 /*   --oscd-theme-nav-primary-text-active: yellow; */
 
 }
+
+/* Experimental: Simulate High Contrast variant for Bearingpoint-Distribution. */
 @media (prefers-contrast: more) {
-  
   html.bearingpoint-new {
     --internal-gray-10: #ffffff; /* lightest */
     --internal-gray-20: #f7f4f3;

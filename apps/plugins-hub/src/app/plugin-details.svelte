@@ -30,7 +30,7 @@
 <aside class="plugin-details">
   <div class="details-header">
     <div class="details-title-row bp-typo-h1">
-      <span class="material-icons details-icon">{plugin.icon}</span>
+      <span class="material-icons-outlined details-icon">{plugin.icon}</span>
       <h3 class="details-name">{displayName}</h3>
       <button class="close-btn" onclick={onClose} aria-label="Close details"
         >✕</button
@@ -39,7 +39,7 @@
 
     <div class="details-kind-wrapper">
       <div class="badge badge-kind bp-typo-label">
-        <span class="material-icons badge-icon">{plugin.kindIcon}</span>
+        <span class="material-icons-outlined badge-icon">{plugin.kindIcon}</span>
         {plugin.kindText}
       </div>
     </div>

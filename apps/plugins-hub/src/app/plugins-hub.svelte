@@ -318,15 +318,15 @@
       instead of inline style={...}. Must be tested separately against MDC DOM
       before removing the inline styles.
     -->
-    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface, #fff)`} >
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface)`} >
       {#snippet leadingIcon()}
-          <Icon class="material-icons" >search</Icon>
+          <Icon class="material-icons-outlined" >search</Icon>
         {/snippet}
     </Textfield>
 
     <Select
       bind:value={statusFilter}
-      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      style={`background: var(--bearingpoint-color-surface)`}
       variant="outlined">
         <Option value="all">All status</Option>
         <Option value="installed">Installed</Option>
@@ -334,9 +334,8 @@
     </Select>
 
     <Select
-      class="filter-select"
       bind:value={providerFilter}
-      style={`width:300px; background: var(--bearingpoint-color-surface, #fff)` }
+      style={`width:300px; background: var(--bearingpoint-color-surface)` }
       variant="outlined">
         <Option value="all">All contributors</Option>
         {#each providers as provider}
@@ -346,7 +345,7 @@
 
     <Select
       bind:value={kindFilter}
-      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      style={`background: var(--bearingpoint-color-surface)`}
       variant="outlined">
         <Option value="all">All kinds</Option>
         {#each PLUGIN_KINDS as kind}
@@ -411,7 +410,7 @@
     height: 100%;
     min-height: 400px;
     background: var(--bearingpoint-color-bg-page);
-    color: var(--bearingpoint-color-ink);
+    color: var(--bearingpoint-color-text-primary);
     overflow: hidden;
   }
 
@@ -420,7 +419,7 @@
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    background: var(--oscd-);
+    background: var(--bearingpoint-color-bg-page);
     border-bottom: 1px solid var(--bearingpoint-color-border);
     flex-wrap: wrap;
   }

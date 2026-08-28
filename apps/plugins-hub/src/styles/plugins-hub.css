@@ -16,8 +16,9 @@
   --badge-incompatible: #b45309;
   --badge-kind: #6b9197;
   
+  /* background where the badges are placed on, is --bearingpoint-color-surface => --oscd-base3 */
   color: color-mix(in oklab, var(--badge-color) 14%, #fff);
-  border-color: color-mix(in oklab, #fff, var(--badge-color) 50%);
+  border-color: color-mix(in oklab, var(--oscd-base03), var(--badge-color) 50%);
   background: var(--badge-color);
 }
 
@@ -54,7 +55,7 @@
 
 .badge.badge-kind {
   --badge-color: var(--badge-kind);
-  /* background is --bearingpoint-color-surface => --oscd-base3 */
+  /* background where the badges are placed on, is --bearingpoint-color-surface => --oscd-base3 */
   color: color-mix(in oklab, var(--badge-color), var(--oscd-base03));
   border-color: color-mix(in oklab, var(--badge-color) 50%, var(--oscd-base3));
   background: color-mix(in oklab, var(--badge-color) 10%, var(--oscd-base3));

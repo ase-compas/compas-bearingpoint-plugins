@@ -3,6 +3,7 @@
    See: https://sveltematerialui.com/INSTALL.md — "The Default Theme" / bare.css */
 @import 'svelte-material-ui/bare.css';
 
-/* Host theme bridge: --oscd-theme-* → --oscd-* / MDC / --bearingpoint-* aliases */
+/* Host theme bridge: --oscd-* -> --bearingpoint-* aliases, and corrections for old hosts with wrong/incomplete themes. */
 @import '../../../../libs/global/bearingpoint-theme.css';
+/* Special Styling only for Plugin-Hub like Badges */
 @import './plugins-hub.css';

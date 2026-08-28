@@ -1,7 +1,7 @@
 /**
  * OpenSCD host-theme bridge for Plugins-Hub.
  *
- * Maps distro-provided theme variables to --bearingpoint-* so component CSS
+ * Maps distro-provided theme variables '--oscd-*' to --bearingpoint-* so component CSS
  * needs no rename.
  *
  * Do NOT set --oscd-theme-* inside the production plugin.
@@ -12,12 +12,7 @@
 * , /** '*' is needed for old-host design upgrades via @container style(...) below */
 :root,
 :host {
-
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
-  --bearingpoint-color-primary: var(--oscd-primary);
-  --bearingpoint-color-on-primary: var(--oscd-on-primary);
-  --bearingpoint-color-ink: var(--oscd-base02);
-
   --bearingpoint-color-positive: var(--oscd-green);
   --bearingpoint-color-negative: var(--oscd-error);
   --bearingpoint-color-warning: var(--oscd-warning);
@@ -60,11 +55,11 @@
   );
 
   --bearingpoint-color-action-neutral-text: var(--oscd-secondary);
-  --bearingpoint-color-action-neutral-bg: var(--oscd-base3);
+  --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
   --bearingpoint-color-action-neutral-bg-hover: color-mix(
     in oklab,
-    var(--oscd-base3) 80%,
-    var(--bearingpoint-color-surface)
+    var(--bearingpoint-color-surface) 80%,
+    var(--oscd-base2)
   );
 
   --bearingpoint-color-action-danger-text: var(--oscd-base2);
@@ -76,25 +71,80 @@
   );
 
   /* Font stacks prefer host text font */
-  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --bearingpoint-font-inter: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-rubik: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-oscd: var(--oscd-text-font), system-ui, sans-serif;
 
   /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
 }
 
-/* old Open-SCD didn't set the --oscd-on-primary value and others => missing values must be faked. */
+/* old Open-SCD didn't set the --oscd-on-warning value and others => missing values must be added. */
 @container style(--oscd-on-warning: initial) {
-  * {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    /* ==== Solarized palette Colors missed the "--ocsd-*" variables ==== */
+    --oscd-yellow: var(--yellow, #b58900);
+    --oscd-orange: var(--orange, #cb4b16);
+    --oscd-red: var(--red, #dc322f);
+    --oscd-magenta: var(--magenta, #d33682);
+    --oscd-violet: var(--violet, #6c71c4);
+    --oscd-blue: var(--blue, #268bd2);
+    --oscd-cyan: var(--cyan, #2aa198);
+    --oscd-green: var(--green, #859900);
+  
     /* Signal-Colors for error, warning and success */
-    --oscd-error: #ff3d47;
+    /* assume very light fixed signal color for light/dark: Default Text-Color should be fixed the darkest color from the default-palete. */
+    --oscd-error: #ff3d47; /* Already defined, but default is a relative dark red. Our bearingpoint-plugins want a signal-color for that. */ 
     --oscd-on-error: #002b36;
     --oscd-warning: #ffcc17;
     --oscd-on-warning: #002b36;
     --oscd-success: #239c5b;
     --oscd-on-success: #002b36;
+  }
+}
+/* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Light */
+@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #330000;
+    --oscd-secondary: #990000;
+    
+    /* Gray scale */
+    --oscd-base03: #5a473e; /* darkest */
+    --oscd-base02: #665247;
+    --oscd-base01: #735c50;
+    --oscd-base00: #806659;
+
+    --oscd-base0: #b2a59f;
+    --oscd-base1: #ccc1bc;
+    --oscd-base2: #e6deda;
+    --oscd-base3: #faf8f7; /* lightest */
+  }
+}
+/* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Dark */
+@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #ffecec;
+    --oscd-secondary: #ee8585;
+    
+    /* Gray scale */
+    --oscd-base03: #faf8f7; /* lightest */
+    --oscd-base02: #e6deda;
+    --oscd-base01: #ccc1bc;
+    --oscd-base00: #b2a59f;
+
+    --oscd-base0: #806659;
+    --oscd-base1: #735c50;
+    --oscd-base2: #665247;
+    --oscd-base3: #5a473e; /* darkest */
+  }
+}
+/* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Light */
+@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #004552;
+  }
+}
+/* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Dark */
+@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #81c3cf;
   }
 }
 
