@@ -1,7 +1,7 @@
 /**
  * OpenSCD host-theme bridge for Plugins-Hub.
  *
- * Maps distro-provided theme variables to --bearingpoint-* so component CSS
+ * Maps distro-provided theme variables '--oscd-*' to --bearingpoint-* so component CSS
  * needs no rename.
  *
  * Do NOT set --oscd-theme-* inside the production plugin.
@@ -9,99 +9,76 @@
  * :host covers Shadow DOM (production plugin); :root covers standalone mount.
  */
 
-* , /** old-host design upgrades via @container style(...) below */
+* , /** '*' is needed for old-host design upgrades via @container style(...) below */
 :root,
 :host {
-
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
-  --bearingpoint-color-primary: var(--oscd-primary);
-  --bearingpoint-color-on-primary: var(--oscd-on-primary);
-  --bearingpoint-color-ink: color-mix(in oklab, var(--oscd-primary-adaptive), var(--oscd-ink));
-
   --bearingpoint-color-positive: var(--oscd-green);
   --bearingpoint-color-negative: var(--oscd-error);
   --bearingpoint-color-warning: var(--oscd-warning);
-
-  --bearingpoint-color-focus: var(--oscd-secondary);
+  
+  --bearingpoint-color-warning-text: var(--oscd-on-warning);
+  --bearingpoint-color-warning-bg: var(--oscd-warning);
 
   --bearingpoint-color-bg-page: var(--oscd-base2);
-  --bearingpoint-color-surface: var(--oscd-paper);
+  --bearingpoint-color-surface: var(--oscd-base3);
 
-  /* Body text uses palette foregrounds (primary brand can be loud on dark) */
-  --bearingpoint-color-text-primary: var(--oscd-base00);
+  --bearingpoint-color-text-primary: var(--oscd-base02);
   --bearingpoint-color-text-dark: var(--oscd-base03);
-  --bearingpoint-color-text-secondary: var(--oscd-base00);
-  --bearingpoint-color-text-disabled: var(--oscd-base1);
+  --bearingpoint-color-text-secondary: var(--oscd-base01);
 
   --bearingpoint-color-link: var(--oscd-blue);
   --bearingpoint-color-link-visited: var(--oscd-secondary);
 
-  --bearingpoint-color-border: var(--oscd-base1);
+  --bearingpoint-color-border: var(--oscd-base01);
   --bearingpoint-color-border-strong: var(--oscd-base03);
-  --bearingpoint-color-border-hover: var(--oscd-base00);
+  --bearingpoint-color-border-hover: var(--oscd-base02);
   --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
 
   --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
 
-  --bearingpoint-color-warning-text: var(--oscd-on-warning);
-  --bearingpoint-color-warning-bg: var(--oscd-warning);
 
-  --bearingpoint-color-action-primary-text: var(--oscd-on-primary-adaptive);
-  --bearingpoint-color-action-primary-bg: var(--oscd-primary-adaptive);
+  --bearingpoint-color-action-primary-text: var(--oscd-base2);
+  --bearingpoint-color-action-primary-bg: var(--oscd-primary);
   --bearingpoint-color-action-primary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-primary-adaptive) 80%,
+    var(--oscd-primary) 80%,
     var(--bearingpoint-color-surface)
   );
 
-  --bearingpoint-color-action-secondary-text: var(--oscd-on-secondary-adaptive);
-  --bearingpoint-color-action-secondary-bg: var(--oscd-secondary-adaptive);
+  --bearingpoint-color-action-secondary-text: var(--oscd-base3);
+  --bearingpoint-color-action-secondary-bg: var(--oscd-secondary);
   --bearingpoint-color-action-secondary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-secondary-adaptive) 80%,
+    var(--oscd-secondary) 80%,
     var(--bearingpoint-color-surface)
   );
 
-  --bearingpoint-color-action-neutral-text: var(--oscd-secondary-adaptive);
-  --bearingpoint-color-action-neutral-bg: var(--oscd-on-secondary-adaptive);
+  --bearingpoint-color-action-neutral-text: var(--oscd-secondary);
+  --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
   --bearingpoint-color-action-neutral-bg-hover: color-mix(
     in oklab,
-    var(--oscd-on-secondary-adaptive) 80%,
-    var(--bearingpoint-color-surface)
+    var(--bearingpoint-color-surface) 80%,
+    var(--oscd-base2)
   );
 
-  --bearingpoint-color-action-danger-text: var(--oscd-on-error);
-  --bearingpoint-color-action-danger-bg: var(--oscd-error);
+  --bearingpoint-color-action-danger-text: var(--oscd-base2);
+  --bearingpoint-color-action-danger-bg: var(--oscd-red);
   --bearingpoint-color-action-danger-bg-hover: color-mix(
     in oklab,
-    var(--oscd-error) 82%,
+    var(--oscd-red) 82%,
     var(--bearingpoint-color-surface)
   );
 
   /* Font stacks prefer host text font */
-  --bearingpoint-font-sans: var(--oscd-text-font), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --bearingpoint-font-inter: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-roboto: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-source-sans: var(--oscd-text-font), system-ui, sans-serif;
-  --bearingpoint-font-rubik: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-oscd: var(--oscd-text-font), system-ui, sans-serif;
 
   /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
 }
 
-/* old Open-SCD didn't set the --oscd-on-primary value and others => missing values must be faked. */
-@container style(--oscd-on-primary: initial) {
-  * {
-    /* ========== Gray-Skala (form '--oscd-base*' Light-Mode) ========== */
-    --oscd-gray-10: var(--oscd-base3, #fdf6e3); /* lightest */
-    --oscd-gray-20: var(--oscd-base2, #eee8d5);
-    --oscd-gray-30: var(--oscd-base1, #93a1a1);
-    --oscd-gray-40: var(--oscd-base0, #839496);
-    --oscd-gray-50: color-mix(in oklab, var(--oscd-base0, #839496) 50%, var(--oscd-base00, #657b83));
-    --oscd-gray-60: var(--oscd-base00, #657b83);
-    --oscd-gray-70: var(--oscd-base01, #586e75);
-    --oscd-gray-80: var(--oscd-base02, #073642);
-    --oscd-gray-90: var(--oscd-base03, #002b36); /* darkest */
-    
+/* old Open-SCD didn't set the --oscd-on-warning value and others => missing values must be added. */
+@container style(--oscd-on-warning: initial) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
     /* ==== Solarized palette Colors missed the "--ocsd-*" variables ==== */
     --oscd-yellow: var(--yellow, #b58900);
     --oscd-orange: var(--orange, #cb4b16);
@@ -111,270 +88,72 @@
     --oscd-blue: var(--blue, #268bd2);
     --oscd-cyan: var(--cyan, #2aa198);
     --oscd-green: var(--green, #859900);
-
-    /* ========== Extreme ========== */
-    --oscd-white: #ffffff;
-    --oscd-black: #000000;
-    
-    /* ========== Paper / Ink (only Light-Mode) ========== */
-    --oscd-paper: #ffffff;
-    --oscd-ink:   #000000;
-    
-    /* ========== Semantic Contrast-Colors (Light-Mode) ========== */
-    --oscd-primary: var(--oscd-theme-primary, var(--primary));
-    --oscd-on-primary:   var(--oscd-gray-20);
-    --oscd-on-secondary: var(--oscd-gray-20);
-
-    --oscd-primary-adaptive: var(--oscd-primary);
-    --oscd-on-primary-adaptive: var(--oscd-on-primary);
-    --oscd-secondary-adaptive: var(--oscd-secondary);
-    --oscd-on-secondary-adaptive: var(--oscd-on-secondary);
-
-    /* ========== modern Semantic-Colors ========== */
-    --oscd-error:   #ff3d47;
-    --oscd-on-error: var(--oscd-gray-90);
+  
+    /* Signal-Colors for error, warning and success */
+    /* assume very light fixed signal color for light/dark: Default Text-Color should be fixed the darkest color from the default-palete. */
+    --oscd-error: #ff3d47; /* Already defined, but default is a relative dark red. Our bearingpoint-plugins want a signal-color for that. */ 
+    --oscd-on-error: #002b36;
     --oscd-warning: #ffcc17;
-    --oscd-on-warning: var(--oscd-gray-90);
+    --oscd-on-warning: #002b36;
     --oscd-success: #239c5b;
-    --oscd-on-success: var(--oscd-gray-90);
+    --oscd-on-success: #002b36;
   }
 }
-
-/* default dark-mode in old branding styles. This is only a Workaround: Dark-mode was not fully supported in old Open-SCD instances. */
-@container style(--oscd-on-primary: initial) and style(--base03: #fdf6e3) {
-  * {
-    /* ========== Gray-Skala (form '--oscd-base*' Dark-Mode) ========== */
-    --oscd-gray-10: var(--oscd-base03, #fdf6e3); /* lightest */
-    --oscd-gray-20: var(--oscd-base02, #eee8d5);
-    --oscd-gray-30: var(--oscd-base01, #93a1a1);
-    --oscd-gray-40: var(--oscd-base00, #839496);
-    --oscd-gray-50: color-mix(in oklab, var(--oscd-base0, #839496) 50%, var(--oscd-base00, #657b83));
-    --oscd-gray-60: var(--oscd-base0, #657b83);
-    --oscd-gray-70: var(--oscd-base1, #586e75);
-    --oscd-gray-80: var(--oscd-base2, #073642);
-    --oscd-gray-90: var(--oscd-base3, #002b36); /* darkest */
+/* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Light */
+@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #330000;
+    --oscd-secondary: #990000;
     
-    /* ========== Paper / Ink (Dark Mode) ========== */
-    --oscd-paper: #000000;
-    --oscd-ink:   #ffffff;
+    /* Gray scale */
+    --oscd-base03: #5a473e; /* darkest */
+    --oscd-base02: #665247;
+    --oscd-base01: #735c50;
+    --oscd-base00: #806659;
+
+    --oscd-base0: #b2a59f;
+    --oscd-base1: #ccc1bc;
+    --oscd-base2: #e6deda;
+    --oscd-base3: #faf8f7; /* lightest */
   }
 }
-
-@container style(--oscd-on-primary: initial) and style(--primary: #330000) and style(--base03: #002b36) {
-  /* old bearingpoint style light */
-  * {
-
-    /* bearingpoint Gray scale must be fixed */
-    --oscd-gray-10: #faf8f7;
-    --oscd-gray-20: #e6deda;
-    --oscd-gray-30: #ccc1bc;
-    --oscd-gray-40: #b2a59f;
-    --oscd-gray-50: #98847a;
-    --oscd-gray-60: #806659;
-    --oscd-gray-70: #735c50;
-    --oscd-gray-80: #665247;
-    --oscd-gray-90: #5a473e;
+/* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Dark */
+@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #ffecec;
+    --oscd-secondary: #ee8585;
     
-    --interactive-500: #a070ff;
-    --success-500: #239c5b;
-    --warning-500: #ffcc17;
-    --danger-500: #ff3d47;
-    
-    --oscd-primary: var(--primary);
-    --oscd-on-primary: var(--oscd-white);
-    --oscd-secondary: var(--oscd-gray-60);
-    --oscd-on-secondary: var(--oscd-gray-10);
+    /* Gray scale */
+    --oscd-base03: #faf8f7; /* lightest */
+    --oscd-base02: #e6deda;
+    --oscd-base01: #ccc1bc;
+    --oscd-base00: #b2a59f;
 
-    --oscd-error: var(--danger-500);
-    --oscd-on-error: var(--oscd-black);
-    --oscd-warning: var(--warning-500);
-    --oscd-on-warning: var(--oscd-black);
-    --oscd-success: var(--success-500);
-    --oscd-on-success: var(--oscd-black);
-
-    --oscd-white: #ffffff;
-    --oscd-black: color-mix(in oklab, var(--primary) 50%, #000);
-    --oscd-paper: var(--oscd-white);
-    --oscd-ink: var(--oscd-black);
-    
-    --oscd-primary-adaptive: var(--oscd-primary);
-    --oscd-on-primary-adaptive: var(--oscd-on-primary);
-    --oscd-secondary-adaptive: var(--oscd-secondary);
-    --oscd-on-secondary-adaptive: var(--oscd-on-secondary);
-    
-    --oscd-base03: var(--oscd-gray-90);
-    --oscd-base02: var(--oscd-gray-80);
-    --oscd-base01: var(--oscd-gray-70);
-    --oscd-base00: var(--oscd-gray-60);
-    --oscd-base0: var(--oscd-gray-40);
-    --oscd-base1: var(--oscd-gray-30);
-    --oscd-base2: var(--oscd-gray-20);
-    --oscd-base3: var(--oscd-gray-10);
+    --oscd-base0: #806659;
+    --oscd-base1: #735c50;
+    --oscd-base2: #665247;
+    --oscd-base3: #5a473e; /* darkest */
   }
 }
-
-@container style(--oscd-on-primary: initial) and style(--primary: #330000) and style(--base03: #fdf6e3) {
-  /* old bearingpoint style dark */
-  * {
-
-    /* bearingpoint Gray scale must be fixed */
-    --oscd-gray-10: #faf8f7;
-    --oscd-gray-20: #e6deda;
-    --oscd-gray-30: #ccc1bc;
-    --oscd-gray-40: #b2a59f;
-    --oscd-gray-50: #98847a;
-    --oscd-gray-60: #806659;
-    --oscd-gray-70: #735c50;
-    --oscd-gray-80: #665247;
-    --oscd-gray-90: #5a473e;
-    
-    --interactive-500: #a070ff;
-    --success-500: #239c5b;
-    --warning-500: #ffcc17;
-    --danger-500: #ff3d47;
-
-    --oscd-primary: var(--primary);
-    --oscd-on-primary: var(--oscd-white);
-    --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-gray-10);
-
-    --oscd-error: var(--danger-500);
-    --oscd-on-error: var(--oscd-black);
-    --oscd-warning: var(--warning-500);
-    --oscd-on-warning: var(--oscd-black);
-    --oscd-success: var(--success-500);
-    --oscd-on-success: var(--oscd-black);
-    
-    --oscd-white: #ffffff;
-    --oscd-black: color-mix(in oklab, var(--primary) 50%, #000);
-    --oscd-paper: var(--oscd-black);
-    --oscd-ink: var(--oscd-white);
-
-    --oscd-primary-adaptive: var(--oscd-on-primary);
-    --oscd-on-primary-adaptive: var(--oscd-primary);
-    --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
-
-    --oscd-base03: var(--oscd-gray-10);
-    --oscd-base02: var(--oscd-gray-20);
-    --oscd-base01: var(--oscd-gray-30);
-    --oscd-base00: var(--oscd-gray-40);
-    --oscd-base0: var(--oscd-gray-60);
-    --oscd-base1: var(--oscd-gray-70);
-    --oscd-base2: var(--oscd-gray-80);
-    --oscd-base3: var(--oscd-gray-90);
-
+/* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Light */
+@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #004552;
   }
 }
-
-@container style(--oscd-on-primary: initial) and style(--primary: #004552) and style(--oscd-base03: #002b36)  {
-  /** fix Server branded Transnet-BW host light. Old hosts only. */
-  * {
-    /* transnetbw Gray scale */
-    --oscd-gray-10: #F2F2F2; /* lightest */
-    --oscd-gray-20: #EDF1F2;
-    --oscd-gray-30: color-mix(in oklab, var(--oscd-gray-20), var(--oscd-gray-40));
-    --oscd-gray-40: #9E9E9E;
-    --oscd-gray-50: color-mix(in oklab, var(--oscd-gray-40) 50%, var(--oscd-gray-60));
-    --oscd-gray-60: #616161;
-    --oscd-gray-70: color-mix(in oklab, var(--oscd-gray-60) 50%, var(--oscd-gray-80));
-    --oscd-gray-80: #073642;
-    --oscd-gray-90: #002b36; /* darkest */
-    
-    --interactive-500: #a070ff;
-    --success-500: #239c5b;
-    --warning-500: #ffcc17;
-    --danger-500: #ff3d47;
-    
-    --oscd-primary: var(--primary);
-    --oscd-on-primary: var(--oscd-white);
-    --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-gray-10);
-
-    --oscd-error: var(--danger-500);
-    --oscd-on-error: var(--oscd-black);
-    --oscd-warning: var(--warning-500);
-    --oscd-on-warning: var(--oscd-black);
-    --oscd-success: var(--success-500);
-    --oscd-on-success: var(--oscd-black);
-
-    --oscd-white: #ffffff;
-    --oscd-black: color-mix(in oklab, var(--oscd-gray-90) 50%, #000);
-    --oscd-paper: var(--oscd-white);
-    --oscd-ink: var(--oscd-black);
-    
-    --oscd-primary-adaptive: var(--oscd-primary);
-    --oscd-on-primary-adaptive: var(--oscd-on-primary);
-    --oscd-secondary-adaptive: var(--oscd-secondary);
-    --oscd-on-secondary-adaptive: var(--oscd-on-secondary);
-    
-    --oscd-base03: var(--oscd-gray-90);
-    --oscd-base02: var(--oscd-gray-80);
-    --oscd-base01: var(--oscd-gray-70);
-    --oscd-base00: var(--oscd-gray-60);
-    --oscd-base0: var(--oscd-gray-40);
-    --oscd-base1: var(--oscd-gray-30);
-    --oscd-base2: var(--oscd-gray-20);
-    --oscd-base3: var(--oscd-gray-10);
-  }
-}
-
-@container style(--oscd-on-primary: initial) and style(--primary: #004552) and style(--oscd-base03: #fdf6e3) {
-  /** fix Server branded Transnet-BW host dark. Old hosts only. */
-  * {
-    /* transnetbw Gray scale */
-    --oscd-gray-10: #F2F2F2; /* lightest */
-    --oscd-gray-20: #EDF1F2;
-    --oscd-gray-30: color-mix(in oklab, var(--oscd-gray-20), var(--oscd-gray-40));
-    --oscd-gray-40: #9E9E9E;
-    --oscd-gray-50: color-mix(in oklab, var(--oscd-gray-40) 50%, var(--oscd-gray-60));
-    --oscd-gray-60: #616161;
-    --oscd-gray-70: color-mix(in oklab, var(--oscd-gray-60) 50%, var(--oscd-gray-80));
-    --oscd-gray-80: #073642;
-    --oscd-gray-90: #002b36; /* darkest */
-    
-    --interactive-500: #a070ff;
-    --success-500: #239c5b;
-    --warning-500: #ffcc17;
-    --danger-500: #ff3d47;
-
-    --oscd-primary: var(--primary);
-    --oscd-on-primary: var(--oscd-white);
-    --oscd-secondary: var(--secondary);
-    --oscd-on-secondary: var(--oscd-gray-10);
-
-    --oscd-error: var(--danger-500);
-    --oscd-on-error: var(--oscd-black);
-    --oscd-warning: var(--warning-500);
-    --oscd-on-warning: var(--oscd-black);
-    --oscd-success: var(--success-500);
-    --oscd-on-success: var(--oscd-black);
-
-    --oscd-white: #ffffff;
-    --oscd-black: color-mix(in oklab, var(--oscd-gray-90) 50%, #000);
-    --oscd-paper: var(--oscd-black);
-    --oscd-ink: var(--oscd-white);
-
-    --oscd-primary-adaptive: var(--oscd-on-primary);
-    --oscd-on-primary-adaptive: var(--oscd-primary);
-    --oscd-secondary-adaptive: var(--oscd-on-secondary);
-    --oscd-on-secondary-adaptive: color-mix(in oklab, var(--oscd-secondary) 30%, var(--oscd-black));
-    
-    --oscd-base03: var(--oscd-gray-10);
-    --oscd-base02: var(--oscd-gray-20);
-    --oscd-base01: var(--oscd-gray-30);
-    --oscd-base00: var(--oscd-gray-40);
-    --oscd-base0: var(--oscd-gray-60);
-    --oscd-base1: var(--oscd-gray-70);
-    --oscd-base2: var(--oscd-gray-80);
-    --oscd-base3: var(--oscd-gray-90);
+/* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Dark */
+@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+  * { /* needed, because old Distros also set the variables with "*" on every element. */
+    --oscd-primary: #81c3cf;
   }
 }
 
 :root,
 :host {
   /* SMUI outlined focus ring (Search / Status / Contributors / Kind) */
-  --mdc-theme-primary: var(--oscd-primary-adaptive);
+  --mdc-theme-primary: var(--oscd-primary);
+  --mdc-theme-surface: var(--oscd-base3);
+  --mdc-theme-on-surface: var(--oscd-base03);
   --mdc-shape-small: 8px;
 }
 
@@ -389,20 +168,20 @@
 
 /** dark mode set color for smui componenten. */
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: color-mix(in srgb, var(--oscd-ink) 60%, transparent);
+  color: color-mix(in srgb, var(--oscd-base02) 60%, transparent);
 }
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-  color:  color-mix(in srgb, var(--oscd-ink) 87%, transparent);
+  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
 }
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
-  color:  color-mix(in srgb, var(--oscd-ink) 54%, transparent);
+  color:  color-mix(in srgb, var(--oscd-base02) 54%, transparent);
 }
 .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
-  color:  color-mix(in srgb, var(--oscd-ink) 87%, transparent);
+  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
 }
 .mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
-  fill:  color-mix(in srgb, var(--oscd-ink) 54%, transparent);
+  fill:  color-mix(in srgb, var(--oscd-base02) 54%, transparent);
 }
 .mdc-menu .mdc-deprecated-list {
-  color:  color-mix(in srgb, var(--oscd-ink) 87%, transparent);
+  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
 }

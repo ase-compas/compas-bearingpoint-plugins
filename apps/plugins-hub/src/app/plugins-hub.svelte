@@ -311,10 +311,6 @@
 </script>
 
 <div class="plugins-hub bp-typo-body">
-  <div class="hub-header">
-    <h2 class="hub-title">Plugin Store</h2>
-  </div>
-
   <div class="hub-toolbar">
     <!--
       TODO(min-task): verify whether SMUI Textfield/Select surface background
@@ -322,15 +318,15 @@
       instead of inline style={...}. Must be tested separately against MDC DOM
       before removing the inline styles.
     -->
-    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface, #fff)`} >
+    <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface)`} >
       {#snippet leadingIcon()}
-          <Icon class="material-icons" >search</Icon>
+          <Icon class="material-icons-outlined" >search</Icon>
         {/snippet}
     </Textfield>
 
     <Select
       bind:value={statusFilter}
-      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      style={`background: var(--bearingpoint-color-surface)`}
       variant="outlined">
         <Option value="all">All status</Option>
         <Option value="installed">Installed</Option>
@@ -338,9 +334,8 @@
     </Select>
 
     <Select
-      class="filter-select"
       bind:value={providerFilter}
-      style={`width:300px; background: var(--bearingpoint-color-surface, #fff)` }
+      style={`width:300px; background: var(--bearingpoint-color-surface)` }
       variant="outlined">
         <Option value="all">All contributors</Option>
         {#each providers as provider}
@@ -350,7 +345,7 @@
 
     <Select
       bind:value={kindFilter}
-      style={`background: var(--bearingpoint-color-surface, #fff)`}
+      style={`background: var(--bearingpoint-color-surface)`}
       variant="outlined">
         <Option value="all">All kinds</Option>
         {#each PLUGIN_KINDS as kind}
@@ -415,26 +410,8 @@
     height: 100%;
     min-height: 400px;
     background: var(--bearingpoint-color-bg-page);
-    color: var(--bearingpoint-color-ink);
+    color: var(--bearingpoint-color-text-primary);
     overflow: hidden;
-  }
-
-  .hub-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--bearingpoint-color-primary);
-    color: var(--bearingpoint-color-on-primary);
-    padding: 16px 24px;
-  }
-
-  .hub-title {
-    margin: 0;
-    font-family: var(--bearingpoint-font-roboto);
-    font-weight: 500;
-    font-size: var(--bearingpoint-text-h1-size);
-    line-height: 32px;
-    letter-spacing: 0.25px;
   }
 
   .hub-toolbar {

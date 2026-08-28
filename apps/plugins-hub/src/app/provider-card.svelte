@@ -42,7 +42,7 @@
           ((e.currentTarget as HTMLImageElement).style.display = 'none')}
       />
     {:else}
-      <span class="material-icons provider-icon">{provider.icon}</span>
+      <span class="material-icons-outlined provider-icon">{provider.icon}</span>
     {/if}
   </div>
 

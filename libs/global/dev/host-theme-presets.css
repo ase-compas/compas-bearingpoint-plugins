@@ -307,9 +307,28 @@ html.bearingpoint.dark {
   
 }
 
-/* OMICRONEnergyOSS: thex do not support dark mode. */
+/* OMICRONEnergyOSS: they do not have dark mode. */
+/* Source: https://github.com/OMICRONEnergyOSS/oscd-academy/blob/main/themes.css */
 html.omicron.light,
 html.omicron.dark {
+  /* Defaults from Openscd themes.ts */
+  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
+  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
+  --oscd-error: var(--oscd-theme-error, var(--red));
+
+  --oscd-base03: var(--oscd-theme-base03, var(--base03));
+  --oscd-base02: var(--oscd-theme-base02, var(--base02));
+  --oscd-base01: var(--oscd-theme-base01, var(--base01));
+  --oscd-base00: var(--oscd-theme-base00, var(--base00));
+  --oscd-base0: var(--oscd-theme-base0, var(--base0));
+  --oscd-base1: var(--oscd-theme-base1, var(--base1));
+  --oscd-base2: var(--oscd-theme-base2, var(--base2));
+  --oscd-base3: var(--oscd-theme-base3, var(--base3));
+
+  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+
+  /* START /oscd-academy/blob/main/themes.css */
   /* color variables names taken from Omicron Pallet (for reference) */
   --french-blue-15: #0b335b;
   --french-blue-55: #2485e5;
@@ -349,109 +368,83 @@ html.omicron.dark {
   --oscd-text-font-mono: var(--oscd-theme-text-font-mono, "Roboto Mono");
 
   --oscd-warning: var(--oscd-theme-warning, #b58900);
-    
-    
 
-  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
-  --oscd-error: var(--oscd-theme-error, var(--red));
-
-  --oscd-base03: var(--oscd-theme-base03, var(--base03));
-  --oscd-base02: var(--oscd-theme-base02, var(--base02));
-  --oscd-base01: var(--oscd-theme-base01, var(--base01));
-  --oscd-base00: var(--oscd-theme-base00, var(--base00));
-  --oscd-base0: var(--oscd-theme-base0, var(--base0));
-  --oscd-base1: var(--oscd-theme-base1, var(--base1));
-  --oscd-base2: var(--oscd-theme-base2, var(--base2));
-  --oscd-base3: var(--oscd-theme-base3, var(--base3));
-
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
-    
 }
 
 html.transnetbw-new {
   --oscd-theme-branding: TransnetBW;
 
-  /* White / Black */
-  --oscd-theme-white: #ffffff;
-  --oscd-theme-black: color-mix(in oklab, var(--oscd-theme-gray-90) 50%, #000); /* little darker then darkest gray */
-  
   /* Gray scale */
-  --oscd-theme-gray-10: #F2F2F2; /* lightest */
-  --oscd-theme-gray-20: #EDF1F2;
-  --oscd-theme-gray-30: color-mix(in oklab, var(--oscd-theme-gray-20), var(--oscd-theme-gray-40));
-  --oscd-theme-gray-40: #9E9E9E;
-  --oscd-theme-gray-50: color-mix(in oklab, var(--oscd-theme-gray-40) 50%, var(--oscd-theme-gray-60));
-  --oscd-theme-gray-60: #616161;
-  --oscd-theme-gray-70: color-mix(in oklab, var(--oscd-theme-gray-60) 50%, var(--oscd-theme-gray-80));
-  --oscd-theme-gray-80: #073642;
-  --oscd-theme-gray-90: #002b36; /* darkest */
+  --internal-gray-10: #FAFAFA; /* lightest */
+  --internal-gray-20: #EDF1F2;
+  --internal-gray-30: color-mix(in oklab, var(--internal-gray-20), var(--internal-gray-40));
+  --internal-gray-40: #9E9E9E;
+  --internal-gray-50: color-mix(in oklab, var(--internal-gray-40) 50%, var(--internal-gray-60));
+  --internal-gray-60: #616161;
+  --internal-gray-70: color-mix(in oklab, var(--internal-gray-60) 50%, var(--internal-gray-80));
+  --internal-gray-80: #073642;
+  --internal-gray-90: #002b36; /* darkest */
 
-  --interactive-500: #a070ff;
-  --success-500: #239c5b;
-  --warning-500: #ffcc17;
-  --danger-500: #ff3d47;
+  --oscd-theme-primary: light-dark(#004552, #81c3cf);
+  --oscd-theme-secondary: #6c71c4; /* cyan default*/
 
-  --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
-  --oscd-theme-primary: #004552;
-  --oscd-theme-on-primary: var(--oscd-theme-white);
-  --oscd-theme-primary-adaptive: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
-  --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
-  --oscd-theme-on-primary-active: yellow; /* oder --warning-500 ? */
-  --oscd-theme-secondary: #004552;
-  --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
-  --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(in oklab, var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
-  --oscd-theme-error: var(--danger-500);
-  --oscd-theme-on-error: var(--oscd-theme-black);
-  --oscd-theme-warning: var(--warning-500);
-  --oscd-theme-on-warning: var(--oscd-theme-black);
-  --oscd-theme-success: var(--success-500);
-  --oscd-theme-on-success: var(--oscd-theme-black);
+  --oscd-theme-base03: light-dark(var(--internal-gray-90), var(--internal-gray-10));
+  --oscd-theme-base02: light-dark(var(--internal-gray-80), var(--internal-gray-20));
+  --oscd-theme-base01: light-dark(var(--internal-gray-70), var(--internal-gray-30));
+  --oscd-theme-base00: light-dark(var(--internal-gray-60), var(--internal-gray-40));
+  --oscd-theme-base0: light-dark(var(--internal-gray-40), var(--internal-gray-60));
+  --oscd-theme-base1: light-dark(var(--internal-gray-30), var(--internal-gray-70));
+  --oscd-theme-base2: light-dark(var(--internal-gray-20), var(--internal-gray-80));
+  --oscd-theme-base3: light-dark(var(--internal-gray-10), var(--internal-gray-90));
+  
+  /* Signal-Colors for error, warning and success */
+  --oscd-theme-error: #ff3d47;
+  --oscd-theme-on-error: var(--internal-gray-90);
+  --oscd-theme-warning: #ffcc17;
+  --oscd-theme-on-warning: var(--internal-gray-90);
+  --oscd-theme-success: #239c5b;
+  --oscd-theme-on-success: var(--internal-gray-90);
   
 }
 
 html.bearingpoint-new {
   --oscd-theme-branding: Bearingpoint;
 
-  /* White / Black */
-  --oscd-theme-white: #ffffff;
-  --oscd-theme-black: color-mix(in oklab, var(--oscd-theme-primary) 60%, #000); /* little darker then primary */
+  --internal-primary: #330000;
+  --internal-secondary: #990000;
 
   /* Gray scale */
-  --oscd-theme-gray-10: #faf8f7; /* lightest */
-  --oscd-theme-gray-20: #e6deda;
-  --oscd-theme-gray-30: #ccc1bc;
-  --oscd-theme-gray-40: #b2a59f;
-  --oscd-theme-gray-50: #98847a;
-  --oscd-theme-gray-60: #806659;
-  --oscd-theme-gray-70: #735c50;
-  --oscd-theme-gray-80: #665247;
-  --oscd-theme-gray-90: #5a473e; /* darkest */
+  --internal-gray-10: #faf8f7; /* lightest */
+  --internal-gray-20: #e6deda;
+  --internal-gray-30: #ccc1bc;
+  --internal-gray-40: #b2a59f;
+  --internal-gray-50: #98847a;
+  --internal-gray-60: #806659;
+  --internal-gray-70: #735c50;
+  --internal-gray-80: #665247;
+  --internal-gray-90: #5a473e; /* darkest */
 
-  --interactive-500: #a070ff;
-  --success-500: #239c5b;
-  --warning-500: #ffcc17;
-  --danger-500: #ff3d47;
+  --oscd-theme-primary: light-dark(#330000, #ffecec);
+  --oscd-theme-secondary: light-dark(#990000, #ee8585);
 
-  --oscd-theme-body-bg: light-dark(var(--oscd-theme-white), var(--oscd-theme-black));
-  --oscd-theme-primary: #330000;
-  --oscd-theme-on-primary: var(--oscd-theme-white);
-  --oscd-theme-primary-adaptive: light-dark(var(--oscd-theme-primary), var(--oscd-theme-on-primary));
-  --oscd-theme-on-primary-adaptive: light-dark(var(--oscd-theme-on-primary), var(--oscd-theme-primary));
-  --oscd-theme-on-primary-active: yellow; /* oder --warning-500 ? */
-  --oscd-theme-secondary: var(--oscd-theme-gray-60);
-  --oscd-theme-on-secondary: var(--oscd-theme-gray-10);
-  --oscd-theme-secondary-adaptive: light-dark(var(--oscd-theme-secondary), var(--oscd-theme-on-secondary));
-  --oscd-theme-on-secondary-adaptive: light-dark(var(--oscd-theme-on-secondary), color-mix(in oklab, var(--oscd-theme-secondary) 30%, var(--oscd-theme-black)));
-  --oscd-theme-error: var(--danger-500);
-  --oscd-theme-on-error: var(--oscd-theme-black);
-  --oscd-theme-warning: var(--warning-500);
-  --oscd-theme-on-warning: var(--oscd-theme-black);
-  --oscd-theme-success: var(--success-500);
-  --oscd-theme-on-success: var(--oscd-theme-black);
+  --oscd-theme-base03: light-dark(var(--internal-gray-90), var(--internal-gray-10));
+  --oscd-theme-base02: light-dark(var(--internal-gray-80), var(--internal-gray-20));
+  --oscd-theme-base01: light-dark(var(--internal-gray-70), var(--internal-gray-30));
+  --oscd-theme-base00: light-dark(var(--internal-gray-60), var(--internal-gray-40));
+  --oscd-theme-base0: light-dark(var(--internal-gray-40), var(--internal-gray-60));
+  --oscd-theme-base1: light-dark(var(--internal-gray-30), var(--internal-gray-70));
+  --oscd-theme-base2: light-dark(var(--internal-gray-20), var(--internal-gray-80));
+  --oscd-theme-base3: light-dark(var(--internal-gray-10), var(--internal-gray-90));
   
+  /* Signal-Colors for error, warning and success */
+  --oscd-theme-error: #ff3d47;
+  --oscd-theme-on-error: var(--internal-gray-90);
+  --oscd-theme-warning: #ffcc17;
+  --oscd-theme-on-warning: var(--internal-gray-90);
+  --oscd-theme-success: #239c5b;
+  --oscd-theme-on-success: var(--internal-gray-90);
+
+/* Do not overwrite all defaults */
 /*   --oscd-theme-yellow: #b58900; */
 /*   --oscd-theme-orange: #cb4b16; */
 /*   --oscd-theme-red: #dc322f; */
@@ -460,10 +453,35 @@ html.bearingpoint-new {
 /*   --oscd-theme-blue: #268bd2; */
 /*   --oscd-theme-cyan: #2aa198; */
 /*   --oscd-theme-green: #859900; */
-  
 /*   --oscd-theme-text-font: 'Roboto'; */
 /*   --oscd-theme-icon-font: 'Material Icons Outlined'; */
 
+/*
+ * Set by OSCD only,
+ * plugin should set his own background, the oscd-body-bg is only a fallback in case Plugin doensT' have one.
+ * nav-colors are not used by plugins, so it is not used by this dev-environment.
+ */
+/*   --oscd-theme-body-bg: var(--oscd-theme-base3); */
+/*   --oscd-theme-nav-primary: var(--internal-primary); */
+/*   --oscd-theme-nav-primary-active: var(--internal-primary); */
+/*   --oscd-theme-nav-primary-text: var(--oscd-base3); */
+/*   --oscd-theme-nav-primary-text-active: yellow; */
+
+}
+
+/* Experimental: Simulate High Contrast variant for Bearingpoint-Distribution. */
+@media (prefers-contrast: more) {
+  html.bearingpoint-new {
+    --internal-gray-10: #ffffff; /* lightest */
+    --internal-gray-20: #f7f4f3;
+    --internal-gray-30: #dbd5d1;
+    --internal-gray-40: #987e71;
+    --internal-gray-50: #574238;
+    --internal-gray-60: #3b2a21;
+    --internal-gray-70: #241914;
+    --internal-gray-80: #140e0a;
+    --internal-gray-90: #000000; /* darkest */
+  }
 }
 
 /**
@@ -474,34 +492,16 @@ html.openscd-new,
 html.transnetbw-new,
 html.bearingpoint-new {
 
-  /* Gray-Values should be fixed values */
-  --oscd-gray-10: var(--oscd-theme-gray-10, #fdf6e3); /* lightest */
-  --oscd-gray-20: var(--oscd-theme-gray-20, #eee8d5);
-  --oscd-gray-30: var(--oscd-theme-gray-30, #93a1a1);
-  --oscd-gray-40: var(--oscd-theme-gray-40, #839496);
-  --oscd-gray-50: var(--oscd-theme-gray-50, color-mix(in oklab, #839496 50%, #657b83));  /* #74888c */
-  --oscd-gray-60: var(--oscd-theme-gray-60, #657b83);
-  --oscd-gray-70: var(--oscd-theme-gray-70, #586e75);
-  --oscd-gray-80: var(--oscd-theme-gray-80, #073642);
-  --oscd-gray-90: var(--oscd-theme-gray-90, #002b36); /* darkest */
-  
-  /* darkest black and lightes white. Fixed values. */
-  --oscd-white: var(--oscd-theme-white, #ffffff);
-  --oscd-black: var(--oscd-theme-black, color-mix(in oklab, var(--oscd-gray-90) 50%, #000)); /* little darker then darkest gray */
-  /* paper = lightest ground, ink = darkest mark. Values swap in dark mode. */
-  --oscd-paper: var(--oscd-theme-paper, light-dark(var(--oscd-white), var(--oscd-black)));
-  --oscd-ink: var(--oscd-theme-ink, light-dark(var(--oscd-black), var(--oscd-white)));
-  
   /* Solarized palette. Dark mode inverts the base scale.
    * https://ethanschoonover.com/solarized/ */
-  --oscd-base03: var(--oscd-theme-base03, light-dark(var(--oscd-gray-90), var(--oscd-gray-10)));
-  --oscd-base02: var(--oscd-theme-base02, light-dark(var(--oscd-gray-80), var(--oscd-gray-20)));
-  --oscd-base01: var(--oscd-theme-base01, light-dark(var(--oscd-gray-70), var(--oscd-gray-30)));
-  --oscd-base00: var(--oscd-theme-base00, light-dark(var(--oscd-gray-60), var(--oscd-gray-40)));
-  --oscd-base0: var(--oscd-theme-base0, light-dark(var(--oscd-gray-40), var(--oscd-gray-60)));
-  --oscd-base1: var(--oscd-theme-base1, light-dark(var(--oscd-gray-30), var(--oscd-gray-70)));
-  --oscd-base2: var(--oscd-theme-base2, light-dark(var(--oscd-gray-20), var(--oscd-gray-80)));
-  --oscd-base3: var(--oscd-theme-base3, light-dark(var(--oscd-gray-10), var(--oscd-gray-90)));
+  --oscd-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
+  --oscd-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
+  --oscd-base01: var(--oscd-theme-base01, light-dark(#586e75, #93a1a1));
+  --oscd-base00: var(--oscd-theme-base00, light-dark(#657b83, #839496));
+  --oscd-base0: var(--oscd-theme-base0, light-dark(#839496, #657b83));
+  --oscd-base1: var(--oscd-theme-base1, light-dark(#93a1a1, #586e75));
+  --oscd-base2: var(--oscd-theme-base2, light-dark(#eee8d5, #073642));
+  --oscd-base3: var(--oscd-theme-base3, light-dark(#fdf6e3, #002b36));
   --oscd-yellow: var(--oscd-theme-yellow, #b58900);
   --oscd-orange: var(--oscd-theme-orange, #cb4b16);
   --oscd-red: var(--oscd-theme-red, #dc322f);
@@ -517,21 +517,14 @@ html.bearingpoint-new {
    * (--oscd-on-*) are independent so branding can keep a fixed primary
    * and still pick a readable ink (or let ink follow base2). */
   --oscd-primary: var(--oscd-theme-primary, var(--oscd-cyan));
-  --oscd-on-primary: var(--oscd-theme-on-primary, var(--oscd-gray-20));
-  --oscd-primary-adaptive: var(--oscd-theme-primary-adaptive, var(--oscd-primary));
-  --oscd-on-primary-adaptive: var(--oscd-theme-on-primary-adaptive, var(--oscd-on-primary));
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
-  --oscd-on-secondary: var(--oscd-theme-on-secondary, var(--oscd-gray-20));
-  --oscd-secondary-adaptive: var(--oscd-theme-secondary-adaptive, var(--oscd-secondary));
-  --oscd-on-secondary-adaptive: var(--oscd-theme-on-secondary-adaptive, var(--oscd-on-secondary));
-  --oscd-on-primary-active: var(--oscd-theme-on-primary-active, var(--oscd-on-primary));
 
   --oscd-error: var(--oscd-theme-error, #ff3d47);
-  --oscd-on-error: var(--oscd-theme-on-error, var(--oscd-gray-90));
+  --oscd-on-error: var(--oscd-theme-on-error, #002b36);
   --oscd-warning: var(--oscd-theme-warning, #ffcc17);
-  --oscd-on-warning: var(--oscd-theme-on-warning, var(--oscd-gray-90));
+  --oscd-on-warning: var(--oscd-theme-on-warning, #002b36);
   --oscd-success: var(--oscd-theme-success, #239c5b);
-  --oscd-on-success: var(--oscd-theme-on-success, var(--oscd-gray-90));
+  --oscd-on-success: var(--oscd-theme-on-success, #002b36);
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');

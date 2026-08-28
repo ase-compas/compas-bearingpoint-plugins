@@ -25,12 +25,13 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Plugin + SMUI use .material-icons; OpenSCD MDC maps this to Material Icons Outlined
-   (plugin-kind ligatures editor/menu/validator depend on that face). */
+/* OpenSCD sets '--oscd-icon-font' to 'Material Icons' */
 .material-icons {
-  font-family: var(--mdc-icon-font, 'Material Icons Outlined');
+  font-family: var(--oscd-icon-font, 'Material Icons');
 }
 
+/* Plugin + SMUI use .material-icons-outlined; OpenSCD sets '--mdc-icon-font' to 'Material Icons Outlined'
+   (plugin-kind ligatures editor/menu/validator depend on that face). */
 .material-icons-outlined {
   font-family: 'Material Icons Outlined';
 }
