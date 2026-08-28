@@ -1536,7 +1536,7 @@ function ae(n, e = !1) {
     return t instanceof Comment && t.data === "" ? /* @__PURE__ */ wr(t) : t;
   }
 }
-function z(n, e = 1, t = !1) {
+function X(n, e = 1, t = !1) {
   let i = n;
   for (; e--; )
     i = /** @type {TemplateNode} */
@@ -5361,7 +5361,7 @@ function ao(n, e) {
       [i()]: !0
     })
   ]);
-  var w = z(Q(O), 2);
+  var w = X(Q(O), 2);
   {
     var M = (I) => {
       var x = kd(), G = Q(x);
@@ -5724,7 +5724,7 @@ function Zd(n, e) {
   ]);
   const Pe = m() !== void 0 || m() === void 0 && e.input$emptyValueUndefined || !r(g());
   r(g()) && g(null), r(E()) && E(!1);
-  let Z, B = /* @__PURE__ */ fe(void 0), H = new Rr(), $ = Oe({}), ue = Oe({}), V = /* @__PURE__ */ fe(void 0), he = /* @__PURE__ */ fe(!1), me = /* @__PURE__ */ fe(Oe(S())), le = Me("SMUI:addLayoutListener"), ce, T, K = new Promise((_) => T = _), R, X, P, j;
+  let Z, B = /* @__PURE__ */ fe(void 0), H = new Rr(), $ = Oe({}), ue = Oe({}), V = /* @__PURE__ */ fe(void 0), he = /* @__PURE__ */ fe(!1), me = /* @__PURE__ */ fe(Oe(S())), le = Me("SMUI:addLayoutListener"), ce, T, K = new Promise((_) => T = _), R, z, P, j;
   const ie = /* @__PURE__ */ se(() => x() && x().getElement());
   Fe(() => {
     (C() || s(me) || !D()) && s(B) && s(B).isValid() !== !E() && (D() ? E(!s(B).isValid()) : s(B).setValid(!E()));
@@ -5747,9 +5747,9 @@ function Zd(n, e) {
   }), pe("SMUI:textfield:leading-icon:unmount", () => {
     R = void 0;
   }), pe("SMUI:textfield:trailing-icon:mount", (_) => {
-    X = _;
+    z = _;
   }), pe("SMUI:textfield:trailing-icon:unmount", () => {
-    X = void 0;
+    z = void 0;
   }), pe("SMUI:textfield:helper-text:id", (_) => {
     W(V, _, !0);
   }), pe("SMUI:textfield:helper-text:mount", (_) => {
@@ -5837,7 +5837,7 @@ function Zd(n, e) {
             return R;
           },
           get trailingIcon() {
-            return X;
+            return z;
           }
         }
       ),
@@ -5926,7 +5926,7 @@ function Zd(n, e) {
               f() === "filled" && ht(Ot);
             });
           }
-          var fn = z(je, 2);
+          var fn = X(je, 2);
           {
             var Xe = (ht) => {
               {
@@ -5979,7 +5979,7 @@ function Zd(n, e) {
           !h() && f() !== "outlined" && Re(Ze);
         });
       }
-      var ot = z(ge, 2);
+      var ot = X(ge, 2);
       {
         var wt = (Re) => {
           {
@@ -6055,7 +6055,7 @@ function Zd(n, e) {
           (h() || f() === "outlined") && Re(wt);
         });
       }
-      var Ut = z(ot, 2);
+      var Ut = X(ot, 2);
       Nr(Ut, {
         key: "SMUI:textfield:icon:leading",
         value: !0,
@@ -6065,9 +6065,9 @@ function Zd(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var ki = z(Ut, 2);
+      var ki = X(Ut, 2);
       Te(ki, () => e.children ?? Ae);
-      var et = z(ki, 2);
+      var et = X(ki, 2);
       {
         var Mt = (Re) => {
           var ze = Wd(), je = Q(ze);
@@ -6129,7 +6129,7 @@ function Zd(n, e) {
               () => x()
             );
           }
-          var Ot = z(je, 2);
+          var Ot = X(je, 2);
           Te(Ot, () => e.internalCounter ?? Ae), Be((fn) => Kn(ze, 1, fn), [
             () => Ql(it({
               "mdc-text-field__resizer": !("input$resizable" in U) || e.input$resizable
@@ -6163,7 +6163,7 @@ function Zd(n, e) {
               e.prefix != null && At(Ot);
             });
           }
-          var fn = z(je, 2);
+          var fn = X(je, 2);
           {
             let At = /* @__PURE__ */ se(() => gt(U, "input$"));
             _e(
@@ -6232,7 +6232,7 @@ function Zd(n, e) {
               () => x()
             );
           }
-          var Xe = z(fn, 2);
+          var Xe = X(fn, 2);
           {
             var ht = (At) => {
               var Ne = ve(), Et = ae(Ne);
@@ -6265,7 +6265,7 @@ function Zd(n, e) {
           h() && typeof m() == "string" ? Re(Mt) : Re(Nt, -1);
         });
       }
-      var Zn = z(et, 2);
+      var Zn = X(et, 2);
       Nr(Zn, {
         key: "SMUI:textfield:icon:leading",
         value: !1,
@@ -6275,7 +6275,7 @@ function Zd(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var _r = z(Zn, 2);
+      var _r = X(Zn, 2);
       {
         var Jn = (Re) => {
           {
@@ -6327,7 +6327,7 @@ function Zd(n, e) {
           typeof e.label != "string" && et(Ze);
         });
       }
-      var ot = z(ge, 2);
+      var ot = X(ge, 2);
       Nr(ot, {
         key: "SMUI:textfield:icon:leading",
         value: !0,
@@ -6337,9 +6337,9 @@ function Zd(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var wt = z(ot, 2);
+      var wt = X(ot, 2);
       Te(wt, () => e.children ?? Ae);
-      var Ut = z(wt, 2);
+      var Ut = X(wt, 2);
       Nr(Ut, {
         key: "SMUI:textfield:icon:leading",
         value: !1,
@@ -6349,7 +6349,7 @@ function Zd(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var ki = z(Ut, 2);
+      var ki = X(Ut, 2);
       Te(ki, () => e.line ?? Ae), _e(F, (et) => Z = et, () => Z), $e(F, (et, Mt) => Ln == null ? void 0 : Ln(et, Mt), () => ({
         ripple: o(),
         unbounded: !1,
@@ -6362,7 +6362,7 @@ function Zd(n, e) {
       Pe ? _(He) : _(Ve, -1);
     });
   }
-  var N = z(yt, 2);
+  var N = X(yt, 2);
   {
     var q = (_) => {
       {
@@ -7999,8 +7999,8 @@ function hc(n, e) {
     "children"
   ]), S, C = /* @__PURE__ */ fe(void 0), O = Oe({}), w = Oe({}), M = /* @__PURE__ */ fe(void 0);
   pe("SMUI:list:role", "menu"), pe("SMUI:list:item:role", "menuitem"), Fe(() => {
-    var R, X;
-    S && l() && !((R = S.parentElement) != null && R.classList.contains("mdc-menu-surface--anchor")) && ((X = S.parentElement) == null || X.classList.add("mdc-menu-surface--anchor"), f(S.parentElement ?? void 0));
+    var R, z;
+    S && l() && !((R = S.parentElement) != null && R.classList.contains("mdc-menu-surface--anchor")) && ((z = S.parentElement) == null || z.classList.add("mdc-menu-surface--anchor"), f(S.parentElement ?? void 0));
   }), Fe(() => {
     s(C) && s(C).isOpen() !== o() && (o() ? s(C).open() : s(C).close());
   }), Fe(() => {
@@ -8041,10 +8041,10 @@ function hc(n, e) {
         notifyOpening: () => {
           o() || St(me(), "SMUIMenuSurfaceOpening");
         },
-        isElementInContainer: (X) => me().contains(X),
+        isElementInContainer: (z) => me().contains(z),
         isRtl: () => getComputedStyle(me()).getPropertyValue("direction") === "rtl",
-        setTransformOrigin: (X) => {
-          w["transform-origin"] = X;
+        setTransformOrigin: (z) => {
+          w["transform-origin"] = z;
         },
         isFocused: () => document.activeElement === me(),
         saveFocus: () => {
@@ -8064,11 +8064,11 @@ function hc(n, e) {
           height: document.body.clientHeight
         }),
         getWindowScroll: () => ({ x: window.pageXOffset, y: window.pageYOffset }),
-        setPosition: (X) => {
-          w.left = "left" in X ? `${X.left}px` : "", w.right = "right" in X ? `${X.right}px` : "", w.top = "top" in X ? `${X.top}px` : "", w.bottom = "bottom" in X ? `${X.bottom}px` : "";
+        setPosition: (z) => {
+          w.left = "left" in z ? `${z.left}px` : "", w.right = "right" in z ? `${z.right}px` : "", w.top = "top" in z ? `${z.top}px` : "", w.bottom = "bottom" in z ? `${z.bottom}px` : "";
         },
-        setMaxHeight: (X) => {
-          w["max-height"] = X;
+        setMaxHeight: (z) => {
+          w["max-height"] = z;
         }
       }),
       !0
@@ -8077,16 +8077,16 @@ function hc(n, e) {
       get open() {
         return o();
       },
-      set open(X) {
-        o(X);
+      set open(z) {
+        o(z);
       },
       closeProgrammatic: Pe
     };
     return x && x(R), s(C).init(), () => {
       var P, j;
       G && G(R);
-      const X = s(C).isHoistedElement;
-      (P = s(C)) == null || P.destroy(), X && ((j = me().parentNode) == null || j.removeChild(me()));
+      const z = s(C).isHoistedElement;
+      (P = s(C)) == null || P.destroy(), z && ((j = me().parentNode) == null || j.removeChild(me()));
     };
   }), di(() => {
     var R;
@@ -8102,8 +8102,8 @@ function hc(n, e) {
     (!(R in O) || O[R]) && (O[R] = !1);
   }
   function Pe(R) {
-    var X;
-    (X = s(C)) == null || X.close(R), o(!1);
+    var z;
+    (z = s(C)) == null || z.close(R), o(!1);
   }
   function Z(R) {
     s(C) && o() && !d() && s(C).handleBodyClick(R);
@@ -8114,10 +8114,10 @@ function hc(n, e) {
   function H(R) {
     o(R);
   }
-  function $(R, X) {
+  function $(R, z) {
     if (s(C) == null)
       throw new Error("Instance is not defined.");
-    return s(C).setAbsolutePosition(R, X);
+    return s(C).setAbsolutePosition(R, z);
   }
   function ue(R) {
     if (s(C) == null)
@@ -8148,14 +8148,14 @@ function hc(n, e) {
   }, ce = fc();
   Kl("click", Tl.body, Z, !0);
   var T = (R) => {
-    var X;
-    s(C) && !d() && s(C).handleKeydown(R), (X = e.onkeydown) == null || X.call(e, R);
+    var z;
+    s(C) && !d() && s(C).handleKeydown(R), (z = e.onkeydown) == null || z.call(e, R);
   };
   dt(
     ce,
-    (R, X) => ({
+    (R, z) => ({
       class: R,
-      style: X,
+      style: z,
       role: "dialog",
       ...D,
       onkeydown: T
@@ -8170,11 +8170,11 @@ function hc(n, e) {
         ...O,
         [i()]: !0
       }),
-      () => Object.entries(w).map(([R, X]) => `${R}: ${X};`).concat([r()]).join(" ")
+      () => Object.entries(w).map(([R, z]) => `${R}: ${z};`).concat([r()]).join(" ")
     ]
   );
   var K = Q(ce);
-  return Te(K, () => e.children ?? Ae), _e(ce, (R) => S = R, () => S), $e(ce, (R, X) => te == null ? void 0 : te(R, X), t), L(n, ce), Qe(le);
+  return Te(K, () => e.children ?? Ae), _e(ce, (R) => S = R, () => S), $e(ce, (R, z) => te == null ? void 0 : te(R, z), t), L(n, ce), Qe(le);
 }
 function ba(n, { addClass: e = (i) => n.classList.add(i), removeClass: t = (i) => n.classList.remove(i) } = {}) {
   return e("mdc-menu-surface--anchor"), {
@@ -8449,7 +8449,7 @@ function pc(n, e) {
         },
         isFocusInsideList: () => k != null && ke() !== document.activeElement && ke().contains(document.activeElement),
         isRootFocused: () => k != null && document.activeElement === ke(),
-        listItemAtIndexHasClass: X,
+        listItemAtIndexHasClass: z,
         notifyAction: (q) => {
           O(q), k != null && St(ke(), "SMUIListAction", { index: q });
         },
@@ -8534,7 +8534,7 @@ function pc(n, e) {
   function R() {
     return k == null ? [] : [...ke().children].map((N) => B.get(N)).filter((N) => N && N._smui_list_item_accessor);
   }
-  function X(N, q) {
+  function z(N, q) {
     const _ = R()[N];
     return (_ && _.hasClass(q)) ?? !1;
   }
@@ -8841,7 +8841,7 @@ function bc(n, e) {
   function T() {
     return O.getElement();
   }
-  var K = { action: le, getPrimaryText: ce, getElement: T }, R = ve(), X = ae(R);
+  var K = { action: le, getPrimaryText: ce, getElement: T }, R = ve(), z = ae(R);
   {
     let P = /* @__PURE__ */ se(() => [
       ...o() ? [] : [
@@ -8870,7 +8870,7 @@ function bc(n, e) {
       ...w,
       [l()]: !0
     })), ie = /* @__PURE__ */ se(() => Object.entries(M).map(([Ge, Ue]) => `${Ge}: ${Ue};`).concat([u()]).join(" ")), Ee = /* @__PURE__ */ se(() => m() || void 0);
-    ls(X, D, (Ge, Ue) => {
+    ls(z, D, (Ge, Ue) => {
       _e(
         Ue(Ge, nt(
           {
@@ -8927,7 +8927,7 @@ function bc(n, e) {
                   d() && Se(J);
                 });
               }
-              var ee = z(Jt);
+              var ee = X(Jt);
               Te(ee, () => e.children ?? Ae), L(Ce, Zt);
             },
             $$slots: { default: !0 }
@@ -9078,7 +9078,7 @@ function ya(n, e) {
   l(D()) && D(!1);
   let ue, V = /* @__PURE__ */ fe(void 0), he = Oe({}), me = Oe({}), le, ce = Oe({}), T = /* @__PURE__ */ fe(-1);
   const K = /* @__PURE__ */ se(() => H.menu$id ?? O() + "-menu");
-  let R = /* @__PURE__ */ fe(void 0), X = Me("SMUI:addLayoutListener"), P, j = /* @__PURE__ */ fe(!1), ie = Oe({}), Ee = /* @__PURE__ */ fe(void 0), Ge = /* @__PURE__ */ fe(void 0), Ue = /* @__PURE__ */ fe(!1), Ce, Lt = Me("SMUI:select:context"), Zt, Jt, J, ee, Se;
+  let R = /* @__PURE__ */ fe(void 0), z = Me("SMUI:addLayoutListener"), P, j = /* @__PURE__ */ fe(!1), ie = Oe({}), Ee = /* @__PURE__ */ fe(void 0), Ge = /* @__PURE__ */ fe(void 0), Ue = /* @__PURE__ */ fe(!1), Ce, Lt = Me("SMUI:select:context"), Zt, Jt, J, ee, Se;
   pe("SMUI:list:role", ""), pe("SMUI:list:nav", !1);
   const ke = xa("");
   pe("SMUI:select:selectedText", ke);
@@ -9109,7 +9109,7 @@ function ya(n, e) {
     s(V) && E() && s(V).isValid() !== !D() && (S() ? D(!s(V).isValid()) : s(V).setValid(!D()));
   }), Fe(() => {
     s(V) && s(V).getRequired() !== C() && s(V).setRequired(C());
-  }), X && (P = X(_r)), pe("SMUI:select:leading-icon:mount", (A) => {
+  }), z && (P = z(_r)), pe("SMUI:select:leading-icon:mount", (A) => {
     Zt = A;
   }), pe("SMUI:select:leading-icon:unmount", () => {
     Zt = void 0;
@@ -9320,7 +9320,7 @@ function ya(n, e) {
       w() && A(fn);
     });
   }
-  var Xe = z(Ot, 2), ht = (A) => {
+  var Xe = X(Ot, 2), ht = (A) => {
     var Y;
     le.focus(), s(V) && s(V).handleClick(ki(A)), (Y = e.anchor$onclick) == null || Y.call(e, A);
   }, At = (A) => {
@@ -9366,7 +9366,7 @@ function ya(n, e) {
       f() === "filled" && A($t);
     });
   }
-  var vt = z(Bn, 2);
+  var vt = X(Bn, 2);
   {
     var Dt = (A) => {
       {
@@ -9415,7 +9415,7 @@ function ya(n, e) {
       f() !== "outlined" && !p() && v() != null && A(Dt);
     });
   }
-  var en = z(vt, 2);
+  var en = X(vt, 2);
   {
     var hn = (A) => {
       {
@@ -9493,9 +9493,9 @@ function ya(n, e) {
       f() === "outlined" && A(hn);
     });
   }
-  var Xt = z(en, 2);
+  var Xt = X(en, 2);
   Te(Xt, () => e.leadingIcon ?? Ae);
-  var tn = z(Xt, 2);
+  var tn = X(Xt, 2);
   dt(tn, (A, Y) => ({ class: A, ...Y }), [
     () => it({
       "mdc-select__selected-text-container": !0,
@@ -9524,7 +9524,7 @@ function ya(n, e) {
   );
   var fi = Q(Ht);
   $e(Ht, (A, Y) => te == null ? void 0 : te(A, Y), k), $e(tn, (A, Y) => te == null ? void 0 : te(A, Y), G);
-  var sr = z(tn, 2);
+  var sr = X(tn, 2);
   dt(sr, (A, Y) => ({ class: A, ...Y }), [
     () => it({
       "mdc-select__dropdown-icon": !0,
@@ -9532,7 +9532,7 @@ function ya(n, e) {
     }),
     () => gt(H, "dropdownIcon$")
   ]), $e(sr, (A, Y) => te == null ? void 0 : te(A, Y), Pe);
-  var fo = z(sr, 2);
+  var fo = X(sr, 2);
   {
     var ho = (A) => {
       {
@@ -9545,7 +9545,7 @@ function ya(n, e) {
     });
   }
   _e(Xe, (A) => le = A, () => le), $e(Xe, (A, Y) => te == null ? void 0 : te(A, Y), I);
-  var vo = z(Xe, 2);
+  var vo = X(Xe, 2);
   {
     let A = /* @__PURE__ */ se(() => it({
       "mdc-select__menu": !0,
@@ -9631,7 +9631,7 @@ function ya(n, e) {
     removeClass: q,
     addStyle: _
   })), $e(je, (A, Y) => ba == null ? void 0 : ba(A, Y), () => ({ addClass: N, removeClass: q })), $e(je, (A, Y) => te == null ? void 0 : te(A, Y), u);
-  var po = z(je, 2);
+  var po = X(je, 2);
   {
     var mo = (A) => {
       {
@@ -10160,7 +10160,7 @@ const sf = [
     pluginsUrl: "https://sprinteins.github.io/oscd-plugin-store/plugins.json"
   }
 ], lf = sf;
-var of = /* @__PURE__ */ re('<span class="badge badge-builtin bp-typo-button">Built-in</span>'), uf = /* @__PURE__ */ re("<span> </span>"), df = /* @__PURE__ */ re("<span> </span>"), cf = /* @__PURE__ */ re('<span class="badge badge-incompatible bp-typo-button">Incompatible</span>'), ff = /* @__PURE__ */ re('<div role="button" tabindex="0"><div class="card-top svelte-1myq0bn"><div class="plugin-icon-wrapper svelte-1myq0bn"><span class="material-icons plugin-icon svelte-1myq0bn"> </span></div> <button><!></button></div> <div class="plugin-name bp-typo-16-bold svelte-1myq0bn"> </div> <div class="plugin-kind-wrapper svelte-1myq0bn"><div class="badge badge-kind bp-typo-label"><span class="material-icons badge-icon"> </span> </div></div> <div class="plugin-description bp-typo-body svelte-1myq0bn"> </div> <div class="plugin-badges svelte-1myq0bn"><!> <!> <!></div></div>');
+var of = /* @__PURE__ */ re('<span class="badge badge-builtin bp-typo-button">Built-in</span>'), uf = /* @__PURE__ */ re("<span> </span>"), df = /* @__PURE__ */ re("<span> </span>"), cf = /* @__PURE__ */ re('<span class="badge badge-incompatible bp-typo-button">Incompatible</span>'), ff = /* @__PURE__ */ re('<div role="button" tabindex="0"><div class="card-top svelte-1myq0bn"><div class="plugin-icon-wrapper svelte-1myq0bn"><span class="material-icons-outlined plugin-icon svelte-1myq0bn"> </span></div> <button><!></button></div> <div class="plugin-name bp-typo-16-bold svelte-1myq0bn"> </div> <div class="plugin-kind-wrapper svelte-1myq0bn"><div class="badge badge-kind bp-typo-label"><span class="material-icons-outlined badge-icon"> </span> </div></div> <div class="plugin-description bp-typo-body svelte-1myq0bn"> </div> <div class="plugin-badges svelte-1myq0bn"><!> <!> <!></div></div>');
 function hf(n, e) {
   Ye(e, !0);
   const t = /* @__PURE__ */ se(() => e.plugin.builtin === !0), i = /* @__PURE__ */ se(() => e.plugin.shadowedByHostBuiltin === !0), r = /* @__PURE__ */ se(() => e.plugin.installationState === "INSTALLED" || s(t) || s(i)), a = /* @__PURE__ */ se(() => e.plugin.activationState === "ACTIVE"), l = /* @__PURE__ */ se(() => ar(e.plugin.provider, e.plugin.name)), u = /* @__PURE__ */ se(() => uo(s(l))), o = /* @__PURE__ */ se(() => s(i) || !s(r) && !e.plugin.compatible);
@@ -10175,7 +10175,7 @@ function hf(n, e) {
   }
   var c = ff();
   let h;
-  var f = Q(c), p = Q(f), v = Q(p), m = Q(v), g = z(p, 2);
+  var f = Q(c), p = Q(f), v = Q(p), m = Q(v), g = X(p, 2);
   let E;
   var D = Q(g);
   {
@@ -10193,7 +10193,7 @@ function hf(n, e) {
       s(r) ? s(a) ? le(C, 1) : le(O, -1) : le(S);
     });
   }
-  var w = z(f, 2), M = Q(w), I = z(w, 2), x = Q(I), G = Q(x), ne = Q(G), k = z(G), U = z(I, 2), Pe = Q(U), Z = z(U, 2), B = Q(Z);
+  var w = X(f, 2), M = Q(w), I = X(w, 2), x = Q(I), G = Q(x), ne = Q(G), k = X(G), U = X(I, 2), Pe = Q(U), Z = X(U, 2), B = Q(Z);
   {
     var H = (le) => {
       var ce = of();
@@ -10211,7 +10211,7 @@ function hf(n, e) {
       s(t) || s(i) ? le(H) : le($, -1);
     });
   }
-  var ue = z(B, 2);
+  var ue = X(B, 2);
   {
     var V = (le) => {
       var ce = df(), T = Q(ce);
@@ -10226,7 +10226,7 @@ function hf(n, e) {
       s(r) && le(V);
     });
   }
-  var he = z(ue, 2);
+  var he = X(ue, 2);
   {
     var me = (le) => {
       var ce = cf();
@@ -10251,10 +10251,10 @@ function hf(n, e) {
   }), gn("keydown", c, (le) => le.key === "Enter" && e.onSelect()), gn("click", g, d), L(n, c), Qe();
 }
 ss(["click", "keydown"]);
-var vf = /* @__PURE__ */ re('<img class="provider-icon svelte-1ttjeex"/>'), pf = /* @__PURE__ */ re('<span class="material-icons provider-icon svelte-1ttjeex"> </span>'), mf = /* @__PURE__ */ re('<section class="provider-card svelte-1ttjeex"><div class="provider-header svelte-1ttjeex"><div class="provider-info svelte-1ttjeex"><h3 class="provider-name bp-typo-h3 svelte-1ttjeex"> </h3> <span class="provider-description bp-typo-body svelte-1ttjeex"> </span></div> <!></div> <div class="plugins-grid svelte-1ttjeex"></div></section>');
+var vf = /* @__PURE__ */ re('<img class="provider-icon svelte-1ttjeex"/>'), pf = /* @__PURE__ */ re('<span class="material-icons-outlined provider-icon svelte-1ttjeex"> </span>'), mf = /* @__PURE__ */ re('<section class="provider-card svelte-1ttjeex"><div class="provider-header svelte-1ttjeex"><div class="provider-info svelte-1ttjeex"><h3 class="provider-name bp-typo-h3 svelte-1ttjeex"> </h3> <span class="provider-description bp-typo-body svelte-1ttjeex"> </span></div> <!></div> <div class="plugins-grid svelte-1ttjeex"></div></section>');
 function gf(n, e) {
   Ye(e, !0);
-  var t = mf(), i = Q(t), r = Q(i), a = Q(r), l = Q(a), u = z(a, 2), o = Q(u), d = z(r, 2);
+  var t = mf(), i = Q(t), r = Q(i), a = Q(r), l = Q(a), u = X(a, 2), o = Q(u), d = X(r, 2);
   {
     var c = (v) => {
       var m = vf();
@@ -10269,7 +10269,7 @@ function gf(n, e) {
       s(h) ? v(c) : v(f, -1);
     });
   }
-  var p = z(i, 2);
+  var p = X(i, 2);
   vr(p, 21, () => e.plugins, (v) => yr(v), (v, m) => {
     {
       let g = /* @__PURE__ */ se(() => e.selectedPluginKey === yr(s(m)));
@@ -10291,11 +10291,11 @@ function gf(n, e) {
     ye(l, e.provider.name), ye(o, e.provider.description);
   }), L(n, t), Qe();
 }
-var If = /* @__PURE__ */ re('<span class="badge badge-builtin bp-typo-button">Built-in</span>'), bf = /* @__PURE__ */ re("<span> </span>"), yf = /* @__PURE__ */ re("<span> </span>"), Af = /* @__PURE__ */ re('<span class="badge badge-incompatible bp-typo-button">Incompatible</span>'), Ef = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Active by default</span> <span class="bp-typo-16-regular"> </span></div> <div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Requires document</span> <span class="bp-typo-16-regular"> </span></div>', 1), Cf = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Supported Version</span> <span class="bp-typo-16-regular"><!></span></div>'), Sf = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Current Core</span> <span class="bp-typo-16-regular"> </span></div>'), xf = /* @__PURE__ */ re('<p class="details-long-desc bp-typo-body svelte-yr5wcf"> </p>'), Tf = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf" disabled="" aria-label="Disable">Disable</button>'), Lf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf" disabled="" aria-label="Enable">Enable</button>'), wf = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf">Disable</button>'), Mf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf">Enable</button>'), Of = /* @__PURE__ */ re('<button class="action-btn install bp-typo-button svelte-yr5wcf">Install</button>'), Df = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf">Disable</button>'), Rf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf">Enable</button>'), _f = /* @__PURE__ */ re('<button class="action-btn remove bp-typo-button svelte-yr5wcf">Remove</button> <!>', 1), Pf = /* @__PURE__ */ re('<aside class="plugin-details svelte-yr5wcf"><div class="details-header svelte-yr5wcf"><div class="details-title-row bp-typo-h1 svelte-yr5wcf"><span class="material-icons details-icon svelte-yr5wcf"> </span> <h3 class="details-name svelte-yr5wcf"> </h3> <button class="close-btn svelte-yr5wcf" aria-label="Close details">✕</button></div> <div class="details-kind-wrapper svelte-yr5wcf"><div class="badge badge-kind bp-typo-label"><span class="material-icons badge-icon"> </span> </div></div> <p class="details-short-desc bp-typo-body svelte-yr5wcf"> </p> <div class="details-badges svelte-yr5wcf"><!> <!> <!></div></div> <div class="details-meta svelte-yr5wcf"><div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Provider</span> <span class="bp-typo-16-regular"> </span></div> <div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Author</span> <span class="bp-typo-16-regular"> </span></div> <!> <!> <!></div> <div class="details-url svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">URL</span> <a target="_blank" rel="noopener noreferrer"> </a></div> <!> <div class="details-actions svelte-yr5wcf"><div style="flex: 1"></div> <!></div></aside>');
+var If = /* @__PURE__ */ re('<span class="badge badge-builtin bp-typo-button">Built-in</span>'), bf = /* @__PURE__ */ re("<span> </span>"), yf = /* @__PURE__ */ re("<span> </span>"), Af = /* @__PURE__ */ re('<span class="badge badge-incompatible bp-typo-button">Incompatible</span>'), Ef = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Active by default</span> <span class="bp-typo-16-regular"> </span></div> <div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Requires document</span> <span class="bp-typo-16-regular"> </span></div>', 1), Cf = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Supported Version</span> <span class="bp-typo-16-regular"><!></span></div>'), Sf = /* @__PURE__ */ re('<div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Current Core</span> <span class="bp-typo-16-regular"> </span></div>'), xf = /* @__PURE__ */ re('<p class="details-long-desc bp-typo-body svelte-yr5wcf"> </p>'), Tf = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf" disabled="" aria-label="Disable">Disable</button>'), Lf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf" disabled="" aria-label="Enable">Enable</button>'), wf = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf">Disable</button>'), Mf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf">Enable</button>'), Of = /* @__PURE__ */ re('<button class="action-btn install bp-typo-button svelte-yr5wcf">Install</button>'), Df = /* @__PURE__ */ re('<button class="action-btn disable bp-typo-button svelte-yr5wcf">Disable</button>'), Rf = /* @__PURE__ */ re('<button class="action-btn enable bp-typo-button svelte-yr5wcf">Enable</button>'), _f = /* @__PURE__ */ re('<button class="action-btn remove bp-typo-button svelte-yr5wcf">Remove</button> <!>', 1), Pf = /* @__PURE__ */ re('<aside class="plugin-details svelte-yr5wcf"><div class="details-header svelte-yr5wcf"><div class="details-title-row bp-typo-h1 svelte-yr5wcf"><span class="material-icons-outlined details-icon svelte-yr5wcf"> </span> <h3 class="details-name svelte-yr5wcf"> </h3> <button class="close-btn svelte-yr5wcf" aria-label="Close details">✕</button></div> <div class="details-kind-wrapper svelte-yr5wcf"><div class="badge badge-kind bp-typo-label"><span class="material-icons-outlined badge-icon"> </span> </div></div> <p class="details-short-desc bp-typo-body svelte-yr5wcf"> </p> <div class="details-badges svelte-yr5wcf"><!> <!> <!></div></div> <div class="details-meta svelte-yr5wcf"><div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Provider</span> <span class="bp-typo-16-regular"> </span></div> <div class="meta-item svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">Author</span> <span class="bp-typo-16-regular"> </span></div> <!> <!> <!></div> <div class="details-url svelte-yr5wcf"><span class="meta-label bp-typo-label svelte-yr5wcf">URL</span> <a target="_blank" rel="noopener noreferrer"> </a></div> <!> <div class="details-actions svelte-yr5wcf"><div style="flex: 1"></div> <!></div></aside>');
 function kf(n, e) {
   Ye(e, !0);
   const t = /* @__PURE__ */ se(() => e.plugin.builtin === !0), i = /* @__PURE__ */ se(() => e.plugin.shadowedByHostBuiltin === !0), r = /* @__PURE__ */ se(() => e.plugin.installationState === "INSTALLED" || s(t) || s(i)), a = /* @__PURE__ */ se(() => e.plugin.activationState === "ACTIVE"), l = /* @__PURE__ */ se(() => ar(e.plugin.provider, e.plugin.name)), u = /* @__PURE__ */ se(() => uo(s(l)));
-  var o = Pf(), d = Q(o), c = Q(d), h = Q(c), f = Q(h), p = z(h, 2), v = Q(p), m = z(p, 2), g = z(c, 2), E = Q(g), D = Q(E), S = Q(D), C = z(D), O = z(g, 2), w = Q(O), M = z(O, 2), I = Q(M);
+  var o = Pf(), d = Q(o), c = Q(d), h = Q(c), f = Q(h), p = X(h, 2), v = Q(p), m = X(p, 2), g = X(c, 2), E = Q(g), D = Q(E), S = Q(D), C = X(D), O = X(g, 2), w = Q(O), M = X(O, 2), I = Q(M);
   {
     var x = (J) => {
       var ee = If();
@@ -10313,7 +10313,7 @@ function kf(n, e) {
       s(t) || s(i) ? J(x) : J(G, -1);
     });
   }
-  var ne = z(I, 2);
+  var ne = X(I, 2);
   {
     var k = (J) => {
       var ee = yf(), Se = Q(ee);
@@ -10328,7 +10328,7 @@ function kf(n, e) {
       s(r) && J(k);
     });
   }
-  var U = z(ne, 2);
+  var U = X(ne, 2);
   {
     var Pe = (J) => {
       var ee = Af();
@@ -10338,10 +10338,10 @@ function kf(n, e) {
       e.plugin.compatible || J(Pe);
     });
   }
-  var Z = z(d, 2), B = Q(Z), H = z(Q(B), 2), $ = Q(H), ue = z(B, 2), V = z(Q(ue), 2), he = Q(V), me = z(ue, 2);
+  var Z = X(d, 2), B = Q(Z), H = X(Q(B), 2), $ = Q(H), ue = X(B, 2), V = X(Q(ue), 2), he = Q(V), me = X(ue, 2);
   {
     var le = (J) => {
-      var ee = Ef(), Se = ae(ee), ke = z(Q(Se), 2), yt = Q(ke), He = z(Se, 2), Ve = z(Q(He), 2), N = Q(Ve);
+      var ee = Ef(), Se = ae(ee), ke = X(Q(Se), 2), yt = Q(ke), He = X(Se, 2), Ve = X(Q(He), 2), N = Q(Ve);
       Be(() => {
         ye(yt, e.plugin.activeByDefault ? "Yes" : "No"), ye(N, e.plugin.requireDoc ? "Yes" : "No");
       }), L(J, ee);
@@ -10350,10 +10350,10 @@ function kf(n, e) {
       s(t) && J(le);
     });
   }
-  var ce = z(me, 2);
+  var ce = X(me, 2);
   {
     var T = (J) => {
-      var ee = Cf(), Se = z(Q(ee), 2), ke = Q(Se);
+      var ee = Cf(), Se = X(Q(ee), 2), ke = Q(Se);
       {
         var yt = (N) => {
           var q = tt();
@@ -10375,17 +10375,17 @@ function kf(n, e) {
       e.plugin.supportedCoreVersion && (e.plugin.supportedCoreVersion.from || e.plugin.supportedCoreVersion.to) && J(T);
     });
   }
-  var K = z(ce, 2);
+  var K = X(ce, 2);
   {
     var R = (J) => {
-      var ee = Sf(), Se = z(Q(ee), 2), ke = Q(Se);
+      var ee = Sf(), Se = X(Q(ee), 2), ke = Q(Se);
       Be(() => ye(ke, e.coreVersion)), L(J, ee);
     };
     oe(K, (J) => {
       e.coreVersion && J(R);
     });
   }
-  var X = z(Z, 2), P = z(Q(X), 2), j = Q(P), ie = z(X, 2);
+  var z = X(Z, 2), P = X(Q(z), 2), j = Q(P), ie = X(z, 2);
   {
     var Ee = (J) => {
       var ee = xf(), Se = Q(ee);
@@ -10395,7 +10395,7 @@ function kf(n, e) {
       e.plugin.longDescription && J(Ee);
     });
   }
-  var Ge = z(ie, 2), Ue = z(Q(Ge), 2);
+  var Ge = X(ie, 2), Ue = X(Q(Ge), 2);
   {
     var Ce = (J) => {
       var ee = ve(), Se = ae(ee);
@@ -10431,7 +10431,7 @@ function kf(n, e) {
       var ee = Of();
       Be(() => ee.disabled = !e.plugin.compatible), gn("click", ee, () => e.onInstall(e.plugin)), L(J, ee);
     }, Jt = (J) => {
-      var ee = _f(), Se = ae(ee), ke = z(Se, 2);
+      var ee = _f(), Se = ae(ee), ke = X(Se, 2);
       {
         var yt = (Ve) => {
           var N = Df();
@@ -10458,15 +10458,15 @@ function kf(n, e) {
   }), L(n, o), Qe();
 }
 ss(["click"]);
-var Bf = /* @__PURE__ */ re("<!> <!> <!>", 1), Ff = /* @__PURE__ */ re("<!> <!>", 1), Uf = /* @__PURE__ */ re("<!> <!>", 1), Nf = /* @__PURE__ */ re('<p class="error-message bp-typo-body svelte-1u53k0h"> </p>'), Hf = /* @__PURE__ */ re('<div class="load-errors svelte-1u53k0h"></div>'), Vf = /* @__PURE__ */ re('<div class="loading bp-typo-16-regular svelte-1u53k0h">Loading plugins…</div>'), jf = /* @__PURE__ */ re('<div class="empty-state bp-typo-body svelte-1u53k0h">No plugins match your search.</div>'), Gf = /* @__PURE__ */ re('<div class="plugins-hub bp-typo-body svelte-1u53k0h"><div class="hub-header svelte-1u53k0h"><h2 class="hub-title svelte-1u53k0h">Plugin Store</h2></div> <div class="hub-toolbar svelte-1u53k0h"><!> <!> <!> <!></div> <!> <div><div class="providers-list svelte-1u53k0h"><!></div> <!></div></div>');
+var Bf = /* @__PURE__ */ re("<!> <!> <!>", 1), Ff = /* @__PURE__ */ re("<!> <!>", 1), Uf = /* @__PURE__ */ re("<!> <!>", 1), Nf = /* @__PURE__ */ re('<p class="error-message bp-typo-body svelte-1u53k0h"> </p>'), Hf = /* @__PURE__ */ re('<div class="load-errors svelte-1u53k0h"></div>'), Vf = /* @__PURE__ */ re('<div class="loading bp-typo-16-regular svelte-1u53k0h">Loading plugins…</div>'), jf = /* @__PURE__ */ re('<div class="empty-state bp-typo-body svelte-1u53k0h">No plugins match your search.</div>'), Gf = /* @__PURE__ */ re('<div class="plugins-hub bp-typo-body svelte-1u53k0h"><div class="hub-toolbar svelte-1u53k0h"><!> <!> <!> <!></div> <!> <div><div class="providers-list svelte-1u53k0h"><!></div> <!></div></div>');
 function zf(n, e) {
   Ye(e, !0);
   let t = b(e, "coreVersion", 19, af), i = /* @__PURE__ */ fe(Oe([])), r = /* @__PURE__ */ fe(Oe([])), a = /* @__PURE__ */ fe(!0), l = /* @__PURE__ */ fe(Oe([])), u = /* @__PURE__ */ fe(null), o = /* @__PURE__ */ fe(""), d = /* @__PURE__ */ fe("all"), c = /* @__PURE__ */ fe("all"), h = /* @__PURE__ */ fe("all");
   const f = lf.map((T) => ({ ...T, icon: ja(T.icon) }));
   async function p() {
     W(a, !0), W(l, [], !0);
-    const T = Uc(), K = [], R = [], X = await $c(T, t());
-    for (const Ee of X)
+    const T = Uc(), K = [], R = [], z = await $c(T, t());
+    for (const Ee of z)
       R.push(Ee.provider), K.push(...Ee.plugins);
     const P = await Rc(f);
     for (const Ee of P) {
@@ -10496,8 +10496,8 @@ function zf(n, e) {
   }
   const g = /* @__PURE__ */ se(() => s(i).filter((T) => {
     var j;
-    const K = !s(o) || T.name.toLowerCase().includes(s(o).toLowerCase()) || T.description.toLowerCase().includes(s(o).toLowerCase()), R = s(d) === "all" || s(d) === "installed" && T.installationState === "INSTALLED" || s(d) === "available" && T.installationState === "AVAILABLE", X = s(c) === "all" || ((j = T.provider) == null ? void 0 : j.name) === s(c), P = s(h) === "all" || T.kind === s(h);
-    return K && R && X && P;
+    const K = !s(o) || T.name.toLowerCase().includes(s(o).toLowerCase()) || T.description.toLowerCase().includes(s(o).toLowerCase()), R = s(d) === "all" || s(d) === "installed" && T.installationState === "INSTALLED" || s(d) === "available" && T.installationState === "AVAILABLE", z = s(c) === "all" || ((j = T.provider) == null ? void 0 : j.name) === s(c), P = s(h) === "all" || T.kind === s(h);
+    return K && R && z && P;
   }));
   function E(T) {
     if (!T.compatible || T.builtin || T.shadowedByHostBuiltin)
@@ -10519,10 +10519,10 @@ function zf(n, e) {
       )), s(u) && nn(s(u), T) && W(u, null), K && M(K, !0);
       return;
     }
-    const { updated: R, success: X } = jc(s(i), T);
+    const { updated: R, success: z } = jc(s(i), T);
     W(i, R, !0);
     const P = s(i).find((j) => nn(j, T));
-    s(u) && nn(s(u), T) && W(u, P ?? null, !0), K && X && M(K, !0);
+    s(u) && nn(s(u), T) && W(u, P ?? null, !0), K && z && M(K, !0);
   }
   function S(T) {
     if (T.shadowedByHostBuiltin)
@@ -10549,11 +10549,11 @@ function zf(n, e) {
     const R = T.builtin === !0 ? s(i).find((Ue) => {
       var Ce;
       return ((Ce = Ue.provider) == null ? void 0 : Ce.source) === "builtin" && Ue.name === T.name && Ue.kind === T.kind;
-    }) : void 0, X = T.builtin === !0 ? T.name : ar(T.provider, T.name), P = T.builtin === !0 ? (R == null ? void 0 : R.src) ?? T.src : ja(T.src), j = K ? { name: X, kind: T.kind, config: null } : {
-      name: X,
+    }) : void 0, z = T.builtin === !0 ? T.name : ar(T.provider, T.name), P = T.builtin === !0 ? (R == null ? void 0 : R.src) ?? T.src : ja(T.src), j = K ? { name: z, kind: T.kind, config: null } : {
+      name: z,
       kind: T.kind,
       config: {
-        name: X,
+        name: z,
         author: T.author || ((Ee = T.provider) == null ? void 0 : Ee.name),
         src: P,
         icon: T.icon,
@@ -10568,12 +10568,12 @@ function zf(n, e) {
     }, ie = new CustomEvent("oscd-configure-plugin", { bubbles: !0, composed: !0, detail: j });
     (Ge = ps()) == null || Ge.dispatchEvent(ie);
   }
-  var I = Gf(), x = z(Q(I), 2), G = Q(x);
+  var I = Gf(), x = Q(I), G = Q(x);
   Zd(G, {
     label: "Search plugins",
     placeholder: "Search...",
     variant: "outlined",
-    style: "flex: 1; background: var(--bearingpoint-color-surface, #fff)",
+    style: "flex: 1; background: var(--bearingpoint-color-surface)",
     get value() {
       return s(o);
     },
@@ -10582,8 +10582,8 @@ function zf(n, e) {
     },
     leadingIcon: (K) => {
       wc(K, {
-        class: "material-icons",
-        children: (R, X) => {
+        class: "material-icons-outlined",
+        children: (R, z) => {
           var P = tt("search");
           L(R, P);
         },
@@ -10592,9 +10592,9 @@ function zf(n, e) {
     },
     $$slots: { leadingIcon: !0 }
   });
-  var ne = z(G, 2);
+  var ne = X(G, 2);
   ya(ne, {
-    style: "background: var(--bearingpoint-color-surface, #fff)",
+    style: "background: var(--bearingpoint-color-surface)",
     variant: "outlined",
     get value() {
       return s(d);
@@ -10603,8 +10603,8 @@ function zf(n, e) {
       W(d, T, !0);
     },
     children: (T, K) => {
-      var R = Bf(), X = ae(R);
-      Ii(X, {
+      var R = Bf(), z = ae(R);
+      Ii(z, {
         value: "all",
         children: (ie, Ee) => {
           var Ge = tt("All status");
@@ -10612,7 +10612,7 @@ function zf(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var P = z(X, 2);
+      var P = X(z, 2);
       Ii(P, {
         value: "installed",
         children: (ie, Ee) => {
@@ -10621,7 +10621,7 @@ function zf(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var j = z(P, 2);
+      var j = X(P, 2);
       Ii(j, {
         value: "available",
         children: (ie, Ee) => {
@@ -10633,10 +10633,9 @@ function zf(n, e) {
     },
     $$slots: { default: !0 }
   });
-  var k = z(ne, 2);
+  var k = X(ne, 2);
   ya(k, {
-    class: "filter-select",
-    style: "width:300px; background: var(--bearingpoint-color-surface, #fff)",
+    style: "width:300px; background: var(--bearingpoint-color-surface)",
     variant: "outlined",
     get value() {
       return s(c);
@@ -10645,8 +10644,8 @@ function zf(n, e) {
       W(c, T, !0);
     },
     children: (T, K) => {
-      var R = Ff(), X = ae(R);
-      Ii(X, {
+      var R = Ff(), z = ae(R);
+      Ii(z, {
         value: "all",
         children: (j, ie) => {
           var Ee = tt("All contributors");
@@ -10654,7 +10653,7 @@ function zf(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var P = z(X, 2);
+      var P = X(z, 2);
       vr(P, 17, () => s(r), Br, (j, ie) => {
         Ii(j, {
           get value() {
@@ -10670,9 +10669,9 @@ function zf(n, e) {
     },
     $$slots: { default: !0 }
   });
-  var U = z(k, 2);
+  var U = X(k, 2);
   ya(U, {
-    style: "background: var(--bearingpoint-color-surface, #fff)",
+    style: "background: var(--bearingpoint-color-surface)",
     variant: "outlined",
     get value() {
       return s(h);
@@ -10681,8 +10680,8 @@ function zf(n, e) {
       W(h, T, !0);
     },
     children: (T, K) => {
-      var R = Uf(), X = ae(R);
-      Ii(X, {
+      var R = Uf(), z = ae(R);
+      Ii(z, {
         value: "all",
         children: (j, ie) => {
           var Ee = tt("All kinds");
@@ -10690,7 +10689,7 @@ function zf(n, e) {
         },
         $$slots: { default: !0 }
       });
-      var P = z(X, 2);
+      var P = X(z, 2);
       vr(P, 17, () => cs, Br, (j, ie) => {
         Ii(j, {
           get value() {
@@ -10708,20 +10707,20 @@ function zf(n, e) {
     },
     $$slots: { default: !0 }
   });
-  var Pe = z(x, 2);
+  var Pe = X(x, 2);
   {
     var Z = (T) => {
       var K = Hf();
-      vr(K, 21, () => s(l), Br, (R, X) => {
+      vr(K, 21, () => s(l), Br, (R, z) => {
         var P = Nf(), j = Q(P);
-        Be(() => ye(j, `⚠️ ${s(X) ?? ""}`)), L(R, P);
+        Be(() => ye(j, `⚠️ ${s(z) ?? ""}`)), L(R, P);
       }), L(T, K);
     };
     oe(Pe, (T) => {
       s(l).length > 0 && T(Z);
     });
   }
-  var B = z(Pe, 2);
+  var B = X(Pe, 2);
   let H;
   var $ = Q(B), ue = Q($);
   {
@@ -10733,7 +10732,7 @@ function zf(n, e) {
       L(T, K);
     }, me = (T) => {
       var K = ve(), R = ae(K);
-      vr(R, 17, () => s(r), Br, (X, P) => {
+      vr(R, 17, () => s(r), Br, (z, P) => {
         const j = /* @__PURE__ */ se(() => m(s(P).name));
         var ie = ve(), Ee = ae(ie);
         {
@@ -10762,14 +10761,14 @@ function zf(n, e) {
             s(j).length > 0 && Ue(Ge);
           });
         }
-        L(X, ie);
+        L(z, ie);
       }), L(T, K);
     };
     oe(ue, (T) => {
       s(a) ? T(V) : s(g).length === 0 ? T(he, 1) : T(me, -1);
     });
   }
-  var le = z($, 2);
+  var le = X($, 2);
   {
     var ce = (T) => {
       kf(T, {
