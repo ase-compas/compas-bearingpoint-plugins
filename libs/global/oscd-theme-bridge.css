@@ -13,12 +13,12 @@
 :root,
 :host {
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
-  --bearingpoint-color-positive: var(--oscd-green);
-  --bearingpoint-color-negative: var(--oscd-error);
-  --bearingpoint-color-warning: var(--oscd-warning);
+  --bearingpoint-color-positive: #239c5b;
+  --bearingpoint-color-negative: #ff3d47;
+  --bearingpoint-color-warning: #ffcc17;
   
-  --bearingpoint-color-warning-text: var(--oscd-on-warning);
-  --bearingpoint-color-warning-bg: var(--oscd-warning);
+  --bearingpoint-color-warning-text: black;
+  --bearingpoint-color-warning-bg: color-mix(in srgb, white 40%, var(--bearingpoint-color-warning));
 
   --bearingpoint-color-bg-page: var(--oscd-base2);
   --bearingpoint-color-surface: var(--oscd-base3);
@@ -76,8 +76,8 @@
   /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
 }
 
-/* old Open-SCD didn't set the --oscd-on-warning value and others => missing values must be added. */
-@container style(--oscd-on-warning: initial) {
+/* old Open-SCD didn't set the --oscd-yellow value and others => missing values must be added. */
+@container style(--oscd-yellow: initial) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
     /* ==== Solarized palette Colors missed the "--ocsd-*" variables ==== */
     --oscd-yellow: var(--yellow, #b58900);
@@ -88,19 +88,14 @@
     --oscd-blue: var(--blue, #268bd2);
     --oscd-cyan: var(--cyan, #2aa198);
     --oscd-green: var(--green, #859900);
-  
-    /* Signal-Colors for error, warning and success */
-    /* assume very light fixed signal color for light/dark: Default Text-Color should be fixed the darkest color from the default-palete. */
-    --oscd-error: #ff3d47; /* Already defined, but default is a relative dark red. Our bearingpoint-plugins want a signal-color for that. */ 
-    --oscd-on-error: #002b36;
-    --oscd-warning: #ffcc17;
-    --oscd-on-warning: #002b36;
-    --oscd-success: #239c5b;
-    --oscd-on-success: #002b36;
+    
+    /* primary and secondayr where maybe not set correctly because the --primary ans --secondary where missing in the expression. */
+    --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--oscd-cyan, #2aa198)));
+    --oscd-secondary: var(--oscd-theme-secondary, var(--secondary, var(--oscd-violet, #6c71c4)));
   }
 }
 /* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Light */
-@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+@container style(--oscd-yellow: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
     --oscd-primary: #330000;
     --oscd-secondary: #990000;
@@ -110,7 +105,6 @@
     --oscd-base02: #665247;
     --oscd-base01: #735c50;
     --oscd-base00: #806659;
-
     --oscd-base0: #b2a59f;
     --oscd-base1: #ccc1bc;
     --oscd-base2: #e6deda;
@@ -118,7 +112,7 @@
   }
 }
 /* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Dark */
-@container style(--oscd-on-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+@container style(--oscd-yellow: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
     --oscd-primary: #ffecec;
     --oscd-secondary: #ee8585;
@@ -128,7 +122,6 @@
     --oscd-base02: #e6deda;
     --oscd-base01: #ccc1bc;
     --oscd-base00: #b2a59f;
-
     --oscd-base0: #806659;
     --oscd-base1: #735c50;
     --oscd-base2: #665247;
@@ -136,13 +129,13 @@
   }
 }
 /* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Light */
-@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+@container style(--oscd-yellow: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
     --oscd-primary: #004552;
   }
 }
 /* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Dark */
-@container style(--oscd-on-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+@container style(--oscd-yellow: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
     --oscd-primary: #81c3cf;
   }
