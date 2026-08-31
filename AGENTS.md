@@ -16,9 +16,9 @@ truth for conventions.
 
 | Path               | Purpose                                                                                                                      |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `apps/plugins-hub` | The Plugin-Hub application (Svelte UI, entry `src/plugin-wrapper.svelte.ts`, built as a lib bundle `index.js` + `style.css`) |
-| `libs/plugins-hub` | All domain logic: types, services, store, utils. Public API re-exported from `src/index.ts`. **All unit tests live here**    |
-| `libs/global`      | Shared CSS / icons (imported cross-project)                                                                                  |
+| `apps/plugins-hub` | The Plugin-Hub application (Svelte UI, entry `src/plugin-wrapper.svelte.ts`, built as a lib bundle `index.js` with CSS inlined) |
+| `libs/plugins-hub` | All domain logic: types, services, store, utils. Public API re-exported from `src/index.ts`. **All unit tests live here**      |
+| `libs/global`      | Shared CSS / icons / Vite helpers (imported cross-project)                                                                     |
 | `wiremock/`        | WireMock stubs for `/external-api` and `/proxy` (mock providers)                                                             |
 | `doc/`             | Feature docs (`doc/features/plugins-hub.md`), plans, review                                                                  |
 | `dist/`            | Build output (gitignored)                                                                                                    |

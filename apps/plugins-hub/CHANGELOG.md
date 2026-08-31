@@ -6,11 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 ## [0.0.5]
 
 ### Changed
 
+- Implements [Issue #23](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/23):
+  Production bundle is a single `index.js`. Component/theme CSS is inlined at
+  build time and injected as a `<style>` tag into the plugin Shadow DOM
+  (no sibling `style.css` to host next to the script).
 - Implements [Issue #18](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/18):
   Plugin Hub no longer ships font files or loads Google Fonts. Icon classes
   (`.material-icons`, `.material-icons-outlined`, `.material-symbols-outlined`)

@@ -145,9 +145,8 @@ jobs:
           NEW_PLUGIN_DIR="compas/plugins/$PLUGIN_NAME/$NEW_RELEASE_VERSION"
           mkdir -p "$NEW_PLUGIN_DIR"
 
-          # Copy built plugin files to the new version directory
+          # Copy built plugin files to the new version directory (CSS is inlined in index.js)
           cp -r "compas/plugins/$PLUGIN_NAME/index.js" "$NEW_PLUGIN_DIR/"
-          cp -r "compas/plugins/$PLUGIN_NAME/style.css" "$NEW_PLUGIN_DIR/"
 
           echo "Plugin $PLUGIN_NAME version $NEW_RELEASE_VERSION released successfully"
 
