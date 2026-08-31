@@ -1,7 +1,8 @@
 /// <reference types='vitest' />
 import path from 'node:path';
-import { defineConfig, UserConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import { inlineCssIntoJs } from '../../libs/global/vite/inline-css-into-js';
 
 export default defineConfig(async (): Promise<UserConfig> => {
   const { svelte } = await import('@sveltejs/vite-plugin-svelte');
@@ -35,7 +36,7 @@ export default defineConfig(async (): Promise<UserConfig> => {
       proxy,
     },
 
-    plugins: [svelte(), nxViteTsPaths()],
+    plugins: [svelte(), nxViteTsPaths(), inlineCssIntoJs()],
 
     build: {
       outDir: '../../dist/apps/plugins-hub',
@@ -46,14 +47,8 @@ export default defineConfig(async (): Promise<UserConfig> => {
       rollupOptions: {
         output: {
           entryFileNames: 'index.js',
-          assetFileNames: (assetInfo) => {
-            // Ensure the emitted CSS (from Svelte components) is always named style.css
-            // as expected by the plugin-wrapper's generateStylePath()
-            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-              return 'style.css';
-            }
-            return assetInfo.name || '[name]-[hash][extname]';
-          },
+          assetFileNames: (assetInfo) =>
+            assetInfo.name || '[name]-[hash][extname]',
         },
       },
       lib: {

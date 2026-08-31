@@ -41,18 +41,9 @@ export default class PluginsHubElement extends HTMLElement {
       throw new Error('ShadowRoot not found');
     }
 
-    const linkElement = createStyleLinkElement();
-    shadowRoot.appendChild(linkElement);
-
-    const mountPlugin = () => {
-      mount(Plugin, { target: shadowRoot, props: this.props });
-
-      // apply Layout-Hack after plugin is mounted.
-      requestAnimationFrame(() => this.applyLayoutHack());
-    };
-
-    linkElement.addEventListener('load', mountPlugin, { once: true });
-    linkElement.addEventListener('error', mountPlugin, { once: true });
+    shadowRoot.appendChild(createStyleElement());
+    mount(Plugin, { target: shadowRoot, props: this.props });
+    requestAnimationFrame(() => this.applyLayoutHack());
   }
 
   disconnectedCallback() {
@@ -115,26 +106,15 @@ export default class PluginsHubElement extends HTMLElement {
   }
 }
 
-function createStyleLinkElement(): HTMLElement {
-  const id = `${pkg.name}-v${pkg.version}-style`;
-  const stylePath = generateStylePath();
+/**
+ * Replaced at production build time with the extracted CSS string
+ * (see `inlineCssIntoJs` in `libs/global/vite/inline-css-into-js.ts`).
+ */
+const INLINED_PLUGIN_CSS = '__INLINED_PLUGIN_CSS_PLACEHOLDER__';
 
-  const linkElement = document.createElement('link');
-  linkElement.rel = 'stylesheet';
-  linkElement.type = 'text/css';
-  linkElement.href = stylePath;
-  linkElement.id = id;
-
-  return linkElement;
-}
-
-function generateStylePath(): string {
-  const srcUrl = new URL(import.meta.url);
-  const origin = srcUrl.origin;
-  const path = srcUrl.pathname
-    .split('/')
-    .slice(0, -1)
-    .filter(Boolean)
-    .join('/');
-  return [origin, path, 'style.css'].filter(Boolean).join('/');
+function createStyleElement(): HTMLStyleElement {
+  const styleElement = document.createElement('style');
+  styleElement.id = `${pkg.name}-v${pkg.version}-style`;
+  styleElement.textContent = INLINED_PLUGIN_CSS;
+  return styleElement;
 }
