@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `oscd-configure-plugin` is dispatched from the Hub root (bubbles / composed)
   instead of `getLayout()`, so hosts without `<compas-layout>` / `<oscd-layout>`
   still receive install / enable / disable.
+- Hub icons use `--oscd-icon-font` (default `'Material Symbols Outlined'`;
+  old hosts without `--oscd-yellow` fall back to `'Material Icons Outlined'`).
+  SMUI text-field icons need no `material-icons*` class; ligature spans use
+  `.oscd-icons`.
 
 ## [0.0.5]
 

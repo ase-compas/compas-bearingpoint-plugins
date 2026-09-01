@@ -321,7 +321,7 @@
     -->
     <Textfield bind:value={searchTerm} label="Search plugins" placeholder="Search..." variant="outlined" style={`flex: 1; background: var(--bearingpoint-color-surface)`} >
       {#snippet leadingIcon()}
-          <Icon class="material-icons-outlined" >search</Icon>
+          <Icon>search</Icon>
         {/snippet}
     </Textfield>
 

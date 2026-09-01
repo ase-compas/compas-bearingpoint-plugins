@@ -8,9 +8,13 @@
  * Sources: open-scd packages/distribution/public/google/icons/*.css
  */
 
+.oscd-icons,
 .material-icons,
 .material-icons-outlined,
-.material-symbols-outlined {
+.material-symbols-outlined,
+.mdc-text-field__icon,
+.mdc-select__icon {
+  font-family: var(--oscd-icon-font, 'Material Symbols Outlined');
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -23,19 +27,4 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-}
-
-/* OpenSCD sets '--oscd-icon-font' to 'Material Icons' */
-.material-icons {
-  font-family: var(--oscd-icon-font, 'Material Icons');
-}
-
-/* Plugin + SMUI use .material-icons-outlined; OpenSCD sets '--mdc-icon-font' to 'Material Icons Outlined'
-   (plugin-kind ligatures editor/menu/validator depend on that face). */
-.material-icons-outlined {
-  font-family: 'Material Icons Outlined';
-}
-
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
 }

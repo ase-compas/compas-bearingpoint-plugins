@@ -48,7 +48,7 @@ html {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
   
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
   
 }
 
@@ -110,7 +110,7 @@ html.openscd.light {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 }
 
 /* OpenSCD dark: only inverted bases (shared block); accents = default cyan/violet */
@@ -150,7 +150,7 @@ html.openscd.dark {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 }
 
 /* TransnetBW light: CoMPAS-like surfaces + brand primary via --cyan */
@@ -186,7 +186,7 @@ html.transnetbw.light {
   --oscd-base2: var(--oscd-theme-base2, var(--base2));
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 }
 
 /* TransnetBW dark: inverted bases + brand accent */
@@ -222,7 +222,7 @@ html.transnetbw.dark {
   --oscd-base2: var(--oscd-theme-base2, var(--base2));
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 }
 
 /* BearingPoint light: demo surfaces + brand primary/secondary */
@@ -262,7 +262,7 @@ html.bearingpoint.light {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
     
     
 }
@@ -303,7 +303,7 @@ html.bearingpoint.dark {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
   
 }
 
@@ -326,7 +326,7 @@ html.omicron.dark {
   --oscd-base3: var(--oscd-theme-base3, var(--base3));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 
   /* START /oscd-academy/blob/main/themes.css */
   /* color variables names taken from Omicron Pallet (for reference) */
@@ -521,5 +521,5 @@ html.bearingpoint-new {
   --oscd-error: var(--oscd-theme-error, var(--oscd-red));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
 }

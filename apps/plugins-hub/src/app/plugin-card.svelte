@@ -55,7 +55,7 @@
 >
   <div class="card-top">
     <div class="plugin-icon-wrapper">
-      <span class="material-icons-outlined plugin-icon">{plugin.icon}</span>
+      <span class="oscd-icons plugin-icon">{plugin.icon}</span>
     </div>
 
     <button
@@ -81,7 +81,7 @@
   <div class="plugin-name bp-typo-16-bold">{plugin.name}</div>
   <div class="plugin-kind-wrapper">
     <div class="badge badge-kind bp-typo-label">
-      <span class="material-icons-outlined badge-icon">{plugin.kindIcon}</span>
+      <span class="oscd-icons badge-icon">{plugin.kindIcon}</span>
       {plugin.kindText}
     </div>
   </div>

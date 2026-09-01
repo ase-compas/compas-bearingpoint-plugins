@@ -92,6 +92,8 @@
     /* primary and secondayr where maybe not set correctly because the --primary ans --secondary where missing in the expression. */
     --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--oscd-cyan, #2aa198)));
     --oscd-secondary: var(--oscd-theme-secondary, var(--secondary, var(--oscd-violet, #6c71c4)));
+    --oscd-icon-font: 'Material Icons Outlined';
+    --mdc-icon-font: var(--oscd-icon-font);
   }
 }
 /* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Light */
@@ -148,6 +150,10 @@
   --mdc-theme-surface: var(--oscd-base3);
   --mdc-theme-on-surface: var(--oscd-base03);
   --mdc-shape-small: 8px;
+
+  /* inherited host --oscd-icon-font / --oscd-theme-icon-font if set, else Symbols */
+  --oscd-icon-font: var(--oscd-theme-icon-font, var(--oscd-icon-font, 'Material Symbols Outlined'));
+  --mdc-icon-font: var(--oscd-icon-font);
 }
 
 /* MDC filled shape rounds only the top; outlined notched outline rounds all
