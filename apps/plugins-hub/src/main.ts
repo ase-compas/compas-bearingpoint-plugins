@@ -16,7 +16,9 @@ if (import.meta.env?.DEV) {
   fakeCompasLayout = createFakeCompasLayout();
 
   if (fakeCompasLayout) {
-    fakeCompasLayout.addEventListener('oscd-configure-plugin', (e: Event) => listenOscdConfigurePlugin(e));
+    document.addEventListener('oscd-configure-plugin', (e: Event) =>
+      listenOscdConfigurePlugin(e),
+    );
 
     console.log(
       '%c✅ [Dev] Fake open-scd + compas-layout created und oscd-configure-plugin listener registered',

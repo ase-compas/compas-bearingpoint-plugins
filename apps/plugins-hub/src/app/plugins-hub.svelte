@@ -15,7 +15,6 @@
     activatePlugin,
     deactivatePlugin,
     getAppVersion,
-    getLayout,
     proxyUrl,
     PLUGIN_KINDS,
     CUSTOM_PROVIDER,
@@ -48,6 +47,7 @@
   /** Filter key is provider.name (prefix is optional on built-in/Custom). */
   let providerFilter = $state<string>('all');
   let kindFilter = $state<'all' | PluginKind>('all');
+  let eventTarget: HTMLDivElement;
 
   const remoteProviders: Provider[] = (providersConfig as Provider[]).map(p => ({
     ...p,
@@ -249,7 +249,8 @@
   }
 
   /**
-   * Dispatches oscd-configure-plugin to the OpenSCD host.
+   * Dispatches oscd-configure-plugin from the hub so any compatible host can
+   * receive it through normal bubbling, regardless of the host element name.
    * Built-ins use plain plugin name (no provider prefix) and the host official
    * `src` when a twin exists. Remotes use registrationName + proxyUrl(src).
    */
@@ -305,12 +306,12 @@
       detail,
     });
 
-    getLayout()?.dispatchEvent(event);
+    eventTarget.dispatchEvent(event);
   }
 
 </script>
 
-<div class="plugins-hub bp-typo-body">
+<div bind:this={eventTarget} class="plugins-hub bp-typo-body">
   <div class="hub-toolbar">
     <!--
       TODO(min-task): verify whether SMUI Textfield/Select surface background

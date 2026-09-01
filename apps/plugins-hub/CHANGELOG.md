@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Changed
+
+- Implements [Issue #25](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/25):
+  `oscd-configure-plugin` is dispatched from the Hub root (bubbles / composed)
+  instead of `getLayout()`, so hosts without `<compas-layout>` / `<oscd-layout>`
+  still receive install / enable / disable.
+
 ## [0.0.5]
 
 ### Changed

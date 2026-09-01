@@ -162,7 +162,7 @@ npm run verify                     # lint + check + test
 - All external absolute URLs go through `proxyUrl()` on localhost
   (`/proxy/host/path`); only proxy when not already localhost.
 - Communicate with the host via the `oscd-configure-plugin` `CustomEvent`
-  (`bubbles: true, composed: true`, dispatched on the compas/oscd layout element);
+  (`bubbles: true, composed: true`, dispatched from the Hub so it bubbles to any host);
   registration name = `${provider.prefix} - ${plugin.name}` when prefix is set
   (see `registrationName` in `libs/plugins-hub/src/lib/services/plugin-loader.ts`).
 - Host interaction is isolated in `libs/plugins-hub/src/lib/dom/open-scd-helpers.ts`
