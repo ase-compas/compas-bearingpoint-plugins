@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Installed plugins come from the host `plugins` property (same JSON shape as
   the former `localStorage['plugins']` key). The Hub no longer reads that
   storage key.
+- Removes core-version handling: no `coreVersion` host property, no
+  `supportedCoreVersion` on catalogue entries, no Incompatible badge or
+  version-gated Install.
 
 ## [0.0.5]
 

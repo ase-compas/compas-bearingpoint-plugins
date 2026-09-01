@@ -172,7 +172,6 @@ describe('buildPlugin identity matching', () => {
         description: 'd',
       },
       remoteProvider,
-      '0.44.0',
       storedList,
     );
     expect(plugin.installationState).toBe('INSTALLED');
@@ -198,7 +197,6 @@ describe('buildPlugin identity matching', () => {
         description: 'd',
       },
       remoteProvider,
-      '0.44.0',
       storedList,
     );
     expect(plugin.installationState).toBe('AVAILABLE');
@@ -222,7 +220,6 @@ describe('buildPlugin identity matching', () => {
         description: 'Built-in editor plugin',
       },
       builtinProvider,
-      '0.44.0',
       storedList,
       { builtin: true, activeByDefault: false },
     );
@@ -239,7 +236,6 @@ describe('markPluginsOverlappingBuiltins', () => {
       icon: 'edit',
       description: 'd',
       provider: remoteProvider,
-      compatible: true,
       kindText: 'Editor plugin',
       kindIcon: 'tab',
       installationState: 'AVAILABLE',
@@ -330,7 +326,6 @@ describe('install / uninstall / activate / deactivate by identity', () => {
       icon: 'edit',
       description: 'd',
       provider: remoteProvider,
-      compatible: true,
       kindText: 'Editor plugin',
       kindIcon: 'tab',
       installationState: 'AVAILABLE',

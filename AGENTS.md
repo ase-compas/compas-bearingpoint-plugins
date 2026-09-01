@@ -64,8 +64,8 @@ test target - all tests live in `libs/plugins-hub`.
 ```bash
 npm run test:all                   # nx run-many --target=test (lib only)
 npx nx run plugins-hub-lib:test    # run the lib test suite
-npx vitest run --project plugins-hub-lib src/lib/services/version-resolver.spec.ts   # ONE spec file
-npx vitest run --project plugins-hub-lib src/lib/services/version-resolver.spec.ts -t "returns -1 when a < b"  # ONE test by name
+npx vitest run --project plugins-hub-lib src/lib/store/plugin-store.spec.ts   # ONE spec file
+npx vitest run --project plugins-hub-lib src/lib/store/plugin-store.spec.ts -t "returns empty array when input is missing"  # ONE test by name
 ```
 
 `--project` must match `test.name` in `vite.config.ts` (`plugins-hub-lib` /

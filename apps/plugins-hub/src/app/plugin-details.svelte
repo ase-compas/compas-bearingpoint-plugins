@@ -12,10 +12,9 @@
     onUninstall: (plugin: Plugin) => void;
     onEnable: (plugin: Plugin) => void;
     onDisable: (plugin: Plugin) => void;
-    coreVersion?: string;
   }
 
-  let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable, coreVersion }: Props = $props();
+  let { plugin, onClose, onInstall, onUninstall, onEnable, onDisable }: Props = $props();
 
   const isBuiltin = $derived(plugin.builtin === true);
   const isShadowed = $derived(plugin.shadowedByHostBuiltin === true);
@@ -59,9 +58,6 @@
           {isActive ? 'Active' : 'Inactive'}
         </span>
       {/if}
-      {#if !plugin.compatible}
-        <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
-      {/if}
     </div>
   </div>
 
@@ -82,26 +78,6 @@
       <div class="meta-item">
         <span class="meta-label bp-typo-label">Requires document</span>
         <span class="bp-typo-16-regular">{plugin.requireDoc ? 'Yes' : 'No'}</span>
-      </div>
-    {/if}
-    {#if plugin.supportedCoreVersion && (plugin.supportedCoreVersion.from || plugin.supportedCoreVersion.to)}
-      <div class="meta-item">
-        <span class="meta-label bp-typo-label">Supported Version</span>
-        <span class="bp-typo-16-regular">
-          {#if plugin.supportedCoreVersion.from && plugin.supportedCoreVersion.to}
-            {plugin.supportedCoreVersion.from} – {plugin.supportedCoreVersion.to}
-          {:else if plugin.supportedCoreVersion.from}
-            ≥ {plugin.supportedCoreVersion.from}
-          {:else if plugin.supportedCoreVersion.to}
-            {'< ' + plugin.supportedCoreVersion.to}
-          {/if}
-        </span>
-      </div>
-    {/if}
-    {#if coreVersion}
-      <div class="meta-item">
-        <span class="meta-label bp-typo-label">Current Core</span>
-        <span class="bp-typo-16-regular">{coreVersion}</span>
       </div>
     {/if}
   </div>
@@ -147,7 +123,6 @@
       <button
         class="action-btn install bp-typo-button"
         onclick={() => onInstall(plugin)}
-        disabled={!plugin.compatible}
       >
         Install
       </button>

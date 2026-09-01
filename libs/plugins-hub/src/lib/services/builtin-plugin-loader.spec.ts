@@ -56,7 +56,7 @@ describe('mapOfficialPluginToManifest', () => {
 
 describe('loadBuiltinProviders', () => {
   it('returns empty when host has no getBuiltInPlugins', () => {
-    const results = loadBuiltinProviders([], '0.44.0', {
+    const results = loadBuiltinProviders([], {
       getHost: () => null,
       detectEdition: () => 'compas',
     });
@@ -67,7 +67,7 @@ describe('loadBuiltinProviders', () => {
     const host = {
       getBuiltInPlugins: () => undefined,
     } as unknown as OpenScdHost;
-    const results = loadBuiltinProviders([], '0.44.0', {
+    const results = loadBuiltinProviders([], {
       getHost: () => host,
       detectEdition: () => 'open-scd',
     });
@@ -93,7 +93,7 @@ describe('loadBuiltinProviders', () => {
       ],
     } as unknown as OpenScdHost;
 
-    const results = loadBuiltinProviders([], '0.44.0', {
+    const results = loadBuiltinProviders([], {
       getHost: () => host,
       detectEdition: () => 'compas',
     });
@@ -126,7 +126,7 @@ describe('loadBuiltinProviders', () => {
       ],
     } as unknown as OpenScdHost;
 
-    const results = loadBuiltinProviders([], '1.0.0', {
+    const results = loadBuiltinProviders([], {
       getHost: () => host,
       detectEdition: () => 'open-scd',
     });
@@ -161,7 +161,6 @@ describe('loadBuiltinProviders', () => {
           active: true,
         },
       ],
-      '0.44.0',
       { getHost: () => host, detectEdition: () => 'compas' },
     );
 

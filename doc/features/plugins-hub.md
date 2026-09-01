@@ -136,7 +136,6 @@ interface Provider {
 ```
 
 - `kind` is required (`editor`, `menu` or `validator`).
-- `supportedCoreVersion` is optional. If not present, no constraint.
 - `icon` is a Material Design Icon name (string).
 - `longDescription` is optional. For example, when you want to provide a detailed user description of the plugin.
 
@@ -150,7 +149,6 @@ interface Plugin extends PluginManifestEntry {
   // identity: registrationName(provider, name) + kind
   // src: load URL only
   provider: Provider;
-  compatible: boolean;
   kindText: string;
   kindIcon: string;
   installationState: 'INSTALLED' | 'AVAILABLE';
@@ -209,7 +207,7 @@ If the host `plugins` list still contains name+kind duplicates (historical open-
 |-------------------------------------|:-------------:|:-----------:|
 | Single static plugin list           | ✅            | ✅          |
 | Multiple federated providers        | ❌            | ✅          |
-| Core-version compatibility filter   | ❌            | ✅          |
+| Core-version compatibility filter   | ❌            | ❌          |
 | Search / filter                     | ❌            | ✅          |
 | Kind filter + kind badges (editor / menu / validator) | ❌ | ✅ |
 | Plugin detail view                  | ❌            | ✅          |
@@ -261,8 +259,6 @@ If the host `plugins` list still contains name+kind duplicates (historical open-
 | `description` | string | Required (short description shown on cards) |
 | `longDescription` | string | Optional. When present, rendered in the detail panel directly after the URL. For example, when you want to provide a detailed user description of the plugin. |
 | `position` | string | Optional. One of `top` \| `middle` \| `bottom`. Only relevant for `kind === 'menu'`. |
-| `supportedCoreVersion.from` | string | semver (optional) |
-| `supportedCoreVersion.to` | string | semver (exclusive upper bound, optional) |
 
 ## Developer References
 

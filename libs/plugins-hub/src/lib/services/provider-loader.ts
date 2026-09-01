@@ -99,11 +99,6 @@ function isValidPluginManifestEntry(
     (isDev || p.src.startsWith('https://') || p.src.startsWith('/')) &&
     typeof p.kind === 'string' &&
     typeof p.icon === 'string' &&
-    typeof p.description === 'string' &&
-    (p.supportedCoreVersion === undefined ||
-      (typeof p.supportedCoreVersion === 'object' &&
-        p.supportedCoreVersion !== null &&
-        (typeof (p.supportedCoreVersion as any).from === 'string' ||
-        typeof (p.supportedCoreVersion as any).to === 'string')))
+    typeof p.description === 'string'
   );
 }

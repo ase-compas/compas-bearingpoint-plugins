@@ -14,7 +14,6 @@
     uninstallPlugin,
     activatePlugin,
     deactivatePlugin,
-    getAppVersion,
     proxyUrl,
     PLUGIN_KINDS,
     CUSTOM_PROVIDER,
@@ -31,12 +30,11 @@
   import '../styles/global.css';
 
   interface Props {
-    coreVersion?: string;
     /** Host installed-plugin list (same shape as former localStorage['plugins']). */
     plugins?: unknown;
   }
 
-  let { coreVersion = getAppVersion(), plugins: storedPlugins }: Props = $props();
+  let { plugins: storedPlugins }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let providers = $state<Provider[]>([]);
@@ -63,7 +61,7 @@
     const allPlugins: Plugin[] = [];
     const allProviders: Provider[] = [];
 
-    const builtinResults = await loadBuiltinProviders(stored, coreVersion);
+    const builtinResults = await loadBuiltinProviders(stored);
     for (const result of builtinResults) {
       allProviders.push(result.provider);
       allPlugins.push(...result.plugins);
@@ -79,7 +77,7 @@
       }
       allProviders.push(result.provider);
       for (const entry of result.plugins) {
-        allPlugins.push(buildPlugin(entry, result.provider, coreVersion, stored));
+        allPlugins.push(buildPlugin(entry, result.provider, stored));
       }
     }
 
@@ -88,7 +86,6 @@
     const customPlugins = buildCustomPluginsFromStored(
       stored,
       knownIdentities,
-      coreVersion,
     );
     if (customPlugins.length >= 1) {
       allProviders.push(CUSTOM_PROVIDER);
@@ -107,10 +104,8 @@
   }
 
   $effect(() => {
-    // Re-initialise when the host core version or installed-plugin list changes
-    const _version = coreVersion;
+    // Re-initialise when the host installed-plugin list changes
     const _stored = storedPlugins;
-    void _version;
     void _stored;
     initHub();
   });
@@ -142,7 +137,7 @@
   );
 
   function handleInstall(target: Plugin) {
-    if (!target.compatible || target.builtin || target.shadowedByHostBuiltin) {
+    if (target.builtin || target.shadowedByHostBuiltin) {
       return;
     }
 
@@ -402,7 +397,6 @@
         onUninstall={handleUninstall}
         onEnable={handleEnable}
         onDisable={handleDisable}
-        {coreVersion}
       />
     {/if}
   </div>

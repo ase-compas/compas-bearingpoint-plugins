@@ -31,10 +31,6 @@ if (import.meta.env?.DEV) {
       'color:#0ea5e9; font-weight:bold',
     );
   }
-
-  // Simulate Core-App writing appVersion to localStorage
-  localStorage.setItem('appVersion', '0.44.0-8');
-  console.log('%c[Dev] appVersion set in localStorage: 0.44.0-8', 'color:#0ea5e9');
 }
 
 

@@ -5,10 +5,7 @@
       "kind": "editor",
       "description": "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
       "src": "http://localhost:4301/index.js",
-      "icon": "hub",
-      "supportedCoreVersion": {
-        "from": "0.44.0"
-      }
+      "icon": "hub"
     },
     {
       "name": "Plugin 1",
@@ -17,32 +14,21 @@
       "description": "Bearingpoint Plugin Test 1",
       "longDescription": "This is a longer description for Plugin 1. It provides additional context that appears after the URL in the detail view, as defined in the mockup for Issue #5.",
       "src": "/external-api/provider/bearingpoint-plugin-01.js",
-      "icon": "edit",
-      "supportedCoreVersion": {
-        "from": "0.44.0",
-        "to": "2.0.0"
-      }
+      "icon": "edit"
     },
     {
       "name": "Plugin 2",
       "kind": "menu",
       "description": "Bearingpoint Plugin Test 2",
       "src": "/external-api/provider/bearingpoint-plugin-02.js",
-      "icon": "edit",
-      "supportedCoreVersion": {
-        "from": "0.45.0",
-        "to": "2.0.0"
-      }
+      "icon": "edit"
     },
     {
       "name": "Plugin 3",
       "kind": "validator",
       "description": "Bearingpoint Plugin Test 3",
       "src": "/external-api/provider/bearingpoint-plugin-03.js",
-      "icon": "edit",
-      "supportedCoreVersion": {
-        "to": "2.0.0"
-      }
+      "icon": "edit"
     }
   ]
 }

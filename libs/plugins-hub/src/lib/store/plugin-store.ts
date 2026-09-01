@@ -7,7 +7,6 @@ import {
 } from '../types/plugin';
 import type { Provider } from '../types/provider';
 import type { PluginManifestEntry } from '../types/plugin';
-import { isVersionCompatible } from '../services/version-resolver';
 import {
   matchesStoredPlugin,
   pluginIdentityKey,
@@ -84,14 +83,13 @@ function findStoredMatch(
 }
 
 /**
- * Builds a Plugin record from a manifest entry, provider, and core version.
+ * Builds a Plugin record from a manifest entry and provider.
  * Unique key in the hub is registration {@link PluginManifestEntry.name} +
  * {@link PluginManifestEntry.kind} (via provider prefix when set). `src` is
  * the load URL only.
  *
  * @param entry - Manifest entry from a provider catalogue or host builtins.
  * @param provider - Owning provider.
- * @param coreVersion - Running OpenSCD core version string.
  * @param stored - Host-supplied installed plugins (install/active state).
  * @param options - Optional builtin / host flags.
  * @returns Enriched hub plugin with installation and activation state.
@@ -99,7 +97,6 @@ function findStoredMatch(
 export function buildPlugin(
   entry: PluginManifestEntry,
   provider: Provider,
-  coreVersion: string,
   stored: StoredPlugin[],
   options?: BuildPluginOptions,
 ): Plugin {
@@ -118,13 +115,6 @@ export function buildPlugin(
     : isBuiltin && activeByDefault
       ? 'ACTIVE'
       : 'INACTIVE';
-  const compatible = isBuiltin
-    ? true
-    : isVersionCompatible(
-        coreVersion,
-        entry.supportedCoreVersion?.from,
-        entry.supportedCoreVersion?.to,
-      );
 
   return {
     ...entry,
@@ -132,7 +122,6 @@ export function buildPlugin(
     activeByDefault: options?.activeByDefault,
     requireDoc: options?.requireDoc,
     provider: provider,
-    compatible,
     kindText: PluginKindTextMapping[entry.kind],
     kindIcon: PluginKindIconMapping[entry.kind],
     installationState,
@@ -205,7 +194,7 @@ function isLockedByHostBuiltin(
 
 /**
  * Installs a plugin by name+kind identity (sets INSTALLED + INACTIVE).
- * Incompatible plugins, built-ins, and host-shadowed entries are left unchanged.
+ * Built-ins and host-shadowed entries are left unchanged.
  *
  * @param plugins - Current hub plugin list.
  * @param target - Plugin identity to install.
@@ -216,11 +205,7 @@ export function installPlugin(
   target: PluginIdentityTarget,
 ): Plugin[] {
   return plugins.map((p) => {
-    if (
-      !sameHubPlugin(p, target) ||
-      !p.compatible ||
-      isLockedByHostBuiltin(p)
-    ) {
+    if (!sameHubPlugin(p, target) || isLockedByHostBuiltin(p)) {
       return p;
     }
     return {

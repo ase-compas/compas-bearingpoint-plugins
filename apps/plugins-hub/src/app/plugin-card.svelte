@@ -25,15 +25,12 @@
   const isActive = $derived(plugin.activationState === 'ACTIVE');
   const hostBuiltinName = $derived(registrationName(plugin.provider, plugin.name));
   const shadowTooltip = $derived(shadowedByHostBuiltinTooltip(hostBuiltinName));
-  const actionDisabled = $derived(
-    isShadowed || (!isInstalled && !plugin.compatible),
-  );
+  const actionDisabled = $derived(isShadowed);
 
   function handleActionClick(e: MouseEvent) {
     e.stopPropagation();
     if (isShadowed) return;
     if (!isInstalled) {
-      if (!plugin.compatible) return;
       onInstall();
     } else if (isActive) {
       onDisable();
@@ -46,7 +43,6 @@
 <div
   class="plugin-card"
   class:selected
-  class:incompatible={!plugin.compatible}
   onclick={onSelect}
   role="button"
   tabindex="0"
@@ -100,9 +96,6 @@
         {isActive ? 'Active' : 'Inactive'}
       </span>
     {/if}
-    {#if !plugin.compatible}
-      <span class="badge badge-incompatible bp-typo-button">Incompatible</span>
-    {/if}
   </div>
 </div>
 
@@ -130,10 +123,6 @@
     border-color: var(--bearingpoint-color-border-strong);
     /* Extra 1px as shadow so the box size (and neighbours) do not shift. */
     box-shadow: 0 0 0 1px var(--bearingpoint-color-border-strong);
-  }
-
-  .plugin-card.incompatible {
-    opacity: 0.6;
   }
 
   .card-top {

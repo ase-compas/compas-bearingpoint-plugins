@@ -6,7 +6,6 @@ import { getLayout } from '@compas-bearingpoint/plugins-hub';
 type Props = {
   doc?: XMLDocument;
   editCount?: number;
-  coreVersion?: string;
   plugins?: unknown;
 };
 
@@ -27,7 +26,6 @@ export default class PluginsHubElement extends HTMLElement {
     this.props = $state({
       doc: undefined,
       editCount: undefined,
-      coreVersion: undefined,
       plugins: undefined,
     });
   }
@@ -36,7 +34,6 @@ export default class PluginsHubElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.props.doc = this._doc;
     this.props.editCount = this._editCount;
-    this.props.coreVersion = this._coreVersion;
     this.props.plugins = this._plugins;
 
     const shadowRoot = this.shadowRoot;
@@ -64,12 +61,6 @@ export default class PluginsHubElement extends HTMLElement {
   public set editCount(newCount: number) {
     this._editCount = newCount;
     this.props.editCount = newCount;
-  }
-
-  private _coreVersion?: string;
-  public set coreVersion(newVersion: string) {
-    this._coreVersion = newVersion;
-    this.props.coreVersion = newVersion;
   }
 
   private _plugins?: unknown;

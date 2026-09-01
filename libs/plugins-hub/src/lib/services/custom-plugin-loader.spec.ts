@@ -24,7 +24,6 @@ function makePlugin(partial: Partial<Plugin> & Pick<Plugin, 'name' | 'src'>): Pl
     icon: 'edit',
     description: 'd',
     provider: remoteProvider,
-    compatible: true,
     kindText: 'Editor plugin',
     kindIcon: 'tab',
     installationState: 'AVAILABLE',
@@ -124,7 +123,7 @@ describe('buildCustomPluginsFromStored', () => {
       },
     ];
 
-    const customs = buildCustomPluginsFromStored(stored, known, '0.44.0');
+    const customs = buildCustomPluginsFromStored(stored, known);
     expect(customs).toHaveLength(1);
     expect(customs[0].name).toBe('My Manual Plugin');
     expect(customs[0].provider.name).toBe(CUSTOM_PROVIDER.name);
@@ -153,7 +152,7 @@ describe('buildCustomPluginsFromStored', () => {
         active: true,
       },
     ];
-    expect(buildCustomPluginsFromStored(stored, knownIds, '0.44.0')).toHaveLength(
+    expect(buildCustomPluginsFromStored(stored, knownIds)).toHaveLength(
       0,
     );
   });
@@ -168,7 +167,7 @@ describe('buildCustomPluginsFromStored', () => {
         active: true,
       },
     ];
-    const customs = buildCustomPluginsFromStored(stored, known, '0.44.0');
+    const customs = buildCustomPluginsFromStored(stored, known);
     expect(customs[0].activationState).toBe('ACTIVE');
   });
 
@@ -189,7 +188,7 @@ describe('buildCustomPluginsFromStored', () => {
         active: true,
       },
     ] as StoredPlugin[];
-    expect(buildCustomPluginsFromStored(stored, known, '0.44.0')).toHaveLength(0);
+    expect(buildCustomPluginsFromStored(stored, known)).toHaveLength(0);
   });
 
   it('returns empty when all stored plugins are known', () => {
@@ -202,6 +201,6 @@ describe('buildCustomPluginsFromStored', () => {
         active: true,
       },
     ];
-    expect(buildCustomPluginsFromStored(stored, known, '0.44.0')).toHaveLength(0);
+    expect(buildCustomPluginsFromStored(stored, known)).toHaveLength(0);
   });
 });

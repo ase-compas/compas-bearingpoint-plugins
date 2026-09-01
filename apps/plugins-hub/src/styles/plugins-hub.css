@@ -13,7 +13,6 @@
   --badge-available: #1d4ed8;
   --badge-active: #0d3d4a;
   --badge-inactive: #004552;
-  --badge-incompatible: #b45309;
   --badge-kind: #6b9197;
   
   /* background where the badges are placed on, is --bearingpoint-color-surface => --oscd-base3 */
@@ -47,10 +46,6 @@
 
 .badge.badge-inactive {
   --badge-color: var(--badge-inactive);
-}
-
-.badge.badge-incompatible {
-  --badge-color: var(--badge-incompatible);
 }
 
 .badge.badge-kind {

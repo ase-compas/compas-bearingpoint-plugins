@@ -103,7 +103,6 @@ export function mapOfficialPluginToManifest(
  */
 export function loadBuiltinProviders(
   stored: StoredPlugin[],
-  coreVersion: string,
   options?: {
     getHost?: () => OpenScdHost | null;
     detectEdition?: () => HostEdition | null;
@@ -126,7 +125,7 @@ export function loadBuiltinProviders(
     const manifest = mapOfficialPluginToManifest(entry, provider.name);
     if (!manifest) continue;
     plugins.push(
-      buildPlugin(manifest, provider, coreVersion, stored, {
+      buildPlugin(manifest, provider, stored, {
         builtin: true,
         activeByDefault: entry.activeByDefault === true,
         requireDoc: entry.requireDoc === true,

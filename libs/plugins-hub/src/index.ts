@@ -3,7 +3,6 @@ export type { Provider } from './lib/types/provider';
 export type {
   Plugin,
   PluginManifestEntry,
-  SupportedCoreVersion,
   InstallationState,
   ActivationState,
   PluginKind,
@@ -48,8 +47,6 @@ export {
   isUrlTrusted,
 } from './lib/services/plugin-loader';
 
-export { isVersionCompatible, compareSemver } from './lib/services/version-resolver';
-
 export {
   buildPlugin,
   markPluginsOverlappingBuiltins,
@@ -64,7 +61,6 @@ export type {
   BuildPluginOptions,
   PluginIdentityTarget,
 } from './lib/store/plugin-store';
-export { getAppVersion } from './lib/store/app-version-store';
 
 export {
   getLayout,

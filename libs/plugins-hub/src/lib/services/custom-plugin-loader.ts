@@ -66,13 +66,11 @@ export function isKnownStoredPlugin(
  *
  * @param stored - Host-supplied installed plugins.
  * @param knownIdentities - Catalogue identities to exclude.
- * @param coreVersion - Running core version (passed through to {@link buildPlugin}).
  * @returns Custom plugins marked INSTALLED with stored activation state.
  */
 export function buildCustomPluginsFromStored(
   stored: StoredPlugin[],
   knownIdentities: Set<string>,
-  coreVersion: string,
 ): Plugin[] {
   const customs: Plugin[] = [];
 
@@ -97,22 +95,15 @@ export function buildCustomPluginsFromStored(
       position: s.position,
     };
 
-    const plugin = buildPlugin(
-      entry,
-      CUSTOM_PROVIDER,
-      coreVersion,
-      stored,
-      {
-        activeByDefault: s.activeByDefault === true,
-        requireDoc: s.requireDoc === true,
-      },
-    );
+    const plugin = buildPlugin(entry, CUSTOM_PROVIDER, stored, {
+      activeByDefault: s.activeByDefault === true,
+      requireDoc: s.requireDoc === true,
+    });
 
     customs.push({
       ...plugin,
       installationState: 'INSTALLED',
       activationState: s.active ? 'ACTIVE' : 'INACTIVE',
-      compatible: true,
     });
   }
 

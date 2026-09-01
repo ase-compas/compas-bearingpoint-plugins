@@ -5,53 +5,35 @@
       "kind": "editor",
       "description": "Dummy Plugin Test 1",
       "src": "/external-api/provider/dummy-plugin-1.js",
-      "icon": "editing",
-      "supportedCoreVersion": {
-        "to": "2.0.0"
-      }
+      "icon": "editing"
     },
     {
       "name": "Plugin 2",
       "kind": "editor",
       "description": "Dummy Plugin Test 2",
       "src": "/external-api/provider/dummy-plugin-2.js",
-      "icon": "editing",
-      "supportedCoreVersion": {
-        "from": "0.0.0",
-        "to": "0.43.0"
-      }
+      "icon": "editing"
     },
     {
       "name": "Plugin 3",
       "kind": "editor",
       "description": "Dummy Plugin Test 3",
       "src": "/external-api/provider/dummy-plugin-3.js",
-      "icon": "editing",
-      "supportedCoreVersion": {
-        "from": "0.0.0",
-        "to": "0.44.0"
-      }
+      "icon": "editing"
     },
     {
       "name": "Plugin 4",
       "kind": "editor",
       "description": "Dummy Plugin Test 4",
       "src": "/external-api/provider/dummy-plugin-4.js",
-      "icon": "editing",
-      "supportedCoreVersion": {
-        "from": "0.0.0",
-        "to": "0.45.0"
-      }
+      "icon": "editing"
     },
     {
       "name": "Plugin 5",
       "kind": "editor",
       "description": "Dummy Plugin Test 5",
       "src": "/external-api/provider/dummy-plugin-5.js",
-      "icon": "editing",
-      "supportedCoreVersion": {
-        "from": "0.0.0"
-      }
+      "icon": "editing"
     }
   ]
 }

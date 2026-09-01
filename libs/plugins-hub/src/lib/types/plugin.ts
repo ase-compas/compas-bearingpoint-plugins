@@ -33,16 +33,6 @@ const menuPositions = ['top', 'middle', 'bottom'] as const;
 export type MenuPosition = (typeof menuPositions)[number];
 
 /**
- * Semver version range specifying which OpenSCD core versions the plugin supports.
- */
-export interface SupportedCoreVersion {
-  /** Minimum supported core version (inclusive), e.g. "1.0.0". */
-  from: string;
-  /** Maximum supported core version (exclusive), e.g. "2.0.0". */
-  to: string;
-}
-
-/**
  * Raw plugin entry as served from a provider's plugins.json.
  */
 export interface PluginManifestEntry {
@@ -62,8 +52,6 @@ export interface PluginManifestEntry {
   longDescription?: string;
   /** postion if kind === 'menu'. */
   position?: MenuPosition;
-  /** Supported OpenSCD core version range (optional). */
-  supportedCoreVersion?: SupportedCoreVersion;
 }
 
 /**
@@ -77,8 +65,6 @@ export interface PluginManifestEntry {
 export interface Plugin extends PluginManifestEntry {
   /** The provider that supplies this plugin. */
   provider: Provider;
-  /** Whether the plugin is compatible with the running core version. */
-  compatible: boolean;
   /** Kind Text for the given kind. */
   kindText: PluginKindText;
   /** Kind Icon for the given kind. */

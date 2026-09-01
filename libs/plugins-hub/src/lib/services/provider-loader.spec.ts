@@ -16,7 +16,6 @@ const validPlugin = {
   description: 'Imports transformer models.',
   src: 'https://example.com/transformer-importer.js',
   icon: 'document',
-  supportedCoreVersion: { from: '1.0.0', to: '2.0.0' },
 };
 
 beforeEach(() => {

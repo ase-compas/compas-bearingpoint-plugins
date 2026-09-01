@@ -4,14 +4,13 @@
   interface Props {
     doc?: XMLDocument;
     editCount?: number;
-    coreVersion?: string;
     plugins?: unknown;
   }
 
-  let { doc, editCount, coreVersion, plugins }: Props = $props();
+  let { doc, editCount, plugins }: Props = $props();
 </script>
 
-<PluginsHub {coreVersion} {plugins} />
+<PluginsHub {plugins} />
 
 <style>
   :host {
