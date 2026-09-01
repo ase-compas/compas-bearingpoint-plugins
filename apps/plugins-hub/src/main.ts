@@ -1,6 +1,11 @@
 import PluginsHub from './app/plugins-hub.svelte';
 import { mount } from 'svelte';
-import { createFakeCompasLayout, listenOscdConfigurePlugin } from './dev/fake-open-scd';
+import {
+  createFakeCompasLayout,
+  initFakeHostPlugins,
+  listenOscdConfigurePlugin,
+} from './dev/fake-open-scd';
+import { standaloneProps } from './dev/standalone-props.svelte';
 // Production loads plugin-wrapper.svelte.ts (not this file) and must not include these rules.
 // eslint-disable-next-line @nx/enforce-module-boundaries -- dev-only CSS outside the lib graph; main.ts is not the production entry
 import { initThemePlayground } from '../../../libs/global/dev/theme-playground';
@@ -16,6 +21,7 @@ if (import.meta.env?.DEV) {
   fakeCompasLayout = createFakeCompasLayout();
 
   if (fakeCompasLayout) {
+    initFakeHostPlugins();
     document.addEventListener('oscd-configure-plugin', (e: Event) =>
       listenOscdConfigurePlugin(e),
     );
@@ -34,7 +40,7 @@ if (import.meta.env?.DEV) {
 
 const app = mount(PluginsHub, {
   target: document.body,
-  props: {},
+  props: standaloneProps,
 });
 
 export default app;

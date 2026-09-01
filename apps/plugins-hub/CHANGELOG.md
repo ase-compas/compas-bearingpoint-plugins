@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   old hosts without `--oscd-yellow` fall back to `'Material Icons Outlined'`).
   SMUI text-field icons need no `material-icons*` class; ligature spans use
   `.oscd-icons`.
+- Installed plugins come from the host `plugins` property (same JSON shape as
+  the former `localStorage['plugins']` key). The Hub no longer reads that
+  storage key.
 
 ## [0.0.5]
 

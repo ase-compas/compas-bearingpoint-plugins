@@ -8,7 +8,7 @@
     loadBuiltinProviders,
     buildPlugin,
     markPluginsOverlappingBuiltins,
-    loadStoredPlugins,
+    normalizeStoredPlugins,
     providersConfig,
     installPlugin,
     uninstallPlugin,
@@ -32,9 +32,11 @@
 
   interface Props {
     coreVersion?: string;
+    /** Host installed-plugin list (same shape as former localStorage['plugins']). */
+    plugins?: unknown;
   }
 
-  let { coreVersion = getAppVersion() }: Props = $props();
+  let { coreVersion = getAppVersion(), plugins: storedPlugins }: Props = $props();
 
   let plugins = $state<Plugin[]>([]);
   let providers = $state<Provider[]>([]);
@@ -57,7 +59,7 @@
   async function initHub() {
     loading = true;
     loadErrors = [];
-    const stored = loadStoredPlugins();
+    const stored = normalizeStoredPlugins(storedPlugins);
     const allPlugins: Plugin[] = [];
     const allProviders: Provider[] = [];
 
@@ -105,8 +107,11 @@
   }
 
   $effect(() => {
-    // Re-initialise when the host core version changes
+    // Re-initialise when the host core version or installed-plugin list changes
     const _version = coreVersion;
+    const _stored = storedPlugins;
+    void _version;
+    void _stored;
     initHub();
   });
 

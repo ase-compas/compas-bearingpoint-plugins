@@ -45,7 +45,7 @@ function isPluginKind(value: unknown): value is PluginKind {
 /**
  * Returns true when a stored plugin's name+kind matches a known catalogue plugin.
  *
- * @param stored - Host localStorage plugin entry.
+ * @param stored - Host `plugins` list entry.
  * @param knownIdentities - Set from {@link collectKnownPluginIdentities}.
  */
 export function isKnownStoredPlugin(
@@ -64,7 +64,7 @@ export function isKnownStoredPlugin(
  * Description is the source URL only (product requirement).
  * Hub unique key is name+kind; host configure uses plain stored name (no prefix).
  *
- * @param stored - Host localStorage plugins.
+ * @param stored - Host-supplied installed plugins.
  * @param knownIdentities - Catalogue identities to exclude.
  * @param coreVersion - Running core version (passed through to {@link buildPlugin}).
  * @returns Custom plugins marked INSTALLED with stored activation state.

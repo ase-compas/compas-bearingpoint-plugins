@@ -133,7 +133,7 @@ npm run verify                     # lint + check + test
   `{ ..., error?: string }` and callers check `error` (see `loadProvider`,
   `uninstallPlugin`).
 - Wrap `JSON.parse` / `localStorage` access in `try/catch` and fall back to safe
-  defaults (`loadStoredPlugins` returns `[]` on failure).
+  defaults (`normalizeStoredPlugins` returns `[]` on invalid host `plugins` input).
 - Log warnings for recoverable problems: `console.warn('[ProviderLoader] ...')`.
 - Throwing is reserved for truly invariant failures (e.g. missing shadow root in
   `plugin-wrapper.svelte.ts`).
@@ -155,8 +155,10 @@ npm run verify                     # lint + check + test
 
 - **A plugin's unique key is registration `name` + `kind`** (OpenSCD host
   identity). Use `registrationName(provider, plugin.name)` + `kind` /
-  `hubPluginKey(plugin)`. `src` is the load URL only. Stored host plugins are
-  deduped with `dedupeStoredPluginsByNameAndKind`.
+  `hubPluginKey(plugin)`. `src` is the load URL only. The host passes installed
+  plugins as the `plugins` property (same shape as the former
+  `localStorage['plugins']` JSON); they are deduped with
+  `dedupeStoredPluginsByNameAndKind` / `normalizeStoredPlugins`.
 - Providers: remote (from `providers.json` / `providers.dev.json`) and builtin
   (from the host's `getBuiltInPlugins()`); JSON config is selected by
   `import.meta.env.MODE === 'development'`.

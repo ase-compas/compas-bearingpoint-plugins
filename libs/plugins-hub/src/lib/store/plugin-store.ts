@@ -16,21 +16,18 @@ import {
 } from '../services/plugin-loader';
 import type { StoredPlugin } from '../types/stored-plugin';
 
-/** Persistent store key for installed plugins */
-const STORAGE_KEY = 'plugins';
-
 /**
  * Deduplicates stored plugins by host identity key `name` + `kind`.
  *
- * Host localStorage may contain duplicates (e.g. open-scd#157 when `src` was
- * used as a secondary uniqueness path). The hub keys by name+kind, so duplicates
- * would crash Svelte's keyed `{#each}` and confuse install state.
+ * The host-supplied list may contain duplicates (e.g. open-scd#157 when `src`
+ * was used as a secondary uniqueness path). The hub keys by name+kind, so
+ * duplicates would crash Svelte's keyed `{#each}` and confuse install state.
  *
  * - Entries without a non-empty `name`, `kind`, or `src` are dropped.
  * - Later entries overwrite earlier ones for the same name+kind (last-wins fields).
  * - `active` is OR-merged so an enabled duplicate is not lost to a later inactive one.
  *
- * @param stored - Raw plugins array from host localStorage.
+ * @param stored - Raw plugins array from the host `plugins` property.
  * @returns Deduplicated plugins in first-seen identity order.
  */
 export function dedupeStoredPluginsByNameAndKind(
@@ -52,20 +49,15 @@ export function dedupeStoredPluginsByNameAndKind(
 }
 
 /**
- * Loads and deduplicates plugins from host localStorage (`plugins` key).
+ * Normalizes the host `plugins` input (same shape as the former
+ * `localStorage['plugins']` JSON array).
  *
+ * @param input - Value assigned by the host (array, or anything else).
  * @returns Deduplicated stored plugins, or `[]` on missing/invalid data.
  */
-export function loadStoredPlugins(): StoredPlugin[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return dedupeStoredPluginsByNameAndKind(parsed as StoredPlugin[]);
-  } catch {
-    return [];
-  }
+export function normalizeStoredPlugins(input: unknown): StoredPlugin[] {
+  if (!Array.isArray(input)) return [];
+  return dedupeStoredPluginsByNameAndKind(input as StoredPlugin[]);
 }
 
 /** Optional host/runtime fields not present on remote plugins.json manifests. */
@@ -80,7 +72,7 @@ export interface BuildPluginOptions {
  *
  * @param entry - Catalogue manifest entry.
  * @param provider - Provider (supplies registration prefix when set).
- * @param stored - Host localStorage plugins.
+ * @param stored - Host-supplied installed plugins.
  */
 function findStoredMatch(
   entry: PluginManifestEntry,
@@ -100,7 +92,7 @@ function findStoredMatch(
  * @param entry - Manifest entry from a provider catalogue or host builtins.
  * @param provider - Owning provider.
  * @param coreVersion - Running OpenSCD core version string.
- * @param stored - Host localStorage plugins (install/active state).
+ * @param stored - Host-supplied installed plugins (install/active state).
  * @param options - Optional builtin / host flags.
  * @returns Enriched hub plugin with installation and activation state.
  */

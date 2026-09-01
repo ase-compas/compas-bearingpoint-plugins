@@ -7,6 +7,7 @@ type Props = {
   doc?: XMLDocument;
   editCount?: number;
   coreVersion?: string;
+  plugins?: unknown;
 };
 
 export default class PluginsHubElement extends HTMLElement {
@@ -27,6 +28,7 @@ export default class PluginsHubElement extends HTMLElement {
       doc: undefined,
       editCount: undefined,
       coreVersion: undefined,
+      plugins: undefined,
     });
   }
 
@@ -35,6 +37,7 @@ export default class PluginsHubElement extends HTMLElement {
     this.props.doc = this._doc;
     this.props.editCount = this._editCount;
     this.props.coreVersion = this._coreVersion;
+    this.props.plugins = this._plugins;
 
     const shadowRoot = this.shadowRoot;
     if (!shadowRoot) {
@@ -67,6 +70,12 @@ export default class PluginsHubElement extends HTMLElement {
   public set coreVersion(newVersion: string) {
     this._coreVersion = newVersion;
     this.props.coreVersion = newVersion;
+  }
+
+  private _plugins?: unknown;
+  public set plugins(value: unknown) {
+    this._plugins = value;
+    this.props.plugins = value;
   }
 
   /**

@@ -5,12 +5,13 @@
     doc?: XMLDocument;
     editCount?: number;
     coreVersion?: string;
+    plugins?: unknown;
   }
 
-  let { doc, editCount, coreVersion }: Props = $props();
+  let { doc, editCount, coreVersion, plugins }: Props = $props();
 </script>
 
-<PluginsHub {coreVersion} />
+<PluginsHub {coreVersion} {plugins} />
 
 <style>
   :host {

@@ -187,7 +187,7 @@ registrationName(provider, plugin.name)
 | Concern | Key |
 | --- | --- |
 | Hub list / selection / install state | `registrationName` + `kind` (`hubPluginKey`) |
-| Host localStorage match | stored `name` + `kind` |
+| Host `plugins` property match | stored `name` + `kind` |
 | Load path | `src` (catalogue URL; `proxyUrl` only on configure `config.src`) |
 
 Changing `src` for the same registration name + kind (version bump, offline path, mirror) updates that plugin instead of creating a second entry. Custom plugins are stored entries whose **name+kind** is not covered by any remote or built-in catalogue.
@@ -201,7 +201,7 @@ entry under the host built-in provider instead.
 
 ### Migration / duplicates
 
-If host localStorage still contains name+kind duplicates (historical open-scd#157), the hub **dedupes on read** (`dedupeStoredPluginsByNameAndKind`: last-wins fields, `active` OR-merged). The hub does not rewrite host storage by itself; a permanent cleanup needs the host fix or reconfigure of the surviving entry.
+If the host `plugins` list still contains name+kind duplicates (historical open-scd#157), the hub **dedupes on read** (`dedupeStoredPluginsByNameAndKind`: last-wins fields, `active` OR-merged). The hub does not rewrite host storage by itself; a permanent cleanup needs the host fix or reconfigure of the surviving entry.
 
 ## UI Features
 

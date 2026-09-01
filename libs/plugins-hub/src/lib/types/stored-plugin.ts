@@ -1,7 +1,8 @@
 import type { MenuPosition, PluginKind } from "./plugin";
 
 /**
- * Represents a plugin that has been stored in the localStorage 'plugins'.
+ * Represents a plugin in the host `plugins` list (same shape as the former
+ * `localStorage['plugins']` JSON entries).
  */
 export type StoredPlugin = {
   name: string;

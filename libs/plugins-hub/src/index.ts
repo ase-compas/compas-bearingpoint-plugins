@@ -58,7 +58,7 @@ export {
   uninstallPlugin,
   activatePlugin,
   deactivatePlugin,
-  loadStoredPlugins,
+  normalizeStoredPlugins,
 } from './lib/store/plugin-store';
 export type {
   BuildPluginOptions,

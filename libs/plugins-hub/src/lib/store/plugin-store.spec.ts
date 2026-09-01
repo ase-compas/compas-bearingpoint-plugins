@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import type { Plugin } from '../types/plugin';
 import type { Provider } from '../types/provider';
 import type { StoredPlugin } from '../types/stored-plugin';
@@ -8,7 +8,7 @@ import {
   deactivatePlugin,
   dedupeStoredPluginsByNameAndKind,
   installPlugin,
-  loadStoredPlugins,
+  normalizeStoredPlugins,
   markPluginsOverlappingBuiltins,
   uninstallPlugin,
 } from './plugin-store';
@@ -117,47 +117,35 @@ describe('dedupeStoredPluginsByNameAndKind', () => {
   });
 });
 
-describe('loadStoredPlugins', () => {
-  afterEach(() => {
-    localStorage.removeItem('plugins');
+describe('normalizeStoredPlugins', () => {
+  it('returns empty array when input is missing', () => {
+    expect(normalizeStoredPlugins(undefined)).toEqual([]);
   });
 
-  it('returns empty array when key is missing', () => {
-    expect(loadStoredPlugins()).toEqual([]);
+  it('returns empty array when input is not an array', () => {
+    expect(normalizeStoredPlugins({ name: 'x' })).toEqual([]);
+    expect(normalizeStoredPlugins('[]')).toEqual([]);
+    expect(normalizeStoredPlugins(null)).toEqual([]);
   });
 
-  it('returns empty array for invalid JSON', () => {
-    localStorage.setItem('plugins', '{not-json');
-    expect(loadStoredPlugins()).toEqual([]);
-  });
-
-  it('returns empty array when JSON is not an array', () => {
-    localStorage.setItem('plugins', JSON.stringify({ name: 'x' }));
-    expect(loadStoredPlugins()).toEqual([]);
-  });
-
-  it('deduplicates by name+kind after reading localStorage', () => {
-    localStorage.setItem(
-      'plugins',
-      JSON.stringify([
-        stored({
-          name: 'BP - PluginHub',
-          src: 'https://cdn.example/1.0.0/x.js',
-          active: true,
-        }),
-        stored({
-          name: 'BP - PluginHub',
-          src: 'https://cdn.example/1.1.0/x.js',
-          active: false,
-        }),
-        stored({
-          name: 'Other',
-          src: 'https://cdn.example/y.js',
-          active: false,
-        }),
-      ]),
-    );
-    const result = loadStoredPlugins();
+  it('deduplicates by name+kind', () => {
+    const result = normalizeStoredPlugins([
+      stored({
+        name: 'BP - PluginHub',
+        src: 'https://cdn.example/1.0.0/x.js',
+        active: true,
+      }),
+      stored({
+        name: 'BP - PluginHub',
+        src: 'https://cdn.example/1.1.0/x.js',
+        active: false,
+      }),
+      stored({
+        name: 'Other',
+        src: 'https://cdn.example/y.js',
+        active: false,
+      }),
+    ]);
     expect(result).toHaveLength(2);
     expect(result[0].name).toBe('BP - PluginHub');
     expect(result[0].src).toBe('https://cdn.example/1.1.0/x.js');

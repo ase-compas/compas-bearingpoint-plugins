@@ -1,6 +1,7 @@
 // Fake host environment for standalone plugins-hub dev (no real OpenSCD/CoMPAS).
 // Mirrors handleConfigurationPluginEvent + getBuiltInPlugins from open-scd.ts
 import type { StoredPlugin } from '@compas-bearingpoint/plugins-hub';
+import { standaloneProps } from './standalone-props.svelte';
 
 const FAKE_BUILTINS = [
   {
@@ -29,6 +30,24 @@ const FAKE_BUILTINS = [
   },
 ] as const;
 
+let fakeHostPlugins: StoredPlugin[] = [];
+
+/**
+ * Seed the in-memory host list. Optional localStorage mirror is debug-only;
+ * the Hub reads `standaloneProps.plugins`, never storage.
+ */
+export function initFakeHostPlugins(): StoredPlugin[] {
+  try {
+    const raw = localStorage.getItem('plugins');
+    const parsed = raw ? (JSON.parse(raw) as unknown) : [];
+    fakeHostPlugins = Array.isArray(parsed) ? (parsed as StoredPlugin[]) : [];
+  } catch {
+    fakeHostPlugins = [];
+  }
+  standaloneProps.plugins = fakeHostPlugins;
+  return fakeHostPlugins;
+}
+
 /**
  * Fake der Host-Umgebung (nur Dev).
  * Provides getBuiltInPlugins() instead of serving plugins.js via WireMock.
@@ -54,7 +73,7 @@ export function createFakeCompasLayout(): HTMLElement | null {
 
 /**
  * Exakte Nachbildung von handleConfigurationPluginEvent aus open-scd
- * → aktualisiert localStorage['plugins'] genau wie die Original-App
+ * → aktualisiert die in-memory host list (optional localStorage mirror).
  */
 export function listenOscdConfigurePlugin(e: Event): void {
   const event = e as CustomEvent;
@@ -66,7 +85,7 @@ export function listenOscdConfigurePlugin(e: Event): void {
     'background:#0ea5e9; color:white; padding:2px 6px; border-radius:3px; font-weight:bold',
     event.detail,
   );
-  const hasPlugin = hasPluginInLocalStorage(name, kind);
+  const hasPlugin = hasPluginInHost(name, kind);
   const hasConfig = config !== null;
 
   const isChangeEvent = hasPlugin && hasConfig;
@@ -74,11 +93,11 @@ export function listenOscdConfigurePlugin(e: Event): void {
   const isAddEvent = !hasPlugin && hasConfig;
 
   if (isChangeEvent && config) {
-    changePluginInLocalStorage(config);
+    changePluginInHost(config);
   } else if (isRemoveEvent) {
-    removePluginFromLocalStorage(name, kind);
+    removePluginFromHost(name, kind);
   } else if (isAddEvent && config) {
-    addPluginToLocalStorage(config);
+    addPluginToHost(config);
   } else {
     console.warn('%c⚠️ Invalid plugin configuration event', 'color:#ef4444', {
       name,
@@ -88,39 +107,36 @@ export function listenOscdConfigurePlugin(e: Event): void {
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Interne Helper (exakt wie in open-scd.ts)
-// ─────────────────────────────────────────────────────────────
-
-function getPluginsFromLocalStorage(): StoredPlugin[] {
-  const str = localStorage.getItem('plugins') ?? '[]';
-  return JSON.parse(str);
+function persist(plugins: StoredPlugin[]) {
+  fakeHostPlugins = plugins;
+  standaloneProps.plugins = plugins;
+  try {
+    localStorage.setItem('plugins', JSON.stringify(plugins));
+  } catch {
+    // debug mirror only
+  }
 }
 
-function savePluginsToLocalStorage(plugins: StoredPlugin[]) {
-  localStorage.setItem('plugins', JSON.stringify(plugins));
-}
-
-function hasPluginInLocalStorage(name: string, kind: string): boolean {
-  return getPluginsFromLocalStorage().some(
+function hasPluginInHost(name: string, kind: string): boolean {
+  return fakeHostPlugins.some(
     (p: StoredPlugin) => p.name === name && p.kind === kind,
   );
 }
 
-function removePluginFromLocalStorage(name: string, kind: string) {
-  const plugins = getPluginsFromLocalStorage().filter(
-    (p: StoredPlugin) => p.name !== name || p.kind !== kind,
+function removePluginFromHost(name: string, kind: string) {
+  persist(
+    fakeHostPlugins.filter(
+      (p: StoredPlugin) => p.name !== name || p.kind !== kind,
+    ),
   );
-  savePluginsToLocalStorage(plugins);
 }
 
-function addPluginToLocalStorage(plugin: StoredPlugin) {
-  const plugins = [...getPluginsFromLocalStorage(), plugin];
-  savePluginsToLocalStorage(plugins);
+function addPluginToHost(plugin: StoredPlugin) {
+  persist([...fakeHostPlugins, plugin]);
 }
 
-function changePluginInLocalStorage(plugin: StoredPlugin) {
-  const plugins = getPluginsFromLocalStorage();
+function changePluginInHost(plugin: StoredPlugin) {
+  const plugins = [...fakeHostPlugins];
   const index = plugins.findIndex(
     (p: StoredPlugin) => p.name === plugin.name && p.kind === plugin.kind,
   );
@@ -131,5 +147,5 @@ function changePluginInLocalStorage(plugin: StoredPlugin) {
   }
 
   plugins[index] = { ...plugins[index], ...plugin };
-  savePluginsToLocalStorage(plugins);
+  persist(plugins);
 }
