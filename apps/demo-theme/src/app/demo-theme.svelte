@@ -159,7 +159,7 @@
     <table>
       <thead>
         <tr>
-          <th width="150px">Token</th>
+          <th style="width: 150px">Token</th>
           <th>Hex</th>
           {#each accentBgs as bg}
             <th>{srcToken(bg)}</th>
