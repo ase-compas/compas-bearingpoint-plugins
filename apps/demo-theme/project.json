@@ -1,0 +1,74 @@
+{
+  "name": "demo-theme",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/demo-theme/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "command": "eslint apps/demo-theme/**/*.{ts,svelte,spec.ts}"
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "svelte-check",
+        "cwd": "apps/demo-theme"
+      }
+    },
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/demo-theme"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-theme:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-theme:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "demo-theme:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "demo-theme:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "demo-theme:build:development"
+        },
+        "production": {
+          "buildTarget": "demo-theme:build:production"
+        }
+      }
+    },
+    "xxx-test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/apps/demo-theme"
+      }
+    }
+  }
+}

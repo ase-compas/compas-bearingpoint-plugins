@@ -16,9 +16,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "@compas-bearingpoint/plugins-hub": [
-        "./libs/plugins-hub/src/index.ts"
-      ]
+    "@compas-bearingpoint/plugins-hub": [
+      "./libs/plugins-hub/src/index.ts"
+    ],
+    "@compas-bearingpoint/demo-theme": [
+      "./libs/demo-theme/src/index.ts"
+    ]
     }
   },
   "exclude": ["node_modules", "tmp"]

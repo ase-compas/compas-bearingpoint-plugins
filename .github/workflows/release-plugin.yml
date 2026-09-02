@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - plugins-hub
+          - demo-theme
       RELEASE_TYPE:
         description: 'Release type: MAJOR, MINOR, or PATCH'
         required: false
