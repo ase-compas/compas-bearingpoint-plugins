@@ -10,7 +10,8 @@ that aggregates, installs and manages plugins from multiple providers inside the
 OpenSCD/CoMPAS host application.
 
 No Cursor or Copilot rules exist in this repo. Use this file as the source of
-truth for conventions.
+truth for conventions. New AI skills belong in `.agents/skills/` (not in
+user-global skill folders).
 
 ## Monorepo layout
 
@@ -18,10 +19,11 @@ truth for conventions.
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | `apps/plugins-hub` | The Plugin-Hub application (Svelte UI, entry `src/plugin-wrapper.svelte.ts`, built as a lib bundle `index.js` with CSS inlined) |
 | `libs/plugins-hub` | All domain logic: types, services, store, utils. Public API re-exported from `src/index.ts`. **All unit tests live here**      |
-| `libs/global`      | Shared CSS / icons / Vite helpers (imported cross-project)                                                                     |
+| `libs/global`      | Shared CSS / icons / Vite helpers / standalone fake OpenSCD host (`dev/`)                                                      |
 | `wiremock/`        | WireMock stubs for `/external-api` and `/proxy` (mock providers)                                                             |
 | `doc/`             | Feature docs (`doc/features/plugins-hub.md`), plans, review                                                                  |
 | `dist/`            | Build output (gitignored)                                                                                                    |
+| `.agents/skills/`  | Repo AI skills (`SKILL.md` + optional scripts/references). Create new skills here.                                           |
 
 The lib is consumed by the app via the path alias `@compas-bearingpoint/plugins-hub`
 (defined in `tsconfig.base.json`). New code that is shared should go in
@@ -124,8 +126,9 @@ npm run verify                     # lint + check + test
   plugin. Do not ship `@font-face` / font files in the production plugin;
   icons use `var(--oscd-icon-font)` / `.oscd-icons` (`libs/global/oscd-typography.css`).
   Dev-only host
-  brand/light-dark switching and OpenSCD font faces live under
-  `libs/global/dev/` (wired from app `main.ts`, not the production entry).
+  brand/light-dark switching, OpenSCD font faces, and the reusable fake
+  OpenSCD host (`fake-open-scd.ts`) live under `libs/global/dev/` (wired
+  from app `main.ts`, not the production entry).
 
 ### Error handling
 

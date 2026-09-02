@@ -53,7 +53,9 @@ so CSS `light-dark()` works.
 | Separate story/demo page | No |
 
 Runtime is wired from `apps/plugins-hub/src/main.ts` only (**not** the production
-plugin entry). Fake OpenSCD host stays in `apps/plugins-hub/src/dev/fake-open-scd.ts`.
+plugin entry). Shared fake OpenSCD host lives in `libs/global/dev/fake-open-scd.ts`;
+Hub builtins stay in `apps/plugins-hub/src/dev/fake-open-scd.ts`
+(`createFakeCompasLayout`).
 
 #### Fonts (standalone only)
 
