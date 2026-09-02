@@ -31,7 +31,7 @@
     <div class="details-title-row bp-typo-h1">
       <span class="oscd-icons details-icon">{plugin.icon}</span>
       <h3 class="details-name">{displayName}</h3>
-      <button class="close-btn" onclick={onClose} aria-label="Close details"
+      <button type="button" class="close-btn" onclick={onClose} aria-label="Close details"
         >✕</button
       >
     </div>
@@ -100,6 +100,7 @@
     {#if isShadowed}
       {#if isActive}
         <button
+          type="button"
           class="action-btn disable bp-typo-button"
           disabled
           title={shadowTooltip}
@@ -107,6 +108,7 @@
         >Disable</button>
       {:else}
         <button
+          type="button"
           class="action-btn enable bp-typo-button"
           disabled
           title={shadowTooltip}
@@ -115,23 +117,24 @@
       {/if}
     {:else if isBuiltin}
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
+        <button type="button" class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
+        <button type="button" class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {:else if !isInstalled}
       <button
+        type="button"
         class="action-btn install bp-typo-button"
         onclick={() => onInstall(plugin)}
       >
         Install
       </button>
     {:else}
-      <button class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin)}>Remove</button>
+      <button type="button" class="action-btn remove bp-typo-button" onclick={() => onUninstall(plugin)}>Remove</button>
       {#if isActive}
-        <button class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
+        <button type="button" class="action-btn disable bp-typo-button" onclick={() => onDisable(plugin)}>Disable</button>
       {:else}
-        <button class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
+        <button type="button" class="action-btn enable bp-typo-button" onclick={() => onEnable(plugin)}>Enable</button>
       {/if}
     {/if}
   </div>

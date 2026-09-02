@@ -55,6 +55,7 @@
     </div>
 
     <button
+      type="button"
       class="action-btn bp-typo-button"
       class:disable={isInstalled && isActive}
       class:enable={isInstalled && !isActive}

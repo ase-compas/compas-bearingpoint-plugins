@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Implements [Issue #26](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/26):
+  Install / enable / disable no longer jump the provider list to the top.
+  Host `plugins` updates re-merge install state without the loading
+  placeholder; action buttons use `type="button"`.
+
 ### Changed
 
 - Implements [Issue #25](https://github.com/ase-compas/compas-bearingpoint-plugins/issues/25):

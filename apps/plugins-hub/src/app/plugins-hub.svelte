@@ -2,7 +2,13 @@
   import Textfield from '@smui/textfield';
   import Select, { Option } from '@smui/select';
   import Icon from '@smui/textfield/icon';
-  import type { Provider, StoredPlugin, Plugin, PluginKind } from '@compas-bearingpoint/plugins-hub';
+  import type {
+    Provider,
+    StoredPlugin,
+    Plugin,
+    PluginKind,
+    ProviderLoadResult,
+  } from '@compas-bearingpoint/plugins-hub';
   import {
     loadAllProviders,
     loadBuiltinProviders,
@@ -54,27 +60,52 @@
     icon: proxyUrl(p.icon),
   }));
 
+  let remoteResults: ProviderLoadResult[] = [];
+  let cataloguesFetched = false;
+  let cataloguesFetch: Promise<void> | null = null;
+
+  async function ensureRemoteCatalogues() {
+    if (cataloguesFetched) return;
+    if (cataloguesFetch) {
+      await cataloguesFetch;
+      return;
+    }
+    cataloguesFetch = (async () => {
+      loadErrors = [];
+      remoteResults = await loadAllProviders(remoteProviders);
+      for (const result of remoteResults) {
+        if (result.error) {
+          loadErrors = [
+            ...loadErrors,
+            `Error loading Provider '${result.provider.name}': ${result.error}`,
+          ];
+        }
+      }
+      cataloguesFetched = true;
+    })();
+    await cataloguesFetch;
+  }
+
   async function initHub() {
-    loading = true;
-    loadErrors = [];
+    const firstLoad = !cataloguesFetched;
+    if (firstLoad) loading = true;
+
     const stored = normalizeStoredPlugins(storedPlugins);
+    await ensureRemoteCatalogues();
+
+    const selectedKey = selectedPlugin
+      ? hubPluginListKey(selectedPlugin)
+      : null;
     const allPlugins: Plugin[] = [];
     const allProviders: Provider[] = [];
 
-    const builtinResults = await loadBuiltinProviders(stored);
+    const builtinResults = loadBuiltinProviders(stored);
     for (const result of builtinResults) {
       allProviders.push(result.provider);
       allPlugins.push(...result.plugins);
     }
 
-    const results = await loadAllProviders(remoteProviders);
-    for (const result of results) {
-      if (result.error) {
-        loadErrors = [
-          ...loadErrors,
-          `Error loading Provider '${result.provider.name}': ${result.error}`,
-        ];
-      }
+    for (const result of remoteResults) {
       allProviders.push(result.provider);
       for (const entry of result.plugins) {
         allPlugins.push(buildPlugin(entry, result.provider, stored));
@@ -96,6 +127,10 @@
     // are marked built-in too (badge, no install/remove).
     providers = allProviders;
     plugins = markPluginsOverlappingBuiltins(allPlugins);
+    if (selectedKey) {
+      selectedPlugin =
+        plugins.find((p) => hubPluginListKey(p) === selectedKey) ?? null;
+    }
     loading = false;
   }
 
@@ -371,7 +406,7 @@
       {:else if filteredPlugins.length === 0}
         <div class="empty-state bp-typo-body">No plugins match your search.</div>
       {:else}
-        {#each providers as provider}
+        {#each providers as provider (provider.name)}
           {@const providerPlugins = getPluginsForProvider(provider.name)}
           {#if providerPlugins.length > 0}
             <ProviderCard
