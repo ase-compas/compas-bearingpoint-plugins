@@ -162,8 +162,6 @@ npm run verify                     # lint + check + test
 - Providers: remote (from `providers.json` / `providers.dev.json`) and builtin
   (from the host's `getBuiltInPlugins()`); JSON config is selected by
   `import.meta.env.MODE === 'development'`.
-- All external absolute URLs go through `proxyUrl()` on localhost
-  (`/proxy/host/path`); only proxy when not already localhost.
 - Communicate with the host via the `oscd-configure-plugin` `CustomEvent`
   (`bubbles: true, composed: true`, dispatched from the Hub so it bubbles to any host);
   registration name = `${provider.prefix} - ${plugin.name}` when prefix is set

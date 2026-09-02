@@ -20,7 +20,6 @@
     uninstallPlugin,
     activatePlugin,
     deactivatePlugin,
-    proxyUrl,
     PLUGIN_KINDS,
     CUSTOM_PROVIDER,
     collectKnownPluginIdentities,
@@ -55,10 +54,7 @@
   let kindFilter = $state<'all' | PluginKind>('all');
   let eventTarget: HTMLDivElement;
 
-  const remoteProviders: Provider[] = (providersConfig as Provider[]).map(p => ({
-    ...p,
-    icon: proxyUrl(p.icon),
-  }));
+  const remoteProviders: Provider[] = providersConfig as Provider[];
 
   let remoteResults: ProviderLoadResult[] = [];
   let cataloguesFetched = false;
@@ -287,7 +283,7 @@
    * Dispatches oscd-configure-plugin from the hub so any compatible host can
    * receive it through normal bubbling, regardless of the host element name.
    * Built-ins use plain plugin name (no provider prefix) and the host official
-   * `src` when a twin exists. Remotes use registrationName + proxyUrl(src).
+   * `src` when a twin exists. Remotes use registrationName + catalogue src.
    */
   function dispatchConfigurePlugin(target: ConfigureTarget, remove = false) {
     const hostBuiltinTwin =
@@ -309,7 +305,7 @@
     const configSrc =
       target.builtin === true
         ? (hostBuiltinTwin?.src ?? target.src)
-        : proxyUrl(target.src);
+        : target.src;
 
     const detail: { name: string; kind: PluginKind; config: StoredPlugin | null } = remove
       ? {

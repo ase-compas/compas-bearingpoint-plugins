@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removes core-version handling: no `coreVersion` host property, no
   `supportedCoreVersion` on catalogue entries, no Incompatible badge or
   version-gated Install.
+- Drops the localhost `proxyUrl()` rewrite. Catalogue `src` / `pluginsUrl` /
+  icons are used as given (HTTPS from `http://localhost` is allowed).
 
 ## [0.0.5]
 

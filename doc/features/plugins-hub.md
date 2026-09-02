@@ -186,7 +186,7 @@ registrationName(provider, plugin.name)
 | --- | --- |
 | Hub list / selection / install state | `registrationName` + `kind` (`hubPluginKey`) |
 | Host `plugins` property match | stored `name` + `kind` |
-| Load path | `src` (catalogue URL; `proxyUrl` only on configure `config.src`) |
+| Load path | `src` (catalogue URL; passed through on configure `config.src`) |
 
 Changing `src` for the same registration name + kind (version bump, offline path, mirror) updates that plugin instead of creating a second entry. Custom plugins are stored entries whose **name+kind** is not covered by any remote or built-in catalogue.
 

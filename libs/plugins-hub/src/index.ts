@@ -70,8 +70,6 @@ export {
 } from './lib/dom/open-scd-helpers';
 export type { HostEdition, OpenScdHost } from './lib/dom/open-scd-helpers';
 
-export { proxyUrl } from './lib/utils/proxy-url';
-
 import { default as providersConfigProd } from './lib/config/providers.json';
 import { default as providersConfigDev } from './lib/config/providers.dev.json';
 
