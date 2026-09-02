@@ -1,9 +1,6 @@
-/* SMUI (svelte-material-ui) default theme styles (MDC baseline).
-   Required by @smui/* components used in the hub toolbar (Textfield, Select, Icon).
-   See: https://sveltematerialui.com/INSTALL.md — "The Default Theme" / bare.css */
-@import 'svelte-material-ui/bare.css';
 
 /* Host theme bridge: --oscd-* -> --bearingpoint-* aliases, and corrections for old hosts with wrong/incomplete themes. */
-@import '../../../../libs/global/bearingpoint-theme.css';
+/* @import '../../../../libs/global/bearingpoint-theme.css'; */
+
 /* Plugin-specific global styles */
 @import './demo-theme.css';
