@@ -59,9 +59,10 @@ Hub builtins stay in `apps/plugins-hub/src/dev/fake-open-scd.ts`
 
 #### Fonts (standalone only)
 
-Production inherits Roboto / Material Icons from the OpenSCD host and must **not**
-ship `@font-face` files. The plugin only bundles the host icon **classes** in
-`libs/global/oscd-typography.css` (needed inside Shadow DOM).
+Production inherits Roboto / Roboto Mono / Material Symbols Outlined from the
+OpenSCD host and must **not** ship `@font-face` files. The plugin only bundles
+the host icon **classes** in `libs/global/oscd-typography.css` (needed inside
+Shadow DOM). Default `--oscd-icon-font` is `'Material Symbols Outlined'`.
 
 Standalone `run:plugins-hub` registers the same faces as OpenSCD
 (`packages/distribution/public/google`) via `libs/global/dev/oscd-fonts.css` →

@@ -1,7 +1,7 @@
 /**
  * OpenSCD host-theme bridge for Plugins-Hub.
  *
- * Maps distro-provided theme variables '--oscd-*' to --bearingpoint-* so component CSS
+ * Maps distro-provided theme variables '--oscd-theme-*' to --bearingpoint-* so component CSS
  * needs no rename.
  *
  * Do NOT set --oscd-theme-* inside the production plugin.
@@ -12,6 +12,41 @@
 * , /** '*' is needed for old-host design upgrades via @container style(...) below */
 :root,
 :host {
+  /* Helper "--bp-internal-*" tokens, so that fallbacks and defaults has only to be assigned once. */
+  --bp-internal-primary: var(--oscd-theme-primary, var(--oscd-primary, #2aa198));
+  --bp-internal-secondary: var(--oscd-theme-secondary, var(--oscd-secondary, #6c71c4));
+  --bp-internal-error: var(--oscd-theme-error, var(--oscd-error, #dc322f));
+  --bp-internal-warning: var(--oscd-theme-warning, var(--oscd-warning, #b58900));
+
+  --bp-internal-base03: var(--oscd-theme-base03, var(--oscd-base03, light-dark(#002b36, #fdf6e3)));
+  --bp-internal-base02: var(--oscd-theme-base02, var(--oscd-base02, light-dark(#073642, #eee8d5)));
+  --bp-internal-base01: var(--oscd-theme-base01, var(--oscd-base01, light-dark(#586e75, #93a1a1)));
+  --bp-internal-base00: var(--oscd-theme-base00, var(--oscd-base00, light-dark(#657b83, #839496)));
+  --bp-internal-base0: var(--oscd-theme-base0, var(--oscd-base0, light-dark(#839496, #657b83)));
+  --bp-internal-base1: var(--oscd-theme-base1, var(--oscd-base1, light-dark(#93a1a1, #586e75)));
+  --bp-internal-base2: var(--oscd-theme-base2, var(--oscd-base2, light-dark(#eee8d5, #073642)));
+  --bp-internal-base3: var(--oscd-theme-base3, var(--oscd-base3, light-dark(#fdf6e3, #002b36)));
+
+  --bp-internal-yellow: var(--oscd-theme-yellow, var(--oscd-yellow, #b58900));
+  --bp-internal-orange: var(--oscd-theme-orange, var(--oscd-orange, #cb4b16));
+  --bp-internal-red: var(--oscd-theme-red, var(--oscd-red, #dc322f));
+  --bp-internal-magenta: var(--oscd-theme-magenta, var(--oscd-magenta, #d33682));
+  --bp-internal-violet: var(--oscd-theme-violet, var(--oscd-violet, #6c71c4));
+  --bp-internal-blue: var(--oscd-theme-blue, var(--oscd-blue, #268bd2));
+  --bp-internal-cyan: var(--oscd-theme-cyan, var(--oscd-cyan, #2aa198));
+  --bp-internal-green: var(--oscd-theme-green, var(--oscd-green, #859900));
+
+  --bp-internal-text-font: var(--oscd-theme-text-font, var(--oscd-text-font, 'Roboto'));
+  --bp-internal-text-font-mono: var(--oscd-theme-text-font-mono, var(--oscd-text-font-mono, 'Roboto Mono'));
+  --bp-internal-icon-font: var(--oscd-theme-icon-font, var(--oscd-icon-font, 'Material Symbols Outlined'));
+  
+  --bp-internal-shape: var(--oscd-theme-shape, var(--oscd-shape, 8px));
+  --bp-internal-shape-none: 0;
+  --bp-internal-shape-extra-small: calc(0.5 * var(--bp-internal-shape)); /* 4px */
+  --bp-internal-shape-small: var(--bp-internal-shape); /* 8px */
+  --bp-internal-shape-medium: calc(1.5 * var(--bp-internal-shape)); /* 12px */
+  --bp-internal-shape-large: calc(2 * var(--bp-internal-shape)); /* 16px */
+  
   /* ------- START Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
   --bearingpoint-color-positive: #239c5b;
   --bearingpoint-color-negative: #ff3d47;
@@ -20,140 +55,123 @@
   --bearingpoint-color-warning-text: black;
   --bearingpoint-color-warning-bg: color-mix(in srgb, white 40%, var(--bearingpoint-color-warning));
 
-  --bearingpoint-color-bg-page: var(--oscd-base2);
-  --bearingpoint-color-surface: var(--oscd-base3);
+  --bearingpoint-color-bg-page: var(--bp-internal-base2);
+  --bearingpoint-color-surface: var(--bp-internal-base3);
 
-  --bearingpoint-color-text-primary: var(--oscd-base02);
-  --bearingpoint-color-text-dark: var(--oscd-base03);
-  --bearingpoint-color-text-secondary: var(--oscd-base01);
+  --bearingpoint-color-text-primary: var(--bp-internal-base02);
+  --bearingpoint-color-text-dark: var(--bp-internal-base03);
+  --bearingpoint-color-text-secondary: var(--bp-internal-base01);
 
-  --bearingpoint-color-link: var(--oscd-blue);
-  --bearingpoint-color-link-visited: var(--oscd-secondary);
+  --bearingpoint-color-link: var(--bp-internal-blue);
+  --bearingpoint-color-link-visited: var(--bp-internal-secondary);
 
-  --bearingpoint-color-border: var(--oscd-base01);
-  --bearingpoint-color-border-strong: var(--oscd-base03);
-  --bearingpoint-color-border-hover: var(--oscd-base02);
-  --bearingpoint-color-divider: color-mix(in oklab, var(--oscd-base03) 12%, transparent);
+  --bearingpoint-color-border: var(--bp-internal-base01);
+  --bearingpoint-color-border-strong: var(--bp-internal-base03);
+  --bearingpoint-color-border-hover: var(--bp-internal-base02);
+  --bearingpoint-color-divider: color-mix(in oklab, var(--bp-internal-base03) 12%, transparent);
 
-  --bearingpoint-color-overlay: color-mix(in oklab, var(--oscd-base03) 35%, transparent);
+  --bearingpoint-color-overlay: color-mix(in oklab, var(--bp-internal-base03) 35%, transparent);
 
 
-  --bearingpoint-color-action-primary-text: var(--oscd-base2);
-  --bearingpoint-color-action-primary-bg: var(--oscd-primary);
+  --bearingpoint-color-action-primary-text: var(--bp-internal-base2);
+  --bearingpoint-color-action-primary-bg: var(--bp-internal-primary);
   --bearingpoint-color-action-primary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-primary) 80%,
+    var(--bp-internal-primary) 80%,
     var(--bearingpoint-color-surface)
   );
 
-  --bearingpoint-color-action-secondary-text: var(--oscd-base3);
-  --bearingpoint-color-action-secondary-bg: var(--oscd-secondary);
+  --bearingpoint-color-action-secondary-text: var(--bp-internal-base3);
+  --bearingpoint-color-action-secondary-bg: var(--bp-internal-secondary);
   --bearingpoint-color-action-secondary-bg-hover: color-mix(
     in oklab,
-    var(--oscd-secondary) 80%,
+    var(--bp-internal-secondary) 80%,
     var(--bearingpoint-color-surface)
   );
 
-  --bearingpoint-color-action-neutral-text: var(--oscd-secondary);
+  --bearingpoint-color-action-neutral-text: var(--bp-internal-secondary);
   --bearingpoint-color-action-neutral-bg: var(--bearingpoint-color-surface);
   --bearingpoint-color-action-neutral-bg-hover: color-mix(
     in oklab,
     var(--bearingpoint-color-surface) 80%,
-    var(--oscd-base2)
+    var(--bp-internal-base2)
   );
 
-  --bearingpoint-color-action-danger-text: var(--oscd-base2);
-  --bearingpoint-color-action-danger-bg: var(--oscd-red);
+  --bearingpoint-color-action-danger-text: var(--bp-internal-base2);
+  --bearingpoint-color-action-danger-bg: var(--bp-internal-red);
   --bearingpoint-color-action-danger-bg-hover: color-mix(
     in oklab,
-    var(--oscd-red) 82%,
+    var(--bp-internal-red) 82%,
     var(--bearingpoint-color-surface)
   );
 
   /* Font stacks prefer host text font */
-  --bearingpoint-font-oscd: var(--oscd-text-font), system-ui, sans-serif;
+  --bearingpoint-font-oscd: var(--bp-internal-text-font), system-ui, sans-serif;
 
   /* ------- END Semantic --bearingpoint-* aliases (component CSS keeps these names) ------- */
 }
 
-/* old Open-SCD didn't set the --oscd-yellow value and others => missing values must be added. */
-@container style(--oscd-yellow: initial) {
-  * { /* needed, because old Distros also set the variables with "*" on every element. */
-    /* ==== Solarized palette Colors missed the "--ocsd-*" variables ==== */
-    --oscd-yellow: var(--yellow, #b58900);
-    --oscd-orange: var(--orange, #cb4b16);
-    --oscd-red: var(--red, #dc322f);
-    --oscd-magenta: var(--magenta, #d33682);
-    --oscd-violet: var(--violet, #6c71c4);
-    --oscd-blue: var(--blue, #268bd2);
-    --oscd-cyan: var(--cyan, #2aa198);
-    --oscd-green: var(--green, #859900);
-    
-    /* primary and secondayr where maybe not set correctly because the --primary ans --secondary where missing in the expression. */
-    --oscd-primary: var(--oscd-theme-primary, var(--primary, var(--oscd-cyan, #2aa198)));
-    --oscd-secondary: var(--oscd-theme-secondary, var(--secondary, var(--oscd-violet, #6c71c4)));
-    --oscd-icon-font: 'Material Icons Outlined';
-    --mdc-icon-font: var(--oscd-icon-font);
-  }
-}
 /* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Light */
-@container style(--oscd-yellow: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+@container style(--oscd-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
-    --oscd-primary: #330000;
-    --oscd-secondary: #990000;
+    --bp-internal-primary: #330000;
+    --bp-internal-secondary: #990000;
     
     /* Gray scale */
-    --oscd-base03: #5a473e; /* darkest */
-    --oscd-base02: #665247;
-    --oscd-base01: #735c50;
-    --oscd-base00: #806659;
-    --oscd-base0: #b2a59f;
-    --oscd-base1: #ccc1bc;
-    --oscd-base2: #e6deda;
-    --oscd-base3: #faf8f7; /* lightest */
+    --bp-internal-base03: #5a473e; /* darkest */
+    --bp-internal-base02: #665247;
+    --bp-internal-base01: #735c50;
+    --bp-internal-base00: #806659;
+    --bp-internal-base0: #b2a59f;
+    --bp-internal-base1: #ccc1bc;
+    --bp-internal-base2: #e6deda;
+    --bp-internal-base3: #faf8f7; /* lightest */
   }
 }
 /* old Bearing-point distribution (--primary: #330000) did not set the --oscd-primary color correctly. Dark */
-@container style(--oscd-yellow: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+@container style(--oscd-warning: initial) and style(--primary: #330000) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
-    --oscd-primary: #ffecec;
-    --oscd-secondary: #ee8585;
+    --bp-internal-primary: #ffecec;
+    --bp-internal-secondary: #ee8585;
     
     /* Gray scale */
-    --oscd-base03: #faf8f7; /* lightest */
-    --oscd-base02: #e6deda;
-    --oscd-base01: #ccc1bc;
-    --oscd-base00: #b2a59f;
-    --oscd-base0: #806659;
-    --oscd-base1: #735c50;
-    --oscd-base2: #665247;
-    --oscd-base3: #5a473e; /* darkest */
+    --bp-internal-base03: #faf8f7; /* lightest */
+    --bp-internal-base02: #e6deda;
+    --bp-internal-base01: #ccc1bc;
+    --bp-internal-base00: #b2a59f;
+    --bp-internal-base0: #806659;
+    --bp-internal-base1: #735c50;
+    --bp-internal-base2: #665247;
+    --bp-internal-base3: #5a473e; /* darkest */
   }
 }
 /* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Light */
-@container style(--oscd-yellow: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
+@container style(--oscd-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #002b36) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
-    --oscd-primary: #004552;
+    --bp-internal-primary: #004552;
   }
 }
 /* old Transnet-BW distribution (--primary: #004552) did not set the --oscd-primary color correctly. Dark */
-@container style(--oscd-yellow: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
+@container style(--oscd-warning: initial) and style(--primary: #004552) and style(--oscd-primary: var(--cyan)) and style(--oscd-base03: #fdf6e3) {
   * { /* needed, because old Distros also set the variables with "*" on every element. */
-    --oscd-primary: #81c3cf;
+    --bp-internal-primary: #81c3cf;
   }
 }
 
 :root,
 :host {
   /* SMUI outlined focus ring (Search / Status / Contributors / Kind) */
-  --mdc-theme-primary: var(--oscd-primary);
-  --mdc-theme-surface: var(--oscd-base3);
-  --mdc-theme-on-surface: var(--oscd-base03);
-  --mdc-shape-small: 8px;
+  --mdc-theme-primary: var(--bp-internal-primary);
+  --mdc-theme-surface: var(--bp-internal-base3);
+  --mdc-theme-on-surface: var(--bp-internal-base03);
 
-  /* inherited host --oscd-icon-font / --oscd-theme-icon-font if set, else Symbols */
-  --oscd-icon-font: var(--oscd-theme-icon-font, var(--oscd-icon-font, 'Material Symbols Outlined'));
-  --mdc-icon-font: var(--oscd-icon-font);
+  --mdc-shape-none: var(--bp-internal-shape-none);
+  --mdc-shape-extra-small: var(--bp-internal-shape-extra-small);
+  --mdc-shape-small: var(--bp-internal-shape-small);
+  --mdc-shape-medium: var(--bp-internal-shape-medium);
+  --mdc-shape-large: var(--bp-internal-shape-large);
+  
+  --mdc-icon-font: var(--bp-internal-icon-font);
 }
 
 /* MDC filled shape rounds only the top; outlined notched outline rounds all
@@ -162,25 +180,25 @@
 .mdc-text-field--outlined,
 .mdc-select--outlined,
 .mdc-select--outlined .mdc-select__anchor {
-  border-radius: var(--mdc-shape-small);
+  border-radius: var(--bp-internal-shape-small);
 }
 
 /** dark mode set color for smui componenten. */
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: color-mix(in srgb, var(--oscd-base02) 60%, transparent);
+  color: color-mix(in srgb, var(--bp-internal-base02) 60%, transparent);
 }
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
-  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
+  color:  color-mix(in srgb, var(--bp-internal-base02) 87%, transparent);
 }
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__icon--leading {
-  color:  color-mix(in srgb, var(--oscd-base02) 54%, transparent);
+  color:  color-mix(in srgb, var(--bp-internal-base02) 54%, transparent);
 }
 .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
-  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
+  color:  color-mix(in srgb, var(--bp-internal-base02) 87%, transparent);
 }
 .mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
-  fill:  color-mix(in srgb, var(--oscd-base02) 54%, transparent);
+  fill:  color-mix(in srgb, var(--bp-internal-base02) 54%, transparent);
 }
 .mdc-menu .mdc-deprecated-list {
-  color:  color-mix(in srgb, var(--oscd-base02) 87%, transparent);
+  color:  color-mix(in srgb, var(--bp-internal-base02) 87%, transparent);
 }

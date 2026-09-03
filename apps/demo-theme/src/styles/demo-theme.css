@@ -1,10 +1,9 @@
 /* Plugin-specific global styles (loaded from global.css). */
 :root,
 :host {
+  /* Helper "--my-internal-*" tokens, so that fallbacks and defaults has only to be assigned once. */
   --my-internal-primary: var(--oscd-theme-primary, #2aa198);
   --my-internal-secondary: var(--oscd-theme-secondary, #6c71c4);
-  --my-internal-error: var(--oscd-theme-error, #dc322f);
-  --my-internal-warning: var(--oscd-theme-warning, #b58900);
 
   --my-internal-base03: var(--oscd-theme-base03, light-dark(#002b36, #fdf6e3));
   --my-internal-base02: var(--oscd-theme-base02, light-dark(#073642, #eee8d5));
@@ -23,8 +22,19 @@
   --my-internal-blue: var(--oscd-theme-blue, #268bd2);
   --my-internal-cyan: var(--oscd-theme-cyan, #2aa198);
   --my-internal-green: var(--oscd-theme-green, #859900);
+  
+  --my-internal-error: var(--oscd-theme-error, var(--my-internal-red));
+  --my-internal-warning: var(--oscd-theme-warning, var(--my-internal-yellow));
 
   --my-internal-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --my-internal-icon-font: var(--oscd-theme-icon-font, 'Material Icons');
+  --my-internal-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
+  --my-internal-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
+  
+  --my-internal-shape: var(--oscd-theme-shape, 8px);
+  --my-internal-shape-none: 0;
+  --my-internal-shape-extra-small: calc(0.5 * var(--my-internal-shape)); /* 4px */
+  --my-internal-shape-small: var(--my-internal-shape); /* 8px */
+  --my-internal-shape-medium: calc(1.5 * var(--my-internal-shape)); /* 12px */
+  --my-internal-shape-large: calc(2 * var(--my-internal-shape)); /* 16px */
 
 }

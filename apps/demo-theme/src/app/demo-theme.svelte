@@ -1,6 +1,6 @@
 <script lang="ts">
   import '../styles/global.css';
-  import { cssVarToHex } from '../css-var-hex';
+  import { cssVarComputed, cssVarToHex } from '../css-var-hex';
 
   interface Props {
     doc?: XMLDocument;
@@ -12,6 +12,8 @@
 
   let root: HTMLElement | undefined = $state();
   let hex = $state<Record<string, string>>({});
+  let fontFamily = $state<Record<string, string>>({});
+  let shapePx = $state<Record<string, string>>({});
 
   const greysOnBase3 = ['base03', 'base02', 'base01', 'base00'] as const;
   const greysOnBase03 = ['base3', 'base2', 'base1', 'base0'] as const;
@@ -27,6 +29,41 @@
   ] as const;
   const accentBgs = ['base03', 'base02', 'base2', 'base3'] as const;
   const buttonBgs = ['base3', 'base2'] as const;
+  const fontIds = ['text-font', 'text-font-mono', 'icon-font'] as const;
+  const fontWeights = [300, 400, 500, 600, 700] as const;
+  const iconLigatures = ['home', 'search', 'settings'] as const;
+  const shapeRows = [
+    {
+      id: 'shape-none',
+      scale: '×0',
+      use: 'Checkboxes, dense lists',
+      preview: 'tile',
+    },
+    {
+      id: 'shape-extra-small',
+      scale: '×0.5',
+      use: 'Chips, text fields',
+      preview: 'chip',
+    },
+    {
+      id: 'shape-small',
+      scale: '×1',
+      use: 'Buttons',
+      preview: 'button',
+    },
+    {
+      id: 'shape-medium',
+      scale: '×1.5',
+      use: 'Cards, menus',
+      preview: 'card',
+    },
+    {
+      id: 'shape-large',
+      scale: '×2',
+      use: 'Dialogs, FABs',
+      preview: 'dialog',
+    },
+  ] as const;
 
   function srcToken(id: string): string {
     return `--oscd-theme-${id}`;
@@ -36,7 +73,11 @@
     return `--my-internal-${id}`;
   }
 
-  function readHexes() {
+  function unquoteFont(value: string): string {
+    return value.replace(/^["']+|["']+$/g, '');
+  }
+
+  function readTokens() {
     if (!root) return;
     const ids = [
       ...greysOnBase3,
@@ -52,12 +93,26 @@
       next[id] = cssVarToHex(myToken(id), root);
     }
     hex = next;
+
+    const nextFonts: Record<string, string> = {};
+    for (const id of fontIds) {
+      nextFonts[id] =
+        unquoteFont(cssVarComputed(myToken(id), root, 'font-family')) || '…';
+    }
+    fontFamily = nextFonts;
+
+    const nextShape: Record<string, string> = {};
+    for (const id of ['shape', ...shapeRows.map((row) => row.id)]) {
+      nextShape[id] =
+        cssVarComputed(myToken(id), root, 'border-top-left-radius') || '…';
+    }
+    shapePx = nextShape;
   }
 
   $effect(() => {
     if (!root) return;
-    readHexes();
-    const obs = new MutationObserver(readHexes);
+    readTokens();
+    const obs = new MutationObserver(readTokens);
     obs.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class', 'style'],
@@ -216,6 +271,147 @@
       {/each}
     </div>
   </section>
+
+  <section>
+    <h2>5. Fonts</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 200px">Token</th>
+            <th>Value</th>
+            {#each fontWeights as weight}
+              <th>{weight}</th>
+            {/each}
+          </tr>
+        </thead>
+        <tbody>
+          {#each fontIds as id}
+            <tr>
+              <td><code>{srcToken(id)}</code></td>
+              <td class="hex">{fontFamily[id] ?? '…'}</td>
+              {#each fontWeights as weight}
+                <td>
+                  {#if id === 'icon-font'}
+                    <span
+                      class="icon-sample"
+                      style="
+                        font-family: var({myToken(id)});
+                        font-weight: {weight};
+                        font-variation-settings: 'wght' {weight};
+                      "
+                    >
+                      {#each iconLigatures as ligature}
+                        <span>{ligature}</span>
+                      {/each}
+                    </span>
+                  {:else}
+                    <span
+                      class="font-sample"
+                      style="
+                        font-family: var({myToken(id)});
+                        font-weight: {weight};
+                      "
+                    >
+                      The quick brown fox
+                    </span>
+                  {/if}
+                </td>
+              {/each}
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Shape</h2>
+    <p class="note">
+      Host provides <code>--oscd-theme-shape</code>
+      (<span class="hex">{shapePx['shape'] ?? '…'}</span> via
+      <code>--my-internal-shape</code>). The MDC-style scale below is derived in
+      <code>demo-theme.css</code>.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Scale</th>
+            <th>Computed</th>
+            <th>Typical use</th>
+            <th>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each shapeRows as row}
+            <tr>
+              <td><code>{row.id}</code></td>
+              <td class="hex">{row.scale}</td>
+              <td class="hex">{shapePx[row.id] ?? '…'}</td>
+              <td>{row.use}</td>
+              <td>
+                <div class="shape-preview">
+                  {#if row.preview === 'tile'}
+                    <div
+                      class="shape-box"
+                      style="border-radius: var({myToken(row.id)})"
+                    ></div>
+                  {:else if row.preview === 'chip'}
+                    <span
+                      class="shape-chip"
+                      style="border-radius: var({myToken(row.id)})"
+                    >
+                      Chip
+                    </span>
+                    <span
+                      class="shape-field"
+                      style="border-radius: var({myToken(row.id)})"
+                    >
+                      Text field
+                    </span>
+                  {:else if row.preview === 'button'}
+                    <button
+                      type="button"
+                      class="shape-btn"
+                      style="border-radius: var({myToken(row.id)})"
+                    >
+                      Button
+                    </button>
+                  {:else if row.preview === 'card'}
+                    <div
+                      class="shape-card"
+                      style="border-radius: var({myToken(row.id)})"
+                    >
+                      <strong>Card</strong>
+                      <span>Menu / surface</span>
+                    </div>
+                  {:else}
+                    <div
+                      class="shape-dialog"
+                      style="border-radius: var({myToken(row.id)})"
+                    >
+                      <strong>Dialog</strong>
+                      <span>Modal surface</span>
+                    </div>
+                    <button
+                      type="button"
+                      class="shape-fab"
+                      style="border-radius: var({myToken(row.id)})"
+                      aria-label="FAB"
+                    >
+                      +
+                    </button>
+                  {/if}
+                </div>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
 
 <style>
@@ -279,6 +475,16 @@
     border: 1px solid currentColor;
   }
 
+  .note {
+    margin: 0 0 12px;
+    color: var(--my-internal-base01);
+    max-width: 52rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -337,5 +543,89 @@
   .alert code,
   .alert .hex {
     margin-right: 8px;
+  }
+
+  .font-sample {
+    font-size: 0.95rem;
+  }
+
+  .icon-sample {
+    display: inline-flex;
+    gap: 8px;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shape-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shape-box {
+    width: 48px;
+    height: 48px;
+    background: var(--my-internal-primary);
+  }
+
+  .shape-chip {
+    padding: 4px 12px;
+    background: var(--my-internal-base2);
+    border: 1px solid var(--my-internal-base01);
+    font-size: 0.82rem;
+  }
+
+  .shape-field {
+    padding: 8px 12px;
+    border: 1px solid var(--my-internal-base01);
+    background: var(--my-internal-base3);
+    font-size: 0.82rem;
+  }
+
+  .shape-btn,
+  .shape-fab {
+    border: none;
+    font: inherit;
+    cursor: default;
+  }
+
+  .shape-btn {
+    padding: 8px 16px;
+    background: var(--my-internal-primary);
+    color: var(--my-internal-base3);
+  }
+
+  .shape-card,
+  .shape-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 140px;
+    padding: 12px 14px;
+    background: var(--my-internal-base2);
+    color: var(--my-internal-base03);
+    font-size: 0.82rem;
+  }
+
+  .shape-dialog {
+    background: var(--my-internal-base3);
+    border: 1px solid var(--my-internal-base01);
+  }
+
+  .shape-fab {
+    width: 48px;
+    height: 48px;
+    background: var(--my-internal-secondary);
+    color: var(--my-internal-base3);
+    font-size: 1.4rem;
+    line-height: 1;
   }
 </style>

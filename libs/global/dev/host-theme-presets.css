@@ -30,27 +30,6 @@ body {
   START Default palette (OpenSCD Solarized light) + host-style derived tokens.
   Should be the same as: https://github.com/com-pas/open-scd/blob/main/packages/openscd/src/themes.ts
 */
-html {
-  --primary: var(--cyan);
-  --secondary: var(--violet);
-  
-  --oscd-primary: var(--oscd-theme-primary, var(--cyan));
-  --oscd-secondary: var(--oscd-theme-secondary, var(--violet));
-  --oscd-error: var(--oscd-theme-error, var(--red));
-  
-  --oscd-base03: var(--oscd-theme-base03, var(--base03));
-  --oscd-base02: var(--oscd-theme-base02, var(--base02));
-  --oscd-base01: var(--oscd-theme-base01, var(--base01));
-  --oscd-base00: var(--oscd-theme-base00, var(--base00));
-  --oscd-base0: var(--oscd-theme-base0, var(--base0));
-  --oscd-base1: var(--oscd-theme-base1, var(--base1));
-  --oscd-base2: var(--oscd-theme-base2, var(--base2));
-  --oscd-base3: var(--oscd-theme-base3, var(--base3));
-  
-  --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
-  --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
-  
-}
 
 .mdc-drawer span.mdc-drawer__title {
   color: var(--mdc-theme-text-primary-on-background) !important;
@@ -65,6 +44,7 @@ mwc-textfield[iconTrailing='search'] {
   --mdc-shape-small: 28px;
 }
 /** END Default palette (OpenSCD Solarized light) + host-style derived tokens. */
+
 
 /* Host shell page background (OpenSCD bodyStyles track the active base2) */
 html body {
@@ -396,14 +376,21 @@ html.transnetbw-new {
   --oscd-theme-base1: light-dark(var(--internal-gray-30), var(--internal-gray-70));
   --oscd-theme-base2: light-dark(var(--internal-gray-20), var(--internal-gray-80));
   --oscd-theme-base3: light-dark(var(--internal-gray-10), var(--internal-gray-90));
+
+  --oscd-theme-yellow: #b58900;
+  --oscd-theme-orange: #cb4b16;
+  --oscd-theme-red: #dc322f;
+  --oscd-theme-magenta: #d33682;
+  --oscd-theme-violet: #6c71c4;
+  --oscd-theme-blue: #268bd2;
+  --oscd-theme-cyan: #2aa198;
+  --oscd-theme-green: #859900;
+
+  --oscd-theme-text-font: 'Roboto';
+  --oscd-theme-text-font-mono: 'Roboto Mono';
+  --oscd-theme-icon-font: 'Material Symbols Outlined';
   
-  /* Signal-Colors for error, warning and success */
-  --oscd-theme-error: #ff3d47;
-  --oscd-theme-on-error: var(--internal-gray-90);
-  --oscd-theme-warning: #ffcc17;
-  --oscd-theme-on-warning: var(--internal-gray-90);
-  --oscd-theme-success: #239c5b;
-  --oscd-theme-on-success: var(--internal-gray-90);
+  --oscd-theme-shape: 8px;
   
 }
 
@@ -424,8 +411,8 @@ html.bearingpoint-new {
   --internal-gray-80: #665247;
   --internal-gray-90: #5a473e; /* darkest */
 
-  --oscd-theme-primary: light-dark(#330000, #ffecec);
-  --oscd-theme-secondary: light-dark(#990000, #ee8585);
+  --oscd-theme-primary: light-dark(var(--internal-primary), #ffecec);
+  --oscd-theme-secondary: light-dark(var(--internal-secondary), #ee8585);
 
   --oscd-theme-base03: light-dark(var(--internal-gray-90), var(--internal-gray-10));
   --oscd-theme-base02: light-dark(var(--internal-gray-80), var(--internal-gray-20));
@@ -435,38 +422,21 @@ html.bearingpoint-new {
   --oscd-theme-base1: light-dark(var(--internal-gray-30), var(--internal-gray-70));
   --oscd-theme-base2: light-dark(var(--internal-gray-20), var(--internal-gray-80));
   --oscd-theme-base3: light-dark(var(--internal-gray-10), var(--internal-gray-90));
+
+  --oscd-theme-yellow: #b58900;
+  --oscd-theme-orange: #cb4b16;
+  --oscd-theme-red: #dc322f;
+  --oscd-theme-magenta: #d33682;
+  --oscd-theme-violet: #6c71c4;
+  --oscd-theme-blue: #268bd2;
+  --oscd-theme-cyan: #2aa198;
+  --oscd-theme-green: #859900;
+
+  --oscd-theme-text-font: 'Roboto';
+  --oscd-theme-text-font-mono: 'Roboto Mono';
+  --oscd-theme-icon-font: 'Material Symbols Outlined';
   
-  /* Signal-Colors for error, warning and success */
-  --oscd-theme-error: #ff3d47;
-  --oscd-theme-on-error: var(--internal-gray-90);
-  --oscd-theme-warning: #ffcc17;
-  --oscd-theme-on-warning: var(--internal-gray-90);
-  --oscd-theme-success: #239c5b;
-  --oscd-theme-on-success: var(--internal-gray-90);
-
-/* Do not overwrite all defaults */
-/*   --oscd-theme-yellow: #b58900; */
-/*   --oscd-theme-orange: #cb4b16; */
-/*   --oscd-theme-red: #dc322f; */
-/*   --oscd-theme-magenta: #d33682; */
-/*   --oscd-theme-violet: #6c71c4; */
-/*   --oscd-theme-blue: #268bd2; */
-/*   --oscd-theme-cyan: #2aa198; */
-/*   --oscd-theme-green: #859900; */
-/*   --oscd-theme-text-font: 'Roboto'; */
-/*   --oscd-theme-icon-font: 'Material Icons Outlined'; */
-
-/*
- * Set by OSCD only,
- * plugin should set his own background, the oscd-body-bg is only a fallback in case Plugin doensT' have one.
- * nav-colors are not used by plugins, so it is not used by this dev-environment.
- */
-/*   --oscd-theme-body-bg: var(--oscd-theme-base3); */
-/*   --oscd-theme-nav-primary: var(--internal-primary); */
-/*   --oscd-theme-nav-primary-active: var(--internal-primary); */
-/*   --oscd-theme-nav-primary-text: var(--internal-gray-20); */
-/*   --oscd-theme-nav-primary-text-active: yellow; */
-
+  --oscd-theme-shape: 8px;
 }
 
 /* Experimental: Simulate High Contrast variant for Bearingpoint-Distribution. */
@@ -519,7 +489,11 @@ html.bearingpoint-new {
   --oscd-secondary: var(--oscd-theme-secondary, var(--oscd-violet));
 
   --oscd-error: var(--oscd-theme-error, var(--oscd-red));
+  --oscd-warning: var(--oscd-theme-warning, var(--oscd-yellow));
 
   --oscd-text-font: var(--oscd-theme-text-font, 'Roboto');
+  --oscd-text-font-mono: var(--oscd-theme-text-font-mono, 'Roboto Mono');
   --oscd-icon-font: var(--oscd-theme-icon-font, 'Material Symbols Outlined');
+
+  --oscd-shape: var(--oscd-theme-shape, 8px);
 }

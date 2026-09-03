@@ -1,5 +1,6 @@
 
-/* Host theme bridge: --oscd-* -> --bearingpoint-* aliases, and corrections for old hosts with wrong/incomplete themes. */
+/* No Host theme bridge: --oscd-* -> --bearingpoint-* aliases, and corrections for old hosts with wrong/incomplete themes. */
+/* This demo-theme Plugin should test a correct Customer-Branding: It's by design, that old distributions doesn't work. */
 /* @import '../../../../libs/global/bearingpoint-theme.css'; */
 
 /* Plugin-specific global styles */
