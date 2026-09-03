@@ -5,6 +5,7 @@
       "kind": "editor",
       "description": "BearingPoint Plugin Hub – Central plugin for integrating and managing plugins from multiple providers",
       "src": "https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/plugins-hub/0.0.6/index.js",
+      "documentationUrl": "https://ase-compas.github.io/compas-bearingpoint-plugins/plugins/plugins-hub",
       "icon": "hub"
     },
     {
@@ -12,6 +13,7 @@
       "kind": "editor",
       "description": "BearingPoint Demo Theme – Testing-Plugin for Customer Themes. See https://github.com/com-pas/compas-open-scd/issues/534",
       "src": "https://ase-compas.github.io/compas-bearingpoint-plugins/compas/plugins/demo-theme/index.js",
+      "documentationUrl": "https://ase-compas.github.io/compas-bearingpoint-plugins/plugins/demo-theme",
       "icon": "hub"
     }
   ]

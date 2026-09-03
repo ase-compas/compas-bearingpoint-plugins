@@ -6,8 +6,9 @@ This documentation should provide an overview of the from BearingPoint developed
 
 BearingPoint provides currently following Plugins:
 
-| Plugin      | Description                                                                 | Documentation                                    |
-|-------------|-----------------------------------------------------------------------------|--------------------------------------------------|
-| Plugins-Hub | Central plugin for integrating and managing plugins from multiple providers | [documentation](./plugins/plugins-hub/README.md) |
+| Plugin      | Description                                                                                      | Documentation                                    |
+|-------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| Plugins-Hub | Central plugin for integrating and managing plugins from multiple providers                      | [documentation](./plugins/plugins-hub/README.md) |
+| Demo-Theme  | Testing plugin for customer-specific branding and entry-point for plugin developers              | [documentation](./plugins/demo-theme/README.md)  |
 
-The distribution file for the Plugins-Hub plugin provided by BearingPoint can be found here: [plugins.json](./plugins.json)
+The distribution file for the plugins provided by BearingPoint can be found here: [plugins.json](./plugins.json)
