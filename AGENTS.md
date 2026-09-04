@@ -181,4 +181,4 @@ npm run verify                     # lint + check + test
   `update(plugins-hub):`, `refactor(...)`, `update(docu):` (see `git log`).
 - `apps/plugins-hub/CHANGELOG.md` follows Keep a Changelog + SemVer; update it
   with feature changes.
-- CI (`main.yml`): `npm ci --legacy-peer-deps` → `npm run build` → `npm run verify`; on main push, `dist/apps/*` is copied to the `published-plugins` branch for deployment.
+- CI (`main.yml`): `npm ci --legacy-peer-deps` → `npm run build` → `npm run verify`; on main push, `dist/apps/*` is copied to the `gh-pages` branch for deployment.
